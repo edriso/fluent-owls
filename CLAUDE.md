@@ -75,11 +75,11 @@ To change WHEN things post or WHICH levels a slot covers, edit `src/schedules.ts
 ## Environment variables
 
 | Variable             | Required | Notes                                             |
-| -------------------- | -------- | ------------------------------------------------- | ------ | ---------------- |
+| -------------------- | -------- | ------------------------------------------------- |
 | `BOT_TOKEN`          | yes      | From `@BotFather`.                                |
 | `CHANNEL_CHAT_ID`    | yes      | Numeric `-100...` is best; `@channel` also works. |
 | `CHANNEL_PUBLIC_URL` | no       | Public link shown by `/start` in DMs.             |
-| `ADMIN_TELEGRAM_ID`  | no       | Unlocks `/admin_morning                           | midday | evening` in DMs. |
+| `ADMIN_TELEGRAM_ID`  | no       | Unlocks the `/admin_*` slot commands in DMs.      |
 | `TZ_NAME`            | no       | Cron timezone. Default UTC.                       |
 | `MORNING_CRON`       | no       | Override the morning slot (default `0 8 * * *`).  |
 | `MIDDAY_CRON`        | no       | Override the midday slot (default `0 13 * * *`).  |
