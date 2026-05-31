@@ -60,13 +60,11 @@ export const config = Object.freeze({
   channelUrl: channelUrlFrom(channelPublicUrl || channelChatId),
   // Optional. If unset, /admin_* commands authorise nobody.
   adminTelegramId: optionalBigInt(process.env.ADMIN_TELEGRAM_ID),
-  // Timezone for every cron schedule. Defaults to UTC.
+  // Timezone for the cron schedule. Defaults to UTC.
   timezone: process.env.TZ_NAME?.trim() || 'UTC',
-  // Cron expressions for the three daily fires. Defaults are 08:00, 13:00, and
-  // 19:00 in the configured timezone. Override any of them via env.
-  morningCron: process.env.MORNING_CRON?.trim() || '0 8 * * *',
-  middayCron: process.env.MIDDAY_CRON?.trim() || '0 13 * * *',
-  eveningCron: process.env.EVENING_CRON?.trim() || '0 19 * * *',
+  // When the daily batch posts (all three questions together), in the
+  // configured timezone. Default 14:00. Override via env.
+  dailyCron: process.env.DAILY_CRON?.trim() || '0 14 * * *',
   port: resolvePort(process.env.PORT),
   isDev: process.env.NODE_ENV !== 'production',
 });

@@ -12,9 +12,7 @@ async function main(): Promise<void> {
 
   logger.info('Starting bot', {
     timezone: config.timezone,
-    morningCron: config.morningCron,
-    middayCron: config.middayCron,
-    eveningCron: config.eveningCron,
+    dailyCron: config.dailyCron,
     isDev: config.isDev,
   });
 

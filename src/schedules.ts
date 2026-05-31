@@ -1,30 +1,34 @@
-import { config } from './config';
 import type { Level } from './types';
 
-/** A single scheduled posting slot. */
+/** One question in the daily batch. */
 export type ScheduleDef = {
   /** Stable name, used in logs and by /admin and send-test to target a slot. */
   name: string;
-  /** Cron expression (evaluated in the configured timezone). */
-  cron: string;
   /** The band of CEFR levels this slot draws a question from. */
   levels: Level[];
+  /**
+   * Post without a notification sound (Telegram disable_notification). The
+   * batch posts in array order and silences all but the last one, so a
+   * follower gets a single daily ping yet still receives every question.
+   */
+  silent: boolean;
 };
 
 /**
- * The daily posting plan. Three bite-sized posts a day, climbing through the
- * CEFR bands so every level gets aired and learners of all stages get something
- * each day:
- *   morning  08:00  beginner warm-up   (A1, A2)
- *   midday   13:00  intermediate       (B1, B2)
- *   evening  19:00  advanced challenge  (C1, C2)
+ * The daily posting plan. All three questions go out together once a day, at
+ * config.dailyCron (default 14:00 in the configured timezone), posted in this
+ * order and climbing through the CEFR bands:
+ *   morning  beginner warm-up    (A1, A2)   silent
+ *   midday   intermediate        (B1, B2)   silent
+ *   evening  advanced challenge  (C1, C2)   rings
  *
- * Why three and not five: pacing. A quick warm-up, a lunchtime stretch, and an
- * evening challenge is a healthy daily dose. More than that turns a learning
- * channel into noise. Times are interpreted in the timezone from config.
+ * Why one batch instead of three times a day: fewer interruptions. A follower
+ * gets one notification (the last post), opens the channel once, and finds all
+ * three questions waiting, easy to hard. Why still three questions: a warm-up,
+ * a stretch, and a challenge is a healthy daily dose across every level.
  */
 export const schedules: readonly ScheduleDef[] = [
-  { name: 'morning', cron: config.morningCron, levels: ['a1', 'a2'] },
-  { name: 'midday', cron: config.middayCron, levels: ['b1', 'b2'] },
-  { name: 'evening', cron: config.eveningCron, levels: ['c1', 'c2'] },
+  { name: 'morning', levels: ['a1', 'a2'], silent: true },
+  { name: 'midday', levels: ['b1', 'b2'], silent: true },
+  { name: 'evening', levels: ['c1', 'c2'], silent: false },
 ];

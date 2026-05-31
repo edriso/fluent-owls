@@ -16,6 +16,7 @@ import { logger } from './logger';
 export async function postQuizPoll(
   bot: Bot<Context>,
   question: LeveledQuestion,
+  opts: { silent?: boolean } = {},
 ): Promise<number | null> {
   try {
     const message = await bot.api.sendPoll(
@@ -30,6 +31,10 @@ export async function postQuizPoll(
         correct_option_ids: [question.correctIndex],
         explanation: clampExplanation(question.explanation),
         is_anonymous: true,
+        // Silent posts arrive without a sound/vibration (they still appear in
+        // the channel). The daily batch silences all but the last question so
+        // followers get a single ping a day.
+        disable_notification: opts.silent ?? false,
       },
     );
     logger.info('Posted quiz poll', {
