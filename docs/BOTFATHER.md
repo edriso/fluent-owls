@@ -1,0 +1,53 @@
+# BotFather setup (copy and paste)
+
+Ready-to-paste text for the Fluent Owls bot in @BotFather (the `/mybots` ->
+Edit Bot menu). The public texts are English. Copy each block as-is.
+
+Note: this bot does NOT set its command list automatically, so paste the
+Commands block below into BotFather to get the menu. (For contrast, the
+ayah bot self-registers its commands on start; Fluent Owls does not.)
+
+- Bot channel: **@fluent_owls**
+
+---
+
+## Name
+
+Fluent Owls
+
+## About
+
+(BotFather "Edit About", max ~120 characters. Shown on the bot's profile.)
+
+Daily English quizzes 🦉 Three a day, beginner to advanced, each with an instant explanation. Tap Start to join the channel.
+
+## Description
+
+(BotFather "Edit Description", max ~512 characters. Shown on the empty-chat
+start screen, before the user presses Start.)
+
+🦉 Hi! Fluent Owls posts three short English quizzes a day to its Telegram channel: a beginner warm-up at 08:00, an intermediate question at 13:00, and an advanced challenge at 19:00.
+Each is a quick fill-in-the-blank sentence. Tap the word that fits, then Telegram reveals the correct answer and a short explanation right after you vote.
+Vocabulary, collocations, idioms, grammar, and more, organized by CEFR level (A1 to C2). No signup, nothing to install.
+Tap Start for the channel link.
+
+---
+
+## Commands
+
+When BotFather says "Send me a list of commands", paste exactly this block
+(no leading slashes, one command per line, `command - description`):
+
+start - What Fluent Owls is and how to join the channel
+about - About this open-source bot
+
+---
+
+## Other settings
+
+- Botpic: optional, set your own image in BotFather.
+- Privacy Policy: optional. The bot stores nothing about users (no database,
+  no saved votes). If you publish a policy, host a short page saying that and
+  set its URL in BotFather. Not required.
+- Group privacy: this bot only posts to a channel and answers /start in DM,
+  so you can leave group privacy ON (the default).
