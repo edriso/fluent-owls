@@ -1,0 +1,39 @@
+{
+  "name": "fluent-owls",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "main": "dist/src/index.js",
+  "description": "A tiny no-database Telegram bot that posts daily English quizzes to a channel to help people level up their English.",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "node --import tsx dist/src/index.js",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "send-test": "tsx scripts/send-test.ts",
+    "post-welcome": "tsx scripts/post-welcome.ts",
+    "audit-questions": "tsx scripts/audit-questions.ts",
+    "format": "prettier --write \"**/*.{ts,js,json,md,yml,yaml}\"",
+    "format:check": "prettier --check \"**/*.{ts,js,json,md,yml,yaml}\""
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "dependencies": {
+    "grammy": "^1.43.0",
+    "node-cron": "^3.0.3",
+    "tsx": "^4.22.3"
+  },
+  "optionalDependencies": {
+    "dotenv": "^16.6.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.41",
+    "@types/node-cron": "^3.0.11",
+    "prettier": "^3.3.3",
+    "typescript": "^5.9.3",
+    "vitest": "^1.6.1"
+  }
+}
