@@ -5,6 +5,7 @@
   "type": "module",
   "main": "dist/src/index.js",
   "description": "A tiny no-database Telegram bot that posts daily English quizzes to a channel to help people level up their English.",
+  "packageManager": "pnpm@10.33.2",
   "scripts": {
     "dev": "tsx watch src/index.ts",
     "build": "tsc",
