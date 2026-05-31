@@ -66,3 +66,43 @@ describe('question banks', () => {
     }
   });
 });
+
+describe('poolForLevels', () => {
+  it('interleaves a two-level band so the levels alternate', () => {
+    const pool = poolForLevels(['a1', 'a2']);
+    // The first two entries should be one a1 and one a2, not two a1s. That is
+    // the whole point of interleaving: the slot alternates levels day to day.
+    expect(pool[0]?.level).toBe('a1');
+    expect(pool[1]?.level).toBe('a2');
+  });
+
+  it('returns every question from the requested levels, with no extras', () => {
+    const pool = poolForLevels(['b1', 'b2']);
+    const expected = ALL_QUESTIONS.filter((q) => q.level === 'b1' || q.level === 'b2');
+    expect(pool.length).toBe(expected.length);
+    expect(new Set(pool.map((q) => q.id))).toEqual(new Set(expected.map((q) => q.id)));
+  });
+
+  it('is empty for an empty band', () => {
+    expect(poolForLevels([])).toEqual([]);
+  });
+});
+
+describe('content coverage', () => {
+  it('ships a healthy number of questions per level', () => {
+    for (const level of LEVELS) {
+      // A daily slot pairs two levels, so even 20 per level gives ~6 weeks
+      // before a repeat. Guard against a bank accidentally shrinking.
+      expect(poolForLevels([level]).length, level).toBeGreaterThanOrEqual(20);
+    }
+  });
+
+  it('varies the correct answer position (not always the same index)', () => {
+    // A quiz where the answer is always option A is boring and gameable. Make
+    // sure each level uses at least three distinct correct positions.
+    for (const level of LEVELS) {
+      const positions = new Set(poolForLevels([level]).map((q) => q.correctIndex));
+      expect(positions.size, level).toBeGreaterThanOrEqual(3);
+    }
+  });
+});

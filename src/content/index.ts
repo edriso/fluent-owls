@@ -41,10 +41,25 @@ export const ALL_QUESTIONS: LeveledQuestion[] = LEVELS.flatMap((level) =>
 /**
  * Build a pool of questions drawn from the given band of levels.
  *
+ * The result is round-robin interleaved by level (a1, a2, a1, a2, ...) rather
+ * than concatenated (all a1, then all a2). This matters because the daily
+ * picker walks the pool in order: interleaving makes a two-level slot alternate
+ * levels day to day, instead of showing only the easier level for weeks before
+ * switching. Order is still fully deterministic, so the picker stays stable.
+ *
  * @param levels The CEFR levels to include (e.g. ['b1', 'b2']).
- * @returns All questions belonging to those levels, tagged with their level.
+ * @returns The questions for those levels, interleaved by level.
  */
 export function poolForLevels(levels: readonly Level[]): LeveledQuestion[] {
-  const wanted = new Set(levels);
-  return ALL_QUESTIONS.filter((q) => wanted.has(q.level));
+  const byLevel = levels.map((level) => ALL_QUESTIONS.filter((q) => q.level === level));
+  const longest = byLevel.reduce((max, list) => Math.max(max, list.length), 0);
+
+  const interleaved: LeveledQuestion[] = [];
+  for (let i = 0; i < longest; i += 1) {
+    for (const list of byLevel) {
+      const question = list[i];
+      if (question) interleaved.push(question);
+    }
+  }
+  return interleaved;
 }
