@@ -67,7 +67,7 @@ The cycle length for a band equals the size of that band's pool (the levels it c
 | 30             | about a month       |
 | 60             | about two months    |
 
-The project ships with about a dozen questions per level. Add more whenever you have a good idea. There is no upper bound, and the cycle lengthens on its own.
+The project ships with 30 questions per level. Each daily slot pairs two levels, so a slot draws from 60 questions, roughly two months before any repeat. Add more whenever you have a good idea. There is no upper bound, and the cycle lengthens on its own.
 
 ## Topic ideas by level
 
