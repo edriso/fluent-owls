@@ -115,8 +115,8 @@ export const c2Questions: QuizQuestion[] = [
   {
     id: 'c2-013',
     prompt: 'The defence lawyer could not refute the ____ evidence against her client.',
-    options: ['damning', 'damping', 'dawning', 'dimming'],
-    correctIndex: 0,
+    options: ['damping', 'dawning', 'dimming', 'damning'],
+    correctIndex: 3,
     explanation:
       "'Damning' evidence strongly proves guilt or fault. The look-alikes are unrelated.",
     topic: 'vocabulary',
@@ -141,8 +141,8 @@ export const c2Questions: QuizQuestion[] = [
   {
     id: 'c2-016',
     prompt: 'His years of patient research finally ____ dividends.',
-    options: ['paid', 'gave', 'made', 'did'],
-    correctIndex: 0,
+    options: ['gave', 'made', 'paid', 'did'],
+    correctIndex: 2,
     explanation:
       "'Pay dividends' is an idiom meaning to bring benefits later, thanks to earlier effort.",
     topic: 'collocations',
@@ -159,8 +159,8 @@ export const c2Questions: QuizQuestion[] = [
   {
     id: 'c2-018',
     prompt: "The lawyer's clever reply took the wind out of her opponent's ____.",
-    options: ['sails', 'wings', 'feathers', 'wheels'],
-    correctIndex: 0,
+    options: ['wings', 'feathers', 'wheels', 'sails'],
+    correctIndex: 3,
     explanation:
       "'Take the wind out of someone's sails' means to weaken their confidence or advantage.",
     topic: 'idioms',
@@ -184,8 +184,8 @@ export const c2Questions: QuizQuestion[] = [
   {
     id: 'c2-021',
     prompt: "The audit ____ bare the company's deep financial problems.",
-    options: ['laid', 'made', 'did', 'set'],
-    correctIndex: 0,
+    options: ['made', 'did', 'laid', 'set'],
+    correctIndex: 2,
     explanation:
       "'Lay bare' means to reveal or expose something hidden. The past of 'lay' is 'laid'.",
     topic: 'collocations',
@@ -202,8 +202,8 @@ export const c2Questions: QuizQuestion[] = [
   {
     id: 'c2-023',
     prompt: 'He has a finger in every ____, involved in half the businesses in town.',
-    options: ['pie', 'cake', 'plate', 'dish'],
-    correctIndex: 0,
+    options: ['cake', 'plate', 'dish', 'pie'],
+    correctIndex: 3,
     explanation: "'A finger in every pie' means being involved in many activities at once.",
     topic: 'idioms',
   },
