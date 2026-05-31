@@ -2,7 +2,7 @@
 
 ## What this is
 
-A tiny no-database Telegram bot that posts three short English quizzes each day to one channel: a beginner warm-up in the morning, an intermediate question at midday, and an advanced challenge in the evening. Each post is a native Telegram quiz poll that reveals the correct answer and a short explanation after the reader votes.
+A tiny no-database Telegram bot that posts three short English quizzes each day to one channel: a beginner warm-up (A1, A2), an intermediate question (B1, B2), and an advanced challenge (C1, C2). All three post together once a day (default 14:00), in that order, and only the last one makes a notification sound, so followers get a single daily ping but still receive every question. Each post is a native Telegram quiz poll that reveals the correct answer and a short explanation after the reader votes.
 
 The channel is read-only by design. No accounts, no leaderboards, no DMs to manage. The bot exists to deliver good content on a schedule.
 
@@ -15,7 +15,7 @@ fluent-owls/
 │   ├── config.ts         env loading. Required: BOT_TOKEN, CHANNEL_CHAT_ID.
 │   ├── bot.ts            Grammy setup: /start, /about, /admin_morning|midday|evening.
 │   ├── scheduler.ts      node-cron wiring; runOnce(slot, bot); findSlot(name).
-│   ├── schedules.ts      THE EDIT POINT for cron times and level bands.
+│   ├── schedules.ts      THE EDIT POINT for the batch order, level bands, and which slots are silent.
 │   ├── types.ts          Level, Topic, QuizQuestion, LeveledQuestion, LEVELS.
 │   ├── health.ts         /health HTTP endpoint for platform liveness checks.
 │   ├── content/
@@ -70,7 +70,7 @@ fluent-owls/
 4. **Preview.** `pnpm send-test midday` posts a slot to the channel now.
 5. **Redeploy.**
 
-To change WHEN things post or WHICH levels a slot covers, edit `src/schedules.ts` (or the `*_CRON` env vars).
+To change WHEN the batch posts, set `DAILY_CRON`. To change WHICH levels a slot covers or WHICH slots are silent, edit `src/schedules.ts`.
 
 ## Environment variables
 
@@ -81,9 +81,7 @@ To change WHEN things post or WHICH levels a slot covers, edit `src/schedules.ts
 | `CHANNEL_PUBLIC_URL` | no       | Public link shown by `/start` in DMs.             |
 | `ADMIN_TELEGRAM_ID`  | no       | Unlocks the `/admin_*` slot commands in DMs.      |
 | `TZ_NAME`            | no       | Cron timezone. Default UTC.                       |
-| `MORNING_CRON`       | no       | Override the morning slot (default `0 8 * * *`).  |
-| `MIDDAY_CRON`        | no       | Override the midday slot (default `0 13 * * *`).  |
-| `EVENING_CRON`       | no       | Override the evening slot (default `0 19 * * *`). |
+| `DAILY_CRON`         | no       | When the daily batch posts (default `0 14 * * *`). |
 | `PORT`               | no       | `/health` server port. Default 8080.              |
 | `NODE_ENV`           | no       | `production` for hosted.                          |
 

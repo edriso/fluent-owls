@@ -17,9 +17,7 @@ This bot is small and stateless. It runs anywhere Node 20 runs: Fly.io, Railway,
 | `CHANNEL_PUBLIC_URL` | no       | Public link shown by `/start` in DMs.             |
 | `ADMIN_TELEGRAM_ID`  | no       | Unlocks the `/admin_*` slot commands in DMs.      |
 | `TZ_NAME`            | no       | Cron timezone. Default UTC.                       |
-| `MORNING_CRON`       | no       | Override the morning slot (default `0 8 * * *`).  |
-| `MIDDAY_CRON`        | no       | Override the midday slot (default `0 13 * * *`).  |
-| `EVENING_CRON`       | no       | Override the evening slot (default `0 19 * * *`). |
+| `DAILY_CRON`         | no       | When the daily batch posts (default `0 14 * * *`). |
 | `PORT`               | no       | `/health` server port. Default 8080.              |
 | `NODE_ENV`           | no       | `production` for hosted.                          |
 

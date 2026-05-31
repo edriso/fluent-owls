@@ -18,7 +18,7 @@ Fluent Owls 🦉 Three short English quizzes a day: a beginner warm-up, an inter
 
 ## Option 2 — with the levels and times
 
-Fluent Owls 🦉 Level up your English daily. Three quizzes a day by CEFR level: A1 to A2 at 08:00, B1 to B2 at 13:00, C1 to C2 at 19:00. Tap the word that fits, then read an instant explanation. Vocabulary, idioms, grammar, and more.
+Fluent Owls 🦉 Level up your English daily. Three quizzes by CEFR level, posted together each afternoon: a beginner (A1, A2), an intermediate (B1, B2), and an advanced (C1, C2). Tap the word that fits, then read an instant explanation. Vocabulary, idioms, grammar, and more.
 
 ---
 
@@ -31,11 +31,12 @@ Fluent Owls 🦉 Three quick English quizzes a day, beginner to advanced. Fill i
 ## Longer blurb (for a pinned post or the bot's "About", not the 255-char description)
 
 🦉 Welcome to Fluent Owls
-Level up your English a little every day with short, fun quizzes. Three a day,
-each a fill-in-the-blank sentence with an instant explanation.
-• ☀️ 08:00 a beginner warm-up (A1, A2)
-• 🥪 13:00 an intermediate question (B1, B2)
-• 🌙 19:00 an advanced challenge (C1, C2)
+Level up your English a little every day with short, fun quizzes. Three land
+together each afternoon, each a fill-in-the-blank sentence with an instant
+explanation:
+• ☀️ a beginner warm-up (A1, A2)
+• 🥪 an intermediate question (B1, B2)
+• 🌙 an advanced challenge (C1, C2)
 Read the sentence, tap the word that fits, and Telegram reveals the answer and
 a short explanation after you vote. No setup, no signup, no streaks to lose.
 

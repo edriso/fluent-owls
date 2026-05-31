@@ -16,15 +16,20 @@ The questions use contextual fill-in-the-blank (a "cloze" sentence). This is one
 
 Questions are organized by the international **CEFR** scale (A1 to C2) instead of "easy/hard", so learners always know where they stand. Each level mixes the skills that matter most at that stage. The biggest gains for intermediate and advanced learners come from collocations, phrasal verbs, and idioms, the things that make you sound natural rather than merely correct, so those get heavy weight from B1 upward.
 
-## The daily rhythm
+## The daily batch
 
-| Slot    | Default time | Levels | Cron env       |
-| ------- | ------------ | ------ | -------------- |
-| Morning | 08:00        | A1, A2 | `MORNING_CRON` |
-| Midday  | 13:00        | B1, B2 | `MIDDAY_CRON`  |
-| Evening | 19:00        | C1, C2 | `EVENING_CRON` |
+All three quizzes post together once a day, in order (easy to hard), so a
+follower gets a single notification but still receives every question. Only
+the last post makes a sound; the first two are sent silently.
 
-Times run in the timezone set by `TZ_NAME` (default UTC).
+| Order | Slot    | Levels | Notification |
+| ----- | ------- | ------ | ------------ |
+| 1     | Morning | A1, A2 | silent       |
+| 2     | Midday  | B1, B2 | silent       |
+| 3     | Evening | C1, C2 | rings        |
+
+The batch time is `DAILY_CRON` (default `0 14 * * *`, i.e. 14:00), run in the
+timezone set by `TZ_NAME` (default UTC).
 
 ## Tech stack
 

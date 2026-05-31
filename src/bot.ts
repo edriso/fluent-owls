@@ -19,7 +19,7 @@ export function buildBot(): Bot {
       [
         '🦉 Hi! Fluent Owls posts three short English quizzes a day to its Telegram channel.',
         '',
-        'A beginner warm-up at 08:00, an intermediate one at 13:00, and an advanced challenge at 19:00 (default times). Each is a quick fill-in-the-blank quiz with an instant explanation, so you learn a little every day.',
+        'A beginner warm-up, an intermediate question, and an advanced challenge, posted together each afternoon. Each is a quick fill-in-the-blank quiz with an instant explanation, so you learn a little every day.',
         tail,
       ].join('\n'),
       { link_preview_options: { is_disabled: true } },

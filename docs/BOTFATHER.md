@@ -26,7 +26,7 @@ Daily English quizzes 🦉 Three a day, beginner to advanced, each with an insta
 (BotFather "Edit Description", max ~512 characters. Shown on the empty-chat
 start screen, before the user presses Start.)
 
-🦉 Hi! Fluent Owls posts three short English quizzes a day to its Telegram channel: a beginner warm-up at 08:00, an intermediate question at 13:00, and an advanced challenge at 19:00.
+🦉 Hi! Fluent Owls posts three short English quizzes to its Telegram channel every afternoon: a beginner warm-up, an intermediate question, and an advanced challenge.
 Each is a quick fill-in-the-blank sentence. Tap the word that fits, then Telegram reveals the correct answer and a short explanation right after you vote.
 Vocabulary, collocations, idioms, grammar, and more, organized by CEFR level (A1 to C2). No signup, nothing to install.
 Tap Start for the channel link.
