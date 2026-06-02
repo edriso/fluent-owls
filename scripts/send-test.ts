@@ -13,10 +13,10 @@
  * must be a channel admin with "Post messages" permission.
  */
 import { Bot } from 'grammy';
+import { logger } from 'telegram-broadcast-kit';
 import { config } from '../src/config';
 import { runOnce, findSlot } from '../src/scheduler';
 import { schedules } from '../src/schedules';
-import { logger } from '../src/lib/logger';
 
 const SLOT_NAMES = schedules.map((s) => s.name);
 

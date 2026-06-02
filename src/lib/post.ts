@@ -1,58 +1,66 @@
 import type { Bot, Context } from 'grammy';
+import { logger, sendPoll } from 'telegram-broadcast-kit';
 import { config } from '../config';
 import type { LeveledQuestion } from '../types';
 import { buildPrompt, clampExplanation, toPollOptions } from './format';
-import { logger } from './logger';
 
 /**
- * Post one question as a native Telegram quiz poll. Quiz polls reveal the
- * correct option and a short explanation after the reader votes, which is
- * exactly the "learn by doing" loop we want. Polls are anonymous, so nobody
- * (not even the bot) can see who voted what.
+ * Post one question as a native Telegram quiz poll, via the shared kernel's
+ * sendPoll (quiz mode). Quiz polls reveal the correct option and a short
+ * explanation after the reader votes, which is exactly the "learn by doing"
+ * loop we want. Polls are anonymous, so nobody (not even the bot) can see who
+ * voted what.
  *
- * Returns the message_id on success, or null on failure. Never throws: the
- * caller logs and moves on, and the next scheduled fire takes over.
+ * The kernel validates the quiz config synchronously (correctOptionId range,
+ * explanation length) and THROWS on bad input — a programming error surfaced
+ * loudly. A network/send failure is logged inside sendPoll and returns null.
+ *
+ * Returns the message_id on success, or null on a send failure.
  */
 export async function postQuizPoll(
   bot: Bot<Context>,
   question: LeveledQuestion,
   opts: { silent?: boolean } = {},
 ): Promise<number | null> {
-  try {
-    const message = await bot.api.sendPoll(
-      config.channelChatId,
-      buildPrompt(question),
-      toPollOptions(question.options),
-      {
-        type: 'quiz',
-        // correct_option_ids is the Bot API 9.x replacement for the old
-        // singular correct_option_id field. A single-element array keeps the
-        // standard quiz behaviour: one correct answer, revealed on vote.
-        correct_option_ids: [question.correctIndex],
-        explanation: clampExplanation(question.explanation),
-        is_anonymous: true,
-        // Silent posts arrive without a sound/vibration (they still appear in
-        // the channel). The daily batch silences all but the last question so
-        // followers get a single ping a day.
-        disable_notification: opts.silent ?? false,
-      },
-    );
+  // toPollOptions enforces fluent-owls' own count/length rules and throws on a
+  // bad bank (caught in dev, never silently shipped); the kernel re-checks the
+  // quiz-specific fields. We pass plain strings to sendPoll, which maps them to
+  // InputPollOption objects itself.
+  const options = toPollOptions(question.options).map((o) => o.text);
+  const messageId = await sendPoll(
+    bot,
+    config.channelChatId,
+    {
+      question: buildPrompt(question),
+      options,
+      type: 'quiz',
+      correctOptionId: question.correctIndex,
+      explanation: clampExplanation(question.explanation),
+      isAnonymous: true,
+    },
+    {
+      name: question.id,
+      // Silent posts arrive without a sound/vibration (they still appear in the
+      // channel). The daily batch silences all but the last question so
+      // followers get a single ping a day.
+      silent: opts.silent ?? false,
+    },
+  );
+  if (messageId !== null) {
     logger.info('Posted quiz poll', {
       id: question.id,
       level: question.level,
       topic: question.topic,
-      messageId: message.message_id,
+      messageId,
     });
-    return message.message_id;
-  } catch (err) {
-    logger.error('Failed to post quiz poll', { id: question.id, error: String(err) });
-    return null;
   }
+  return messageId;
 }
 
 /**
- * Plain message poster used by /start replies and the welcome script. Kept
- * separate from poll posting so callers do not inherit quiz semantics.
+ * Plain message poster used by the welcome script. Kept local (not routed
+ * through the kernel's `post`) because it disables the link preview and posts
+ * HTML, neither of which the kernel's plain-text-first poster exposes.
  */
 export async function postPlainMessage(
   bot: Bot<Context>,

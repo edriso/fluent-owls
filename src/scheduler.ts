@@ -1,11 +1,20 @@
-import cron from 'node-cron';
 import type { Bot } from 'grammy';
+import { Scheduler, logger } from 'telegram-broadcast-kit';
 import { config } from './config';
-import { logger } from './lib/logger';
 import { schedules, type ScheduleDef } from './schedules';
 import { poolForLevels } from './content/index';
 import { pickQuestion } from './lib/pick';
 import { postQuizPoll } from './lib/post';
+
+// The bot-specific schedule layer. The generic cron plumbing (error
+// containment, the node-cron registry, cron validation) now lives in
+// telegram-broadcast-kit's Scheduler; this file keeps everything
+// fluent-owls-specific on top of it: the daily batch, per-slot dispatch, and
+// the silent/audible ordering.
+
+// One Scheduler per bot, holding the live cron task so it can be stopped on
+// shutdown. Built lazily on the first startScheduler call.
+let scheduler: Scheduler | null = null;
 
 /**
  * Fire one slot: pick today's question from the slot's level band (in the
@@ -43,28 +52,35 @@ export function findSlot(name: string): ScheduleDef | undefined {
 }
 
 /**
- * Register the single daily batch with node-cron. A bad cron expression is
- * logged and the batch is skipped, rather than crashing the bot. Returns the
- * number of questions the batch posts (so /health can report it), or 0 if the
- * cron was invalid.
+ * Register the single daily batch with the kernel's Scheduler. The Scheduler
+ * validates the cron (a bad expression is logged and skipped, never crashing
+ * the bot) and wraps every fire in error containment so one bad tick cannot
+ * kill the loop. Returns the number of questions the batch posts (so /health
+ * can report it), or 0 if the cron was invalid.
  */
 export function startScheduler(bot: Bot): number {
-  if (!cron.validate(config.dailyCron)) {
+  scheduler = new Scheduler(config.timezone);
+  const registered = scheduler.start([
+    {
+      name: 'daily-batch',
+      cron: config.dailyCron,
+      run: () => runDailyBatch(bot),
+    },
+  ]);
+  if (registered === 0) {
     logger.error('Invalid DAILY_CRON, scheduler not started', { cron: config.dailyCron });
     return 0;
   }
-  cron.schedule(
-    config.dailyCron,
-    async () => {
-      logger.info('Daily batch fired', { cron: config.dailyCron, questions: schedules.length });
-      await runDailyBatch(bot);
-    },
-    { timezone: config.timezone },
-  );
   logger.info('Daily batch scheduled', {
     cron: config.dailyCron,
     questions: schedules.length,
     timezone: config.timezone,
   });
   return schedules.length;
+}
+
+/** Stop the scheduler (clean shutdown). Safe to call when never started. */
+export function stopScheduler(): void {
+  scheduler?.stop();
+  scheduler = null;
 }

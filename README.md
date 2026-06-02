@@ -33,15 +33,23 @@ timezone set by `TZ_NAME` (default UTC).
 
 ## Tech stack
 
-| Part     | Choice                                  |
-| -------- | --------------------------------------- |
-| Bot      | TypeScript, Grammy, node-cron, Node 20+ |
-| Storage  | none, no database                       |
-| Content  | TypeScript files in `src/content/`      |
-| Packager | pnpm                                    |
-| Tests    | Vitest, no network                      |
+| Part     | Choice                                     |
+| -------- | ------------------------------------------ |
+| Bot      | TypeScript, Grammy, node-cron v4, Node 20+ |
+| Kernel   | `telegram-broadcast-kit` (shared plumbing) |
+| Storage  | none, no database                          |
+| Content  | TypeScript files in `src/content/`         |
+| Packager | pnpm                                       |
+| Tests    | Vitest, no network                         |
 
 There is no database. All the questions live in source files. To add or change a question, you edit a file and redeploy.
+
+The shared plumbing (logger, `.env` loader, the cron `Scheduler`, the `/health`
+server, and the quiz-poll sender) comes from **`telegram-broadcast-kit`**, a
+small kernel shared across this family of channel bots. It is pinned by git tag
+in `package.json` and bumped automatically by Renovate (the only dependency
+Renovate proposes here). Everything fluent-owls-specific (the question banks,
+the daily batch, the level/topic formatting) stays in this repo.
 
 ## Quick start
 

@@ -1,28 +1,9 @@
 import { describe, expect, it } from 'vitest';
-import { dayOfYearIn, pickForDay } from '../src/lib/pick';
+import { pickForDay } from '../src/lib/pick';
 
-describe('dayOfYearIn', () => {
-  it('returns 1 for January 1 in UTC', () => {
-    expect(dayOfYearIn(new Date('2026-01-01T12:00:00Z'), 'UTC')).toBe(1);
-  });
-
-  it('returns 365 for December 31 in a non-leap year (UTC)', () => {
-    expect(dayOfYearIn(new Date('2026-12-31T12:00:00Z'), 'UTC')).toBe(365);
-  });
-
-  it('returns 366 for December 31 in a leap year (UTC)', () => {
-    expect(dayOfYearIn(new Date('2024-12-31T12:00:00Z'), 'UTC')).toBe(366);
-  });
-
-  it('respects the timezone, not the host TZ', () => {
-    // 2026-03-01 00:30 Africa/Cairo is still Feb 28 in UTC, but in Cairo it is
-    // day 60 of the year. The function must report the Cairo day.
-    const d = new Date('2026-02-28T22:30:00Z');
-    expect(dayOfYearIn(d, 'Africa/Cairo')).toBe(60);
-    expect(dayOfYearIn(d, 'UTC')).toBe(59);
-  });
-});
-
+// The timezone-aware day-of-year math (dayOfYearIn) is tested in
+// telegram-broadcast-kit now. These tests cover only the fluent-owls-specific
+// generic picker: same-day stability, cycling, and the empty-pool throw.
 describe('pickForDay', () => {
   it('picks the same item for the same day', () => {
     const pool = ['a', 'b', 'c', 'd'];

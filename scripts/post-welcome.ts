@@ -8,10 +8,10 @@
  * the position) intact while still letting you update the text.
  */
 import { Bot } from 'grammy';
+import { logger } from 'telegram-broadcast-kit';
 import { config } from '../src/config';
 import { welcomeHtml } from '../src/content/welcome';
 import { editChannelMessage, postPlainMessage } from '../src/lib/post';
-import { logger } from '../src/lib/logger';
 
 async function main(): Promise<void> {
   const bot = new Bot(config.botToken);
