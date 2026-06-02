@@ -3,10 +3,9 @@ import { logger } from 'telegram-broadcast-kit';
 import { config } from './config';
 import { findSlot, runOnce } from './scheduler';
 
-// Public profile texts the bot self-sets on start (About + Description only).
-// The command list stays manual by design — paste it into @BotFather. The name,
-// botpic, and other profile fields cannot be set via the Bot API either; those
-// stay in @BotFather too. Keep these in sync with docs/BOTFATHER.md.
+// Public profile texts the bot self-sets on start (commands + About +
+// Description). The name, botpic, and other profile fields cannot be set via the
+// Bot API; those stay in @BotFather.
 //
 // About is BotFather's "short description": ≤120 code points (115 here).
 export const botAbout =
@@ -75,11 +74,15 @@ export function buildBot(): Bot {
 }
 
 /**
- * Self-set the bot's public profile (About + Description) on the Bot API, so a
- * deploy is self-describing with no manual @BotFather step. Commands are NOT set
- * here by design — those stay pasted into @BotFather (see docs/BOTFATHER.md).
+ * Self-set the bot's public profile (commands + About + Description) on the Bot
+ * API, so a deploy is self-describing with no manual @BotFather step. Each
+ * command here must have a real handler in buildBot above.
  */
 export async function setBotProfile(bot: Bot): Promise<void> {
+  await bot.api.setMyCommands([
+    { command: 'start', description: 'What Fluent Owls is and how to join the channel' },
+    { command: 'about', description: 'About this open-source bot' },
+  ]);
   await bot.api.setMyShortDescription(botAbout);
   await bot.api.setMyDescription(botDescription);
 }
