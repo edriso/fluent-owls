@@ -57,7 +57,7 @@ You need a bot from `@BotFather` and a channel where the bot is an admin with th
 
 ## Picking is deterministic
 
-The bot picks today's question with `dayOfYearInTimezone(today, TZ) % poolSize` for each band. That means:
+The bot picks today's question with `dayOfYearIn(today, TZ) % poolSize` for each band. That means:
 
 - The same calendar day always picks the same question, even if the process restarts.
 - Each band advances independently across the year.

@@ -10,16 +10,16 @@ This bot is small and stateless. It runs anywhere Node 20 runs: Fly.io, Railway,
 
 ## Environment variables
 
-| Variable             | Required | Notes                                             |
-| -------------------- | -------- | ------------------------------------------------- |
-| `BOT_TOKEN`          | yes      | From `@BotFather`.                                |
-| `CHANNEL_CHAT_ID`    | yes      | Numeric `-100...` is best; `@channel` also works. |
-| `CHANNEL_PUBLIC_URL` | no       | Public link shown by `/start` in DMs.             |
-| `ADMIN_TELEGRAM_ID`  | no       | Unlocks the `/admin_*` slot commands in DMs.      |
-| `TZ_NAME`            | no       | Cron timezone. Default UTC.                       |
+| Variable             | Required | Notes                                              |
+| -------------------- | -------- | -------------------------------------------------- |
+| `BOT_TOKEN`          | yes      | From `@BotFather`.                                 |
+| `CHANNEL_CHAT_ID`    | yes      | Numeric `-100...` is best; `@channel` also works.  |
+| `CHANNEL_PUBLIC_URL` | no       | Public link shown by `/start` in DMs.              |
+| `ADMIN_TELEGRAM_ID`  | no       | Unlocks the `/admin_*` slot commands in DMs.       |
+| `TZ_NAME`            | no       | Cron timezone. Default UTC.                        |
 | `DAILY_CRON`         | no       | When the daily batch posts (default `0 14 * * *`). |
-| `PORT`               | no       | `/health` server port. Default 8080.              |
-| `NODE_ENV`           | no       | `production` for hosted.                          |
+| `PORT`               | no       | `/health` server port. Default 8080.               |
+| `NODE_ENV`           | no       | `production` for hosted.                           |
 
 The `.env` file is optional. If you set the variables in your host dashboard, you do not need a file at all.
 
@@ -100,14 +100,14 @@ Logs go to stdout. There is nothing to mount.
 ## Verifying it works
 
 1. Check `/health` returns 200 with `{"ok":true,"schedules":3,...}`.
-2. Tail the logs for `Schedule registered` lines at startup.
+2. Tail the logs for a `Daily batch scheduled` line at startup.
 3. Send `/start` to the bot in a DM; you should get a reply pointing at the channel.
 4. Run `pnpm send-test morning` to verify a channel post end to end.
 5. Wait for a cron to fire. The first real fire is the final test.
 
 ## When something breaks
 
-- **No post arrived.** Check the logs for `Schedule fired` then `Failed to post quiz poll`. The usual cause is the bot is not a channel admin or "Post messages" is off.
+- **No post arrived.** Check the logs for `Daily batch fired` then `Failed to post quiz poll`. The usual cause is the bot is not a channel admin or "Post messages" is off.
 - **403 from Telegram.** Same answer: admin rights.
 - **400 on sendPoll.** An option over 100 chars or a bad option count. Run `pnpm audit-questions`.
 

@@ -52,7 +52,7 @@ Both audit and test must pass before deploying.
 
 ## Picking is by day of year
 
-The bot uses `dayOfYearInTimezone(today, TZ) % pool.length` per band. So:
+The bot uses `dayOfYearIn(today, TZ) % pool.length` per band. So:
 
 - Adding a question shifts the cycle by one for every later day. That is fine for a daily channel; readers will not notice.
 - Do not try to pin a question to a specific date. Keep the banks flat and let the rotation do its job.

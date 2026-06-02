@@ -55,7 +55,7 @@ fluent-owls/
 - **CEFR levels, not easy/hard.** Learners recognize A1 to C2, and it lets the channel target a band per slot. The `Level` union and the `LEVELS` array in `src/types.ts` are the single source of truth.
 - **Contextual fill-in-the-blank.** Every question is a sentence with a `____` blank. The surrounding context teaches usage, which plain word lists cannot. This shape also scales across all seven topics.
 - **One poll per question.** Unlike SQL Ninjas (which needs a separate context message because SQL is long), English answer words are short, so the sentence is the poll question and the words are the options. Simpler, one post, no scrolling.
-- **No database, no state file.** Each band picks its question deterministically from `dayOfYearInTimezone(date, TZ) % pool.length`. The same calendar day always returns the same question, so a restart cannot re-pick. Add questions to lengthen the cycle.
+- **No database, no state file.** Each band picks its question deterministically from `dayOfYearIn(date, TZ) % pool.length`. The same calendar day always returns the same question, so a restart cannot re-pick. Add questions to lengthen the cycle.
 - **Quiz polls, anonymous.** Quiz polls reveal the answer and explanation on vote (the learn-by-doing loop). Anonymous means nothing to track and no privacy footprint.
 - **Authors write plain questions; the registry tags the level.** `src/content/index.ts` attaches each file's level, so authors never repeat it.
 - **`.env` is optional.** `src/config.ts` tries `import('dotenv')` and skips silently if absent. Required values still throw if missing.
@@ -74,16 +74,16 @@ To change WHEN the batch posts, set `DAILY_CRON`. To change WHICH levels a slot 
 
 ## Environment variables
 
-| Variable             | Required | Notes                                             |
-| -------------------- | -------- | ------------------------------------------------- |
-| `BOT_TOKEN`          | yes      | From `@BotFather`.                                |
-| `CHANNEL_CHAT_ID`    | yes      | Numeric `-100...` is best; `@channel` also works. |
-| `CHANNEL_PUBLIC_URL` | no       | Public link shown by `/start` in DMs.             |
-| `ADMIN_TELEGRAM_ID`  | no       | Unlocks the `/admin_*` slot commands in DMs.      |
-| `TZ_NAME`            | no       | Cron timezone. Default UTC.                       |
+| Variable             | Required | Notes                                              |
+| -------------------- | -------- | -------------------------------------------------- |
+| `BOT_TOKEN`          | yes      | From `@BotFather`.                                 |
+| `CHANNEL_CHAT_ID`    | yes      | Numeric `-100...` is best; `@channel` also works.  |
+| `CHANNEL_PUBLIC_URL` | no       | Public link shown by `/start` in DMs.              |
+| `ADMIN_TELEGRAM_ID`  | no       | Unlocks the `/admin_*` slot commands in DMs.       |
+| `TZ_NAME`            | no       | Cron timezone. Default UTC.                        |
 | `DAILY_CRON`         | no       | When the daily batch posts (default `0 14 * * *`). |
-| `PORT`               | no       | `/health` server port. Default 8080.              |
-| `NODE_ENV`           | no       | `production` for hosted.                          |
+| `PORT`               | no       | `/health` server port. Default 8080.               |
+| `NODE_ENV`           | no       | `production` for hosted.                           |
 
 ## Channel admin rights
 
