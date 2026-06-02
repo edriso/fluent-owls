@@ -1,5 +1,5 @@
 import { startHealthServer, logger } from 'telegram-broadcast-kit';
-import { buildBot } from './bot';
+import { buildBot, setBotProfile } from './bot';
 import { startScheduler, stopScheduler } from './scheduler';
 import { config } from './config';
 
@@ -9,6 +9,11 @@ async function main(): Promise<void> {
   const scheduleCount = startScheduler(bot);
   // The kernel's health server reads PORT from the env itself and binds /health.
   startHealthServer();
+
+  // Self-set About + Description on the Bot API. This must run BEFORE bot.start,
+  // which does not resolve while long-polling — anything after the awaited start
+  // would never run. (Commands stay manual in @BotFather by design.)
+  await setBotProfile(bot);
 
   logger.info('Starting bot', {
     timezone: config.timezone,
