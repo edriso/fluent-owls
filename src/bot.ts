@@ -3,6 +3,24 @@ import { logger } from 'telegram-broadcast-kit';
 import { config } from './config';
 import { findSlot, runOnce } from './scheduler';
 
+// Public profile texts the bot self-sets on start (About + Description only).
+// The command list stays manual by design — paste it into @BotFather. The name,
+// botpic, and other profile fields cannot be set via the Bot API either; those
+// stay in @BotFather too. Keep these in sync with docs/BOTFATHER.md.
+//
+// About is BotFather's "short description": ≤120 code points (115 here).
+export const botAbout =
+  'Daily English quizzes 🦉 Three a day, beginner to advanced, each with an explanation. Tap Start to join the channel.';
+
+// Description: BotFather's "description", ≤512 code points (≈472 here). Shown on
+// the empty-chat start screen before the user presses Start.
+export const botDescription = [
+  '🦉 Hi! Fluent Owls posts three short English quizzes to its Telegram channel every afternoon: a beginner warm-up, an intermediate question, and an advanced challenge.',
+  'Each is a quick fill-in-the-blank sentence. Tap the word that fits, then Telegram reveals the correct answer and a short explanation right after you vote.',
+  'Vocabulary, collocations, idioms, grammar, and more, organized by CEFR level (A1 to C2). No signup, nothing to install.',
+  'Tap Start for the channel link.',
+].join('\n');
+
 /**
  * Build and configure the Grammy bot. The bot exists mainly to drive scheduled
  * channel posts. The DM surface is intentionally minimal: a /start that points
@@ -54,6 +72,16 @@ export function buildBot(): Bot {
   });
 
   return bot;
+}
+
+/**
+ * Self-set the bot's public profile (About + Description) on the Bot API, so a
+ * deploy is self-describing with no manual @BotFather step. Commands are NOT set
+ * here by design — those stay pasted into @BotFather (see docs/BOTFATHER.md).
+ */
+export async function setBotProfile(bot: Bot): Promise<void> {
+  await bot.api.setMyShortDescription(botAbout);
+  await bot.api.setMyDescription(botDescription);
 }
 
 function isAdmin(id: number | undefined): boolean {

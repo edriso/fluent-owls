@@ -3,9 +3,11 @@
 Ready-to-paste text for the Fluent Owls bot in @BotFather (the `/mybots` ->
 Edit Bot menu). The public texts are English. Copy each block as-is.
 
-Note: this bot does NOT set its command list automatically, so paste the
-Commands block below into BotFather to get the menu. (For contrast, the
-ayah bot self-registers its commands on start; Fluent Owls does not.)
+Note: the bot self-sets its About + Description on start (via the Bot API), so
+those two are kept in sync from the code (see `botAbout` / `botDescription` in
+`src/bot.ts`). The command list is still pasted by hand — this bot does NOT set
+its commands automatically, so paste the Commands block below into BotFather to
+get the menu.
 
 - Bot channel: **@fluent_owls**
 
@@ -19,7 +21,7 @@ Fluent Owls
 
 (BotFather "Edit About", max ~120 characters. Shown on the bot's profile.)
 
-Daily English quizzes 🦉 Three a day, beginner to advanced, each with an instant explanation. Tap Start to join the channel.
+Daily English quizzes 🦉 Three a day, beginner to advanced, each with an explanation. Tap Start to join the channel.
 
 ## Description
 
