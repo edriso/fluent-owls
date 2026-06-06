@@ -37,6 +37,11 @@ export async function postQuizPoll(
       correctOptionId: question.correctIndex,
       explanation: clampExplanation(question.explanation),
       isAnonymous: true,
+      // Our content is English. Without this the kernel's RTL-by-default bidi
+      // isolate (its Arabic origin) mirrors the poll for the reader, flipping a
+      // leading emoji/number to the wrong side. 'ltr' pins it. Needs kit
+      // v0.2.2+.
+      direction: 'ltr',
     },
     {
       name: question.id,

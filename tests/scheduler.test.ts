@@ -50,6 +50,18 @@ describe('runOnce', () => {
     await runOnce(findSlot('morning')!, bot);
     expect(sent[0]?.silent).toBe(true);
   });
+
+  it('pins the poll left-to-right so English text never mirrors on RTL clients', () => {
+    // postQuizPoll passes direction:'ltr', so the kernel wraps the question in
+    // a Unicode LTR isolate (U+2066 ... U+2069). Guard the first/last marks so
+    // a regression to the kernel's RTL default is caught here.
+    const { bot, sent } = fakeBot();
+    return runOnce(findSlot('evening')!, bot).then(() => {
+      const q = sent[0]!.question;
+      expect(q.codePointAt(0)).toBe(0x2066);
+      expect(q.codePointAt(q.length - 1)).toBe(0x2069);
+    });
+  });
 });
 
 describe('runDailyBatch', () => {
