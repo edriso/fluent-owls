@@ -19,15 +19,30 @@ describe('buildPrompt', () => {
     expect(out).toContain('Collocations');
     expect(out).toContain(sample.prompt);
   });
+
+  it('renders the badge and label for a different level and topic', () => {
+    const out = buildPrompt({ ...sample, id: 'c2-001', level: 'c2', topic: 'idioms' });
+    expect(out).toContain('C2');
+    expect(out).toContain('Idioms');
+  });
 });
 
 describe('toPollOptions', () => {
-  it('maps strings to Telegram option objects', () => {
-    expect(toPollOptions(['a', 'b'])).toEqual([{ text: 'a' }, { text: 'b' }]);
+  it('maps strings to Telegram option objects, preserving order', () => {
+    expect(toPollOptions(['a', 'b', 'c', 'd'])).toEqual([
+      { text: 'a' },
+      { text: 'b' },
+      { text: 'c' },
+      { text: 'd' },
+    ]);
   });
 
   it('throws when there are too few options', () => {
     expect(() => toPollOptions(['only-one'])).toThrowError();
+  });
+
+  it('throws when there are too many options (Telegram caps at 10)', () => {
+    expect(() => toPollOptions(Array.from({ length: 11 }, (_, i) => `option ${i}`))).toThrowError();
   });
 
   it('throws when an option is too long', () => {
@@ -41,14 +56,20 @@ describe('clampExplanation', () => {
     expect(clampExplanation('   ')).toBeUndefined();
   });
 
-  it('keeps short explanations intact', () => {
+  it('keeps short explanations intact and trims surrounding whitespace', () => {
     expect(clampExplanation('short')).toBe('short');
+    expect(clampExplanation('  trimmed  ')).toBe('trimmed');
   });
 
-  it('clamps over-long explanations with an ellipsis', () => {
+  it('keeps an explanation that is exactly at the limit intact (no ellipsis)', () => {
+    const exact = 'y'.repeat(200);
+    expect(clampExplanation(exact)).toBe(exact);
+  });
+
+  it('clamps over-long explanations to the limit with an ellipsis', () => {
     const out = clampExplanation('x'.repeat(250));
     expect(out).toBeDefined();
-    expect(out!.length).toBeLessThanOrEqual(200);
+    expect(out!.length).toBe(200);
     expect(out!.endsWith('…')).toBe(true);
   });
 });
