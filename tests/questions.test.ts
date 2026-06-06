@@ -105,4 +105,18 @@ describe('content coverage', () => {
       expect(positions.size, level).toBeGreaterThanOrEqual(3);
     }
   });
+
+  it('does not bunch the correct answer in one position (<= 45% per level)', () => {
+    // Beyond "at least 3 positions", guard against a single position
+    // dominating, so a reader cannot do well by always guessing the same
+    // letter. Mirrors the NumNinjas spread guard.
+    for (const level of LEVELS) {
+      const pool = poolForLevels([level]);
+      const counts = [0, 0, 0, 0];
+      for (const q of pool) counts[q.correctIndex] = (counts[q.correctIndex] ?? 0) + 1;
+      expect(Math.max(...counts) / pool.length, `${level} ${counts.join('/')}`).toBeLessThanOrEqual(
+        0.45,
+      );
+    }
+  });
 });
