@@ -110,7 +110,8 @@ No test needs a real bot token; `vitest.config.ts` injects placeholders.
 
 - **Channel admin rights**: the bot must be a channel admin with "Post messages" on, or `sendPoll` returns 403.
 - **Numeric chat id is safest**: `-1001234567890` survives a username change; `@channel` does not.
-- **Quiz polls go through the kernel's `sendPoll`**: pass `type: 'quiz'`, `correctOptionId` (0-based) and a clamped `explanation`. The kernel validates the quiz config and throws on a bad index / over-long explanation (a programming bug, surfaced loudly), and logs + returns null on a network failure. See `src/lib/post.ts`.
+- **Quiz polls go through the kernel's `sendPoll`**: pass `type: 'quiz'`, `correctOptionId` (0-based), a clamped `explanation`, and `direction: 'ltr'`. The kernel validates the quiz config and throws on a bad index / over-long explanation (a programming bug, surfaced loudly), and logs + returns null on a network failure. See `src/lib/post.ts`.
+- **Poll text is pinned left-to-right**: the kernel wraps a poll's plain-text question and options in a bidi isolate, defaulting to RTL (its Arabic origin). Our content is English, so `postQuizPoll` passes `direction: 'ltr'` (kit v0.2.2+); without it the poll mirrors for the reader (a leading emoji/number flips to the wrong side). A scheduler test guards that the posted question starts with the LTR isolate mark.
 - **Polls are always anonymous**: by design. Nobody can see who voted, including the bot.
 
 ## Style and Git
