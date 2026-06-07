@@ -360,4 +360,92 @@ export const c1Dialogues: Dialogue[] = [
     note: `"Are we all comfortable with this?" tests for agreement.`,
     audio: 'c1-dl-032.ogg',
   },
+  {
+    id: 'c1-dl-033',
+    situation: 'Strategic disagreement',
+    turns: [
+      { speaker: 'A', text: "I think we're solving the wrong problem." },
+      { speaker: 'B', text: "Go on, what's the real one?" },
+      { speaker: 'A', text: 'Retention, not new sign-ups.' },
+    ],
+    note: `"X, not Y" sharpens what the real issue is.`,
+    audio: 'c1-dl-033.ogg',
+  },
+  {
+    id: 'c1-dl-034',
+    situation: 'Coaching a decision',
+    turns: [
+      { speaker: 'A', text: "I can't decide between the two offers." },
+      { speaker: 'B', text: 'Which one scares you in a good way?' },
+      { speaker: 'A', text: 'The second, honestly.' },
+    ],
+    note: `A good coaching question reframes the whole choice.`,
+    audio: 'c1-dl-034.ogg',
+  },
+  {
+    id: 'c1-dl-035',
+    situation: 'Managing expectations',
+    turns: [
+      { speaker: 'A', text: 'Can you guarantee it by Friday?' },
+      { speaker: 'B', text: 'I can guarantee my best effort, not the date.' },
+      { speaker: 'A', text: "That's fair enough." },
+    ],
+    note: `Promise effort, not an outcome you cannot control.`,
+    audio: 'c1-dl-035.ogg',
+  },
+  {
+    id: 'c1-dl-036',
+    situation: 'Declining extra work',
+    turns: [
+      { speaker: 'A', text: 'Could you take this on as well?' },
+      { speaker: 'B', text: "I'd rather do one thing well than two poorly." },
+      { speaker: 'A', text: "Understood, I'll find someone." },
+    ],
+    note: `"one thing well than two poorly" declines with a reason.`,
+    audio: 'c1-dl-036.ogg',
+  },
+  {
+    id: 'c1-dl-037',
+    situation: 'Clearing up a misunderstanding',
+    turns: [
+      { speaker: 'A', text: 'I felt you dismissed my idea.' },
+      { speaker: 'B', text: "That wasn't my intention at all." },
+      { speaker: 'A', text: "Thanks, I'm glad we cleared that up." },
+    ],
+    note: `Name the feeling, hear the intention, then move on.`,
+    audio: 'c1-dl-037.ogg',
+  },
+  {
+    id: 'c1-dl-038',
+    situation: 'Weighing a risk',
+    turns: [
+      { speaker: 'A', text: "It's a bold move, isn't it?" },
+      { speaker: 'B', text: 'Bold, but the downside is small.' },
+      { speaker: 'A', text: 'Then the math is on our side.' },
+    ],
+    note: `Weigh upside against "the downside is small".`,
+    audio: 'c1-dl-038.ogg',
+  },
+  {
+    id: 'c1-dl-039',
+    situation: 'Encouraging ownership',
+    turns: [
+      { speaker: 'A', text: 'Should I check with you first?' },
+      { speaker: 'B', text: 'No, make the call; I trust your judgment.' },
+      { speaker: 'A', text: "Okay, I'll own it." },
+    ],
+    note: `"make the call" hands someone real responsibility.`,
+    audio: 'c1-dl-039.ogg',
+  },
+  {
+    id: 'c1-dl-040',
+    situation: 'Closing a discussion',
+    turns: [
+      { speaker: 'A', text: "I think we've talked it to death." },
+      { speaker: 'B', text: "Agreed, let's decide and move." },
+      { speaker: 'A', text: 'Done. We go with option B.' },
+    ],
+    note: `"talked it to death" signals it is time to decide.`,
+    audio: 'c1-dl-040.ogg',
+  },
 ];

@@ -359,4 +359,92 @@ export const b2Dialogues: Dialogue[] = [
     note: `"That's disappointing, but ..." keeps a setback in perspective.`,
     audio: 'b2-dl-032.ogg',
   },
+  {
+    id: 'b2-dl-033',
+    situation: 'Brainstorming',
+    turns: [
+      { speaker: 'A', text: 'We need a fresh angle.' },
+      { speaker: 'B', text: 'What if we asked the customers directly?' },
+      { speaker: 'A', text: 'Now that could work.' },
+    ],
+    note: `"What if we ...?" floats an idea without committing.`,
+    audio: 'b2-dl-033.ogg',
+  },
+  {
+    id: 'b2-dl-034',
+    situation: 'Handling pushback',
+    turns: [
+      { speaker: 'A', text: "The team isn't convinced." },
+      { speaker: 'B', text: "Then let's show them the numbers." },
+      { speaker: 'A', text: 'Good call, data wins arguments.' },
+    ],
+    note: `"Let's show them the numbers" answers doubt with evidence.`,
+    audio: 'b2-dl-034.ogg',
+  },
+  {
+    id: 'b2-dl-035',
+    situation: 'Negotiating a price',
+    turns: [
+      { speaker: 'A', text: 'Is there any flexibility on price?' },
+      { speaker: 'B', text: 'A little, if you order in bulk.' },
+      { speaker: 'A', text: "Let's talk volumes then." },
+    ],
+    note: `"Is there any flexibility?" opens a negotiation politely.`,
+    audio: 'b2-dl-035.ogg',
+  },
+  {
+    id: 'b2-dl-036',
+    situation: 'Giving constructive feedback',
+    turns: [
+      { speaker: 'A', text: 'The pitch ran a bit long.' },
+      { speaker: 'B', text: "Fair, I'll cut the middle section." },
+      { speaker: 'A', text: "Perfect, that'll sharpen it." },
+    ],
+    note: `Soften feedback with "a bit" and offer a clear fix.`,
+    audio: 'b2-dl-036.ogg',
+  },
+  {
+    id: 'b2-dl-037',
+    situation: 'Resolving a scheduling clash',
+    turns: [
+      { speaker: 'A', text: 'Both meetings clash on Tuesday.' },
+      { speaker: 'B', text: "I'll move mine to the morning." },
+      { speaker: 'A', text: 'Great, crisis averted.' },
+    ],
+    note: `"crisis averted" lightly marks a problem solved.`,
+    audio: 'b2-dl-037.ogg',
+  },
+  {
+    id: 'b2-dl-038',
+    situation: 'Talking about work-life balance',
+    turns: [
+      { speaker: 'A', text: "You've been working late a lot." },
+      { speaker: 'B', text: 'I know, I need to set limits.' },
+      { speaker: 'A', text: 'Start with leaving on time today.' },
+    ],
+    note: `Offer a concrete first step, not just sympathy.`,
+    audio: 'b2-dl-038.ogg',
+  },
+  {
+    id: 'b2-dl-039',
+    situation: 'Owning a mistake',
+    turns: [
+      { speaker: 'A', text: 'I think I sent the wrong file.' },
+      { speaker: 'B', text: 'It happens, just resend it.' },
+      { speaker: 'A', text: 'Done, and apologies for that.' },
+    ],
+    note: `Own it briefly: "apologies for that", then move on.`,
+    audio: 'b2-dl-039.ogg',
+  },
+  {
+    id: 'b2-dl-040',
+    situation: 'Making a recommendation',
+    turns: [
+      { speaker: 'A', text: 'Which tool should we use?' },
+      { speaker: 'B', text: 'The cheaper one does everything we need.' },
+      { speaker: 'A', text: "Then let's not overpay." },
+    ],
+    note: `Justify a choice with "does everything we need".`,
+    audio: 'b2-dl-040.ogg',
+  },
 ];

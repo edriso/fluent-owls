@@ -360,4 +360,92 @@ export const a2Dialogues: Dialogue[] = [
     note: `Take a compliment with "Oh, thanks!" then add a detail.`,
     audio: 'a2-dl-032.ogg',
   },
+  {
+    id: 'a2-dl-033',
+    situation: 'Asking about a price',
+    turns: [
+      { speaker: 'A', text: 'How much is the large one?' },
+      { speaker: 'B', text: "It's fifteen dollars." },
+      { speaker: 'A', text: "I'll take the small one then." },
+    ],
+    note: `Compare options out loud: "I'll take the small one then."`,
+    audio: 'a2-dl-033.ogg',
+  },
+  {
+    id: 'a2-dl-034',
+    situation: 'A small complaint',
+    turns: [
+      { speaker: 'A', text: 'This soup is cold.' },
+      { speaker: 'B', text: "I'm so sorry, I'll change it." },
+      { speaker: 'A', text: 'Thank you.' },
+    ],
+    note: `State the problem simply; a good reply is "I'll change it."`,
+    audio: 'a2-dl-034.ogg',
+  },
+  {
+    id: 'a2-dl-035',
+    situation: 'At the gym',
+    turns: [
+      { speaker: 'A', text: 'Is this machine free?' },
+      { speaker: 'B', text: 'Yes, go ahead.' },
+      { speaker: 'A', text: 'Thanks!' },
+    ],
+    note: `"Is this ... free?" Answer "Yes, go ahead."`,
+    audio: 'a2-dl-035.ogg',
+  },
+  {
+    id: 'a2-dl-036',
+    situation: 'Making weekend plans',
+    turns: [
+      { speaker: 'A', text: 'Any plans for Saturday?' },
+      { speaker: 'B', text: 'Not yet. You?' },
+      { speaker: 'A', text: "Let's do something together." },
+    ],
+    note: `Bounce it back with "You?" then suggest a plan.`,
+    audio: 'a2-dl-036.ogg',
+  },
+  {
+    id: 'a2-dl-037',
+    situation: 'Asking for a recommendation',
+    turns: [
+      { speaker: 'A', text: "What's good here?" },
+      { speaker: 'B', text: 'The pasta is amazing.' },
+      { speaker: 'A', text: "I'll try that." },
+    ],
+    note: `"What's good here?" asks for a recommendation.`,
+    audio: 'a2-dl-037.ogg',
+  },
+  {
+    id: 'a2-dl-038',
+    situation: 'At the train station',
+    turns: [
+      { speaker: 'A', text: 'Which platform for the city?' },
+      { speaker: 'B', text: 'Platform three, I think.' },
+      { speaker: 'A', text: "Thanks, I'll hurry." },
+    ],
+    note: `"Which platform for ...?" asks where to go.`,
+    audio: 'a2-dl-038.ogg',
+  },
+  {
+    id: 'a2-dl-039',
+    situation: 'Catching up briefly',
+    turns: [
+      { speaker: 'A', text: "How's the new job?" },
+      { speaker: 'B', text: 'Busy, but I like it.' },
+      { speaker: 'A', text: "That's great to hear." },
+    ],
+    note: `"That's great to hear." is a warm, easy reply.`,
+    audio: 'a2-dl-039.ogg',
+  },
+  {
+    id: 'a2-dl-040',
+    situation: 'Asking a favor',
+    turns: [
+      { speaker: 'A', text: 'Could you water my plants?' },
+      { speaker: 'B', text: 'Of course, no problem.' },
+      { speaker: 'A', text: "You're a lifesaver." },
+    ],
+    note: `"You're a lifesaver." warmly thanks someone for help.`,
+    audio: 'a2-dl-040.ogg',
+  },
 ];

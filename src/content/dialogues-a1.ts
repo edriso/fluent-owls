@@ -360,4 +360,92 @@ export const a1Dialogues: Dialogue[] = [
     note: `Apologize with "I am sorry", then "that was my fault."`,
     audio: 'a1-dl-032.ogg',
   },
+  {
+    id: 'a1-dl-033',
+    situation: 'At the bakery',
+    turns: [
+      { speaker: 'A', text: 'Two breads, please.' },
+      { speaker: 'B', text: 'Anything else?' },
+      { speaker: 'A', text: "No, that's all." },
+    ],
+    note: `"Anything else?" Answer "No, that's all." to finish.`,
+    audio: 'a1-dl-033.ogg',
+  },
+  {
+    id: 'a1-dl-034',
+    situation: 'Talking about a child',
+    turns: [
+      { speaker: 'A', text: 'How old is your son?' },
+      { speaker: 'B', text: 'He is five.' },
+      { speaker: 'A', text: "He's so cute!" },
+    ],
+    note: `"How old is ...?" asks about age. Answer "He is ..."`,
+    audio: 'a1-dl-034.ogg',
+  },
+  {
+    id: 'a1-dl-035',
+    situation: 'Talking about the weather',
+    turns: [
+      { speaker: 'A', text: "It's very cold today." },
+      { speaker: 'B', text: 'Yes, take a warm coat.' },
+      { speaker: 'A', text: 'Good idea.' },
+    ],
+    note: `Small talk: comment on the weather, then give advice.`,
+    audio: 'a1-dl-035.ogg',
+  },
+  {
+    id: 'a1-dl-036',
+    situation: 'At the bus stop',
+    turns: [
+      { speaker: 'A', text: 'Does this bus go downtown?' },
+      { speaker: 'B', text: 'Yes, it does.' },
+      { speaker: 'A', text: 'Thank you!' },
+    ],
+    note: `"Does this bus go ...?" Answer "Yes, it does."`,
+    audio: 'a1-dl-036.ogg',
+  },
+  {
+    id: 'a1-dl-037',
+    situation: 'Borrowing something',
+    turns: [
+      { speaker: 'A', text: 'Can I borrow a pen?' },
+      { speaker: 'B', text: 'Sure, here you are.' },
+      { speaker: 'A', text: 'Thanks a lot.' },
+    ],
+    note: `"Can I borrow ...?" Answer "Sure, here you are."`,
+    audio: 'a1-dl-037.ogg',
+  },
+  {
+    id: 'a1-dl-038',
+    situation: 'A short phone call',
+    turns: [
+      { speaker: 'A', text: 'Hi, is Tom there?' },
+      { speaker: 'B', text: "Sorry, he's not home." },
+      { speaker: 'A', text: "Okay, I'll call later." },
+    ],
+    note: `On the phone: "Is ... there?" and "I'll call later."`,
+    audio: 'a1-dl-038.ogg',
+  },
+  {
+    id: 'a1-dl-039',
+    situation: 'Not feeling well',
+    turns: [
+      { speaker: 'A', text: 'I have a cold.' },
+      { speaker: 'B', text: 'Drink water and rest.' },
+      { speaker: 'A', text: 'Okay, thank you.' },
+    ],
+    note: `Say the problem, then take simple advice.`,
+    audio: 'a1-dl-039.ogg',
+  },
+  {
+    id: 'a1-dl-040',
+    situation: 'Saying goodnight',
+    turns: [
+      { speaker: 'A', text: "I'm tired. Goodnight." },
+      { speaker: 'B', text: 'Goodnight, sleep well.' },
+      { speaker: 'A', text: 'You too.' },
+    ],
+    note: `"Sleep well." and "You too." end the day warmly.`,
+    audio: 'a1-dl-040.ogg',
+  },
 ];

@@ -360,4 +360,92 @@ export const c2Dialogues: Dialogue[] = [
     note: `"pending the paperwork" means agreed, subject to formalities.`,
     audio: 'c2-dl-032.ogg',
   },
+  {
+    id: 'c2-dl-033',
+    situation: 'A delicate negotiation',
+    turns: [
+      { speaker: 'A', text: "We're close, but not quite there." },
+      { speaker: 'B', text: 'What would close the gap for you?' },
+      { speaker: 'A', text: 'A longer guarantee, frankly.' },
+    ],
+    note: `"What would close the gap?" moves a deal forward.`,
+    audio: 'c2-dl-033.ogg',
+  },
+  {
+    id: 'c2-dl-034',
+    situation: 'Reading between the lines',
+    turns: [
+      { speaker: 'A', text: "They said they'd consider it." },
+      { speaker: 'B', text: 'Which usually means no.' },
+      { speaker: 'A', text: "Then let's not hold our breath." },
+    ],
+    note: `"not hold our breath" means do not expect it to happen.`,
+    audio: 'c2-dl-034.ogg',
+  },
+  {
+    id: 'c2-dl-035',
+    situation: 'Asking for honest feedback',
+    turns: [
+      { speaker: 'A', text: 'Be honest, did it land?' },
+      { speaker: 'B', text: 'The idea did; the delivery undercut it.' },
+      { speaker: 'A', text: "That's exactly what I needed to hear." },
+    ],
+    note: `"The idea did; the delivery undercut it." separates the two.`,
+    audio: 'c2-dl-035.ogg',
+  },
+  {
+    id: 'c2-dl-036',
+    situation: 'Holding a principle',
+    turns: [
+      { speaker: 'A', text: 'Can we bend the rule just once?' },
+      { speaker: 'B', text: "Once becomes a habit; I'd rather not." },
+      { speaker: 'A', text: "Fair. Let's find another way." },
+    ],
+    note: `"Once becomes a habit" defends a principle gently.`,
+    audio: 'c2-dl-036.ogg',
+  },
+  {
+    id: 'c2-dl-037',
+    situation: 'Defusing tension',
+    turns: [
+      { speaker: 'A', text: 'This is getting heated.' },
+      { speaker: 'B', text: "Let's take five and come back clearer." },
+      { speaker: 'A', text: 'Wise. Tempers help no one.' },
+    ],
+    note: `"take five" suggests a short break to cool down.`,
+    audio: 'c2-dl-037.ogg',
+  },
+  {
+    id: 'c2-dl-038',
+    situation: 'Acknowledging nuance',
+    turns: [
+      { speaker: 'A', text: 'So is it a good idea or not?' },
+      { speaker: 'B', text: 'Both, depending on the timing.' },
+      { speaker: 'A', text: 'Then timing is the real question.' },
+    ],
+    note: `"Both, depending on ..." resists a false either/or.`,
+    audio: 'c2-dl-038.ogg',
+  },
+  {
+    id: 'c2-dl-039',
+    situation: 'A graceful concession',
+    turns: [
+      { speaker: 'A', text: 'You were right and I was wrong.' },
+      { speaker: 'B', text: 'We were each half right, really.' },
+      { speaker: 'A', text: 'Generous of you to say.' },
+    ],
+    note: `"each half right" softens winning or losing an argument.`,
+    audio: 'c2-dl-039.ogg',
+  },
+  {
+    id: 'c2-dl-040',
+    situation: 'Sealing an agreement',
+    turns: [
+      { speaker: 'A', text: 'Shall we shake on it?' },
+      { speaker: 'B', text: "Gladly. It's been a fair deal." },
+      { speaker: 'A', text: 'To a good partnership, then.' },
+    ],
+    note: `"shake on it" means agree informally but firmly.`,
+    audio: 'c2-dl-040.ogg',
+  },
 ];

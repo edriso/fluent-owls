@@ -359,4 +359,92 @@ export const b1Dialogues: Dialogue[] = [
     note: `"let me sort that out" offers to fix a problem.`,
     audio: 'b1-dl-032.ogg',
   },
+  {
+    id: 'b1-dl-033',
+    situation: 'Asking a colleague for help',
+    turns: [
+      { speaker: 'A', text: 'Have you got a minute?' },
+      { speaker: 'B', text: "Sure, what's up?" },
+      { speaker: 'A', text: "I'm stuck on this report." },
+    ],
+    note: `"Have you got a minute?" politely asks for time.`,
+    audio: 'b1-dl-033.ogg',
+  },
+  {
+    id: 'b1-dl-034',
+    situation: 'Planning a hike',
+    turns: [
+      { speaker: 'A', text: 'Fancy a hike on Sunday?' },
+      { speaker: 'B', text: 'Sounds good. What time?' },
+      { speaker: 'A', text: "Let's say nine." },
+    ],
+    note: `"Fancy a ...?" is an informal way to invite someone.`,
+    audio: 'b1-dl-034.ogg',
+  },
+  {
+    id: 'b1-dl-035',
+    situation: 'Dealing with a delay',
+    turns: [
+      { speaker: 'A', text: "The train's running late again." },
+      { speaker: 'B', text: "Typical. We'll just wait." },
+      { speaker: 'A', text: "At least it's not raining." },
+    ],
+    note: `"At least ..." finds a small positive in a bad moment.`,
+    audio: 'b1-dl-035.ogg',
+  },
+  {
+    id: 'b1-dl-036',
+    situation: 'Giving directions',
+    turns: [
+      { speaker: 'A', text: 'How do I get to the museum?' },
+      { speaker: 'B', text: "Take the second left, it's right there." },
+      { speaker: 'A', text: 'Brilliant, thanks.' },
+    ],
+    note: `"Take the second left" gives a clear direction.`,
+    audio: 'b1-dl-036.ogg',
+  },
+  {
+    id: 'b1-dl-037',
+    situation: 'Talking about a film',
+    turns: [
+      { speaker: 'A', text: 'Have you seen that new film?' },
+      { speaker: 'B', text: 'Not yet, is it any good?' },
+      { speaker: 'A', text: "Honestly, it's worth it." },
+    ],
+    note: `"is it any good?" asks for an opinion.`,
+    audio: 'b1-dl-037.ogg',
+  },
+  {
+    id: 'b1-dl-038',
+    situation: 'Returning a favor',
+    turns: [
+      { speaker: 'A', text: 'Thanks again for last week.' },
+      { speaker: 'B', text: "Don't mention it." },
+      { speaker: 'A', text: 'Let me buy you lunch sometime.' },
+    ],
+    note: `"Don't mention it." is a modest reply to thanks.`,
+    audio: 'b1-dl-038.ogg',
+  },
+  {
+    id: 'b1-dl-039',
+    situation: 'Talking about a habit',
+    turns: [
+      { speaker: 'A', text: "I'm trying to drink less coffee." },
+      { speaker: 'B', text: "How's that going?" },
+      { speaker: 'A', text: 'Hard, but I feel better.' },
+    ],
+    note: `"How's that going?" shows interest in someone's effort.`,
+    audio: 'b1-dl-039.ogg',
+  },
+  {
+    id: 'b1-dl-040',
+    situation: 'Planning a budget',
+    turns: [
+      { speaker: 'A', text: 'Can we afford the trip?' },
+      { speaker: 'B', text: 'If we save a bit each month.' },
+      { speaker: 'A', text: "Let's start now then." },
+    ],
+    note: `"If we save a bit each month" sets a simple condition.`,
+    audio: 'b1-dl-040.ogg',
+  },
 ];
