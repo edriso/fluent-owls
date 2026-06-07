@@ -447,4 +447,92 @@ export const b1Dialogues: Dialogue[] = [
     note: `"If we save a bit each month" sets a simple condition.`,
     audio: 'b1-dl-040.ogg',
   },
+  {
+    id: 'b1-dl-041',
+    situation: 'Asking for time off',
+    turns: [
+      { speaker: 'A', text: 'Could I take Friday off?' },
+      { speaker: 'B', text: 'Sure, just send me an email.' },
+      { speaker: 'A', text: 'Will do, thanks.' },
+    ],
+    note: `"Will do" is a quick, friendly way to agree.`,
+    audio: 'b1-dl-041.ogg',
+  },
+  {
+    id: 'b1-dl-042',
+    situation: 'Splitting a task',
+    turns: [
+      { speaker: 'A', text: "Who's doing the slides?" },
+      { speaker: 'B', text: 'I can, if you write the notes.' },
+      { speaker: 'A', text: "Deal, let's split it." },
+    ],
+    note: `"I can, if you ..." offers a fair trade.`,
+    audio: 'b1-dl-042.ogg',
+  },
+  {
+    id: 'b1-dl-043',
+    situation: 'Recommending a restaurant',
+    turns: [
+      { speaker: 'A', text: 'Know any good restaurants nearby?' },
+      { speaker: 'B', text: "There's a great Thai place around the corner." },
+      { speaker: 'A', text: "Perfect, let's go there." },
+    ],
+    note: `"around the corner" means very close by.`,
+    audio: 'b1-dl-043.ogg',
+  },
+  {
+    id: 'b1-dl-044',
+    situation: 'Sorting out a booking',
+    turns: [
+      { speaker: 'A', text: "I think there's been a mix-up with the booking." },
+      { speaker: 'B', text: 'Let me check and sort it out.' },
+      { speaker: 'A', text: 'Thanks, I appreciate it.' },
+    ],
+    note: `"a mix-up" is a gentle word for a small error.`,
+    audio: 'b1-dl-044.ogg',
+  },
+  {
+    id: 'b1-dl-045',
+    situation: 'Talking about a goal',
+    turns: [
+      { speaker: 'A', text: "How's the new fitness plan going?" },
+      { speaker: 'B', text: "Slowly, but I'm sticking with it." },
+      { speaker: 'A', text: "That's the hard part, well done." },
+    ],
+    note: `"sticking with it" means continuing despite difficulty.`,
+    audio: 'b1-dl-045.ogg',
+  },
+  {
+    id: 'b1-dl-046',
+    situation: 'Asking for an opinion',
+    turns: [
+      { speaker: 'A', text: 'Do you think I should take the offer?' },
+      { speaker: 'B', text: 'Honestly, it sounds like a great chance.' },
+      { speaker: 'A', text: "Yeah, I'm leaning that way too." },
+    ],
+    note: `"I'm leaning that way" means almost decided.`,
+    audio: 'b1-dl-046.ogg',
+  },
+  {
+    id: 'b1-dl-047',
+    situation: 'Suggesting a careful approach',
+    turns: [
+      { speaker: 'A', text: 'Maybe we should test it first.' },
+      { speaker: 'B', text: 'Good idea, better safe than sorry.' },
+      { speaker: 'A', text: "I'll set up a small trial." },
+    ],
+    note: `"better safe than sorry" supports being careful.`,
+    audio: 'b1-dl-047.ogg',
+  },
+  {
+    id: 'b1-dl-048',
+    situation: 'Reassuring a friend',
+    turns: [
+      { speaker: 'A', text: "I'm worried I'll mess up the interview." },
+      { speaker: 'B', text: "You've prepared well, just be yourself." },
+      { speaker: 'A', text: 'Thanks, that helps.' },
+    ],
+    note: `"just be yourself" is a classic, kind reassurance.`,
+    audio: 'b1-dl-048.ogg',
+  },
 ];

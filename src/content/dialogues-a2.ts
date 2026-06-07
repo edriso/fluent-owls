@@ -448,4 +448,92 @@ export const a2Dialogues: Dialogue[] = [
     note: `"You're a lifesaver." warmly thanks someone for help.`,
     audio: 'a2-dl-040.ogg',
   },
+  {
+    id: 'a2-dl-041',
+    situation: 'Exchanging a faulty item',
+    turns: [
+      { speaker: 'A', text: "I bought this yesterday, but it's broken." },
+      { speaker: 'B', text: "No problem, I'll exchange it." },
+      { speaker: 'A', text: 'Thank you so much.' },
+    ],
+    note: `Explain the issue, then accept "I'll exchange it."`,
+    audio: 'a2-dl-041.ogg',
+  },
+  {
+    id: 'a2-dl-042',
+    situation: 'Asking about a class',
+    turns: [
+      { speaker: 'A', text: 'When does the class start?' },
+      { speaker: 'B', text: 'At six, but come a bit early.' },
+      { speaker: 'A', text: "Okay, I'll be there at five forty-five." },
+    ],
+    note: `"come a bit early" softens advice about timing.`,
+    audio: 'a2-dl-042.ogg',
+  },
+  {
+    id: 'a2-dl-043',
+    situation: 'Suggesting an evening plan',
+    turns: [
+      { speaker: 'A', text: 'Are you doing anything tonight?' },
+      { speaker: 'B', text: 'Just staying in. Why?' },
+      { speaker: 'A', text: 'Want to watch a film?' },
+    ],
+    note: `"Are you doing anything tonight?" opens an invitation.`,
+    audio: 'a2-dl-043.ogg',
+  },
+  {
+    id: 'a2-dl-044',
+    situation: 'At the post office',
+    turns: [
+      { speaker: 'A', text: "I'd like to send this to Spain." },
+      { speaker: 'B', text: 'By air or by sea?' },
+      { speaker: 'A', text: 'By air, please.' },
+    ],
+    note: `"By air or by sea?" offers two clear choices.`,
+    audio: 'a2-dl-044.ogg',
+  },
+  {
+    id: 'a2-dl-045',
+    situation: 'Talking about the weather',
+    turns: [
+      { speaker: 'A', text: "Do you think it'll rain later?" },
+      { speaker: 'B', text: 'Maybe. Take an umbrella.' },
+      { speaker: 'A', text: 'Good idea, thanks.' },
+    ],
+    note: `"Do you think it'll ...?" asks for a prediction.`,
+    audio: 'a2-dl-045.ogg',
+  },
+  {
+    id: 'a2-dl-046',
+    situation: 'Ordering coffee precisely',
+    turns: [
+      { speaker: 'A', text: 'A large coffee with oat milk, please.' },
+      { speaker: 'B', text: 'Sure, anything to eat?' },
+      { speaker: 'A', text: 'No, just the coffee.' },
+    ],
+    note: `Add detail to an order: "with oat milk".`,
+    audio: 'a2-dl-046.ogg',
+  },
+  {
+    id: 'a2-dl-047',
+    situation: 'Finding a seat',
+    turns: [
+      { speaker: 'A', text: 'Is anyone sitting here?' },
+      { speaker: 'B', text: 'No, go ahead.' },
+      { speaker: 'A', text: 'Thanks a lot.' },
+    ],
+    note: `"Is anyone sitting here?" politely claims a seat.`,
+    audio: 'a2-dl-047.ogg',
+  },
+  {
+    id: 'a2-dl-048',
+    situation: 'Reconnecting with someone',
+    turns: [
+      { speaker: 'A', text: "It's been ages! How are you?" },
+      { speaker: 'B', text: 'I am great, you look well!' },
+      { speaker: 'A', text: 'We should catch up properly.' },
+    ],
+    note: `"It's been ages!" greets someone you have not seen in a while.`,
+    audio: 'a2-dl-048.ogg',
+  },
 ];

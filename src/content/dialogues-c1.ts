@@ -448,4 +448,92 @@ export const c1Dialogues: Dialogue[] = [
     note: `"talked it to death" signals it is time to decide.`,
     audio: 'c1-dl-040.ogg',
   },
+  {
+    id: 'c1-dl-041',
+    situation: 'Framing a problem',
+    turns: [
+      { speaker: 'A', text: 'Sales are down again.' },
+      { speaker: 'B', text: 'Is it the price or the product?' },
+      { speaker: 'A', text: "That's exactly what we need to find out." },
+    ],
+    note: `A sharp question narrows a vague problem.`,
+    audio: 'c1-dl-041.ogg',
+  },
+  {
+    id: 'c1-dl-042',
+    situation: 'Setting boundaries',
+    turns: [
+      { speaker: 'A', text: 'Can you join the call at nine tonight?' },
+      { speaker: 'B', text: "I switch off after seven, I'm afraid." },
+      { speaker: 'A', text: "Understood, let's find another slot." },
+    ],
+    note: `"I switch off after seven" states a boundary kindly.`,
+    audio: 'c1-dl-042.ogg',
+  },
+  {
+    id: 'c1-dl-043',
+    situation: 'Encouraging a risk',
+    turns: [
+      { speaker: 'A', text: 'I am afraid it might fail.' },
+      { speaker: 'B', text: 'And if it works?' },
+      { speaker: 'A', text: "Then it changes everything. Let's try." },
+    ],
+    note: `"And if it works?" flips fear into possibility.`,
+    audio: 'c1-dl-043.ogg',
+  },
+  {
+    id: 'c1-dl-044',
+    situation: 'Checking your tone',
+    turns: [
+      { speaker: 'A', text: 'Was I too blunt in there?' },
+      { speaker: 'B', text: 'Direct, yes; rude, no.' },
+      { speaker: 'A', text: "Good, that's the line I want." },
+    ],
+    note: `"Direct, yes; rude, no." draws a useful distinction.`,
+    audio: 'c1-dl-044.ogg',
+  },
+  {
+    id: 'c1-dl-045',
+    situation: 'Aligning on a plan',
+    turns: [
+      { speaker: 'A', text: 'Are we building for now or for scale?' },
+      { speaker: 'B', text: 'For scale, but without over-engineering.' },
+      { speaker: 'A', text: "Then let's keep it simple and extendable." },
+    ],
+    note: `"X, but without Y" sets a balanced direction.`,
+    audio: 'c1-dl-045.ogg',
+  },
+  {
+    id: 'c1-dl-046',
+    situation: 'Deciding under uncertainty',
+    turns: [
+      { speaker: 'A', text: "We don't have all the data yet." },
+      { speaker: 'B', text: "We rarely will; let's decide with what we have." },
+      { speaker: 'A', text: 'Agreed, waiting has a cost too.' },
+    ],
+    note: `"waiting has a cost too" counters endless delay.`,
+    audio: 'c1-dl-046.ogg',
+  },
+  {
+    id: 'c1-dl-047',
+    situation: 'Delegating with trust',
+    turns: [
+      { speaker: 'A', text: 'Do you want to review it first?' },
+      { speaker: 'B', text: 'No, ship it; you know this better than I do.' },
+      { speaker: 'A', text: "Appreciated, I'll take it from here." },
+    ],
+    note: `"ship it" means release it; trust shown by stepping back.`,
+    audio: 'c1-dl-047.ogg',
+  },
+  {
+    id: 'c1-dl-048',
+    situation: 'Agreeing to disagree',
+    turns: [
+      { speaker: 'A', text: "I don't think we'll agree on this." },
+      { speaker: 'B', text: "That's okay; let's note it and move on." },
+      { speaker: 'A', text: 'Fair enough, onward.' },
+    ],
+    note: `"let's note it and move on" keeps a meeting unstuck.`,
+    audio: 'c1-dl-048.ogg',
+  },
 ];

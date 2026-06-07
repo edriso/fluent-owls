@@ -448,4 +448,92 @@ export const c2Dialogues: Dialogue[] = [
     note: `"shake on it" means agree informally but firmly.`,
     audio: 'c2-dl-040.ogg',
   },
+  {
+    id: 'c2-dl-041',
+    situation: 'A subtle negotiation',
+    turns: [
+      { speaker: 'A', text: 'Is the price firm?' },
+      { speaker: 'B', text: 'Firm-ish; persuade me.' },
+      { speaker: 'A', text: 'Then let me show you the long-term value.' },
+    ],
+    note: `"Firm-ish; persuade me." leaves a little room to bargain.`,
+    audio: 'c2-dl-041.ogg',
+  },
+  {
+    id: 'c2-dl-042',
+    situation: 'Deflecting flattery',
+    turns: [
+      { speaker: 'A', text: "You're clearly the expert here." },
+      { speaker: 'B', text: 'Kind of you, but the team did the heavy lifting.' },
+      { speaker: 'A', text: 'Modest as ever, I see.' },
+    ],
+    note: `"did the heavy lifting" credits others for the hard work.`,
+    audio: 'c2-dl-042.ogg',
+  },
+  {
+    id: 'c2-dl-043',
+    situation: 'Naming the unspoken',
+    turns: [
+      { speaker: 'A', text: "Everyone's avoiding the real issue." },
+      { speaker: 'B', text: 'Go on, name it.' },
+      { speaker: 'A', text: 'We hired for the wrong role.' },
+    ],
+    note: `"name it" invites someone to say the hard thing plainly.`,
+    audio: 'c2-dl-043.ogg',
+  },
+  {
+    id: 'c2-dl-044',
+    situation: 'Holding a line gently',
+    turns: [
+      { speaker: 'A', text: 'Just this once, off the record?' },
+      { speaker: 'B', text: "I'd rather keep it all on the record." },
+      { speaker: 'A', text: 'Respectable. Forget I asked.' },
+    ],
+    note: `"on the record" means official and accountable.`,
+    audio: 'c2-dl-044.ogg',
+  },
+  {
+    id: 'c2-dl-045',
+    situation: 'Reframing a failure',
+    turns: [
+      { speaker: 'A', text: 'The launch flopped completely.' },
+      { speaker: 'B', text: "Or it taught us what the market won't buy." },
+      { speaker: 'A', text: "True, that's worth knowing early." },
+    ],
+    note: `"Or it taught us ..." turns a failure into information.`,
+    audio: 'c2-dl-045.ogg',
+  },
+  {
+    id: 'c2-dl-046',
+    situation: 'Principle over winning',
+    turns: [
+      { speaker: 'A', text: 'We could win, but it feels wrong.' },
+      { speaker: 'B', text: "Then it isn't really a win, is it?" },
+      { speaker: 'A', text: "No. Let's do it properly." },
+    ],
+    note: `A rhetorical question can settle a moral point neatly.`,
+    audio: 'c2-dl-046.ogg',
+  },
+  {
+    id: 'c2-dl-047',
+    situation: 'Admitting a blind spot',
+    turns: [
+      { speaker: 'A', text: 'I completely missed that angle.' },
+      { speaker: 'B', text: "We all have blind spots; that's why we talk." },
+      { speaker: 'A', text: 'Glad I asked before deciding.' },
+    ],
+    note: `"that's why we talk" frames discussion as a safeguard.`,
+    audio: 'c2-dl-047.ogg',
+  },
+  {
+    id: 'c2-dl-048',
+    situation: 'A warm farewell',
+    turns: [
+      { speaker: 'A', text: "It's been a real pleasure working with you." },
+      { speaker: 'B', text: "Likewise; let's not make it the last time." },
+      { speaker: 'A', text: 'Count on it.' },
+    ],
+    note: `"Likewise" returns a sentiment; "Count on it" promises warmly.`,
+    audio: 'c2-dl-048.ogg',
+  },
 ];

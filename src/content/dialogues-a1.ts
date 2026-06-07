@@ -448,4 +448,92 @@ export const a1Dialogues: Dialogue[] = [
     note: `"Sleep well." and "You too." end the day warmly.`,
     audio: 'a1-dl-040.ogg',
   },
+  {
+    id: 'a1-dl-041',
+    situation: 'At a hotel desk',
+    turns: [
+      { speaker: 'A', text: 'Do you have a room for tonight?' },
+      { speaker: 'B', text: 'Yes, one is free.' },
+      { speaker: 'A', text: "Great, I'll take it." },
+    ],
+    note: `"Do you have a room for tonight?" books a room.`,
+    audio: 'a1-dl-041.ogg',
+  },
+  {
+    id: 'a1-dl-042',
+    situation: 'Asking someone to slow down',
+    turns: [
+      { speaker: 'A', text: 'Sorry, can you say it slowly?' },
+      { speaker: 'B', text: 'Of course. My name is Ana.' },
+      { speaker: 'A', text: 'Thank you, Ana.' },
+    ],
+    note: `"Can you say it slowly?" helps when you do not catch something.`,
+    audio: 'a1-dl-042.ogg',
+  },
+  {
+    id: 'a1-dl-043',
+    situation: 'In a taxi',
+    turns: [
+      { speaker: 'A', text: 'To the airport, please.' },
+      { speaker: 'B', text: 'Sure. Any bags?' },
+      { speaker: 'A', text: 'Just this one.' },
+    ],
+    note: `Tell a driver where: "To the ..., please."`,
+    audio: 'a1-dl-043.ogg',
+  },
+  {
+    id: 'a1-dl-044',
+    situation: 'Buying fruit',
+    turns: [
+      { speaker: 'A', text: 'How much are the apples?' },
+      { speaker: 'B', text: 'Two dollars a kilo.' },
+      { speaker: 'A', text: 'One kilo, please.' },
+    ],
+    note: `"How much are ...?" for plural things; answer with a price.`,
+    audio: 'a1-dl-044.ogg',
+  },
+  {
+    id: 'a1-dl-045',
+    situation: 'Meeting a new neighbor',
+    turns: [
+      { speaker: 'A', text: 'Hi, are you new here?' },
+      { speaker: 'B', text: 'Yes, I moved in yesterday.' },
+      { speaker: 'A', text: "Welcome! I'm next door." },
+    ],
+    note: `"Welcome!" and "I'm next door." make a friendly start.`,
+    audio: 'a1-dl-045.ogg',
+  },
+  {
+    id: 'a1-dl-046',
+    situation: 'Asking about wifi',
+    turns: [
+      { speaker: 'A', text: 'Is there wifi here?' },
+      { speaker: 'B', text: 'Yes, the password is on the wall.' },
+      { speaker: 'A', text: 'Perfect, thanks.' },
+    ],
+    note: `"Is there wifi here?" is a useful everyday question.`,
+    audio: 'a1-dl-046.ogg',
+  },
+  {
+    id: 'a1-dl-047',
+    situation: 'Checking opening days',
+    turns: [
+      { speaker: 'A', text: 'Is the shop open on Sunday?' },
+      { speaker: 'B', text: 'No, only weekdays.' },
+      { speaker: 'A', text: "Okay, I'll come Monday." },
+    ],
+    note: `"Is it open on ...?" checks the days.`,
+    audio: 'a1-dl-047.ogg',
+  },
+  {
+    id: 'a1-dl-048',
+    situation: 'Thanking for a meal',
+    turns: [
+      { speaker: 'A', text: 'That was delicious, thank you.' },
+      { speaker: 'B', text: "I'm glad you liked it." },
+      { speaker: 'A', text: "I'll come again." },
+    ],
+    note: `"I'm glad you liked it." is a warm reply to a compliment.`,
+    audio: 'a1-dl-048.ogg',
+  },
 ];

@@ -447,4 +447,92 @@ export const b2Dialogues: Dialogue[] = [
     note: `Justify a choice with "does everything we need".`,
     audio: 'b2-dl-040.ogg',
   },
+  {
+    id: 'b2-dl-041',
+    situation: 'Clarifying ownership',
+    turns: [
+      { speaker: 'A', text: 'Who owns this part of the project?' },
+      { speaker: 'B', text: "I do, but I'd welcome your input." },
+      { speaker: 'A', text: "Great, let's sync on it." },
+    ],
+    note: `"I'd welcome your input" invites help without giving up control.`,
+    audio: 'b2-dl-041.ogg',
+  },
+  {
+    id: 'b2-dl-042',
+    situation: 'Pushing for clarity',
+    turns: [
+      { speaker: 'A', text: 'What exactly do you need from me?' },
+      { speaker: 'B', text: 'A short summary by Thursday.' },
+      { speaker: 'A', text: "Clear, you'll have it." },
+    ],
+    note: `"What exactly do you need?" prevents vague requests.`,
+    audio: 'b2-dl-042.ogg',
+  },
+  {
+    id: 'b2-dl-043',
+    situation: 'Disagreeing on timing',
+    turns: [
+      { speaker: 'A', text: 'I think we should launch now.' },
+      { speaker: 'B', text: "I'd hold off until the testing is done." },
+      { speaker: 'A', text: "Fair point, let's not rush it." },
+    ],
+    note: `"I'd hold off until ..." disagrees with a clear reason.`,
+    audio: 'b2-dl-043.ogg',
+  },
+  {
+    id: 'b2-dl-044',
+    situation: 'Ranking priorities',
+    turns: [
+      { speaker: 'A', text: 'Everything is marked urgent.' },
+      { speaker: 'B', text: "Then nothing really is; let's rank them." },
+      { speaker: 'A', text: "Agreed, let's be honest about it." },
+    ],
+    note: `"Then nothing really is" exposes fake urgency.`,
+    audio: 'b2-dl-044.ogg',
+  },
+  {
+    id: 'b2-dl-045',
+    situation: 'Offering help proactively',
+    turns: [
+      { speaker: 'A', text: 'You seem swamped this week.' },
+      { speaker: 'B', text: 'I am, a little.' },
+      { speaker: 'A', text: "Hand me the easy tasks, I've got time." },
+    ],
+    note: `"swamped" means very busy or overloaded.`,
+    audio: 'b2-dl-045.ogg',
+  },
+  {
+    id: 'b2-dl-046',
+    situation: 'Sharing credit',
+    turns: [
+      { speaker: 'A', text: 'The campaign did really well.' },
+      { speaker: 'B', text: "It was mostly the team's effort." },
+      { speaker: 'A', text: 'Still, your idea started it.' },
+    ],
+    note: `Deflecting and returning credit keeps a team warm.`,
+    audio: 'b2-dl-046.ogg',
+  },
+  {
+    id: 'b2-dl-047',
+    situation: 'Protecting a deadline',
+    turns: [
+      { speaker: 'A', text: 'Can we realistically hit Monday?' },
+      { speaker: 'B', text: 'If we drop the extra feature, yes.' },
+      { speaker: 'A', text: "Then let's cut it for now." },
+    ],
+    note: `"realistically" asks for an honest, not hopeful, answer.`,
+    audio: 'b2-dl-047.ogg',
+  },
+  {
+    id: 'b2-dl-048',
+    situation: 'Following up',
+    turns: [
+      { speaker: 'A', text: 'Did you hear back from the client?' },
+      { speaker: 'B', text: "Not yet, I'll chase them today." },
+      { speaker: 'A', text: 'Thanks, keep me posted.' },
+    ],
+    note: `"chase them" means follow up to get a reply.`,
+    audio: 'b2-dl-048.ogg',
+  },
 ];
