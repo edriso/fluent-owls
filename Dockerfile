@@ -47,9 +47,14 @@ COPY package.json pnpm-lock.yaml ./
 RUN pnpm install --frozen-lockfile --prod --ignore-scripts
 
 COPY --from=builder /app/dist ./dist
+# The committed voice clips live in src/, NOT dist (tsc only emits .ts -> .js, it
+# never copies .ogg files). The bot resolves them from the working directory
+# (src/content/audio, see content/audio-path.ts), so they must be present here or
+# every voice post silently fails. Copy just the audio, nothing else from src.
+COPY --from=builder /app/src/content/audio ./src/content/audio
 
-# The bot writes nothing to disk: content and audio ship in the image, the
-# optional tutor state lives in the shared database. No volume to manage.
+# The bot writes nothing to disk: content (incl. the audio above) ships in the
+# image; the optional tutor state lives in the shared database. No volume.
 
 # Drop privileges. The official node image ships a `node` user (UID 1000).
 USER node
