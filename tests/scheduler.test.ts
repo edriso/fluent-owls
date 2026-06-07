@@ -54,6 +54,7 @@ describe('findSlot', () => {
   it('returns a known slot and undefined for an unknown one', () => {
     expect(findSlot('midday')?.name).toBe('midday');
     expect(findSlot('shadow')?.name).toBe('shadow');
+    expect(findSlot('dialogue')?.name).toBe('dialogue');
     expect(findSlot('nope')).toBeUndefined();
   });
 });
@@ -81,6 +82,14 @@ describe('runOnce', () => {
     expect(sent).toHaveLength(1);
     expect(sent[0]?.kind).toBe('message');
     expect(sent[0]?.text).toContain('Say it like a native');
+  });
+
+  it('posts a voice message for the dialogue slot', async () => {
+    const { bot, sent } = fakeBot();
+    await runOnce(findSlot('dialogue')!, bot);
+    expect(sent).toHaveLength(1);
+    expect(sent[0]?.kind).toBe('voice');
+    expect(sent[0]?.text).toContain('Role-play');
   });
 
   it('pins the quiz poll left-to-right so English text never mirrors on RTL clients', () => {
@@ -111,7 +120,7 @@ describe('runDailyBatch', () => {
     const { bot, sent } = fakeBot();
     await runDailyBatch(bot);
     const expected = schedules.map((s) =>
-      s.kind === 'quiz' ? 'poll' : s.kind === 'shadow' ? 'voice' : 'message',
+      s.kind === 'quiz' ? 'poll' : s.kind === 'phrase' ? 'message' : 'voice',
     );
     expect(sent.map((s) => s.kind)).toEqual(expected);
   });

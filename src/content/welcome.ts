@@ -8,15 +8,17 @@ One set lands together each afternoon, with a single notification:
 • 🥪 an intermediate quiz (B1, B2)
 • 🌙 an advanced challenge quiz (C1, C2)
 • 🗣️ a "say it like a native" phrase for a real situation
+• 🎭 a role-play mini-dialogue (two voices) to act out
 • 🎧 an audio clip to shadow (listen and repeat)
 
 <b>How the quizzes work</b>
 • Read the sentence and tap the word that fits the blank.
 • Telegram reveals the correct answer and a short explanation after you vote.
 
-<b>How shadowing works</b>
+<b>How shadowing and role-play work</b>
 • Play the voice clip and read along with the transcript.
 • Then say it out loud WITH the speaker, copying the rhythm and melody.
+• For a role-play, act out BOTH sides, so you practise asking and answering.
 • Two or three times is enough. This is the fastest way to a natural accent.
 
 <b>What you will practise</b>

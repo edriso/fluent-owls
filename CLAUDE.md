@@ -2,9 +2,9 @@
 
 ## What this is
 
-A tiny no-database Telegram bot that posts one short English set each day to one channel. The set has five parts, posted together once a day (default 14:00) in this order: three native quiz polls (a beginner warm-up A1-A2, an intermediate B1-B2, an advanced challenge C1-C2), then a "say it like a native" phrase for a real situation, then an audio shadowing clip (listen and repeat). Only the last post (the shadowing clip) makes a notification sound, so followers get a single daily ping but still receive everything.
+A tiny no-database Telegram bot that posts one short English set each day to one channel. The set has six parts, posted together once a day (default 14:00) in this order: three native quiz polls (a beginner warm-up A1-A2, an intermediate B1-B2, an advanced challenge C1-C2), then a "say it like a native" phrase for a real situation, then a role-play mini-dialogue (a two-voice exchange), then an audio shadowing clip (listen and repeat). Only the last post (the shadowing clip) makes a notification sound, so followers get a single daily ping but still receive everything.
 
-The aim is both halves of good English: the quizzes build the words that make you _correct_; the phrase and the shadowing clip build the rhythm and ready-made chunks that make you _well spoken_ and natural. Quiz polls reveal the answer and a short explanation after the reader votes. Shadowing clips are voice messages with the transcript in the caption.
+The aim is both halves of good English: the quizzes build the words that make you _correct_; the phrase, dialogue, and shadowing clip build the chunks, the real back-and-forth, and the rhythm that make you _well spoken_ and natural. Quiz polls reveal the answer and a short explanation after the reader votes. Shadowing clips and dialogues are voice messages with the transcript in the caption (a dialogue uses two voices, for speakers A and B).
 
 The channel is read-only by design. No accounts, no leaderboards, no DMs to manage. The bot cannot hear or grade a learner's speaking; it delivers a great model and a clear "do this", and the learner practises on their own (the same self-driven loop as the quiz). The bot exists to deliver good content on a schedule.
 
@@ -28,9 +28,11 @@ fluent-owls/
 │   ├── content/
 │   │   ├── questions-a1.ts ... questions-c2.ts   One quiz bank per CEFR level.
 │   │   ├── shadowing-a1.ts ... shadowing-c2.ts   One shadowing-clip bank per level.
+│   │   ├── dialogues-a1.ts ... dialogues-c2.ts   One role-play dialogue bank per level.
 │   │   ├── phrases-a1.ts ... phrases-c2.ts       One native-phrase bank per level.
 │   │   ├── index.ts        Quiz registry: tags each bank with its level, builds pools.
 │   │   ├── shadowing.ts     Shadowing registry (ALL_SHADOWING, shadowingPool).
+│   │   ├── dialogues.ts     Dialogue registry (ALL_DIALOGUES, dialoguesPool).
 │   │   ├── phrases.ts       Phrase registry (ALL_PHRASES, phrasesPool).
 │   │   ├── pool.ts          Generic interleave-by-level helper, shared by all three registries.
 │   │   ├── audio-path.ts    Where the committed .ogg clips live and how to find one.
@@ -39,14 +41,14 @@ fluent-owls/
 │   └── lib/
 │       ├── limits.ts     Telegram limits for polls + speaking content (shared by audits + tests).
 │       ├── pick.ts       Typed day-of-year picker (reuses the kernel's dayOfYearIn).
-│       ├── format.ts     buildPrompt/toPollOptions/clampExplanation + buildShadowingCaption + buildPhraseMessage.
-│       └── post.ts       postQuizPoll (kernel sendPoll), postVoice (sendVoice), postPhrase/postPlainMessage, editChannelMessage.
+│       ├── format.ts     buildPrompt/toPollOptions/clampExplanation + buildShadowingCaption + buildDialogueCaption + buildPhraseMessage.
+│       └── post.ts       postQuizPoll (kernel sendPoll), postVoice + postDialogue (sendVoice), postPhrase/postPlainMessage, editChannelMessage.
 ├── scripts/
 │   ├── send-test.ts       Manual dev sender (any slot name, or all).
 │   ├── post-welcome.ts    Post or edit-in-place the pinned welcome message.
 │   ├── audit-questions.ts Validate the quiz banks (ids, options, indices, lengths).
-│   ├── audit-speaking.ts  Validate the shadowing + phrase banks (ids, fields, lengths, audio file names).
-│   └── generate-audio.ts  DEV ONLY: ElevenLabs TTS -> ffmpeg -> OGG, writes src/content/audio (idempotent).
+│   ├── audit-speaking.ts  Validate the shadowing, dialogue, and phrase banks (ids, fields, lengths, audio names).
+│   └── generate-audio.ts  DEV ONLY: ElevenLabs TTS -> ffmpeg -> OGG (one voice for shadowing, two stitched for dialogues), idempotent.
 ├── tests/                Vitest unit tests, no network.
 ├── docs/
 │   ├── DEPLOY.md         Host-agnostic deploy notes.
@@ -78,10 +80,11 @@ fluent-owls/
 - **`.env` is loaded by the kernel.** `src/config.ts` calls the kernel's `loadEnv()`, which finds the project root and loads its `.env`. Production hosts inject env vars directly, so `loadEnv` is a harmless no-op then (dotenv never overrides an already-set variable). Required values still throw if missing.
 - **No retries.** A failed Telegram call is logged; the next scheduled fire takes over. The bot is meant to run for years untouched.
 - **Date math is timezone-safe.** `dayOfYearIn` uses `Intl.DateTimeFormat` with the timezone, never `Date.getDate()`, so a UTC host serving a Cairo-time channel still picks the right day.
-- **Speaking, not just correctness.** Quizzes alone teach accuracy, not delivery. Shadowing (listen and repeat a native line) is the most effective drill for rhythm and accent; native phrases teach the ready-made chunks fluent speakers actually use. Both fit a broadcast channel because they need no reply from the learner: the bot delivers the model, the learner practises. Each post shows its level, so the level-pooled speaking slots let anyone self-select.
+- **Speaking, not just correctness.** Quizzes alone teach accuracy, not delivery. The three speaking exercises form a loop: native phrases give ready-made chunks, role-play dialogues train the real back-and-forth of conversation, and shadowing drills rhythm and accent. All fit a broadcast channel because they need no reply from the learner: the bot delivers the model, the learner practises (and self-compares). Each post shows its level, so the level-pooled speaking slots let anyone self-select.
 - **Audio is pre-generated and committed, never made at runtime.** The shadowing `.ogg` files are created once by `scripts/generate-audio.ts` (ElevenLabs TTS, then ffmpeg to OGG/Opus) and checked into `src/content/audio/`. The running bot only reads them, so production needs no TTS key, has no audio cost, and gains no new failure mode. This is the same "runs for years untouched" ethos as the no-database rule. A clip's `text` is both the transcript shown in the caption and the script the audio is generated from, so the two cannot drift.
 - **One generic interleave, three content types.** Quizzes, shadowing clips, and native phrases all use the same `interleaveByLevel` helper (`src/content/pool.ts`) and the same `pickForDay`, so they rotate identically and there is one rotation behaviour to reason about.
-- **Shadowing is a voice message, not an audio file.** `postVoice` uses `sendVoice` (not `sendAudio`), so the clip gets the inline waveform player and Telegram's built-in playback-speed control, which is exactly what a shadower wants.
+- **Shadowing and dialogues are voice messages, not audio files.** `postVoice`/`postDialogue` use `sendVoice` (not `sendAudio`), so a clip gets the inline waveform player and Telegram's built-in playback-speed control, which is exactly what a shadower wants.
+- **Dialogues are two voices stitched into one clip.** A role-play has a speaker A and a speaker B with different voices. `generate-audio.ts` synthesizes each turn separately, then concatenates them with a short silence via ffmpeg, so one voice message sounds like a real exchange. The learner shadows both roles.
 
 ## How to change what it posts
 
@@ -125,6 +128,7 @@ The bot only needs **"Post messages"**. Quiz posts are never auto-deleted; the c
 
 - The quiz banks: every question has a unique level-prefixed id, 2 to 10 unique non-empty options under 100 chars, a `correctIndex` in range, a `____` blank, a rendered question under 300 chars, an explanation under 200 chars, and no em-dashes.
 - The shadowing banks: unique `<level>-sh-` ids, a transcript/context/note within limits, an audio name of `<id>.ogg`, a caption that renders within the Telegram limit and is pinned left-to-right, a valid focus, and no em-dashes.
+- The dialogue banks: unique `<level>-dl-` ids, 2 to 4 turns that alternate A/B, each line within limits, a caption that renders and is LTR-pinned, an audio name of `<id>.ogg`, and no em-dashes.
 - The phrase banks: unique `<level>-ph-` ids, phrase/situation/example within limits, a valid function, a rendered message that contains the phrase, and no em-dashes.
 - `pickForDay`: deterministic, cycles the pool, throws on empty (the typed picker; the kernel tests its timezone `dayOfYearIn`).
 - `buildPrompt` / `toPollOptions` / `clampExplanation` / `buildShadowingCaption` / `buildPhraseMessage`: headers, validation, clamping, LTR isolation, HTML escaping.
@@ -140,7 +144,7 @@ No test needs a real bot token or any audio file; `vitest.config.ts` injects pla
 - **Quiz polls go through the kernel's `sendPoll`**: pass `type: 'quiz'`, `correctOptionId` (0-based), a clamped `explanation`, and `direction: 'ltr'`. The kernel validates the quiz config and throws on a bad index / over-long explanation (a programming bug, surfaced loudly), and logs + returns null on a network failure. See `src/lib/post.ts`.
 - **Poll text is pinned left-to-right**: the kernel wraps a poll's plain-text question and options in a bidi isolate, defaulting to RTL (its Arabic origin). Our content is English, so `postQuizPoll` passes `direction: 'ltr'` (kit v0.2.2+); without it the poll mirrors for the reader (a leading emoji/number flips to the wrong side). A scheduler test guards that the posted question starts with the LTR isolate mark.
 - **Polls are always anonymous**: by design. Nobody can see who voted, including the bot.
-- **Shadowing audio must be generated and committed**: `postVoice` reads `src/content/audio/<id>.ogg` from disk and uploads it via `sendVoice`. A missing file is caught and logged ("is the audio generated?") and the rest of the batch still posts. Run `pnpm generate-audio` (needs `ELEVENLABS_API_KEY` and `ffmpeg`), then commit the files. `pnpm audit-speaking --require-audio` fails on any gap, for a pre-deploy gate.
+- **Shadowing AND dialogue audio must be generated and committed**: `postVoice`/`postDialogue` read `src/content/audio/<id>.ogg` from disk and upload via `sendVoice`. A missing file is caught and logged ("is the audio generated?") and the rest of the batch still posts. Run `pnpm generate-audio` (needs `ELEVENLABS_API_KEY` and `ffmpeg`), then commit the files. `pnpm audit-speaking --require-audio` fails on any gap (shadowing or dialogue), for a pre-deploy gate. Dialogue generation makes one ElevenLabs call per turn and concatenates them, so it uses more credits per item than a shadowing clip.
 - **Audio path is resolved from `process.cwd()`** (the repo root), not from the compiled module, because `tsc` emits to `dist/` but never copies the `.ogg` files there. Start the bot from the project root (every documented recipe does). See `src/content/audio-path.ts`.
 - **`generate-audio` must not import `src/config`**: that would require `BOT_TOKEN` just to make audio. It loads env via the kernel's `loadEnv` and reads `ELEVENLABS_*` directly.
 - **The shadowing caption and the phrase message are pinned/escaped too**: `buildShadowingCaption` wraps the plain-text caption in an LTR isolate (same RTL-mirroring fix as the poll); `buildPhraseMessage` is HTML and escapes `& < >`. Keep both in mind when editing `format.ts`.

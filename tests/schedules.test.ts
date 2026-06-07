@@ -3,15 +3,23 @@ import { schedules } from '../src/schedules';
 import { LEVELS } from '../src/types';
 
 describe('schedules (the daily batch)', () => {
-  it('runs the three quizzes first, then the phrase, then the shadowing clip', () => {
+  it('runs the three quizzes first, then phrase, dialogue, and shadowing', () => {
     expect(schedules.map((s) => s.name)).toEqual([
       'morning',
       'midday',
       'evening',
       'phrase',
+      'dialogue',
       'shadow',
     ]);
-    expect(schedules.map((s) => s.kind)).toEqual(['quiz', 'quiz', 'quiz', 'phrase', 'shadow']);
+    expect(schedules.map((s) => s.kind)).toEqual([
+      'quiz',
+      'quiz',
+      'quiz',
+      'phrase',
+      'dialogue',
+      'shadow',
+    ]);
   });
 
   it('rings exactly once a day: only the last slot is audible', () => {

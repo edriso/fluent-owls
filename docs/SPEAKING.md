@@ -5,6 +5,9 @@ Alongside the quizzes, the bot posts two speaking exercises each day:
 - **Shadowing clips** — a short native audio line you listen to and repeat, to
   build a natural rhythm and accent. One file per CEFR level:
   `src/content/shadowing-a1.ts` ... `shadowing-c2.ts`.
+- **Role-play dialogues** — a short two-voice exchange (2 to 4 turns) the learner
+  shadows on both sides, for real-conversation practice. One file per level:
+  `src/content/dialogues-a1.ts` ... `dialogues-c2.ts`.
 - **"Say it like a native" phrases** — ready-made chunks for real situations
   (text only, no audio). One file per level: `src/content/phrases-a1.ts` ...
   `phrases-c2.ts`.
@@ -45,6 +48,33 @@ Authoring checklist:
 
 The `text` is both the on-screen transcript and the script the audio is
 generated from, so the spoken clip and the caption can never drift.
+
+## Role-play dialogues
+
+```ts
+type DialogueTurn = { speaker: 'A' | 'B'; text: string };
+type Dialogue = {
+  id: string; // "b1-dl-013", unique, starts with the level and "-dl-"
+  situation: string; // short real-situation label, e.g. "Ordering at a café"
+  turns: DialogueTurn[]; // 2 to 4 turns, ALTERNATING A, B, A, B...
+  note: string; // a tip: a useful pattern or reply to copy
+  audio: string; // must be "<id>.ogg"
+};
+```
+
+Authoring checklist:
+
+1. **Pick a real situation** the learner will actually face.
+2. **Alternate speakers** strictly: turn 0 is A, turn 1 is B, and so on. The
+   audit enforces this, because the audio gives A and B two different voices.
+3. **Keep each line short and natural**, the way people really reply.
+4. **Use the note to point out the pattern** worth stealing ("Decline softly
+   with 'I'd love to, but...'").
+5. **No em-dashes.** House style.
+
+The two voices are chosen automatically in `scripts/generate-audio.ts` (speaker
+A is the level's voice, speaker B is a contrasting partner voice). Each turn is
+synthesized separately and stitched together with a short gap.
 
 ## Native phrases
 
@@ -117,11 +147,11 @@ pnpm send-test phrase    # optional: preview the phrase slot
 
 Like the quizzes, the picker is `dayOfYearIn(today, TZ) % pool.length`. The
 shadowing and phrase slots pool every level, so the cycle length equals the
-total number of clips (or phrases), at one post a day. The bank ships with 40
-shadowing clips per level (240 total, about 8 months before a repeat) and 20
-phrases per level (120 total, about 4 months). Add more to lengthen the cycle.
-Every post shows its level, so mixing levels day to day is fine: learners
-self-select.
+total number of items, at one post a day. The bank ships with 40 shadowing clips
+per level (240 total, about 8 months before a repeat), 20 dialogues per level
+(120 total, about 4 months), and 20 phrases per level (120 total, about 4
+months). Add more to lengthen the cycle. Every post shows its level, so mixing
+levels day to day is fine: learners self-select.
 
 Audio is cheap: run `pnpm audit-speaking` to see the total character count
 (roughly 1 ElevenLabs credit per character on the multilingual model). Even the

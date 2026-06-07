@@ -46,11 +46,12 @@ pnpm send-test morning    # fires today's A1-A2 question to the channel now
 pnpm send-test midday     # B1-B2
 pnpm send-test evening    # C1-C2
 pnpm send-test phrase     # today's "say it like a native" phrase
+pnpm send-test dialogue   # today's role-play dialogue (two-voice audio)
 pnpm send-test shadow     # today's shadowing voice clip (needs the .ogg generated)
 pnpm send-test all        # the whole daily set, in order
 ```
 
-The `shadow` slot posts a committed audio file, so run `pnpm generate-audio` (dev only, see [QUESTIONS.md](./QUESTIONS.md) and [SPEAKING.md](./SPEAKING.md)) and commit the `.ogg` files before relying on it.
+The `dialogue` and `shadow` slots post committed audio files, so run `pnpm generate-audio` (dev only, see [SPEAKING.md](./SPEAKING.md)) and commit the `.ogg` files before relying on them.
 
 The script preflights `getChat` first, so a wrong token or channel id gives one clean error instead of two confusing ones.
 
@@ -105,7 +106,7 @@ Logs go to stdout. There is nothing to mount.
 
 ## Verifying it works
 
-1. Check `/health` returns 200 with `{"ok":true,...}` (the startup log reports `posts: 5`, the size of the daily set).
+1. Check `/health` returns 200 with `{"ok":true,...}` (the startup log reports `posts: 6`, the size of the daily set).
 2. Tail the logs for a `Daily batch scheduled` line at startup.
 3. Send `/start` to the bot in a DM; you should get a reply pointing at the channel.
 4. Run `pnpm send-test morning` to verify a channel post end to end.
@@ -116,7 +117,7 @@ Logs go to stdout. There is nothing to mount.
 - **No post arrived.** Check the logs for a `Failed to post...` line. The usual cause is the bot is not a channel admin or "Post messages" is off.
 - **403 from Telegram.** Same answer: admin rights.
 - **400 on sendPoll.** An option over 100 chars or a bad option count. Run `pnpm audit-questions`.
-- **The shadowing clip did not post** (`Failed to post shadowing voice (is the audio generated?)`). The `.ogg` file is missing. Run `pnpm generate-audio` and commit the files, or `pnpm audit-speaking --require-audio` to find every gap. The other posts are unaffected.
+- **A voice post did not arrive** (`Failed to post shadowing voice` or `Failed to post role-play dialogue`, "is the audio generated?"). The `.ogg` file is missing. Run `pnpm generate-audio` and commit the files, or `pnpm audit-speaking --require-audio` to find every gap. The other posts are unaffected.
 
 ## Backups
 

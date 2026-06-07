@@ -49,3 +49,10 @@ export const PHRASE_MAX_CHARS = 120;
 export const SITUATION_MAX_CHARS = 120;
 /** Maximum length of a native phrase's worked example sentence. */
 export const EXAMPLE_MAX_CHARS = 200;
+
+/** Fewest turns in a role-play dialogue (a real exchange needs at least two). */
+export const DIALOGUE_MIN_TURNS = 2;
+/** Most turns in a role-play dialogue (keep it short and shadowable). */
+export const DIALOGUE_MAX_TURNS = 4;
+/** Maximum length of a single dialogue line. */
+export const DIALOGUE_TURN_MAX_CHARS = 120;

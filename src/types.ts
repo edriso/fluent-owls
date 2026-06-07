@@ -184,3 +184,46 @@ export type LeveledNativePhrase = NativePhrase & {
   /** The CEFR level this phrase belongs to. */
   level: Level;
 };
+
+/** One line of a dialogue, said by speaker A or speaker B. */
+export type DialogueTurn = {
+  /** Who speaks this line. The two speakers get two different voices in the audio. */
+  speaker: 'A' | 'B';
+  /** What they say. One short, natural line. */
+  text: string;
+};
+
+/**
+ * One role-play mini-dialogue: a short real-situation exchange (2 to 4 turns)
+ * the learner listens to and then shadows on BOTH sides. This is the bridge
+ * between imitation (a single shadowing line) and real conversation: it trains
+ * natural replies and turn-taking, the back-and-forth of actually talking.
+ *
+ * The audio is a single voice message built from the turns, with a different
+ * voice for speaker A and speaker B (see scripts/generate-audio.ts), so it
+ * sounds like a real two-person conversation. Generated once and committed, like
+ * the shadowing clips, so the running bot never calls a text-to-speech API.
+ *
+ * Constraints (validated by scripts/audit-speaking.ts and the unit tests):
+ *  - 2 to 4 turns, alternating speakers, each line non-empty and within its limit
+ *  - the rendered caption is <= CAPTION_MAX_CHARS
+ *  - no em-dashes anywhere (house style)
+ */
+export type Dialogue = {
+  /** Stable, unique id. Starts with the level and a "dl" marker, e.g. "b1-dl-001". */
+  id: string;
+  /** Short real-situation label, e.g. "Ordering at a café". */
+  situation: string;
+  /** The lines of the exchange, alternating between speaker A and speaker B. */
+  turns: DialogueTurn[];
+  /** One concrete tip: a useful pattern or reply to copy from the exchange. */
+  note: string;
+  /** File name of the committed OGG/Opus clip, e.g. "b1-dl-001.ogg". */
+  audio: string;
+};
+
+/** A dialogue tagged with the CEFR level it was loaded from. */
+export type LeveledDialogue = Dialogue & {
+  /** The CEFR level this dialogue belongs to. */
+  level: Level;
+};

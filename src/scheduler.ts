@@ -5,8 +5,9 @@ import { schedules, type ScheduleDef } from './schedules';
 import { poolForLevels } from './content/index';
 import { shadowingPool } from './content/shadowing';
 import { phrasesPool } from './content/phrases';
+import { dialoguesPool } from './content/dialogues';
 import { pickForDay } from './lib/pick';
-import { postPhrase, postQuizPoll, postVoice } from './lib/post';
+import { postDialogue, postPhrase, postQuizPoll, postVoice } from './lib/post';
 
 // The bot-specific schedule layer. The generic cron plumbing (error
 // containment, the node-cron registry, cron validation) now lives in
@@ -56,6 +57,15 @@ export async function runOnce(slot: ScheduleDef, bot: Bot): Promise<void> {
         return;
       }
       await postPhrase(bot, pickForDay(pool, now, config.timezone), { silent: slot.silent });
+      return;
+    }
+    case 'dialogue': {
+      const pool = dialoguesPool(slot.levels);
+      if (pool.length === 0) {
+        logger.warn('No dialogues for slot, skipping', { slot: slot.name, levels: slot.levels });
+        return;
+      }
+      await postDialogue(bot, pickForDay(pool, now, config.timezone), { silent: slot.silent });
       return;
     }
   }

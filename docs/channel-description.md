@@ -37,9 +37,10 @@ single notification:
 • 🥪 an intermediate quiz (B1, B2)
 • 🌙 an advanced challenge quiz (C1, C2)
 • 🗣️ a "say it like a native" phrase for a real situation
+• 🎭 a role-play mini-dialogue (two voices) to act out
 • 🎧 an audio clip to shadow (listen and repeat)
-The quizzes make you correct; the phrase and the shadowing clip make you sound
-natural. No setup, no signup, no streaks to lose.
+The quizzes make you correct; the phrase, dialogue, and shadowing clip make you
+sound natural. No setup, no signup, no streaks to lose.
 
 > Note: the full pinned welcome message lives in `src/content/welcome.ts`
 > and is posted with `pnpm post-welcome`.

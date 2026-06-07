@@ -1,6 +1,7 @@
 import { ltrIsolate } from 'telegram-broadcast-kit';
 import type {
   Level,
+  LeveledDialogue,
   LeveledNativePhrase,
   LeveledQuestion,
   LeveledShadowingClip,
@@ -131,6 +132,28 @@ export function buildShadowingCaption(clip: LeveledShadowingClip): string {
 /** Escape the five characters that matter for Telegram's HTML parse mode. */
 function escapeHtml(text: string): string {
   return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+/**
+ * Build the caption for a role-play dialogue voice message: a header with the
+ * level and situation, the exchange with "A:" / "B:" labels, then the
+ * shadow-both-roles instruction and a tip. Like the shadowing caption, it is
+ * plain text wrapped in a left-to-right isolate so a leading emoji never mirrors
+ * on an RTL-locale client.
+ */
+export function buildDialogueCaption(dialogue: LeveledDialogue): string {
+  const badge = LEVEL_BADGE[dialogue.level] ?? dialogue.level.toUpperCase();
+  const lines = dialogue.turns.map((t) => `${t.speaker}: ${t.text}`);
+  const caption = [
+    `🎭 Role-play  ·  ${badge}`,
+    `💬 ${dialogue.situation}`,
+    '',
+    ...lines,
+    '',
+    '▶️ Listen, then shadow BOTH roles out loud. Copy the rhythm and the natural replies.',
+    `🎯 ${dialogue.note}`,
+  ].join('\n');
+  return ltrIsolate(caption);
 }
 
 /**

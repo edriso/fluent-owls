@@ -4,6 +4,7 @@ A tiny Telegram bot that posts one short English set to a channel each day, so p
 
 - **3 quizzes** (beginner to advanced): a fill-in-the-blank sentence with four options and an instant explanation, sent as a native Telegram quiz poll.
 - **1 "say it like a native" phrase**: a ready-made chunk for a real situation, with when to use it and an example.
+- **1 role-play mini-dialogue**: a short two-voice exchange to act out both sides, for real-conversation practice.
 - **1 shadowing clip**: a short native-audio voice message with the transcript, to listen to and repeat (the fastest drill for a natural rhythm and accent).
 
 The whole project is junior friendly on purpose. The content is short, the English is plain, and the code is small and well documented.
@@ -26,13 +27,14 @@ The whole set posts together once a day, in order, so a follower gets a single
 notification but still receives everything. Only the last post makes a sound;
 the rest are sent silently.
 
-| Order | Slot    | Kind      | Levels         | Notification |
-| ----- | ------- | --------- | -------------- | ------------ |
-| 1     | Morning | quiz      | A1, A2         | silent       |
-| 2     | Midday  | quiz      | B1, B2         | silent       |
-| 3     | Evening | quiz      | C1, C2         | silent       |
-| 4     | Phrase  | phrase    | all (A1 to C2) | silent       |
-| 5     | Shadow  | shadowing | all (A1 to C2) | rings        |
+| Order | Slot     | Kind      | Levels         | Notification |
+| ----- | -------- | --------- | -------------- | ------------ |
+| 1     | Morning  | quiz      | A1, A2         | silent       |
+| 2     | Midday   | quiz      | B1, B2         | silent       |
+| 3     | Evening  | quiz      | C1, C2         | silent       |
+| 4     | Phrase   | phrase    | all (A1 to C2) | silent       |
+| 5     | Dialogue | dialogue  | all (A1 to C2) | silent       |
+| 6     | Shadow   | shadowing | all (A1 to C2) | rings        |
 
 The quizzes climb the CEFR bands; the phrase and shadowing slots pool every
 level and show the level on each post, so learners self-select. The batch time
@@ -83,30 +85,30 @@ The bot picks today's question with `dayOfYearIn(today, TZ) % poolSize` for each
 ## Adding content
 
 - **A quiz question**: see [`docs/QUESTIONS.md`](docs/QUESTIONS.md). Append an object to the right `src/content/questions-<level>.ts`, then run `pnpm audit-questions` and `pnpm test`.
-- **A shadowing clip or a native phrase**: see [`docs/SPEAKING.md`](docs/SPEAKING.md). Append to `src/content/shadowing-<level>.ts` or `phrases-<level>.ts`, run `pnpm audit-speaking` and `pnpm test`, then `pnpm generate-audio` for any new clip and commit the new `.ogg`.
+- **A shadowing clip, a role-play dialogue, or a native phrase**: see [`docs/SPEAKING.md`](docs/SPEAKING.md). Append to `src/content/shadowing-<level>.ts`, `dialogues-<level>.ts`, or `phrases-<level>.ts`, run `pnpm audit-speaking` and `pnpm test`, then `pnpm generate-audio` for any new audio and commit the new `.ogg`.
 
 If the checks pass, redeploy.
 
 ## The shadowing audio
 
-The shadowing clips are AI-generated once with [ElevenLabs](https://elevenlabs.io) (one American voice per CEFR level) and committed as OGG/Opus under `src/content/audio/`. The running bot only reads them, so production needs no text-to-speech key and has no audio cost. Generating is a one-time dev step (`pnpm generate-audio`, needs `ELEVENLABS_API_KEY` and `ffmpeg`); see [`docs/SPEAKING.md`](docs/SPEAKING.md). The audio is **not** covered by this repo's MIT license, see [`NOTICE`](NOTICE).
+The shadowing clips and role-play dialogues are AI-generated once with [ElevenLabs](https://elevenlabs.io) and committed as OGG/Opus under `src/content/audio/`. Shadowing uses one American voice per CEFR level; dialogues use two voices (a speaker A and B) stitched together. The running bot only reads the files, so production needs no text-to-speech key and has no audio cost. Generating is a one-time dev step (`pnpm generate-audio`, needs `ELEVENLABS_API_KEY` and `ffmpeg`); see [`docs/SPEAKING.md`](docs/SPEAKING.md). The audio is **not** covered by this repo's MIT license, see [`NOTICE`](NOTICE).
 
 ## Scripts
 
-| Command                   | What it does                                                 |
-| ------------------------- | ------------------------------------------------------------ |
-| `pnpm dev`                | Start the bot locally with hot reload                        |
-| `pnpm start`              | Run the compiled bot (after `pnpm build`)                    |
-| `pnpm build`              | Compile TypeScript to `dist/`                                |
-| `pnpm test`               | Run unit tests (no network)                                  |
-| `pnpm typecheck`          | TypeScript with no emit                                      |
-| `pnpm audit-questions`    | Validate the question banks                                  |
-| `pnpm audit-speaking`     | Validate the shadowing + phrase banks                        |
-| `pnpm audit-all`          | Run both content audits                                      |
-| `pnpm generate-audio`     | Dev only: generate the shadowing `.ogg` clips (ElevenLabs)   |
-| `pnpm send-test [slot]`   | Post one slot now (morning/midday/evening/phrase/shadow/all) |
-| `pnpm post-welcome [id?]` | Post the welcome message, or edit it in place by id          |
-| `pnpm format`             | Prettier across the repo                                     |
+| Command                   | What it does                                                          |
+| ------------------------- | --------------------------------------------------------------------- |
+| `pnpm dev`                | Start the bot locally with hot reload                                 |
+| `pnpm start`              | Run the compiled bot (after `pnpm build`)                             |
+| `pnpm build`              | Compile TypeScript to `dist/`                                         |
+| `pnpm test`               | Run unit tests (no network)                                           |
+| `pnpm typecheck`          | TypeScript with no emit                                               |
+| `pnpm audit-questions`    | Validate the question banks                                           |
+| `pnpm audit-speaking`     | Validate the shadowing, dialogue, and phrase banks                    |
+| `pnpm audit-all`          | Run both content audits                                               |
+| `pnpm generate-audio`     | Dev only: generate the audio `.ogg` clips (ElevenLabs)                |
+| `pnpm send-test [slot]`   | Post one slot now (morning/midday/evening/phrase/dialogue/shadow/all) |
+| `pnpm post-welcome [id?]` | Post the welcome message, or edit it in place by id                   |
+| `pnpm format`             | Prettier across the repo                                              |
 
 ## Why no database
 

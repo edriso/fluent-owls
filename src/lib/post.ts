@@ -2,8 +2,14 @@ import { InputFile, type Bot, type Context } from 'grammy';
 import { logger, sendPoll } from 'telegram-broadcast-kit';
 import { config } from '../config';
 import { audioPathFor } from '../content/audio-path';
-import type { LeveledNativePhrase, LeveledQuestion, LeveledShadowingClip } from '../types';
+import type {
+  LeveledDialogue,
+  LeveledNativePhrase,
+  LeveledQuestion,
+  LeveledShadowingClip,
+} from '../types';
 import {
+  buildDialogueCaption,
   buildPhraseMessage,
   buildPrompt,
   buildShadowingCaption,
@@ -70,47 +76,64 @@ export async function postQuizPoll(
 }
 
 /**
- * Post one shadowing clip as a Telegram voice message: the committed OGG/Opus
- * audio with a caption (the transcript plus the listen-and-repeat instruction).
- * We send it as a voice message (sendVoice), not an audio file, so it gets the
- * inline waveform player and Telegram's built-in playback-speed control, which
- * is exactly what a shadower wants.
- *
- * The audio is read from disk by file path (see content/audio-path.ts). A
- * missing file (audio not generated yet) throws inside the Bot API call, which
- * we catch and log, returning null so the daily batch keeps going. Run
- * `pnpm generate-audio` to create the files. Returns the message_id, or null on
- * failure.
+ * Send one committed OGG/Opus clip as a Telegram voice message (sendVoice, not
+ * sendAudio, so it gets the inline waveform player and Telegram's playback-speed
+ * control, which is what a shadower wants). The audio is read from disk by file
+ * name (see content/audio-path.ts). A missing file (audio not generated yet)
+ * throws inside the Bot API call, which we catch and log, returning null so the
+ * daily batch keeps going. Run `pnpm generate-audio` to create the files.
  */
+async function sendVoiceFile(
+  bot: Bot<Context>,
+  audioFile: string,
+  caption: string,
+  opts: { silent?: boolean; logName: string; logFields: Record<string, unknown> },
+): Promise<number | null> {
+  try {
+    const message = await bot.api.sendVoice(
+      config.channelChatId,
+      new InputFile(audioPathFor(audioFile)),
+      {
+        caption,
+        disable_notification: opts.silent ?? false,
+      },
+    );
+    logger.info(`Posted ${opts.logName}`, { ...opts.logFields, messageId: message.message_id });
+    return message.message_id;
+  } catch (err) {
+    logger.error(`Failed to post ${opts.logName} (is the audio generated?)`, {
+      ...opts.logFields,
+      audio: audioFile,
+      error: String(err),
+    });
+    return null;
+  }
+}
+
+/** Post one shadowing clip as a voice message (transcript + listen-and-repeat tip). */
 export async function postVoice(
   bot: Bot<Context>,
   clip: LeveledShadowingClip,
   opts: { silent?: boolean } = {},
 ): Promise<number | null> {
-  try {
-    const message = await bot.api.sendVoice(
-      config.channelChatId,
-      new InputFile(audioPathFor(clip.audio)),
-      {
-        caption: buildShadowingCaption(clip),
-        disable_notification: opts.silent ?? false,
-      },
-    );
-    logger.info('Posted shadowing voice', {
-      id: clip.id,
-      level: clip.level,
-      focus: clip.focus,
-      messageId: message.message_id,
-    });
-    return message.message_id;
-  } catch (err) {
-    logger.error('Failed to post shadowing voice (is the audio generated?)', {
-      id: clip.id,
-      audio: clip.audio,
-      error: String(err),
-    });
-    return null;
-  }
+  return sendVoiceFile(bot, clip.audio, buildShadowingCaption(clip), {
+    silent: opts.silent,
+    logName: 'shadowing voice',
+    logFields: { id: clip.id, level: clip.level, focus: clip.focus },
+  });
+}
+
+/** Post one role-play dialogue as a two-voice voice message (the exchange + tip). */
+export async function postDialogue(
+  bot: Bot<Context>,
+  dialogue: LeveledDialogue,
+  opts: { silent?: boolean } = {},
+): Promise<number | null> {
+  return sendVoiceFile(bot, dialogue.audio, buildDialogueCaption(dialogue), {
+    silent: opts.silent,
+    logName: 'role-play dialogue',
+    logFields: { id: dialogue.id, level: dialogue.level, turns: dialogue.turns.length },
+  });
 }
 
 /**

@@ -1,12 +1,18 @@
 import { describe, expect, it } from 'vitest';
 import {
+  buildDialogueCaption,
   buildPhraseMessage,
   buildPrompt,
   buildShadowingCaption,
   clampExplanation,
   toPollOptions,
 } from '../src/lib/format';
-import type { LeveledNativePhrase, LeveledQuestion, LeveledShadowingClip } from '../src/types';
+import type {
+  LeveledDialogue,
+  LeveledNativePhrase,
+  LeveledQuestion,
+  LeveledShadowingClip,
+} from '../src/types';
 
 const sample: LeveledQuestion = {
   id: 'b1-001',
@@ -35,6 +41,18 @@ const samplePhrase: LeveledNativePhrase = {
   situation: 'Disagreeing politely',
   example: 'I see your point, but it is too expensive.',
   fn: 'disagreeing',
+};
+
+const sampleDialogue: LeveledDialogue = {
+  id: 'b1-dl-001',
+  level: 'b1',
+  situation: 'A request at work',
+  turns: [
+    { speaker: 'A', text: 'Could you send me the report?' },
+    { speaker: 'B', text: 'Sure, I will do it now.' },
+  ],
+  note: 'Accept warmly.',
+  audio: 'b1-dl-001.ogg',
 };
 
 describe('buildPrompt', () => {
@@ -111,6 +129,24 @@ describe('buildShadowingCaption', () => {
 
   it('pins the caption left-to-right with a Unicode isolate', () => {
     const out = buildShadowingCaption(sampleClip);
+    expect(out.codePointAt(0)).toBe(0x2066);
+    expect(out.codePointAt(out.length - 1)).toBe(0x2069);
+  });
+});
+
+describe('buildDialogueCaption', () => {
+  it('includes the level, situation, both lines, and the tip', () => {
+    const out = buildDialogueCaption(sampleDialogue);
+    expect(out).toContain('B1');
+    expect(out).toContain('Role-play');
+    expect(out).toContain(sampleDialogue.situation);
+    expect(out).toContain('A: Could you send me the report?');
+    expect(out).toContain('B: Sure, I will do it now.');
+    expect(out).toContain(sampleDialogue.note);
+  });
+
+  it('pins the caption left-to-right with a Unicode isolate', () => {
+    const out = buildDialogueCaption(sampleDialogue);
     expect(out.codePointAt(0)).toBe(0x2066);
     expect(out.codePointAt(out.length - 1)).toBe(0x2069);
   });

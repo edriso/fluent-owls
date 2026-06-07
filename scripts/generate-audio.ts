@@ -1,35 +1,35 @@
 /**
- * One-time audio generator for the shadowing clips. Run with `pnpm generate-audio`.
+ * One-time audio generator for the speaking clips. Run with `pnpm generate-audio`.
  *
- * This is a DEV-ONLY tool. It reads every shadowing clip's `text`, sends it to
- * ElevenLabs text-to-speech, converts the result to OGG/Opus (what Telegram
- * wants for a voice message), and writes it to src/content/audio/<id>.ogg. Those
- * files are committed to the repo, so the RUNNING bot never calls a TTS API: no
- * key, no cost, and no new failure mode in production.
+ * This is a DEV-ONLY tool. It turns each shadowing clip and each role-play
+ * dialogue into an OGG/Opus voice clip (what Telegram wants) under
+ * src/content/audio/<id>.ogg, using ElevenLabs text-to-speech. Those files are
+ * committed, so the RUNNING bot never calls a TTS API: no key, no cost, and no
+ * new failure mode in production.
  *
- * It is idempotent: a clip whose .ogg already exists is skipped, so you can run
- * it again after adding clips and only the new ones are generated. Pass --force
- * to regenerate everything, or one or more level names (e.g. b1 c1) to limit it.
+ * Shadowing clips are one voice. Dialogues use two voices (speaker A and B) and
+ * are stitched together with a short gap, so they sound like a real exchange.
+ *
+ * It is idempotent: a clip whose .ogg already exists is skipped, so after adding
+ * content you just run it again and only the new items are generated.
  *
  * Requirements:
  *   - ELEVENLABS_API_KEY in your env or .env (only needed to run THIS script).
  *   - ffmpeg installed and on PATH (brew install ffmpeg). Used to make OGG/Opus.
  *
  * Optional env:
- *   - ELEVENLABS_VOICE_<LEVEL>  One voice per CEFR level (e.g. ELEVENLABS_VOICE_B1).
- *                               If unset, a curated American voice is used per level.
- *   - ELEVENLABS_VOICE_ID       Force ONE voice for every clip, overriding the above.
- *   - ELEVENLABS_MODEL_ID       Defaults to eleven_multilingual_v2 (best prosody).
+ *   - ELEVENLABS_VOICE_<LEVEL>    Voice for that level (e.g. ELEVENLABS_VOICE_B1).
+ *   - ELEVENLABS_VOICE_<LEVEL>_B  Second (partner) voice for dialogues at that level.
+ *   - ELEVENLABS_VOICE_ID         Force ONE voice for everything, overriding the above.
+ *   - ELEVENLABS_MODEL_ID         Defaults to eleven_multilingual_v2 (best prosody).
  *
- * Run modes:
- *   pnpm generate-audio            every clip that has no .ogg yet
- *   pnpm generate-audio b1 c1      only these levels
- *   pnpm generate-audio --sample   just one clip per level (to audition voices)
- *   pnpm generate-audio --force    regenerate, even clips that already exist
- *
- * Cost: ElevenLabs charges ~1 credit per character on the multilingual model.
- * The script prints the total character count up front so you can sanity-check
- * it against your plan's monthly credits before it runs.
+ * Run modes (combine freely):
+ *   pnpm generate-audio              every item that has no .ogg yet
+ *   pnpm generate-audio b1 c1        only these levels
+ *   pnpm generate-audio shadowing    only shadowing clips
+ *   pnpm generate-audio dialogues    only dialogues
+ *   pnpm generate-audio --sample     one shadow + one dialogue per level (audition)
+ *   pnpm generate-audio --force      regenerate, even items that already exist
  */
 import { spawn } from 'node:child_process';
 import { mkdir, rm, writeFile } from 'node:fs/promises';
@@ -38,16 +38,16 @@ import { join } from 'node:path';
 import { loadEnv, logger } from 'telegram-broadcast-kit';
 import { AUDIO_DIR, audioPathFor } from '../src/content/audio-path';
 import { ALL_SHADOWING } from '../src/content/shadowing';
-import { LEVELS, type Level, type LeveledShadowingClip } from '../src/types';
+import { ALL_DIALOGUES } from '../src/content/dialogues';
+import { LEVELS, type Level } from '../src/types';
 
 loadEnv();
 
-// One clear American voice per CEFR level, female and male alternating so each
-// level has its own consistent "teacher" and the channel stays varied. These
-// are ElevenLabs premade voices, available on every account. Swap any of them
-// per level with ELEVENLABS_VOICE_<LEVEL>, or force one voice for everything
-// with ELEVENLABS_VOICE_ID.
-const DEFAULT_VOICE_BY_LEVEL: Record<Level, { id: string; name: string }> = {
+// One clear American voice per CEFR level (speaker A), and a contrasting partner
+// voice (speaker B) for dialogues. Both are ElevenLabs premade voices, on every
+// account. Override per level with ELEVENLABS_VOICE_<LEVEL> (and _B), or force a
+// single voice for everything with ELEVENLABS_VOICE_ID.
+const VOICE_A_BY_LEVEL: Record<Level, { id: string; name: string }> = {
   a1: { id: 'EXAVITQu4vr4xnSDxMaL', name: 'Sarah' },
   a2: { id: 'nPczCjzI2devNBz1zQrb', name: 'Brian' },
   b1: { id: '21m00Tcm4TlvDq8ikWAM', name: 'Rachel' },
@@ -55,18 +55,42 @@ const DEFAULT_VOICE_BY_LEVEL: Record<Level, { id: string; name: string }> = {
   c1: { id: 'XrExE9yKIg1WjnnlVkGX', name: 'Matilda' },
   c2: { id: 'pqHfZKP75CvOlQylNhV4', name: 'Bill' },
 };
+const VOICE_B_BY_LEVEL: Record<Level, { id: string; name: string }> = {
+  a1: { id: 'nPczCjzI2devNBz1zQrb', name: 'Brian' },
+  a2: { id: '21m00Tcm4TlvDq8ikWAM', name: 'Rachel' },
+  b1: { id: 'pNInz6obpgDQGcFmaJgB', name: 'Adam' },
+  b2: { id: 'XrExE9yKIg1WjnnlVkGX', name: 'Matilda' },
+  c1: { id: 'pqHfZKP75CvOlQylNhV4', name: 'Bill' },
+  c2: { id: 'EXAVITQu4vr4xnSDxMaL', name: 'Sarah' },
+};
 
 const MODEL_ID = process.env.ELEVENLABS_MODEL_ID?.trim() || 'eleven_multilingual_v2';
+const FORCED_VOICE = process.env.ELEVENLABS_VOICE_ID?.trim();
 
-/** Choose the voice for a clip: a forced global voice, else a per-level env
- *  override, else the curated default for that level. */
-function voiceForClip(clip: LeveledShadowingClip): { id: string; name: string } {
-  const forced = process.env.ELEVENLABS_VOICE_ID?.trim();
-  if (forced) return { id: forced, name: 'custom (ELEVENLABS_VOICE_ID)' };
-  const perLevel = process.env[`ELEVENLABS_VOICE_${clip.level.toUpperCase()}`]?.trim();
-  if (perLevel) return { id: perLevel, name: `custom (${clip.level.toUpperCase()})` };
-  return DEFAULT_VOICE_BY_LEVEL[clip.level];
+/** Voice for speaker A (single-voice shadowing also uses this). */
+function voiceA(level: Level): string {
+  if (FORCED_VOICE) return FORCED_VOICE;
+  return (
+    process.env[`ELEVENLABS_VOICE_${level.toUpperCase()}`]?.trim() || VOICE_A_BY_LEVEL[level].id
+  );
 }
+/** Partner voice for speaker B in dialogues. */
+function voiceB(level: Level): string {
+  if (FORCED_VOICE) return FORCED_VOICE;
+  return (
+    process.env[`ELEVENLABS_VOICE_${level.toUpperCase()}_B`]?.trim() || VOICE_B_BY_LEVEL[level].id
+  );
+}
+
+/** A unit of audio to generate: one or more spoken segments, written to one file. */
+type Segment = { text: string; voiceId: string };
+type Job = {
+  id: string;
+  level: Level;
+  audio: string;
+  kind: 'shadow' | 'dialogue';
+  segments: Segment[];
+};
 
 /** Confirm ffmpeg is available, with a friendly message if it is not. */
 function checkFfmpeg(): Promise<void> {
@@ -86,11 +110,7 @@ async function textToMp3(text: string, voiceId: string, apiKey: string): Promise
   const url = `https://api.elevenlabs.io/v1/text-to-speech/${voiceId}?output_format=mp3_44100_128`;
   const res = await fetch(url, {
     method: 'POST',
-    headers: {
-      'xi-api-key': apiKey,
-      'content-type': 'application/json',
-      accept: 'audio/mpeg',
-    },
+    headers: { 'xi-api-key': apiKey, 'content-type': 'application/json', accept: 'audio/mpeg' },
     body: JSON.stringify({
       text,
       model_id: MODEL_ID,
@@ -109,15 +129,28 @@ async function textToMp3(text: string, voiceId: string, apiKey: string): Promise
   return Buffer.from(await res.arrayBuffer());
 }
 
-/** Convert an MP3 buffer to a mono OGG/Opus file (Telegram voice format). */
-function mp3ToOgg(mp3: Buffer, outPath: string): Promise<void> {
+/** Run ffmpeg with the given args, resolving on exit code 0. */
+function runFfmpeg(args: string[]): Promise<void> {
   return new Promise((resolve, reject) => {
-    // Read MP3 from stdin, write OGG/Opus to outPath. Mono 48k keeps voice
-    // files tiny while sounding clean.
-    const proc = spawn('ffmpeg', [
+    const proc = spawn('ffmpeg', args);
+    let stderr = '';
+    proc.stderr.on('data', (chunk) => (stderr += String(chunk)));
+    proc.on('error', reject);
+    proc.on('close', (code) =>
+      code === 0 ? resolve() : reject(new Error(`ffmpeg failed (${code}): ${stderr.slice(-300)}`)),
+    );
+  });
+}
+
+/** Transcode a single MP3 buffer to mono OGG/Opus (the shadowing path). */
+async function oneSegmentToOgg(mp3: Buffer, outPath: string): Promise<void> {
+  const tmp = `${outPath}.seg0.mp3`;
+  await writeFile(tmp, mp3);
+  try {
+    await runFfmpeg([
       '-y',
       '-i',
-      'pipe:0',
+      tmp,
       '-c:a',
       'libopus',
       '-b:a',
@@ -128,15 +161,84 @@ function mp3ToOgg(mp3: Buffer, outPath: string): Promise<void> {
       '1',
       outPath,
     ]);
-    let stderr = '';
-    proc.stderr.on('data', (chunk) => (stderr += String(chunk)));
-    proc.on('error', reject);
-    proc.on('close', (code) =>
-      code === 0 ? resolve() : reject(new Error(`ffmpeg failed (${code}): ${stderr.slice(-300)}`)),
-    );
-    proc.stdin.write(mp3);
-    proc.stdin.end();
-  });
+  } finally {
+    await rm(tmp, { force: true });
+  }
+}
+
+/**
+ * Stitch several spoken MP3 segments into one mono OGG/Opus file, with a short
+ * silence between them (the dialogue path). Each input is normalized to a common
+ * format first, then concatenated, so mismatched sample rates cannot break it.
+ */
+async function segmentsToOgg(mp3s: Buffer[], outPath: string, gapSeconds: number): Promise<void> {
+  const tmpFiles: string[] = [];
+  for (let i = 0; i < mp3s.length; i += 1) {
+    const tmp = `${outPath}.seg${i}.mp3`;
+    await writeFile(tmp, mp3s[i]!);
+    tmpFiles.push(tmp);
+  }
+  try {
+    const inputs: string[] = [];
+    const norm: string[] = [];
+    const labels: string[] = [];
+    let idx = 0;
+    const pushNorm = () => {
+      norm.push(`[${idx}:a]aresample=48000,aformat=sample_fmts=s16:channel_layouts=mono[a${idx}]`);
+      labels.push(`[a${idx}]`);
+      idx += 1;
+    };
+    for (let i = 0; i < tmpFiles.length; i += 1) {
+      inputs.push('-i', tmpFiles[i]!);
+      pushNorm();
+      if (i < tmpFiles.length - 1) {
+        inputs.push('-f', 'lavfi', '-t', String(gapSeconds), '-i', 'anullsrc=r=48000:cl=mono');
+        pushNorm();
+      }
+    }
+    const filter = `${norm.join(';')};${labels.join('')}concat=n=${labels.length}:v=0:a=1[out]`;
+    await runFfmpeg([
+      '-y',
+      ...inputs,
+      '-filter_complex',
+      filter,
+      '-map',
+      '[out]',
+      '-c:a',
+      'libopus',
+      '-b:a',
+      '48k',
+      '-ar',
+      '48000',
+      '-ac',
+      '1',
+      outPath,
+    ]);
+  } finally {
+    for (const f of tmpFiles) await rm(f, { force: true });
+  }
+}
+
+/** Build the full list of generation jobs from both content banks. */
+function allJobs(): Job[] {
+  const shadow: Job[] = ALL_SHADOWING.map((c) => ({
+    id: c.id,
+    level: c.level,
+    audio: c.audio,
+    kind: 'shadow',
+    segments: [{ text: c.text, voiceId: voiceA(c.level) }],
+  }));
+  const dialogue: Job[] = ALL_DIALOGUES.map((d) => ({
+    id: d.id,
+    level: d.level,
+    audio: d.audio,
+    kind: 'dialogue',
+    segments: d.turns.map((t) => ({
+      text: t.text,
+      voiceId: t.speaker === 'A' ? voiceA(d.level) : voiceB(d.level),
+    })),
+  }));
+  return [...shadow, ...dialogue];
 }
 
 async function main(): Promise<void> {
@@ -152,29 +254,39 @@ async function main(): Promise<void> {
   const force = args.includes('--force');
   const sample = args.includes('--sample');
   const levelFilter = args.filter((a): a is Level => (LEVELS as readonly string[]).includes(a));
+  const onlyShadow = args.includes('shadowing');
+  const onlyDialogue = args.includes('dialogues');
 
-  let clips: LeveledShadowingClip[] = ALL_SHADOWING;
-  if (levelFilter.length > 0) clips = clips.filter((c) => levelFilter.includes(c.level));
+  let jobs = allJobs();
+  if (onlyShadow && !onlyDialogue) jobs = jobs.filter((j) => j.kind === 'shadow');
+  if (onlyDialogue && !onlyShadow) jobs = jobs.filter((j) => j.kind === 'dialogue');
+  if (levelFilter.length > 0) jobs = jobs.filter((j) => levelFilter.includes(j.level));
   if (sample) {
-    // One clip per level, to audition the chosen voices before the full run.
-    const seen = new Set<Level>();
-    clips = clips.filter((c) => (seen.has(c.level) ? false : (seen.add(c.level), true)));
+    // One shadow and one dialogue per level, to audition the voices.
+    const seen = new Set<string>();
+    jobs = jobs.filter((j) => {
+      const key = `${j.level}-${j.kind}`;
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
   }
 
-  // Skip clips already generated unless --force.
-  const todo = force ? clips : clips.filter((c) => !existsSync(audioPathFor(c.audio)));
-  const skipped = clips.length - todo.length;
-
+  const todo = force ? jobs : jobs.filter((j) => !existsSync(audioPathFor(j.audio)));
+  const skipped = jobs.length - todo.length;
   if (todo.length === 0) {
     console.log(
-      `Nothing to do: all ${clips.length} clip(s) already have audio. Use --force to redo.`,
+      `Nothing to do: all ${jobs.length} item(s) already have audio. Use --force to redo.`,
     );
     return;
   }
 
-  const totalChars = todo.reduce((sum, c) => sum + c.text.length, 0);
+  const totalChars = todo.reduce(
+    (sum, j) => sum + j.segments.reduce((s, seg) => s + seg.text.length, 0),
+    0,
+  );
   console.log(
-    `Generating ${todo.length} clip(s) (${skipped} already done), ` +
+    `Generating ${todo.length} item(s) (${skipped} already done), ` +
       `~${totalChars} characters / credits on model "${MODEL_ID}".`,
   );
 
@@ -184,25 +296,18 @@ async function main(): Promise<void> {
   let ok = 0;
   const failures: string[] = [];
   for (let i = 0; i < todo.length; i += 1) {
-    const clip = todo[i]!;
-    const voice = voiceForClip(clip);
-    const tmpPath = join(AUDIO_DIR, `${clip.id}.tmp.mp3`);
+    const job = todo[i]!;
+    const outPath = audioPathFor(job.audio);
     try {
-      const mp3 = await textToMp3(clip.text, voice.id, apiKey);
-      // Stage to a temp file too (handy for debugging), then transcode.
-      await writeFile(tmpPath, mp3);
-      await mp3ToOgg(mp3, audioPathFor(clip.audio));
-      await rm(tmpPath, { force: true });
+      const mp3s: Buffer[] = [];
+      for (const seg of job.segments) mp3s.push(await textToMp3(seg.text, seg.voiceId, apiKey));
+      if (mp3s.length === 1) await oneSegmentToOgg(mp3s[0]!, outPath);
+      else await segmentsToOgg(mp3s, outPath, 0.45);
       ok += 1;
-      logger.info('Generated clip', {
-        id: clip.id,
-        voice: voice.name,
-        n: `${i + 1}/${todo.length}`,
-      });
+      logger.info('Generated', { id: job.id, kind: job.kind, n: `${i + 1}/${todo.length}` });
     } catch (err) {
-      await rm(tmpPath, { force: true }).catch(() => {});
-      failures.push(`${clip.id}: ${String(err)}`);
-      logger.error('Failed to generate clip', { id: clip.id, error: String(err) });
+      failures.push(`${job.id}: ${String(err)}`);
+      logger.error('Failed to generate', { id: job.id, error: String(err) });
     }
   }
 
