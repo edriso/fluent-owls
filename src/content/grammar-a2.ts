@@ -201,4 +201,20 @@ export const a2Grammar: GrammarRule[] = [
     note: `one = singular; ones = plural.`,
     audio: 'a2-gr-022.ogg',
   },
+  {
+    id: 'a2-gr-023',
+    rule: `Possessive adjectives: my, your, his, her`,
+    explanation: `Use these before a noun to show who something belongs to.`,
+    examples: ['This is my book.', 'Where is your bag?', 'That is her car.'],
+    note: `They go before a noun: "my book", not "mine book".`,
+    audio: 'a2-gr-023.ogg',
+  },
+  {
+    id: 'a2-gr-024',
+    rule: `Prepositions of movement: to, into, onto`,
+    explanation: `Use these for movement toward or into a place, not "in" or "on".`,
+    examples: ['Go to the door.', 'Come into the room.', 'Put it onto the table.'],
+    note: `Movement uses "to, into, onto"; position uses "at, in, on".`,
+    audio: 'a2-gr-024.ogg',
+  },
 ];

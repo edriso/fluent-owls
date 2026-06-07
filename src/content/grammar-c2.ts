@@ -261,4 +261,24 @@ export const c2Grammar: GrammarRule[] = [
     note: `A stressed "WILL" or "WOULD" can sound critical of the habit.`,
     audio: 'c2-gr-022.ogg',
   },
+  {
+    id: 'c2-gr-023',
+    rule: `The impersonal pronoun one`,
+    explanation: `In formal English, "one" means people in general, like a formal "you".`,
+    examples: ['One must be careful.', 'One never knows.', 'One should always check.'],
+    note: `Quite formal; in casual speech, use "you" instead.`,
+    audio: 'c2-gr-023.ogg',
+  },
+  {
+    id: 'c2-gr-024',
+    rule: `Emphasis with the very and no less than`,
+    explanation: `Use "the very" and "no less than" to add strong emphasis.`,
+    examples: [
+      'That is the very thing I need.',
+      'He gave no less than his best.',
+      'This is the very best.',
+    ],
+    note: `"the very" stresses exactness; "no less than" stresses degree.`,
+    audio: 'c2-gr-024.ogg',
+  },
 ];

@@ -257,4 +257,28 @@ export const c1Grammar: GrammarRule[] = [
     note: `They usually start the sentence and take a comma.`,
     audio: 'c1-gr-022.ogg',
   },
+  {
+    id: 'c1-gr-023',
+    rule: `Reporting verbs with prepositions`,
+    explanation: `Many reporting verbs need a fixed preposition before the next part.`,
+    examples: [
+      'She accused him of lying.',
+      'They blamed me for the delay.',
+      'He apologised for being late.',
+    ],
+    note: `Learn the pattern: accuse of, blame for, apologise for.`,
+    audio: 'c1-gr-023.ogg',
+  },
+  {
+    id: 'c1-gr-024',
+    rule: `Formal result linkers: thus, hence, thereby`,
+    explanation: `These formal words link a cause to its result, common in writing.`,
+    examples: [
+      'Prices rose; thus, sales fell.',
+      'It was late; hence the rush.',
+      'He saved hard, thereby affording the trip.',
+    ],
+    note: `Formal. "thus" and "hence" mean "so" or "therefore".`,
+    audio: 'c1-gr-024.ogg',
+  },
 ];

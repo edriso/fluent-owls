@@ -1,0 +1,88 @@
+/**
+ * A2 (elementary) idioms: everyday expressions that make casual speech sound
+ * natural, taught with a plain meaning and simple examples.
+ */
+import type { IdiomEntry } from '../types';
+
+export const a2Idioms: IdiomEntry[] = [
+  {
+    id: 'a2-idm-001',
+    idiom: 'grab a bite',
+    meaning: 'to get something quick to eat.',
+    examples: ['Let us grab a bite after work.', 'I need to grab a bite.'],
+    note: `Casual. "grab" here just means "get" quickly.`,
+    audio: 'a2-idm-001.ogg',
+  },
+  {
+    id: 'a2-idm-002',
+    idiom: 'hang out',
+    meaning: 'to spend relaxed time with people.',
+    examples: ['We hung out at the park.', 'Want to hang out this weekend?'],
+    note: `Very common and casual. "hang out with" friends.`,
+    audio: 'a2-idm-002.ogg',
+  },
+  {
+    id: 'a2-idm-003',
+    idiom: 'no big deal',
+    meaning: 'not important; nothing to worry about.',
+    examples: ['Do not worry, it is no big deal.', 'It was no big deal, really.'],
+    note: `Reassures someone. The opposite, "a big deal", means important.`,
+    audio: 'a2-idm-003.ogg',
+  },
+  {
+    id: 'a2-idm-004',
+    idiom: 'make up your mind',
+    meaning: 'to decide.',
+    examples: ['Please make up your mind.', 'I cannot make up my mind.'],
+    note: `Often used when someone is taking too long to choose.`,
+    audio: 'a2-idm-004.ogg',
+  },
+  {
+    id: 'a2-idm-005',
+    idiom: 'get along',
+    meaning: 'to have a friendly relationship.',
+    examples: ['They get along well.', 'I get along with my coworkers.'],
+    note: `"get along with" someone. Opposite: not get along.`,
+    audio: 'a2-idm-005.ogg',
+  },
+  {
+    id: 'a2-idm-006',
+    idiom: 'in a hurry',
+    meaning: 'needing to be quick; rushed.',
+    examples: ['Sorry, I am in a hurry.', 'Do not eat in a hurry.'],
+    note: `"in a rush" means the same thing.`,
+    audio: 'a2-idm-006.ogg',
+  },
+  {
+    id: 'a2-idm-007',
+    idiom: 'feel like',
+    meaning: 'to want to do or have something.',
+    examples: ['I feel like a coffee.', 'Do you feel like going out?'],
+    note: `Use "feel like" plus a noun or an -ing verb.`,
+    audio: 'a2-idm-007.ogg',
+  },
+  {
+    id: 'a2-idm-008',
+    idiom: 'a piece of cake',
+    meaning: 'very easy.',
+    examples: ['The test was a piece of cake.', 'Do not worry, it is a piece of cake.'],
+    note: `Casual and positive. Means something is no trouble at all.`,
+    audio: 'a2-idm-008.ogg',
+  },
+  {
+    id: 'a2-idm-009',
+    idiom: 'give it a try',
+    meaning: 'to attempt something.',
+    examples: ['Just give it a try.', 'I will give it a try.'],
+    note: `Encouraging. "give it a go" means the same.`,
+    audio: 'a2-idm-009.ogg',
+  },
+  {
+    id: 'a2-idm-010',
+    idiom: 'on time',
+    meaning: 'at the right time; not late.',
+    examples: ['The bus came on time.', 'Please be on time.'],
+    note: `"on time" is punctual; "in time" means before a deadline.`,
+    audio: 'a2-idm-010.ogg',
+  },
+];

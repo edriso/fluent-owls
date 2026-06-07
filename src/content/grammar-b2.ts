@@ -253,4 +253,24 @@ export const b2Grammar: GrammarRule[] = [
     note: `Common with give, offer, send, tell; the person often comes first.`,
     audio: 'b2-gr-022.ogg',
   },
+  {
+    id: 'b2-gr-023',
+    rule: `Present continuous for arrangements`,
+    explanation: `Use the present continuous for fixed future plans, often with a time.`,
+    examples: [
+      "I'm meeting Sam at six.",
+      "We're flying on Monday.",
+      "She's seeing the doctor tomorrow.",
+    ],
+    note: `Use it when the plan is arranged, not just an idea.`,
+    audio: 'b2-gr-023.ogg',
+  },
+  {
+    id: 'b2-gr-024',
+    rule: `few and little vs a few and a little`,
+    explanation: `"few/little" sound negative (not enough); "a few/a little" sound positive (some).`,
+    examples: ['Few people came.', 'There is little time.', 'We have plenty of food.'],
+    note: `"a few/a little" = some; "few/little" = almost none.`,
+    audio: 'b2-gr-024.ogg',
+  },
 ];

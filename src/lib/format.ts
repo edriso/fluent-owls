@@ -3,6 +3,7 @@ import type {
   Level,
   LeveledDialogue,
   LeveledGrammarRule,
+  LeveledIdiomEntry,
   LeveledMonologue,
   LeveledNativePhrase,
   LeveledPrompt,
@@ -255,6 +256,27 @@ export function buildPromptCaption(prompt: LeveledPrompt): string {
     `🎯 ${prompt.note}`,
   ].join('\n');
   return ltrIsolate(caption);
+}
+
+/**
+ * Build the HTML caption for an idiom entry voice message: a header with the
+ * level, the idiom in bold, its plain meaning, the example sentences (which the
+ * audio reads aloud), and a usage tip. Posted with parse_mode HTML (see post.ts),
+ * so the dynamic fields are HTML-escaped here.
+ */
+export function buildIdiomMessage(entry: LeveledIdiomEntry): string {
+  const badge = LEVEL_BADGE[entry.level] ?? entry.level.toUpperCase();
+  const examples = entry.examples.map((e) => `• ${escapeHtml(e)}`);
+  return [
+    `💡 <b>Idiom</b>  ·  ${badge}`,
+    `<b>${escapeHtml(entry.idiom)}</b>`,
+    `<i>${escapeHtml(entry.meaning)}</i>`,
+    '',
+    '<b>Examples:</b>',
+    ...examples,
+    '',
+    `🎯 ${escapeHtml(entry.note)}`,
+  ].join('\n');
 }
 
 /**

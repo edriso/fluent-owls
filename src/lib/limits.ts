@@ -96,3 +96,13 @@ export const VOCAB_MIN_EXAMPLES = 2;
 export const VOCAB_MAX_EXAMPLES = 3;
 /** Maximum length of a single vocabulary example sentence. */
 export const VOCAB_EXAMPLE_MAX_CHARS = 160;
+
+/** Maximum length of an idiom (the expression itself). */
+export const IDIOM_PHRASE_MAX_CHARS = 60;
+/** Maximum length of an idiom's plain meaning. */
+export const IDIOM_MEANING_MAX_CHARS = 160;
+/** Fewest / most example sentences per idiom entry. */
+export const IDIOM_MIN_EXAMPLES = 2;
+export const IDIOM_MAX_EXAMPLES = 3;
+/** Maximum length of a single idiom example sentence. */
+export const IDIOM_EXAMPLE_MAX_CHARS = 160;

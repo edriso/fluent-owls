@@ -25,9 +25,11 @@ import { ALL_MONOLOGUES } from '../src/content/monologues';
 import { ALL_PROMPTS } from '../src/content/prompts';
 import { ALL_PRONUNCIATION } from '../src/content/pronunciation';
 import { ALL_VOCABULARY } from '../src/content/vocabulary';
+import { ALL_IDIOMS } from '../src/content/idioms';
 import {
   buildDialogueCaption,
   buildGrammarCaption,
+  buildIdiomMessage,
   buildMonologueCaption,
   buildPhraseMessage,
   buildPromptCaption,
@@ -46,6 +48,11 @@ import {
   GRAMMAR_EXAMPLE_MAX_CHARS,
   GRAMMAR_MAX_EXAMPLES,
   GRAMMAR_MIN_EXAMPLES,
+  IDIOM_EXAMPLE_MAX_CHARS,
+  IDIOM_MAX_EXAMPLES,
+  IDIOM_MEANING_MAX_CHARS,
+  IDIOM_MIN_EXAMPLES,
+  IDIOM_PHRASE_MAX_CHARS,
   MONOLOGUE_MAX_CHARS,
   NOTE_MAX_CHARS,
   PHRASE_MAX_CHARS,
@@ -320,6 +327,41 @@ for (const v of ALL_VOCABULARY) {
   if (!existsSync(audioPathFor(v.audio))) missingAudio += 1;
 }
 
+// --- Idioms ----------------------------------------------------------------
+const seenIdiom = new Set<string>();
+const seenIdiomText = new Set<string>();
+
+for (const it of ALL_IDIOMS) {
+  if (seenIdiom.has(it.id)) add(it.id, 'id', 'duplicate id');
+  seenIdiom.add(it.id);
+  if (!it.id.startsWith(`${it.level}-idm-`)) add(it.id, 'id', `must start with "${it.level}-idm-"`);
+
+  // Two entries for the same idiom waste a rotation slot.
+  const normIdiom = it.idiom.trim().toLowerCase();
+  if (seenIdiomText.has(normIdiom)) add(it.id, 'idiom', `duplicate idiom "${it.idiom}"`);
+  seenIdiomText.add(normIdiom);
+
+  checkText(it.id, 'idiom', it.idiom, IDIOM_PHRASE_MAX_CHARS);
+  checkText(it.id, 'meaning', it.meaning, IDIOM_MEANING_MAX_CHARS);
+  checkText(it.id, 'note', it.note, NOTE_MAX_CHARS);
+
+  if (it.examples.length < IDIOM_MIN_EXAMPLES || it.examples.length > IDIOM_MAX_EXAMPLES) {
+    add(
+      it.id,
+      'examples',
+      `must have ${IDIOM_MIN_EXAMPLES}-${IDIOM_MAX_EXAMPLES}, found ${it.examples.length}`,
+    );
+  }
+  it.examples.forEach((ex, i) => checkText(it.id, `examples[${i}]`, ex, IDIOM_EXAMPLE_MAX_CHARS));
+
+  if (it.audio !== `${it.id}.ogg`)
+    add(it.id, 'audio', `should be "${it.id}.ogg", got "${it.audio}"`);
+  const icap = buildIdiomMessage(it).length;
+  if (icap > CAPTION_MAX_CHARS)
+    add(it.id, 'caption', `rendered caption ${icap} > ${CAPTION_MAX_CHARS}`);
+  if (!existsSync(audioPathFor(it.audio))) missingAudio += 1;
+}
+
 // --- Summary ---------------------------------------------------------------
 for (const level of LEVELS) {
   const sh = ALL_SHADOWING.filter((c) => c.level === level).length;
@@ -330,12 +372,13 @@ for (const level of LEVELS) {
   const pr = ALL_PROMPTS.filter((p) => p.level === level).length;
   const pn = ALL_PRONUNCIATION.filter((d) => d.level === level).length;
   const vc = ALL_VOCABULARY.filter((v) => v.level === level).length;
+  const id = ALL_IDIOMS.filter((i) => i.level === level).length;
   console.log(
-    `  ${level.toUpperCase()}: ${sh} shadow, ${dl} dialogue, ${gr} grammar, ${mn} monologue, ${pr} prompt, ${pn} pron, ${vc} vocab, ${ph} phrase`,
+    `  ${level.toUpperCase()}: ${sh} shadow, ${dl} dialogue, ${gr} grammar, ${mn} monologue, ${pr} prompt, ${pn} pron, ${vc} vocab, ${id} idiom, ${ph} phrase`,
   );
 }
 console.log(
-  `Total: ${ALL_SHADOWING.length} shadowing, ${ALL_DIALOGUES.length} dialogues, ${ALL_GRAMMAR.length} grammar, ${ALL_MONOLOGUES.length} monologues, ${ALL_PROMPTS.length} prompts, ${ALL_PRONUNCIATION.length} pronunciation, ${ALL_VOCABULARY.length} vocabulary, ${ALL_PHRASES.length} phrases`,
+  `Total: ${ALL_SHADOWING.length} shadowing, ${ALL_DIALOGUES.length} dialogues, ${ALL_GRAMMAR.length} grammar, ${ALL_MONOLOGUES.length} monologues, ${ALL_PROMPTS.length} prompts, ${ALL_PRONUNCIATION.length} pronunciation, ${ALL_VOCABULARY.length} vocabulary, ${ALL_IDIOMS.length} idioms, ${ALL_PHRASES.length} phrases`,
 );
 
 // Audio cost estimate. ElevenLabs bills ~1 credit per character on the
@@ -353,6 +396,10 @@ const totalAudioChars =
   ALL_VOCABULARY.reduce(
     (sum, v) => sum + v.word.length + v.examples.reduce((s, e) => s + e.length, 0),
     0,
+  ) +
+  ALL_IDIOMS.reduce(
+    (sum, it) => sum + it.idiom.length + it.examples.reduce((s, e) => s + e.length, 0),
+    0,
   );
 console.log(
   `Audio: ~${totalAudioChars} characters total (~${totalAudioChars} credits to generate every clip once on multilingual v2).`,
@@ -366,6 +413,7 @@ const totalAudioItems =
   ALL_PROMPTS.length +
   ALL_PRONUNCIATION.length +
   ALL_VOCABULARY.length +
+  ALL_IDIOMS.length +
   ALL_PHRASES.length;
 const requireAudio = process.argv.slice(2).includes('--require-audio');
 if (missingAudio > 0) {

@@ -237,4 +237,20 @@ export const b1Grammar: GrammarRule[] = [
     note: `Present in the time clause, "will" in the main clause.`,
     audio: 'b1-gr-022.ogg',
   },
+  {
+    id: 'b1-gr-023',
+    rule: `make vs do`,
+    explanation: `"make" and "do" are easy to confuse; each pairs with set nouns.`,
+    examples: ['make a decision', 'do the homework', 'make a mistake'],
+    note: `Learn them as fixed pairs: "make a plan", "do the dishes".`,
+    audio: 'b1-gr-023.ogg',
+  },
+  {
+    id: 'b1-gr-024',
+    rule: `say vs tell`,
+    explanation: `"tell" is followed by a person; "say" usually is not.`,
+    examples: ['She said hello.', 'He told me a story.', 'Tell me the truth.'],
+    note: `"tell someone", but "say something" (to someone).`,
+    audio: 'b1-gr-024.ogg',
+  },
 ];

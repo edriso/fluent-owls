@@ -45,6 +45,7 @@ import { ALL_PROMPTS } from '../src/content/prompts';
 import { ALL_PRONUNCIATION } from '../src/content/pronunciation';
 import { ALL_PHRASES } from '../src/content/phrases';
 import { ALL_VOCABULARY } from '../src/content/vocabulary';
+import { ALL_IDIOMS } from '../src/content/idioms';
 import { LEVELS, type Level } from '../src/types';
 
 loadEnv();
@@ -98,7 +99,8 @@ type Kind =
   | 'prompt'
   | 'pron'
   | 'phrase'
-  | 'vocab';
+  | 'vocab'
+  | 'idiom';
 /** `gap` is the silence (seconds) between segments. Prompts use a long pause so
  *  the learner can answer; everything else uses a short breath. */
 type Job = {
@@ -120,6 +122,7 @@ const KIND_TOKENS: Record<string, Kind> = {
   pronunciation: 'pron',
   phrases: 'phrase',
   vocabulary: 'vocab',
+  idioms: 'idiom',
 };
 
 /** Pause (seconds) the learner gets to answer, between a prompt question and the model answer. */
@@ -334,6 +337,18 @@ function allJobs(): Job[] {
       ...v.examples.map((text) => ({ text, voiceId: voiceA(v.level) })),
     ],
   }));
+  // Idioms: the idiom read aloud, then the example sentences, in one voice with
+  // a small gap. Posted as a voice message with an HTML caption.
+  const idiom: Job[] = ALL_IDIOMS.map((it) => ({
+    id: it.id,
+    level: it.level,
+    audio: it.audio,
+    kind: 'idiom',
+    segments: [
+      { text: it.idiom, voiceId: voiceA(it.level) },
+      ...it.examples.map((text) => ({ text, voiceId: voiceA(it.level) })),
+    ],
+  }));
   return [
     ...shadow,
     ...dialogue,
@@ -343,6 +358,7 @@ function allJobs(): Job[] {
     ...pron,
     ...phrase,
     ...vocab,
+    ...idiom,
   ];
 }
 

@@ -7,6 +7,7 @@ import type {
   LeveledGrammarRule,
   LeveledMonologue,
   LeveledNativePhrase,
+  LeveledIdiomEntry,
   LeveledPrompt,
   LeveledPronunciationDrill,
   LeveledQuestion,
@@ -16,6 +17,7 @@ import type {
 import {
   buildDialogueCaption,
   buildGrammarCaption,
+  buildIdiomMessage,
   buildMonologueCaption,
   buildPhraseMessage,
   buildPrompt,
@@ -201,6 +203,21 @@ export async function postPrompt(
     chatId: opts.chatId,
     logName: 'question prompt',
     logFields: { id: prompt.id, level: prompt.level },
+  });
+}
+
+/** Post one idiom as a voice message (idiom + examples read aloud, HTML caption). */
+export async function postIdiom(
+  bot: Bot<Context>,
+  entry: LeveledIdiomEntry,
+  opts: PostOpts = {},
+): Promise<number | null> {
+  return sendVoiceFile(bot, entry.audio, buildIdiomMessage(entry), {
+    silent: opts.silent,
+    chatId: opts.chatId,
+    parseMode: 'HTML',
+    logName: 'idiom entry',
+    logFields: { id: entry.id, level: entry.level },
   });
 }
 

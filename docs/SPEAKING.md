@@ -217,20 +217,21 @@ pnpm send-test phrase    # optional: preview the phrase slot
 
 Like the quizzes, the picker is `dayOfYearIn(today, TZ) % pool.length`. The
 shadowing and phrase slots pool every level, so the cycle length equals the
-total number of items, at one post a day. The bank ships with 60 shadowing clips
-per level (360 total, about a year before a repeat), 48 dialogues per level
-(288), 22 grammar points per level (132, the daily grammar slot, about 4.5
+total number of items, at one post a day. The bank ships with 66 shadowing clips
+per level (396 total, well over a year before a repeat), 48 dialogues per level
+(288), 24 grammar points per level (144, the daily grammar slot, about 5
 months), and 20 phrases per level (120, now voice messages with audio).
 Monologues (34 per level, 204), question prompts (40 per level, 240),
-pronunciation drills (20 per level, 120), and vocabulary entries (20 per level, 120) are on-demand only. Add more to lengthen any cycle.
+pronunciation drills (20 per level, 120), vocabulary entries (28 per level, 168),
+and idioms (10 per level, 60) are on-demand only. Add more to lengthen any cycle.
 Every post shows its level, so mixing levels day to day is fine: learners
 self-select.
 
 Audio is cheap: run `pnpm audit-speaking` to see the total character count
 (roughly 1 ElevenLabs credit per character on the multilingual model). The full
-bank (1,584 voice clips, every speaking type including phrases, pronunciation,
-and vocabulary) is around 138k credits to generate once (spread across months as
-you add content), and the running bot never pays again:
+bank (1,740 voice clips, every speaking type including phrases, pronunciation,
+vocabulary, and idioms) is around 148k credits to generate once (spread across
+months as you add content), and the running bot never pays again:
 the clips are committed and only ever read. Adding content and re-running
 `pnpm generate-audio` only generates the new items (it is idempotent). Each CEFR
 level has its own American voice (speaker A) plus a contrasting partner voice for

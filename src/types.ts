@@ -417,3 +417,38 @@ export type LeveledVocabularyEntry = VocabularyEntry & {
   /** The CEFR level this entry belongs to. */
   level: Level;
 };
+
+/**
+ * One idiom entry: a common figurative expression, with a plain meaning, example
+ * sentences, and a usage tip (register, or a typical situation). Idioms are what
+ * make speech sound natural and native rather than merely correct, but their
+ * meaning cannot be guessed from the words, so each is taught directly. Posted as
+ * a voice message whose audio reads the idiom and the examples aloud, with the
+ * same text in an HTML caption, so learners hear how it is really said.
+ *
+ * Constraints (validated by scripts/audit-speaking.ts and the unit tests):
+ *  - idiom, meaning, and note non-empty within their limits
+ *  - 2 to 3 non-empty example sentences, each within its limit (read aloud)
+ *  - the rendered caption is <= CAPTION_MAX_CHARS
+ *  - no em-dashes anywhere (house style)
+ */
+export type IdiomEntry = {
+  /** Stable, unique id. Starts with the level and an "idm" marker, e.g. "b1-idm-001". */
+  id: string;
+  /** The idiom itself, e.g. "break the ice". */
+  idiom: string;
+  /** A plain, junior-friendly meaning. */
+  meaning: string;
+  /** Two or three example sentences. The audio reads the idiom, then these. */
+  examples: string[];
+  /** One usage tip: register (formal/casual), or a typical situation. */
+  note: string;
+  /** File name of the committed OGG/Opus clip, e.g. "b1-idm-001.ogg". */
+  audio: string;
+};
+
+/** An idiom entry tagged with the CEFR level it was loaded from. */
+export type LeveledIdiomEntry = IdiomEntry & {
+  /** The CEFR level this entry belongs to. */
+  level: Level;
+};

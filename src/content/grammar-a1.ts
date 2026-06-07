@@ -191,4 +191,20 @@ export const a1Grammar: GrammarRule[] = [
     note: `These come before the verb: "She is", not "Her is".`,
     audio: 'a1-gr-022.ogg',
   },
+  {
+    id: 'a1-gr-023',
+    rule: `Adjectives come before the noun`,
+    explanation: `In English, the adjective goes before the noun it describes.`,
+    examples: ['a big house', 'a red car', 'a good idea'],
+    note: `Say "a big house", not "a house big".`,
+    audio: 'a1-gr-023.ogg',
+  },
+  {
+    id: 'a1-gr-024',
+    rule: `these and those`,
+    explanation: `"these" and "those" are the plurals of "this" and "that".`,
+    examples: ['these books', 'those cars', 'I like these.'],
+    note: `this/that are singular; these/those are plural.`,
+    audio: 'a1-gr-024.ogg',
+  },
 ];
