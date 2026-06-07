@@ -56,3 +56,18 @@ export const DIALOGUE_MIN_TURNS = 2;
 export const DIALOGUE_MAX_TURNS = 4;
 /** Maximum length of a single dialogue line. */
 export const DIALOGUE_TURN_MAX_CHARS = 120;
+
+/** Maximum length of a grammar rule title. */
+export const RULE_MAX_CHARS = 80;
+/** Maximum length of a grammar explanation. */
+export const EXPLANATION_LINE_MAX_CHARS = 200;
+/** Fewest / most example sentences per grammar rule. */
+export const GRAMMAR_MIN_EXAMPLES = 2;
+export const GRAMMAR_MAX_EXAMPLES = 3;
+/** Maximum length of a single grammar example sentence. */
+export const GRAMMAR_EXAMPLE_MAX_CHARS = 120;
+
+/** Maximum length of a monologue topic label. */
+export const TOPIC_MAX_CHARS = 70;
+/** Maximum length of a monologue passage (kept to a short, repeatable model). */
+export const MONOLOGUE_MAX_CHARS = 600;

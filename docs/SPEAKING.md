@@ -8,6 +8,12 @@ Alongside the quizzes, the bot posts two speaking exercises each day:
 - **Role-play dialogues** — a short two-voice exchange (2 to 4 turns) the learner
   shadows on both sides, for real-conversation practice. One file per level:
   `src/content/dialogues-a1.ts` ... `dialogues-c2.ts`.
+- **Grammar points** — a short rule, a plain explanation, and example sentences
+  the audio reads aloud (text plus sound). One file per level:
+  `src/content/grammar-a1.ts` ... `grammar-c2.ts`.
+- **Monologues** — a longer model passage to listen to and then retell in your
+  own words. On-demand only (the /monologue command), not in the daily set. One
+  file per level: `src/content/monologues-a1.ts` ... `monologues-c2.ts`.
 - **"Say it like a native" phrases** — ready-made chunks for real situations
   (text only, no audio). One file per level: `src/content/phrases-a1.ts` ...
   `phrases-c2.ts`.
@@ -75,6 +81,40 @@ Authoring checklist:
 The two voices are chosen automatically in `scripts/generate-audio.ts` (speaker
 A is the level's voice, speaker B is a contrasting partner voice). Each turn is
 synthesized separately and stitched together with a short gap.
+
+## Grammar points
+
+```ts
+type GrammarRule = {
+  id: string; // "b1-gr-013", unique, starts with the level and "-gr-"
+  rule: string; // short title, e.g. "Present perfect for experience"
+  explanation: string; // one or two plain, junior-friendly sentences
+  examples: string[]; // 2 or 3 example sentences (these are read aloud)
+  note: string; // a tip or a common mistake to avoid
+  audio: string; // must be "<id>.ogg"
+};
+```
+
+Authoring checklist: keep the rule small and the explanation plain; give 2 or 3
+natural examples (the audio reads them, with a small gap between each); point out
+the common mistake in the note; no em-dashes.
+
+## Monologues (model passages)
+
+```ts
+type Monologue = {
+  id: string; // "b1-mn-013", unique, starts with the level and "-mn-"
+  topic: string; // short label, e.g. "Describing your hometown"
+  text: string; // a few sentences of clear, natural English (the script)
+  note: string; // what to notice or aim for when retelling
+  audio: string; // must be "<id>.ogg"
+};
+```
+
+Authoring checklist: write clear, concise, native-sounding English; keep it short
+enough to retell (well under the limit in `limits.ts`); scale length and richness
+by level; no em-dashes. Monologues are pulled with the /monologue command, not
+posted in the daily batch.
 
 ## Native phrases
 
@@ -149,9 +189,10 @@ Like the quizzes, the picker is `dayOfYearIn(today, TZ) % pool.length`. The
 shadowing and phrase slots pool every level, so the cycle length equals the
 total number of items, at one post a day. The bank ships with 40 shadowing clips
 per level (240 total, about 8 months before a repeat), 20 dialogues per level
-(120 total, about 4 months), and 20 phrases per level (120 total, about 4
-months). Add more to lengthen the cycle. Every post shows its level, so mixing
-levels day to day is fine: learners self-select.
+(120), 8 grammar points per level (48, the daily grammar slot, about 7 weeks),
+and 20 phrases per level (120). Monologues (6 per level, 36) are on-demand only.
+Add more to lengthen any cycle. Every post shows its level, so mixing levels day
+to day is fine: learners self-select.
 
 Audio is cheap: run `pnpm audit-speaking` to see the total character count
 (roughly 1 ElevenLabs credit per character on the multilingual model). Even the

@@ -227,3 +227,67 @@ export type LeveledDialogue = Dialogue & {
   /** The CEFR level this dialogue belongs to. */
   level: Level;
 };
+
+/**
+ * One grammar point: a short rule, a plain-English explanation, and two or three
+ * example sentences. Posted as a voice message whose audio is the examples read
+ * aloud, so the learner both reads the rule and HEARS it used correctly (text
+ * plus sound in one post). Audio is generated once and committed, like the other
+ * voice clips.
+ *
+ * Constraints (validated by scripts/audit-speaking.ts and the unit tests):
+ *  - rule, explanation, and 2 to 3 non-empty examples, each within its limit
+ *  - the rendered caption is <= CAPTION_MAX_CHARS
+ *  - no em-dashes anywhere (house style)
+ */
+export type GrammarRule = {
+  /** Stable, unique id. Starts with the level and a "gr" marker, e.g. "b1-gr-001". */
+  id: string;
+  /** Short rule title, e.g. "Present perfect for life experience". */
+  rule: string;
+  /** Plain, junior-friendly explanation in one or two short sentences. */
+  explanation: string;
+  /** Two or three example sentences. These are what the audio reads aloud. */
+  examples: string[];
+  /** One concrete tip or common mistake to avoid. */
+  note: string;
+  /** File name of the committed OGG/Opus clip, e.g. "b1-gr-001.ogg". */
+  audio: string;
+};
+
+/** A grammar rule tagged with the CEFR level it was loaded from. */
+export type LeveledGrammarRule = GrammarRule & {
+  /** The CEFR level this rule belongs to. */
+  level: Level;
+};
+
+/**
+ * One model passage (a "monologue"): a few sentences of clear, natural English
+ * on a useful everyday topic. The learner listens, then says it again in their
+ * own words (a retell), which builds the ability to speak at length. Longer than
+ * a shadowing line on purpose, so it trains stamina and flow. Single voice.
+ *
+ * Constraints (validated by scripts/audit-speaking.ts and the unit tests):
+ *  - topic and note non-empty within their limits
+ *  - `text` non-empty and <= MONOLOGUE_MAX_CHARS
+ *  - the rendered caption is <= CAPTION_MAX_CHARS
+ *  - no em-dashes anywhere (house style)
+ */
+export type Monologue = {
+  /** Stable, unique id. Starts with the level and an "mn" marker, e.g. "b1-mn-001". */
+  id: string;
+  /** Short topic label, e.g. "Describing your hometown". */
+  topic: string;
+  /** The passage to listen to and then retell. Also the script the audio uses. */
+  text: string;
+  /** One concrete tip on what to notice or aim for when retelling. */
+  note: string;
+  /** File name of the committed OGG/Opus clip, e.g. "b1-mn-001.ogg". */
+  audio: string;
+};
+
+/** A monologue tagged with the CEFR level it was loaded from. */
+export type LeveledMonologue = Monologue & {
+  /** The CEFR level this monologue belongs to. */
+  level: Level;
+};

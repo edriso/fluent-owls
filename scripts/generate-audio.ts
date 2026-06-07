@@ -26,9 +26,8 @@
  * Run modes (combine freely):
  *   pnpm generate-audio              every item that has no .ogg yet
  *   pnpm generate-audio b1 c1        only these levels
- *   pnpm generate-audio shadowing    only shadowing clips
- *   pnpm generate-audio dialogues    only dialogues
- *   pnpm generate-audio --sample     one shadow + one dialogue per level (audition)
+ *   pnpm generate-audio shadowing    only that kind (also: dialogues, grammar, monologues)
+ *   pnpm generate-audio --sample     one of each kind per level (audition)
  *   pnpm generate-audio --force      regenerate, even items that already exist
  */
 import { spawn } from 'node:child_process';
@@ -39,6 +38,8 @@ import { loadEnv, logger } from 'telegram-broadcast-kit';
 import { AUDIO_DIR, audioPathFor } from '../src/content/audio-path';
 import { ALL_SHADOWING } from '../src/content/shadowing';
 import { ALL_DIALOGUES } from '../src/content/dialogues';
+import { ALL_GRAMMAR } from '../src/content/grammar';
+import { ALL_MONOLOGUES } from '../src/content/monologues';
 import { LEVELS, type Level } from '../src/types';
 
 loadEnv();
@@ -84,12 +85,15 @@ function voiceB(level: Level): string {
 
 /** A unit of audio to generate: one or more spoken segments, written to one file. */
 type Segment = { text: string; voiceId: string };
-type Job = {
-  id: string;
-  level: Level;
-  audio: string;
-  kind: 'shadow' | 'dialogue';
-  segments: Segment[];
+type Kind = 'shadow' | 'dialogue' | 'grammar' | 'monologue';
+type Job = { id: string; level: Level; audio: string; kind: Kind; segments: Segment[] };
+
+/** Map a command-line token to the content kind it filters to. */
+const KIND_TOKENS: Record<string, Kind> = {
+  shadowing: 'shadow',
+  dialogues: 'dialogue',
+  grammar: 'grammar',
+  monologues: 'monologue',
 };
 
 /** Confirm ffmpeg is available, with a friendly message if it is not. */
@@ -238,7 +242,23 @@ function allJobs(): Job[] {
       voiceId: t.speaker === 'A' ? voiceA(d.level) : voiceB(d.level),
     })),
   }));
-  return [...shadow, ...dialogue];
+  // Grammar: the example sentences, read with the level's voice (a small gap
+  // between them). Monologues: the passage in one voice.
+  const grammar: Job[] = ALL_GRAMMAR.map((g) => ({
+    id: g.id,
+    level: g.level,
+    audio: g.audio,
+    kind: 'grammar',
+    segments: g.examples.map((ex) => ({ text: ex, voiceId: voiceA(g.level) })),
+  }));
+  const monologue: Job[] = ALL_MONOLOGUES.map((m) => ({
+    id: m.id,
+    level: m.level,
+    audio: m.audio,
+    kind: 'monologue',
+    segments: [{ text: m.text, voiceId: voiceA(m.level) }],
+  }));
+  return [...shadow, ...dialogue, ...grammar, ...monologue];
 }
 
 async function main(): Promise<void> {
@@ -254,12 +274,10 @@ async function main(): Promise<void> {
   const force = args.includes('--force');
   const sample = args.includes('--sample');
   const levelFilter = args.filter((a): a is Level => (LEVELS as readonly string[]).includes(a));
-  const onlyShadow = args.includes('shadowing');
-  const onlyDialogue = args.includes('dialogues');
+  const kindFilter = args.map((a) => KIND_TOKENS[a]).filter((k): k is Kind => Boolean(k));
 
   let jobs = allJobs();
-  if (onlyShadow && !onlyDialogue) jobs = jobs.filter((j) => j.kind === 'shadow');
-  if (onlyDialogue && !onlyShadow) jobs = jobs.filter((j) => j.kind === 'dialogue');
+  if (kindFilter.length > 0) jobs = jobs.filter((j) => kindFilter.includes(j.kind));
   if (levelFilter.length > 0) jobs = jobs.filter((j) => levelFilter.includes(j.level));
   if (sample) {
     // One shadow and one dialogue per level, to audition the voices.

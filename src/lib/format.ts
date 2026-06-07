@@ -2,6 +2,8 @@ import { ltrIsolate } from 'telegram-broadcast-kit';
 import type {
   Level,
   LeveledDialogue,
+  LeveledGrammarRule,
+  LeveledMonologue,
   LeveledNativePhrase,
   LeveledQuestion,
   LeveledShadowingClip,
@@ -152,6 +154,47 @@ export function buildDialogueCaption(dialogue: LeveledDialogue): string {
     '',
     '▶️ Listen, then shadow BOTH roles out loud. Copy the rhythm and the natural replies.',
     `🎯 ${dialogue.note}`,
+  ].join('\n');
+  return ltrIsolate(caption);
+}
+
+/**
+ * Build the caption for a grammar voice message: the rule, a plain explanation,
+ * the example sentences (which the audio reads aloud), and a tip. Plain text in
+ * an LTR isolate, like the other captions.
+ */
+export function buildGrammarCaption(rule: LeveledGrammarRule): string {
+  const badge = LEVEL_BADGE[rule.level] ?? rule.level.toUpperCase();
+  const examples = rule.examples.map((e) => `• ${e}`);
+  const caption = [
+    `📘 Grammar  ·  ${badge}`,
+    rule.rule,
+    '',
+    rule.explanation,
+    '',
+    'Examples:',
+    ...examples,
+    '',
+    `🎯 ${rule.note}`,
+  ].join('\n');
+  return ltrIsolate(caption);
+}
+
+/**
+ * Build the caption for a monologue voice message: a header with the level and
+ * topic, the passage in quotes, then the listen-and-retell instruction and a
+ * tip. Plain text in an LTR isolate.
+ */
+export function buildMonologueCaption(monologue: LeveledMonologue): string {
+  const badge = LEVEL_BADGE[monologue.level] ?? monologue.level.toUpperCase();
+  const caption = [
+    `🎙️ Listen & retell  ·  ${badge}`,
+    `💬 ${monologue.topic}`,
+    '',
+    `"${monologue.text}"`,
+    '',
+    '▶️ Listen, then say it again in your own words. Aim for smooth, clear flow.',
+    `🎯 ${monologue.note}`,
   ].join('\n');
   return ltrIsolate(caption);
 }

@@ -1,21 +1,32 @@
 import { InputFile, type Bot, type Context } from 'grammy';
-import { logger, sendPoll } from 'telegram-broadcast-kit';
+import { logger, sendPoll, type ChatId } from 'telegram-broadcast-kit';
 import { config } from '../config';
 import { audioPathFor } from '../content/audio-path';
 import type {
   LeveledDialogue,
+  LeveledGrammarRule,
+  LeveledMonologue,
   LeveledNativePhrase,
   LeveledQuestion,
   LeveledShadowingClip,
 } from '../types';
 import {
   buildDialogueCaption,
+  buildGrammarCaption,
+  buildMonologueCaption,
   buildPhraseMessage,
   buildPrompt,
   buildShadowingCaption,
   clampExplanation,
   toPollOptions,
 } from './format';
+
+/**
+ * Common options for every poster. `chatId` defaults to the channel; the
+ * on-demand DM commands pass the requester's chat id instead, so the same
+ * posters serve both the daily channel batch and a private reply.
+ */
+type PostOpts = { silent?: boolean; chatId?: ChatId };
 
 /**
  * Post one question as a native Telegram quiz poll, via the shared kernel's
@@ -33,7 +44,7 @@ import {
 export async function postQuizPoll(
   bot: Bot<Context>,
   question: LeveledQuestion,
-  opts: { silent?: boolean } = {},
+  opts: PostOpts = {},
 ): Promise<number | null> {
   // toPollOptions enforces fluent-owls' own count/length rules and throws on a
   // bad bank (caught in dev, never silently shipped); the kernel re-checks the
@@ -42,7 +53,7 @@ export async function postQuizPoll(
   const options = toPollOptions(question.options).map((o) => o.text);
   const messageId = await sendPoll(
     bot,
-    config.channelChatId,
+    opts.chatId ?? config.channelChatId,
     {
       question: buildPrompt(question),
       options,
@@ -87,11 +98,11 @@ async function sendVoiceFile(
   bot: Bot<Context>,
   audioFile: string,
   caption: string,
-  opts: { silent?: boolean; logName: string; logFields: Record<string, unknown> },
+  opts: { silent?: boolean; chatId?: ChatId; logName: string; logFields: Record<string, unknown> },
 ): Promise<number | null> {
   try {
     const message = await bot.api.sendVoice(
-      config.channelChatId,
+      opts.chatId ?? config.channelChatId,
       new InputFile(audioPathFor(audioFile)),
       {
         caption,
@@ -114,10 +125,11 @@ async function sendVoiceFile(
 export async function postVoice(
   bot: Bot<Context>,
   clip: LeveledShadowingClip,
-  opts: { silent?: boolean } = {},
+  opts: PostOpts = {},
 ): Promise<number | null> {
   return sendVoiceFile(bot, clip.audio, buildShadowingCaption(clip), {
     silent: opts.silent,
+    chatId: opts.chatId,
     logName: 'shadowing voice',
     logFields: { id: clip.id, level: clip.level, focus: clip.focus },
   });
@@ -127,12 +139,41 @@ export async function postVoice(
 export async function postDialogue(
   bot: Bot<Context>,
   dialogue: LeveledDialogue,
-  opts: { silent?: boolean } = {},
+  opts: PostOpts = {},
 ): Promise<number | null> {
   return sendVoiceFile(bot, dialogue.audio, buildDialogueCaption(dialogue), {
     silent: opts.silent,
+    chatId: opts.chatId,
     logName: 'role-play dialogue',
     logFields: { id: dialogue.id, level: dialogue.level, turns: dialogue.turns.length },
+  });
+}
+
+/** Post one grammar rule as a voice message (rule + examples read aloud + tip). */
+export async function postGrammar(
+  bot: Bot<Context>,
+  rule: LeveledGrammarRule,
+  opts: PostOpts = {},
+): Promise<number | null> {
+  return sendVoiceFile(bot, rule.audio, buildGrammarCaption(rule), {
+    silent: opts.silent,
+    chatId: opts.chatId,
+    logName: 'grammar',
+    logFields: { id: rule.id, level: rule.level },
+  });
+}
+
+/** Post one monologue as a voice message (the passage + listen-and-retell tip). */
+export async function postMonologue(
+  bot: Bot<Context>,
+  monologue: LeveledMonologue,
+  opts: PostOpts = {},
+): Promise<number | null> {
+  return sendVoiceFile(bot, monologue.audio, buildMonologueCaption(monologue), {
+    silent: opts.silent,
+    chatId: opts.chatId,
+    logName: 'monologue',
+    logFields: { id: monologue.id, level: monologue.level },
   });
 }
 
@@ -144,11 +185,12 @@ export async function postDialogue(
 export async function postPhrase(
   bot: Bot<Context>,
   phrase: LeveledNativePhrase,
-  opts: { silent?: boolean } = {},
+  opts: PostOpts = {},
 ): Promise<number | null> {
   const messageId = await postPlainMessage(bot, buildPhraseMessage(phrase), {
     parseMode: 'HTML',
     silent: opts.silent,
+    chatId: opts.chatId,
   });
   if (messageId !== null) {
     logger.info('Posted native phrase', { id: phrase.id, level: phrase.level, messageId });
@@ -165,10 +207,10 @@ export async function postPhrase(
 export async function postPlainMessage(
   bot: Bot<Context>,
   text: string,
-  opts: { parseMode?: 'HTML'; silent?: boolean } = {},
+  opts: { parseMode?: 'HTML'; silent?: boolean; chatId?: ChatId } = {},
 ): Promise<number | null> {
   try {
-    const message = await bot.api.sendMessage(config.channelChatId, text, {
+    const message = await bot.api.sendMessage(opts.chatId ?? config.channelChatId, text, {
       parse_mode: opts.parseMode,
       link_preview_options: { is_disabled: true },
       disable_notification: opts.silent ?? false,

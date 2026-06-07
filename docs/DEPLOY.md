@@ -10,20 +10,20 @@ This bot is small and stateless. It runs anywhere Node 20 runs: Fly.io, Railway,
 
 ## Environment variables
 
-| Variable             | Required | Notes                                              |
-| -------------------- | -------- | -------------------------------------------------- |
-| `BOT_TOKEN`          | yes      | From `@BotFather`.                                 |
-| `CHANNEL_CHAT_ID`    | yes      | Numeric `-100...` is best; `@channel` also works.  |
-| `CHANNEL_PUBLIC_URL` | no       | Public link shown by `/start` in DMs.              |
-| `ADMIN_TELEGRAM_ID`  | no       | Unlocks the `/admin_*` slot commands in DMs.       |
-| `TZ_NAME`            | no       | Cron timezone. Default UTC.                        |
-| `DAILY_CRON`         | no       | When the daily batch posts (default `0 14 * * *`). |
-| `PORT`               | no       | `/health` server port. Default 8080.               |
-| `NODE_ENV`           | no       | `production` for hosted.                           |
+| Variable             | Required | Notes                                             |
+| -------------------- | -------- | ------------------------------------------------- |
+| `BOT_TOKEN`          | yes      | From `@BotFather`.                                |
+| `CHANNEL_CHAT_ID`    | yes      | Numeric `-100...` is best; `@channel` also works. |
+| `CHANNEL_PUBLIC_URL` | no       | Public link shown by `/start` in DMs.             |
+| `ADMIN_TELEGRAM_ID`  | no       | Unlocks the `/admin_*` slot commands in DMs.      |
+| `TZ_NAME`            | no       | Cron timezone. Default UTC.                       |
+| `DAILY_CRON`         | no       | When the daily set posts (default `0 18 * * *`).  |
+| `PORT`               | no       | `/health` server port. Default 8080.              |
+| `NODE_ENV`           | no       | `production` for hosted.                          |
 
 The `.env` file is optional. If you set the variables in your host dashboard, you do not need a file at all.
 
-The `ELEVENLABS_*` variables in `.env.example` are **dev only**: they are used by `pnpm generate-audio` to create the shadowing clips once, and are never read by the running bot. Leave them unset in production. The committed `.ogg` files in `src/content/audio/` are all production needs, so make sure they ship with your deploy (the Docker recipe below copies the whole repo, so they are included).
+The `ELEVENLABS_*` variables in `.env.example` are **dev only**: they are used by `pnpm generate-audio` to create the audio clips once (shadowing, dialogues, grammar, monologues), and are never read by the running bot. Leave them unset in production. The committed `.ogg` files in `src/content/audio/` are all production needs, so make sure they ship with your deploy (the Docker recipe below copies the whole repo, so they are included).
 
 ## First post: the pinned welcome
 
@@ -45,13 +45,14 @@ pnpm post-welcome <message_id>
 pnpm send-test morning    # fires today's A1-A2 question to the channel now
 pnpm send-test midday     # B1-B2
 pnpm send-test evening    # C1-C2
+pnpm send-test grammar    # today's grammar point (text + audio examples)
 pnpm send-test phrase     # today's "say it like a native" phrase
 pnpm send-test dialogue   # today's role-play dialogue (two-voice audio)
 pnpm send-test shadow     # today's shadowing voice clip (needs the .ogg generated)
 pnpm send-test all        # the whole daily set, in order
 ```
 
-The `dialogue` and `shadow` slots post committed audio files, so run `pnpm generate-audio` (dev only, see [SPEAKING.md](./SPEAKING.md)) and commit the `.ogg` files before relying on them.
+The `grammar`, `dialogue`, and `shadow` slots post committed audio files, so run `pnpm generate-audio` (dev only, see [SPEAKING.md](./SPEAKING.md)) and commit the `.ogg` files before relying on them.
 
 The script preflights `getChat` first, so a wrong token or channel id gives one clean error instead of two confusing ones.
 
@@ -106,7 +107,7 @@ Logs go to stdout. There is nothing to mount.
 
 ## Verifying it works
 
-1. Check `/health` returns 200 with `{"ok":true,...}` (the startup log reports `posts: 6`, the size of the daily set).
+1. Check `/health` returns 200 with `{"ok":true,...}` (the startup log reports `posts: 7`, the size of the daily set).
 2. Tail the logs for a `Daily batch scheduled` line at startup.
 3. Send `/start` to the bot in a DM; you should get a reply pointing at the channel.
 4. Run `pnpm send-test morning` to verify a channel post end to end.

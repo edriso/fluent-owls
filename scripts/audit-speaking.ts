@@ -20,7 +20,15 @@ import { audioPathFor } from '../src/content/audio-path';
 import { ALL_SHADOWING } from '../src/content/shadowing';
 import { ALL_PHRASES } from '../src/content/phrases';
 import { ALL_DIALOGUES } from '../src/content/dialogues';
-import { buildDialogueCaption, buildPhraseMessage, buildShadowingCaption } from '../src/lib/format';
+import { ALL_GRAMMAR } from '../src/content/grammar';
+import { ALL_MONOLOGUES } from '../src/content/monologues';
+import {
+  buildDialogueCaption,
+  buildGrammarCaption,
+  buildMonologueCaption,
+  buildPhraseMessage,
+  buildShadowingCaption,
+} from '../src/lib/format';
 import {
   CAPTION_MAX_CHARS,
   CONTEXT_MAX_CHARS,
@@ -28,9 +36,16 @@ import {
   DIALOGUE_MIN_TURNS,
   DIALOGUE_TURN_MAX_CHARS,
   EXAMPLE_MAX_CHARS,
+  EXPLANATION_LINE_MAX_CHARS,
+  GRAMMAR_EXAMPLE_MAX_CHARS,
+  GRAMMAR_MAX_EXAMPLES,
+  GRAMMAR_MIN_EXAMPLES,
+  MONOLOGUE_MAX_CHARS,
   NOTE_MAX_CHARS,
   PHRASE_MAX_CHARS,
+  RULE_MAX_CHARS,
   SITUATION_MAX_CHARS,
+  TOPIC_MAX_CHARS,
   TRANSCRIPT_MAX_CHARS,
 } from '../src/lib/limits';
 import { LEVELS } from '../src/types';
@@ -153,28 +168,83 @@ for (const d of ALL_DIALOGUES) {
   if (!existsSync(audioPathFor(d.audio))) missingAudio += 1;
 }
 
+// --- Grammar rules ---------------------------------------------------------
+const seenGrammar = new Set<string>();
+
+for (const g of ALL_GRAMMAR) {
+  if (seenGrammar.has(g.id)) add(g.id, 'id', 'duplicate id');
+  seenGrammar.add(g.id);
+  if (!g.id.startsWith(`${g.level}-gr-`)) add(g.id, 'id', `must start with "${g.level}-gr-"`);
+
+  checkText(g.id, 'rule', g.rule, RULE_MAX_CHARS);
+  checkText(g.id, 'explanation', g.explanation, EXPLANATION_LINE_MAX_CHARS);
+  checkText(g.id, 'note', g.note, NOTE_MAX_CHARS);
+
+  if (g.examples.length < GRAMMAR_MIN_EXAMPLES || g.examples.length > GRAMMAR_MAX_EXAMPLES) {
+    add(
+      g.id,
+      'examples',
+      `must have ${GRAMMAR_MIN_EXAMPLES}-${GRAMMAR_MAX_EXAMPLES}, found ${g.examples.length}`,
+    );
+  }
+  g.examples.forEach((ex, i) => checkText(g.id, `examples[${i}]`, ex, GRAMMAR_EXAMPLE_MAX_CHARS));
+
+  if (g.audio !== `${g.id}.ogg`) add(g.id, 'audio', `should be "${g.id}.ogg", got "${g.audio}"`);
+  const gcap = buildGrammarCaption(g).length;
+  if (gcap > CAPTION_MAX_CHARS)
+    add(g.id, 'caption', `rendered caption ${gcap} > ${CAPTION_MAX_CHARS}`);
+  if (!existsSync(audioPathFor(g.audio))) missingAudio += 1;
+}
+
+// --- Monologues ------------------------------------------------------------
+const seenMonologues = new Set<string>();
+
+for (const m of ALL_MONOLOGUES) {
+  if (seenMonologues.has(m.id)) add(m.id, 'id', 'duplicate id');
+  seenMonologues.add(m.id);
+  if (!m.id.startsWith(`${m.level}-mn-`)) add(m.id, 'id', `must start with "${m.level}-mn-"`);
+
+  checkText(m.id, 'topic', m.topic, TOPIC_MAX_CHARS);
+  checkText(m.id, 'text', m.text, MONOLOGUE_MAX_CHARS);
+  checkText(m.id, 'note', m.note, NOTE_MAX_CHARS);
+
+  if (m.audio !== `${m.id}.ogg`) add(m.id, 'audio', `should be "${m.id}.ogg", got "${m.audio}"`);
+  const mcap = buildMonologueCaption(m).length;
+  if (mcap > CAPTION_MAX_CHARS)
+    add(m.id, 'caption', `rendered caption ${mcap} > ${CAPTION_MAX_CHARS}`);
+  if (!existsSync(audioPathFor(m.audio))) missingAudio += 1;
+}
+
 // --- Summary ---------------------------------------------------------------
 for (const level of LEVELS) {
   const sh = ALL_SHADOWING.filter((c) => c.level === level).length;
   const ph = ALL_PHRASES.filter((p) => p.level === level).length;
   const dl = ALL_DIALOGUES.filter((d) => d.level === level).length;
-  console.log(`  ${level.toUpperCase()}: ${sh} shadowing, ${dl} dialogues, ${ph} phrases`);
+  const gr = ALL_GRAMMAR.filter((g) => g.level === level).length;
+  const mn = ALL_MONOLOGUES.filter((m) => m.level === level).length;
+  console.log(
+    `  ${level.toUpperCase()}: ${sh} shadowing, ${dl} dialogues, ${gr} grammar, ${mn} monologues, ${ph} phrases`,
+  );
 }
 console.log(
-  `Total: ${ALL_SHADOWING.length} shadowing clips, ${ALL_DIALOGUES.length} dialogues, ${ALL_PHRASES.length} phrases`,
+  `Total: ${ALL_SHADOWING.length} shadowing, ${ALL_DIALOGUES.length} dialogues, ${ALL_GRAMMAR.length} grammar, ${ALL_MONOLOGUES.length} monologues, ${ALL_PHRASES.length} phrases`,
 );
 
 // Audio cost estimate. ElevenLabs bills ~1 credit per character on the
 // multilingual model, so the total spoken-text length is the credit cost of
-// generating every audio clip once (dialogues count every turn).
+// generating every audio clip once (dialogues count every turn; grammar counts
+// every example; phrases have no audio).
 const totalAudioChars =
   ALL_SHADOWING.reduce((sum, c) => sum + c.text.length, 0) +
-  ALL_DIALOGUES.reduce((sum, d) => sum + d.turns.reduce((s, t) => s + t.text.length, 0), 0);
+  ALL_DIALOGUES.reduce((sum, d) => sum + d.turns.reduce((s, t) => s + t.text.length, 0), 0) +
+  ALL_GRAMMAR.reduce((sum, g) => sum + g.examples.reduce((s, e) => s + e.length, 0), 0) +
+  ALL_MONOLOGUES.reduce((sum, m) => sum + m.text.length, 0);
 console.log(
   `Audio: ~${totalAudioChars} characters total (~${totalAudioChars} credits to generate every clip once on multilingual v2).`,
 );
 
-const totalAudioItems = ALL_SHADOWING.length + ALL_DIALOGUES.length;
+const totalAudioItems =
+  ALL_SHADOWING.length + ALL_DIALOGUES.length + ALL_GRAMMAR.length + ALL_MONOLOGUES.length;
 const requireAudio = process.argv.slice(2).includes('--require-audio');
 if (missingAudio > 0) {
   const line = `${missingAudio}/${totalAudioItems} audio clip(s) have no .ogg yet. Run "pnpm generate-audio".`;

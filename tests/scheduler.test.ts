@@ -92,6 +92,14 @@ describe('runOnce', () => {
     expect(sent[0]?.text).toContain('Role-play');
   });
 
+  it('posts a voice message for the grammar slot', async () => {
+    const { bot, sent } = fakeBot();
+    await runOnce(findSlot('grammar')!, bot);
+    expect(sent).toHaveLength(1);
+    expect(sent[0]?.kind).toBe('voice');
+    expect(sent[0]?.text).toContain('Grammar');
+  });
+
   it('pins the quiz poll left-to-right so English text never mirrors on RTL clients', () => {
     // postQuizPoll passes direction:'ltr', so the kernel wraps the question in
     // a Unicode LTR isolate (U+2066 ... U+2069). Guard the first/last marks so

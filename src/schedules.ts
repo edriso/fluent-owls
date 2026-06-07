@@ -6,8 +6,12 @@ import { LEVELS, type Level } from './types';
  *  - 'shadow':   a shadowing voice message (shadowing-*.ts  -> postVoice)
  *  - 'phrase':   a "say it like a native"  (phrases-*.ts    -> postPhrase)
  *  - 'dialogue': a role-play voice message (dialogues-*.ts  -> postDialogue)
+ *  - 'grammar':  a grammar voice message   (grammar-*.ts    -> postGrammar)
+ *
+ * (Monologues are not scheduled; they are on-demand only, via the /monologue
+ * command. See bot.ts.)
  */
-export type SlotKind = 'quiz' | 'shadow' | 'phrase' | 'dialogue';
+export type SlotKind = 'quiz' | 'shadow' | 'phrase' | 'dialogue' | 'grammar';
 
 /** One post in the daily batch. */
 export type ScheduleDef = {
@@ -33,6 +37,7 @@ export type ScheduleDef = {
  *   morning  quiz      beginner warm-up   (A1, A2)        silent
  *   midday   quiz      intermediate       (B1, B2)        silent
  *   evening  quiz      advanced challenge (C1, C2)        silent
+ *   grammar  grammar   grammar point          (all levels) silent
  *   phrase   phrase    "say it like a native" (all levels) silent
  *   dialogue dialogue  role-play exchange     (all levels) silent
  *   shadow   shadow    speaking practice      (all levels) rings
@@ -59,6 +64,7 @@ export const schedules: readonly ScheduleDef[] = [
   { name: 'morning', kind: 'quiz', levels: ['a1', 'a2'], silent: true },
   { name: 'midday', kind: 'quiz', levels: ['b1', 'b2'], silent: true },
   { name: 'evening', kind: 'quiz', levels: ['c1', 'c2'], silent: true },
+  { name: 'grammar', kind: 'grammar', levels: [...LEVELS], silent: true },
   { name: 'phrase', kind: 'phrase', levels: [...LEVELS], silent: true },
   { name: 'dialogue', kind: 'dialogue', levels: [...LEVELS], silent: true },
   { name: 'shadow', kind: 'shadow', levels: [...LEVELS], silent: false },

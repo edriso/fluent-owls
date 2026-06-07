@@ -52,8 +52,10 @@ export const config = Object.freeze({
   adminTelegramId: optionalBigInt(process.env.ADMIN_TELEGRAM_ID),
   // Timezone for the cron schedule. Defaults to UTC.
   timezone: process.env.TZ_NAME?.trim() || 'UTC',
-  // When the daily batch posts (all three questions together), in the
-  // configured timezone. Default 14:00. Override via env.
-  dailyCron: process.env.DAILY_CRON?.trim() || '0 14 * * *',
+  // When the daily set posts (everything together), in the configured timezone.
+  // Default 18:00 (6pm): research shows educational channels get the best
+  // engagement on weekday evenings, and one focused daily drop beats scattering
+  // posts. Override via env.
+  dailyCron: process.env.DAILY_CRON?.trim() || '0 18 * * *',
   isDev: process.env.NODE_ENV !== 'production',
 });

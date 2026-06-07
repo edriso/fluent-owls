@@ -1,6 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import {
   buildDialogueCaption,
+  buildGrammarCaption,
+  buildMonologueCaption,
   buildPhraseMessage,
   buildPrompt,
   buildShadowingCaption,
@@ -9,6 +11,8 @@ import {
 } from '../src/lib/format';
 import type {
   LeveledDialogue,
+  LeveledGrammarRule,
+  LeveledMonologue,
   LeveledNativePhrase,
   LeveledQuestion,
   LeveledShadowingClip,
@@ -41,6 +45,25 @@ const samplePhrase: LeveledNativePhrase = {
   situation: 'Disagreeing politely',
   example: 'I see your point, but it is too expensive.',
   fn: 'disagreeing',
+};
+
+const sampleGrammar: LeveledGrammarRule = {
+  id: 'b1-gr-001',
+  level: 'b1',
+  rule: 'Present perfect for experience',
+  explanation: 'Use have plus the past participle for life experience.',
+  examples: ['I have visited Paris.', 'Have you ever tried sushi?'],
+  note: 'No exact time word here.',
+  audio: 'b1-gr-001.ogg',
+};
+
+const sampleMonologue: LeveledMonologue = {
+  id: 'b1-mn-001',
+  level: 'b1',
+  topic: 'A challenge I faced',
+  text: 'A few years ago, I lost my job, but I learned new skills and found a better one.',
+  note: 'End on a reflective line.',
+  audio: 'b1-mn-001.ogg',
 };
 
 const sampleDialogue: LeveledDialogue = {
@@ -129,6 +152,41 @@ describe('buildShadowingCaption', () => {
 
   it('pins the caption left-to-right with a Unicode isolate', () => {
     const out = buildShadowingCaption(sampleClip);
+    expect(out.codePointAt(0)).toBe(0x2066);
+    expect(out.codePointAt(out.length - 1)).toBe(0x2069);
+  });
+});
+
+describe('buildGrammarCaption', () => {
+  it('includes the level, rule, explanation, examples, and tip', () => {
+    const out = buildGrammarCaption(sampleGrammar);
+    expect(out).toContain('B1');
+    expect(out).toContain('Grammar');
+    expect(out).toContain(sampleGrammar.rule);
+    expect(out).toContain(sampleGrammar.explanation);
+    expect(out).toContain('I have visited Paris.');
+    expect(out).toContain(sampleGrammar.note);
+  });
+
+  it('pins the caption left-to-right with a Unicode isolate', () => {
+    const out = buildGrammarCaption(sampleGrammar);
+    expect(out.codePointAt(0)).toBe(0x2066);
+    expect(out.codePointAt(out.length - 1)).toBe(0x2069);
+  });
+});
+
+describe('buildMonologueCaption', () => {
+  it('includes the level, topic, passage, and tip', () => {
+    const out = buildMonologueCaption(sampleMonologue);
+    expect(out).toContain('B1');
+    expect(out).toContain('Listen & retell');
+    expect(out).toContain(sampleMonologue.topic);
+    expect(out).toContain(sampleMonologue.text);
+    expect(out).toContain(sampleMonologue.note);
+  });
+
+  it('pins the caption left-to-right with a Unicode isolate', () => {
+    const out = buildMonologueCaption(sampleMonologue);
     expect(out.codePointAt(0)).toBe(0x2066);
     expect(out.codePointAt(out.length - 1)).toBe(0x2069);
   });
