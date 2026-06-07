@@ -19,6 +19,7 @@
     "audit-speaking": "tsx scripts/audit-speaking.ts",
     "audit-all": "pnpm audit-questions && pnpm audit-speaking",
     "generate-audio": "tsx scripts/generate-audio.ts",
+    "db:deploy": "node --import tsx dist/src/migrate.js",
     "format": "prettier --write \"**/*.{ts,js,json,md,yml,yaml}\"",
     "format:check": "prettier --check \"**/*.{ts,js,json,md,yml,yaml}\"",
     "check": "pnpm typecheck && pnpm format:check && pnpm test"

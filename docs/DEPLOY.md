@@ -32,7 +32,15 @@ The bot runs with no database by default. To turn on the personal tutor (the `/n
 DATABASE_URL="mysql://fluentowls:<password>@shared-db:3306/fluentowls_db"
 ```
 
-There is **no migration step**: the bot runs `CREATE TABLE IF NOT EXISTS` on boot, so the `learners` table appears on first start. The shared DB and this bot's database/user are set up once on the server (see the server's `docs/05-databases.md`). If the DB is unreachable at boot, the bot logs it, disables the tutor for that run, and keeps posting to the channel. See [`TUTOR.md`](./TUTOR.md) for the full picture. To turn the tutor off, unset `DATABASE_URL` and redeploy.
+**No migration step is required**: the bot runs `CREATE TABLE IF NOT EXISTS` on boot, so the `learners` table appears on first start. Just bring up the bot:
+
+```bash
+cd /opt/bots && docker compose up -d --build fluent-owls
+```
+
+The shared DB and this bot's database/user are set up once on the server (see the server's `docs/05-databases.md`). If the DB is unreachable at boot, the bot logs it, disables the tutor for that run, and keeps posting to the channel. To turn the tutor off, unset `DATABASE_URL` and redeploy.
+
+This bot does **not** use Prisma, so a `fluent-owls-migrate` service is optional. If you keep one for the fleet's `<bot>-migrate` habit, set its command to **`pnpm db:deploy`** (which runs the same idempotent table creation and exits), NOT `pnpm prisma migrate deploy` (there is no `prisma` CLI in the image). Otherwise just remove that service. See [`TUTOR.md`](./TUTOR.md).
 
 The `ELEVENLABS_*` variables in `.env.example` are **dev only**: they are used by `pnpm generate-audio` to create the audio clips once (shadowing, dialogues, grammar, monologues, prompts), and are never read by the running bot. Leave them unset in production. The committed `.ogg` files in `src/content/audio/` are all production needs, so make sure they ship with your deploy (the Docker recipe below copies the whole repo, so they are included).
 

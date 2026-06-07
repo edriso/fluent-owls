@@ -53,10 +53,21 @@ The shared MariaDB and this bot's database/user already exist (see the server's
 `docs/05-databases.md`). To enable the tutor:
 
 1. In the bot's `.env`, set `DATABASE_URL="mysql://fluentowls:<password>@shared-db:3306/fluentowls_db"`.
-2. Redeploy (push to `main`; CI deploys). On boot the bot connects and creates
+2. Bring up the bot: `cd /opt/bots && docker compose up -d --build fluent-owls`
+   (a push to `main` also deploys via CI). On boot the bot connects and creates
    the `learners` table. There is **nothing else to run**.
 
 To turn the tutor off again, unset `DATABASE_URL` and redeploy.
+
+### About the `<bot>-migrate` service
+
+This bot does NOT use Prisma, so the shared `compose-with-db.yml` template's
+default command (`pnpm prisma migrate deploy`) fails with "Command prisma not
+found". You do not need a migrate service at all (tables auto-create on boot).
+If you keep one for fleet consistency, set its command to **`pnpm db:deploy`** —
+a tiny entrypoint (`src/migrate.ts`) that runs the same `CREATE TABLE IF NOT
+EXISTS` and exits. It reuses the bot image (which has tsx + mysql2 + dist), so no
+`target: builder` is needed.
 
 ## Safety
 
