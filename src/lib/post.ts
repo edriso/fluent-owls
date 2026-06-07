@@ -8,6 +8,7 @@ import type {
   LeveledMonologue,
   LeveledNativePhrase,
   LeveledPrompt,
+  LeveledPronunciationDrill,
   LeveledQuestion,
   LeveledShadowingClip,
 } from '../types';
@@ -18,6 +19,7 @@ import {
   buildPhraseMessage,
   buildPrompt,
   buildPromptCaption,
+  buildPronunciationCaption,
   buildShadowingCaption,
   clampExplanation,
   toPollOptions,
@@ -100,7 +102,13 @@ async function sendVoiceFile(
   bot: Bot<Context>,
   audioFile: string,
   caption: string,
-  opts: { silent?: boolean; chatId?: ChatId; logName: string; logFields: Record<string, unknown> },
+  opts: {
+    silent?: boolean;
+    chatId?: ChatId;
+    parseMode?: 'HTML';
+    logName: string;
+    logFields: Record<string, unknown>;
+  },
 ): Promise<number | null> {
   try {
     const message = await bot.api.sendVoice(
@@ -108,6 +116,7 @@ async function sendVoiceFile(
       new InputFile(audioPathFor(audioFile)),
       {
         caption,
+        parse_mode: opts.parseMode,
         disable_notification: opts.silent ?? false,
       },
     );
@@ -193,25 +202,40 @@ export async function postPrompt(
   });
 }
 
+/** Post one pronunciation drill as a voice message (the items read aloud + tip). */
+export async function postPronunciation(
+  bot: Bot<Context>,
+  drill: LeveledPronunciationDrill,
+  opts: PostOpts = {},
+): Promise<number | null> {
+  return sendVoiceFile(bot, drill.audio, buildPronunciationCaption(drill), {
+    silent: opts.silent,
+    chatId: opts.chatId,
+    logName: 'pronunciation drill',
+    logFields: { id: drill.id, level: drill.level, focus: drill.focus },
+  });
+}
+
 /**
- * Post one "say it like a native" phrase as a short HTML message. Reuses
- * postPlainMessage (HTML, link preview off), which buildPhraseMessage has
- * already escaped for. Returns the message_id, or null on failure.
+ * Post one "say it like a native" phrase as a voice message: the audio reads the
+ * phrase and a worked example aloud, and the HTML caption (buildPhraseMessage,
+ * already escaped) shows the chunk, when to use it, and the example. So learners
+ * both read the chunk and HEAR it pronounced. The audio file name is derived from
+ * the id (`<id>.ogg`), like every other voice item. Returns the message_id, or
+ * null on a send failure (e.g. the audio is not generated yet).
  */
 export async function postPhrase(
   bot: Bot<Context>,
   phrase: LeveledNativePhrase,
   opts: PostOpts = {},
 ): Promise<number | null> {
-  const messageId = await postPlainMessage(bot, buildPhraseMessage(phrase), {
-    parseMode: 'HTML',
+  return sendVoiceFile(bot, `${phrase.id}.ogg`, buildPhraseMessage(phrase), {
     silent: opts.silent,
     chatId: opts.chatId,
+    parseMode: 'HTML',
+    logName: 'native phrase',
+    logFields: { id: phrase.id, level: phrase.level },
   });
-  if (messageId !== null) {
-    logger.info('Posted native phrase', { id: phrase.id, level: phrase.level, messageId });
-  }
-  return messageId;
 }
 
 /**

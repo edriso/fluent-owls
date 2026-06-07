@@ -23,12 +23,14 @@ import { ALL_DIALOGUES } from '../src/content/dialogues';
 import { ALL_GRAMMAR } from '../src/content/grammar';
 import { ALL_MONOLOGUES } from '../src/content/monologues';
 import { ALL_PROMPTS } from '../src/content/prompts';
+import { ALL_PRONUNCIATION } from '../src/content/pronunciation';
 import {
   buildDialogueCaption,
   buildGrammarCaption,
   buildMonologueCaption,
   buildPhraseMessage,
   buildPromptCaption,
+  buildPronunciationCaption,
   buildShadowingCaption,
 } from '../src/lib/format';
 import {
@@ -47,6 +49,11 @@ import {
   PHRASE_MAX_CHARS,
   PROMPT_ANSWER_MAX_CHARS,
   PROMPT_QUESTION_MAX_CHARS,
+  PRON_EXPLANATION_MAX_CHARS,
+  PRON_ITEM_MAX_CHARS,
+  PRON_MAX_ITEMS,
+  PRON_MIN_ITEMS,
+  PRON_TITLE_MAX_CHARS,
   RULE_MAX_CHARS,
   SITUATION_MAX_CHARS,
   TOPIC_MAX_CHARS,
@@ -120,6 +127,10 @@ for (const phrase of ALL_PHRASES) {
 
   // Just exercise the builder so a formatting bug surfaces here too.
   buildPhraseMessage(phrase);
+
+  // Phrases are now voice messages: the audio file name is derived from the id
+  // (no audio field). Count a missing clip like the other voice types.
+  if (!existsSync(audioPathFor(`${phrase.id}.ogg`))) missingAudio += 1;
 }
 
 // --- Role-play dialogues ---------------------------------------------------
@@ -244,6 +255,30 @@ for (const p of ALL_PROMPTS) {
   if (!existsSync(audioPathFor(p.audio))) missingAudio += 1;
 }
 
+// --- Pronunciation drills --------------------------------------------------
+const seenPron = new Set<string>();
+
+for (const d of ALL_PRONUNCIATION) {
+  if (seenPron.has(d.id)) add(d.id, 'id', 'duplicate id');
+  seenPron.add(d.id);
+  if (!d.id.startsWith(`${d.level}-pn-`)) add(d.id, 'id', `must start with "${d.level}-pn-"`);
+
+  checkText(d.id, 'title', d.title, PRON_TITLE_MAX_CHARS);
+  checkText(d.id, 'explanation', d.explanation, PRON_EXPLANATION_MAX_CHARS);
+  checkText(d.id, 'note', d.note, NOTE_MAX_CHARS);
+
+  if (d.items.length < PRON_MIN_ITEMS || d.items.length > PRON_MAX_ITEMS) {
+    add(d.id, 'items', `must have ${PRON_MIN_ITEMS}-${PRON_MAX_ITEMS}, found ${d.items.length}`);
+  }
+  d.items.forEach((it, i) => checkText(d.id, `items[${i}]`, it, PRON_ITEM_MAX_CHARS));
+
+  if (d.audio !== `${d.id}.ogg`) add(d.id, 'audio', `should be "${d.id}.ogg", got "${d.audio}"`);
+  const dcap = buildPronunciationCaption(d).length;
+  if (dcap > CAPTION_MAX_CHARS)
+    add(d.id, 'caption', `rendered caption ${dcap} > ${CAPTION_MAX_CHARS}`);
+  if (!existsSync(audioPathFor(d.audio))) missingAudio += 1;
+}
+
 // --- Summary ---------------------------------------------------------------
 for (const level of LEVELS) {
   const sh = ALL_SHADOWING.filter((c) => c.level === level).length;
@@ -252,24 +287,27 @@ for (const level of LEVELS) {
   const gr = ALL_GRAMMAR.filter((g) => g.level === level).length;
   const mn = ALL_MONOLOGUES.filter((m) => m.level === level).length;
   const pr = ALL_PROMPTS.filter((p) => p.level === level).length;
+  const pn = ALL_PRONUNCIATION.filter((d) => d.level === level).length;
   console.log(
-    `  ${level.toUpperCase()}: ${sh} shadow, ${dl} dialogue, ${gr} grammar, ${mn} monologue, ${pr} prompt, ${ph} phrase`,
+    `  ${level.toUpperCase()}: ${sh} shadow, ${dl} dialogue, ${gr} grammar, ${mn} monologue, ${pr} prompt, ${pn} pron, ${ph} phrase`,
   );
 }
 console.log(
-  `Total: ${ALL_SHADOWING.length} shadowing, ${ALL_DIALOGUES.length} dialogues, ${ALL_GRAMMAR.length} grammar, ${ALL_MONOLOGUES.length} monologues, ${ALL_PROMPTS.length} prompts, ${ALL_PHRASES.length} phrases`,
+  `Total: ${ALL_SHADOWING.length} shadowing, ${ALL_DIALOGUES.length} dialogues, ${ALL_GRAMMAR.length} grammar, ${ALL_MONOLOGUES.length} monologues, ${ALL_PROMPTS.length} prompts, ${ALL_PRONUNCIATION.length} pronunciation, ${ALL_PHRASES.length} phrases`,
 );
 
 // Audio cost estimate. ElevenLabs bills ~1 credit per character on the
 // multilingual model, so the total spoken-text length is the credit cost of
-// generating every audio clip once (dialogues count every turn; grammar counts
-// every example; phrases have no audio).
+// generating every audio clip once (dialogues count every turn; grammar and
+// pronunciation count every example/item; phrases count the chunk and example).
 const totalAudioChars =
   ALL_SHADOWING.reduce((sum, c) => sum + c.text.length, 0) +
   ALL_DIALOGUES.reduce((sum, d) => sum + d.turns.reduce((s, t) => s + t.text.length, 0), 0) +
   ALL_GRAMMAR.reduce((sum, g) => sum + g.examples.reduce((s, e) => s + e.length, 0), 0) +
   ALL_MONOLOGUES.reduce((sum, m) => sum + m.text.length, 0) +
-  ALL_PROMPTS.reduce((sum, p) => sum + p.question.length + p.answer.length, 0);
+  ALL_PROMPTS.reduce((sum, p) => sum + p.question.length + p.answer.length, 0) +
+  ALL_PRONUNCIATION.reduce((sum, d) => sum + d.items.reduce((s, it) => s + it.length, 0), 0) +
+  ALL_PHRASES.reduce((sum, p) => sum + p.phrase.length + p.example.length, 0);
 console.log(
   `Audio: ~${totalAudioChars} characters total (~${totalAudioChars} credits to generate every clip once on multilingual v2).`,
 );
@@ -279,7 +317,9 @@ const totalAudioItems =
   ALL_DIALOGUES.length +
   ALL_GRAMMAR.length +
   ALL_MONOLOGUES.length +
-  ALL_PROMPTS.length;
+  ALL_PROMPTS.length +
+  ALL_PRONUNCIATION.length +
+  ALL_PHRASES.length;
 const requireAudio = process.argv.slice(2).includes('--require-audio');
 if (missingAudio > 0) {
   const line = `${missingAudio}/${totalAudioItems} audio clip(s) have no .ogg yet. Run "pnpm generate-audio".`;

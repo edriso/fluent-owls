@@ -76,3 +76,13 @@ export const MONOLOGUE_MAX_CHARS = 600;
 export const PROMPT_QUESTION_MAX_CHARS = 120;
 /** Maximum length of a prompt's model answer. */
 export const PROMPT_ANSWER_MAX_CHARS = 220;
+
+/** Maximum length of a pronunciation drill's title. */
+export const PRON_TITLE_MAX_CHARS = 80;
+/** Maximum length of a pronunciation drill's explanation. */
+export const PRON_EXPLANATION_MAX_CHARS = 200;
+/** Fewest / most items (lines read aloud) in a pronunciation drill. */
+export const PRON_MIN_ITEMS = 2;
+export const PRON_MAX_ITEMS = 6;
+/** Maximum length of a single pronunciation item (a word pair or short sentence). */
+export const PRON_ITEM_MAX_CHARS = 120;

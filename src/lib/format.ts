@@ -6,9 +6,11 @@ import type {
   LeveledMonologue,
   LeveledNativePhrase,
   LeveledPrompt,
+  LeveledPronunciationDrill,
   LeveledQuestion,
   LeveledShadowingClip,
   PhraseFunction,
+  PronunciationFocus,
   ShadowingFocus,
   Topic,
 } from '../types';
@@ -128,6 +130,38 @@ export function buildShadowingCaption(clip: LeveledShadowingClip): string {
     '',
     `▶️ Listen 2-3 times, then say it WITH the speaker, copying ${FOCUS_PHRASE[clip.focus]}.`,
     `🎯 ${clip.note}`,
+  ].join('\n');
+  return ltrIsolate(caption);
+}
+
+/** Human-friendly label for each pronunciation focus, shown on a drill post. */
+const PRON_FOCUS_LABEL: Record<PronunciationFocus, string> = {
+  'minimal-pair': 'Minimal pair',
+  'connected-speech': 'Connected speech',
+  'word-stress': 'Word stress',
+  'weak-forms': 'Weak forms',
+};
+
+/**
+ * Build the caption for a pronunciation drill voice message: a header with the
+ * focus and level, the target and a plain explanation, the items the audio reads
+ * aloud, then a listen-and-repeat instruction and a tip. Plain text in an LTR
+ * isolate, like the other voice captions.
+ */
+export function buildPronunciationCaption(drill: LeveledPronunciationDrill): string {
+  const badge = LEVEL_BADGE[drill.level] ?? drill.level.toUpperCase();
+  const focus = PRON_FOCUS_LABEL[drill.focus] ?? drill.focus;
+  const items = drill.items.map((i) => `• ${i}`);
+  const caption = [
+    `🔊 Pronunciation  ·  ${focus}  ·  ${badge}`,
+    drill.title,
+    '',
+    drill.explanation,
+    '',
+    'Repeat after the speaker:',
+    ...items,
+    '',
+    `🎯 ${drill.note}`,
   ].join('\n');
   return ltrIsolate(caption);
 }

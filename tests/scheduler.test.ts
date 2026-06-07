@@ -4,10 +4,11 @@ import { findSlot, runDailyBatch, runOnce } from '../src/scheduler';
 import { schedules } from '../src/schedules';
 
 /**
- * A minimal fake bot covering the three Bot API methods the posters touch:
- * sendPoll (quizzes), sendVoice (shadowing), and sendMessage (native phrases).
- * No network, no token. We record every call so we can assert the batch posts
- * in order and silences all but the last post.
+ * A minimal fake bot covering the Bot API methods the posters touch: sendPoll
+ * (quizzes) and sendVoice (every speaking item, including phrases, which are now
+ * voice messages with an HTML caption). sendMessage is kept for the welcome path
+ * and the failure test. No network, no token. We record every call so we can
+ * assert the batch posts in order and silences all but the last post.
  */
 type Sent = { kind: 'poll' | 'voice' | 'message'; silent: boolean; text: string };
 
@@ -76,11 +77,11 @@ describe('runOnce', () => {
     expect(sent[0]?.silent).toBe(false);
   });
 
-  it('posts an HTML message for the phrase slot', async () => {
+  it('posts a voice message with an HTML caption for the phrase slot', async () => {
     const { bot, sent } = fakeBot();
     await runOnce(findSlot('phrase')!, bot);
     expect(sent).toHaveLength(1);
-    expect(sent[0]?.kind).toBe('message');
+    expect(sent[0]?.kind).toBe('voice');
     expect(sent[0]?.text).toContain('Say it like a native');
   });
 
@@ -127,9 +128,7 @@ describe('runDailyBatch', () => {
   it('posts each slot in the kind its schedule declares', async () => {
     const { bot, sent } = fakeBot();
     await runDailyBatch(bot);
-    const expected = schedules.map((s) =>
-      s.kind === 'quiz' ? 'poll' : s.kind === 'phrase' ? 'message' : 'voice',
-    );
+    const expected = schedules.map((s) => (s.kind === 'quiz' ? 'poll' : 'voice'));
     expect(sent.map((s) => s.kind)).toEqual(expected);
   });
 

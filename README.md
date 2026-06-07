@@ -8,7 +8,7 @@ A tiny Telegram bot that posts one short English set to a channel each day, so p
 - **1 role-play mini-dialogue**: a short two-voice exchange to act out both sides, for real-conversation practice.
 - **1 shadowing clip**: a short native-audio voice message with the transcript, to listen to and repeat (the fastest drill for a natural rhythm and accent).
 
-Want more at any time? Message the bot **/quiz**, **/grammar**, **/phrase**, **/dialogue**, **/shadow**, **/monologue** (a longer passage to retell), or **/prompt** (a question to answer out loud, then compare with a model) and it sends one right away. No database; each is a stateless random pick.
+Want more at any time? Message the bot **/quiz**, **/grammar**, **/phrase**, **/dialogue**, **/shadow**, **/monologue** (a longer passage to retell), **/prompt** (a question to answer out loud, then compare with a model), or **/pron** (a pronunciation drill: a sound contrast or speech feature, with words read aloud to copy) and it sends one right away. No database; each is a stateless random pick.
 
 The whole project is junior friendly on purpose. The content is short, the English is plain, and the code is small and well documented.
 
@@ -96,7 +96,7 @@ If the checks pass, redeploy.
 
 ## On-demand commands
 
-Beyond the daily set, message the bot ([@FluentOwlsBot](https://t.me/FluentOwlsBot)) and it replies with a random item: **/quiz**, **/grammar**, **/phrase**, **/dialogue**, **/shadow**, **/monologue**, **/prompt**. These are stateless (a random pick), so they need no database. You can also **ask about a grammar point** — `/grammar present perfect`, or just type a topic like "second conditional" in a DM — and the bot finds the matching rule and sends it with spoken examples.
+Beyond the daily set, message the bot ([@FluentOwlsBot](https://t.me/FluentOwlsBot)) and it replies with a random item: **/quiz**, **/grammar**, **/phrase**, **/dialogue**, **/shadow**, **/monologue**, **/prompt**, **/pron**. These are stateless (a random pick), so they need no database. You can also **ask about a grammar point** — `/grammar present perfect`, or just type a topic like "second conditional" in a DM — and the bot finds the matching rule and sends it with spoken examples.
 
 ## Personal tutor (optional)
 

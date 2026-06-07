@@ -157,10 +157,14 @@ export type PhraseFunction =
 
 /**
  * One "say it like a native" phrase: a ready-made chunk for a real situation,
- * with when to use it and an example. Text only (no audio), posted as a short
- * HTML message. Chunks are how fluent speakers actually talk, in whole
- * pre-built phrases rather than word by word, so memorising a few makes you
- * sound natural fast.
+ * with when to use it and an example. Posted as a voice message whose audio reads
+ * the phrase and the example aloud, with the same text in an HTML caption, so
+ * learners both read the chunk and HEAR it pronounced. Chunks are how fluent
+ * speakers actually talk, in whole pre-built phrases rather than word by word, so
+ * memorising a few makes you sound natural fast.
+ *
+ * The audio file name is derived from the id (`<id>.ogg`), so unlike the other
+ * voice types a phrase has no separate `audio` field.
  *
  * Constraints (validated by scripts/audit-speaking.ts and the unit tests):
  *  - every field is non-empty and within its limit (see limits.ts)
@@ -322,5 +326,52 @@ export type Prompt = {
 /** A prompt tagged with the CEFR level it was loaded from. */
 export type LeveledPrompt = Prompt & {
   /** The CEFR level this prompt belongs to. */
+  level: Level;
+};
+
+/**
+ * The pronunciation skill a drill trains. Each is a thing a learner can hear and
+ * copy, none of which a written quiz can teach:
+ *
+ *  - minimal-pair:      two words that differ in one sound (ship/sheep), to train the ear and mouth
+ *  - connected-speech:  how words blend, link, and reduce in natural speech (gonna, didja)
+ *  - word-stress:       which syllable is stressed (REcord vs reCORD), which changes meaning
+ *  - weak-forms:        how small words shrink when unstressed (to -> tuh, can -> kn)
+ */
+export type PronunciationFocus = 'minimal-pair' | 'connected-speech' | 'word-stress' | 'weak-forms';
+
+/**
+ * One pronunciation drill: a short, targeted listen-and-repeat exercise on a
+ * single sound contrast or speech feature. Posted as a voice message whose audio
+ * reads the `items` aloud (with small gaps), so the learner hears the difference
+ * and copies it. Like the other voice content, audio is generated once and
+ * committed, so the running bot never calls a text-to-speech API.
+ *
+ * Constraints (validated by scripts/audit-speaking.ts and the unit tests):
+ *  - title, explanation, and note non-empty within their limits
+ *  - 2 to 6 non-empty `items`, each within its limit (these are read aloud)
+ *  - the rendered caption is <= CAPTION_MAX_CHARS
+ *  - no em-dashes anywhere (house style)
+ */
+export type PronunciationDrill = {
+  /** Stable, unique id. Starts with the level and a "pn" marker, e.g. "b1-pn-001". */
+  id: string;
+  /** The pronunciation skill this drill trains. Drives the header badge. */
+  focus: PronunciationFocus;
+  /** Short label for the target, e.g. "ship vs sheep" or "want to becomes wanna". */
+  title: string;
+  /** Plain, junior-friendly explanation of how to make or hear the difference. */
+  explanation: string;
+  /** The lines read aloud (and shown): word pairs or short example sentences. */
+  items: string[];
+  /** One concrete tip or common mistake to avoid. */
+  note: string;
+  /** File name of the committed OGG/Opus clip, e.g. "b1-pn-001.ogg". */
+  audio: string;
+};
+
+/** A pronunciation drill tagged with the CEFR level it was loaded from. */
+export type LeveledPronunciationDrill = PronunciationDrill & {
+  /** The CEFR level this drill belongs to. */
   level: Level;
 };

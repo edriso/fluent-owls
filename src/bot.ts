@@ -20,12 +20,14 @@ import { ALL_PHRASES } from './content/phrases';
 import { ALL_GRAMMAR } from './content/grammar';
 import { ALL_MONOLOGUES } from './content/monologues';
 import { ALL_PROMPTS } from './content/prompts';
+import { ALL_PRONUNCIATION } from './content/pronunciation';
 import {
   postDialogue,
   postGrammar,
   postMonologue,
   postPhrase,
   postPrompt,
+  postPronunciation,
   postQuizPoll,
   postVoice,
 } from './lib/post';
@@ -43,7 +45,7 @@ export const botAbout =
 export const botDescription = [
   '🦉 Hi! Fluent Owls posts a short daily English set to its Telegram channel every evening, to help you be both correct and well spoken.',
   'Each day: three quizzes (with explanations), a grammar point, a native phrase, a role-play dialogue, and an audio clip to shadow.',
-  'Want more? DM me /quiz, /grammar, /phrase, /dialogue, /shadow, /monologue, or /prompt. Or /next for a personal track with a daily streak.',
+  'Want more? DM me /quiz, /grammar, /phrase, /dialogue, /shadow, /monologue, /prompt, or /pron. Or /next for a personal track with a daily streak.',
   'By CEFR level (A1 to C2). No signup. Tap Start for the channel link.',
 ].join('\n');
 
@@ -74,7 +76,7 @@ export function buildBot(): Bot {
         '',
         'Each evening: three fill-in-the-blank quizzes (with instant explanations), a grammar point, a "say it like a native" phrase, a role-play dialogue, and an audio clip to shadow. A little every day, so you become both correct and well spoken.',
         '',
-        'Want more right now? Send me /quiz, /grammar, /phrase, /dialogue, /shadow, /monologue, or /prompt.' +
+        'Want more right now? Send me /quiz, /grammar, /phrase, /dialogue, /shadow, /monologue, /prompt, or /pron.' +
           tutorLine,
         tail,
       ].join('\n'),
@@ -87,7 +89,7 @@ export function buildBot(): Bot {
       [
         'Fluent Owls is a tiny open-source Telegram bot that posts a daily English set to a channel: quizzes, grammar, phrases, role-play dialogues, and audio to shadow.',
         'It has no database. All content lives in the source, organized by CEFR level. Audio is pre-generated, so the bot needs no text-to-speech key to run.',
-        'Want more anytime? Try /quiz, /grammar, /phrase, /dialogue, /shadow, /monologue, or /prompt.',
+        'Want more anytime? Try /quiz, /grammar, /phrase, /dialogue, /shadow, /monologue, /prompt, or /pron.',
       ].join('\n'),
     );
   });
@@ -130,6 +132,10 @@ export function buildBot(): Bot {
   });
   bot.command('prompt', async (ctx) => {
     if (ctx.chat) await postPrompt(bot, randomOf(ALL_PROMPTS), { chatId: ctx.chat.id });
+  });
+  bot.command('pron', async (ctx) => {
+    if (ctx.chat)
+      await postPronunciation(bot, randomOf(ALL_PRONUNCIATION), { chatId: ctx.chat.id });
   });
 
   // Personal tutor (only when a database is configured). /next walks each kind
@@ -297,6 +303,7 @@ export async function setBotProfile(bot: Bot): Promise<void> {
     { command: 'shadow', description: 'Send me a shadowing clip (audio)' },
     { command: 'monologue', description: 'Send me a model passage to retell (audio)' },
     { command: 'prompt', description: 'Send me a question to answer out loud (audio)' },
+    { command: 'pron', description: 'Send me a pronunciation drill (audio)' },
     ...tutorCommands,
   ]);
   await bot.api.setMyShortDescription(botAbout);

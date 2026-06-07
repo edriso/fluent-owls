@@ -42,6 +42,8 @@ import { ALL_DIALOGUES } from '../src/content/dialogues';
 import { ALL_GRAMMAR } from '../src/content/grammar';
 import { ALL_MONOLOGUES } from '../src/content/monologues';
 import { ALL_PROMPTS } from '../src/content/prompts';
+import { ALL_PRONUNCIATION } from '../src/content/pronunciation';
+import { ALL_PHRASES } from '../src/content/phrases';
 import { LEVELS, type Level } from '../src/types';
 
 loadEnv();
@@ -87,7 +89,7 @@ function voiceB(level: Level): string {
 
 /** A unit of audio to generate: one or more spoken segments, written to one file. */
 type Segment = { text: string; voiceId: string };
-type Kind = 'shadow' | 'dialogue' | 'grammar' | 'monologue' | 'prompt';
+type Kind = 'shadow' | 'dialogue' | 'grammar' | 'monologue' | 'prompt' | 'pron' | 'phrase';
 /** `gap` is the silence (seconds) between segments. Prompts use a long pause so
  *  the learner can answer; everything else uses a short breath. */
 type Job = {
@@ -106,6 +108,8 @@ const KIND_TOKENS: Record<string, Kind> = {
   grammar: 'grammar',
   monologues: 'monologue',
   prompts: 'prompt',
+  pronunciation: 'pron',
+  phrases: 'phrase',
 };
 
 /** Pause (seconds) the learner gets to answer, between a prompt question and the model answer. */
@@ -286,7 +290,29 @@ function allJobs(): Job[] {
       { text: p.answer, voiceId: voiceB(p.level) },
     ],
   }));
-  return [...shadow, ...dialogue, ...grammar, ...monologue, ...prompt];
+  // Pronunciation: the items (word pairs or short sentences) read with one voice
+  // and a small gap between them, so the learner hears each and repeats.
+  const pron: Job[] = ALL_PRONUNCIATION.map((p) => ({
+    id: p.id,
+    level: p.level,
+    audio: p.audio,
+    kind: 'pron',
+    segments: p.items.map((text) => ({ text, voiceId: voiceA(p.level) })),
+  }));
+  // Phrases: the chunk read aloud, then a worked example, in one voice with a
+  // small gap. The audio file name is derived from the id (phrases have no audio
+  // field). Posted as a voice message with an HTML caption (see post.ts).
+  const phrase: Job[] = ALL_PHRASES.map((p) => ({
+    id: p.id,
+    level: p.level,
+    audio: `${p.id}.ogg`,
+    kind: 'phrase',
+    segments: [
+      { text: p.phrase, voiceId: voiceA(p.level) },
+      { text: p.example, voiceId: voiceA(p.level) },
+    ],
+  }));
+  return [...shadow, ...dialogue, ...grammar, ...monologue, ...prompt, ...pron, ...phrase];
 }
 
 async function main(): Promise<void> {
