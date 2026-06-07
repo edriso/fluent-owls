@@ -25,6 +25,9 @@ One set lands together each evening, with a single notification:
 <b>Want more right now?</b>
 Message the bot and it sends one instantly: /quiz, /grammar, /phrase, /dialogue, /shadow, /monologue (a passage to retell), or /prompt (a question to answer out loud, then compare with a model).
 
+<b>Want a personal track?</b>
+DM the bot /next and it walks you through everything at your level, in order, and keeps a daily streak. Set yours with /level (for example /level b1).
+
 <b>What you will practise</b>
 The words and rules that make you correct (vocabulary, collocations, phrasal verbs, idioms, grammar) AND the rhythm, real dialogue, and ready-made phrases that make you sound natural.
 

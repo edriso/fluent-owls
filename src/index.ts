@@ -1,10 +1,16 @@
 import { startHealthServer, logger } from 'telegram-broadcast-kit';
 import { buildBot, setBotProfile } from './bot';
 import { startScheduler, stopScheduler } from './scheduler';
+import { closeDb, dbEnabled, ensureSchema } from './database/client';
 import { config } from './config';
 
 async function main(): Promise<void> {
   const bot = buildBot();
+
+  // Optional personal-tutor database. If DATABASE_URL is set, create the tables
+  // (idempotent) so /next, /level, and /streak work. A failure degrades to the
+  // stateless channel bot rather than crashing.
+  if (dbEnabled) await ensureSchema();
 
   const scheduleCount = startScheduler(bot);
   // The kernel's health server reads PORT from the env itself and binds /health.
@@ -36,6 +42,7 @@ async function shutdown(signal: string): Promise<void> {
   shuttingDown = true;
   logger.info(`${signal} received, shutting down...`);
   stopScheduler();
+  await closeDb();
   process.exit(0);
 }
 

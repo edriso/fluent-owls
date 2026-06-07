@@ -49,14 +49,14 @@ silent live in `src/schedules.ts`.
 
 ## Tech stack
 
-| Part     | Choice                                     |
-| -------- | ------------------------------------------ |
-| Bot      | TypeScript, Grammy, node-cron v4, Node 20+ |
-| Kernel   | `telegram-broadcast-kit` (shared plumbing) |
-| Storage  | none, no database                          |
-| Content  | TypeScript files in `src/content/`         |
-| Packager | pnpm                                       |
-| Tests    | Vitest, no network                         |
+| Part     | Choice                                        |
+| -------- | --------------------------------------------- |
+| Bot      | TypeScript, Grammy, node-cron v4, Node 20+    |
+| Kernel   | `telegram-broadcast-kit` (shared plumbing)    |
+| Storage  | none by default; optional MySQL for the tutor |
+| Content  | TypeScript files in `src/content/`            |
+| Packager | pnpm                                          |
+| Tests    | Vitest, no network                            |
 
 There is no database. All the questions live in source files. To add or change a question, you edit a file and redeploy.
 
@@ -98,6 +98,10 @@ If the checks pass, redeploy.
 
 Beyond the daily set, the bot answers commands in a DM and replies with a random item: **/quiz**, **/grammar**, **/phrase**, **/dialogue**, **/shadow**, **/monologue**, **/prompt**. They are stateless (a random pick), so there is no database. A learner who wants extra practice just asks.
 
+## Personal tutor (optional)
+
+Set `DATABASE_URL` and the bot gains a personal tutor in its DMs: **/next** walks each learner through the content in sequence at their level (no repeats until a pool cycles) and keeps a daily **/streak**; **/level** sets the level. It stores per-user progress in the shared MariaDB, and the tables are created automatically on boot (no migration step). Leave `DATABASE_URL` unset and the bot stays a stateless channel broadcaster with no database. See [`docs/TUTOR.md`](docs/TUTOR.md).
+
 ## The audio
 
 The shadowing clips, role-play dialogues, grammar examples, monologues, and question prompts are AI-generated once with [ElevenLabs](https://elevenlabs.io) and committed as OGG/Opus under `src/content/audio/`. Shadowing, grammar, and monologues use one American voice per CEFR level; dialogues and prompts use two voices (an asker and an answerer), and prompts include a built-in pause so the learner can answer before the model. The running bot only reads the files, so production needs no text-to-speech key and has no audio cost. Generating is a one-time dev step (`pnpm generate-audio`, needs `ELEVENLABS_API_KEY` and `ffmpeg`); see [`docs/SPEAKING.md`](docs/SPEAKING.md). The audio is **not** covered by this repo's MIT license, see [`NOTICE`](NOTICE).
@@ -119,9 +123,9 @@ The shadowing clips, role-play dialogues, grammar examples, monologues, and ques
 | `pnpm post-welcome [id?]` | Post the welcome message, or edit it in place by id                           |
 | `pnpm format`             | Prettier across the repo                                                      |
 
-## Why no database
+## Why no database by default
 
-A daily question channel does not need accounts, saved votes, or a leaderboard. Telegram already tallies the anonymous quiz poll and reveals the answer on the spot. Staying stateless means fewer moving parts, no migrations, and no privacy footprint.
+A daily question channel does not need accounts, saved votes, or a leaderboard. Telegram already tallies the anonymous quiz poll and reveals the answer on the spot. Staying stateless means fewer moving parts and no privacy footprint. The one feature that genuinely needs per-user state, the personal tutor (progress and streaks), is opt-in via `DATABASE_URL` and creates its own tables on boot, so the default deployment stays database-free.
 
 ## License
 

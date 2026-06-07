@@ -57,5 +57,9 @@ export const config = Object.freeze({
   // engagement on weekday evenings, and one focused daily drop beats scattering
   // posts. Override via env.
   dailyCron: process.env.DAILY_CRON?.trim() || '0 18 * * *',
+  // Optional. When set, the personal-tutor commands (/next, /level, /streak)
+  // turn on and store per-user progress in the shared MariaDB. When unset, the
+  // bot runs exactly as before: a stateless channel broadcaster, no database.
+  databaseUrl: process.env.DATABASE_URL?.trim() || null,
   isDev: process.env.NODE_ENV !== 'production',
 });

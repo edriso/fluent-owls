@@ -8,7 +8,7 @@ The aim is both halves of good English: the quizzes and grammar build what makes
 
 Beyond the daily set, the bot answers on-demand commands in a DM (/quiz, /grammar, /phrase, /dialogue, /shadow, /monologue, /prompt), each a random pick, so a keen learner can pull more whenever they want. Monologues (longer model passages to retell) and question prompts (hear a question, pause, answer, then a model answer) are on-demand only, not in the daily batch.
 
-The channel is read-only by design, and the on-demand commands are stateless, so there is still NO database. The bot cannot hear or grade a learner's speaking; it delivers a great model and a clear "do this", and the learner practises on their own (the same self-driven loop as the quiz). The bot exists to deliver good content on a schedule.
+The channel is read-only by design, and the on-demand commands are stateless, so the default deployment has NO database. One opt-in feature, the personal tutor, needs per-user state: set `DATABASE_URL` and the bot also answers /next (your next item in sequence at your level), /level, and /streak in DMs, storing progress in the shared MariaDB (tables created on boot, no migration step). Unset, none of that loads and the bot is the pure broadcaster. The bot cannot hear or grade a learner's speaking; it delivers a great model and a clear "do this", and the learner practises on their own. The bot exists to deliver good content on a schedule.
 
 ## Shared kernel
 
@@ -22,11 +22,12 @@ Everything fluent-owls-specific stays here: the content banks (quizzes, shadowin
 fluent-owls/
 ├── src/
 │   ├── index.ts          Entry point: builds the bot, the kernel scheduler, and the kernel /health server.
-│   ├── config.ts         env loading (via the kernel's loadEnv). Required: BOT_TOKEN, CHANNEL_CHAT_ID.
+│   ├── config.ts         env loading (via the kernel's loadEnv). Required: BOT_TOKEN, CHANNEL_CHAT_ID. Optional: DATABASE_URL (tutor).
+│   ├── database/         Optional personal-tutor DB (mysql2). client.ts (pool + boot-time CREATE TABLE), learners.ts (service). Null/no-op when DATABASE_URL is unset.
 │   ├── bot.ts            Grammy setup: /start, /about, on-demand content commands (/quiz, /grammar, ...), and one /admin_<slot> per batch slot.
 │   ├── scheduler.ts      Domain layer over the kernel's Scheduler; runOnce dispatches by slot kind; runDailyBatch; findSlot; start/stopScheduler.
 │   ├── schedules.ts      THE EDIT POINT for the batch order, slot kinds, level bands, and which slots are silent.
-│   ├── types.ts          Level/Topic + QuizQuestion, ShadowingClip, NativePhrase (and their Leveled* forms), LEVELS.
+│   ├── types.ts          Level/Topic + QuizQuestion, ShadowingClip, Dialogue, GrammarRule, Monologue, Prompt, NativePhrase (and Leveled* forms), LEVELS.
 │   ├── content/
 │   │   ├── questions-a1.ts ... questions-c2.ts   One quiz bank per CEFR level.
 │   │   ├── shadowing-a1.ts ... shadowing-c2.ts   One shadowing-clip bank per level.
@@ -44,24 +45,27 @@ fluent-owls/
 │   │   ├── phrases.ts       Phrase registry (ALL_PHRASES, phrasesPool).
 │   │   ├── pool.ts          Generic interleave-by-level helper, shared by all three registries.
 │   │   ├── audio-path.ts    Where the committed .ogg clips live and how to find one.
-│   │   ├── audio/           Committed OGG/Opus shadowing clips (generated once, see scripts).
+│   │   ├── audio/           Committed OGG/Opus clips for every audio kind (generated once, see scripts).
 │   │   └── welcome.ts      Pinned welcome message body (HTML).
 │   └── lib/
 │       ├── limits.ts     Telegram limits for polls + speaking content (shared by audits + tests).
 │       ├── pick.ts       Typed day-of-year picker (reuses the kernel's dayOfYearIn).
+│       ├── streak.ts     Pure streak math for the tutor (dayKeyIn, nextStreak), unit-tested, no DB.
+│       ├── tutor.ts      Pure /next selection: round-robin kind + per-kind cursor -> typed item.
 │       ├── format.ts     buildPrompt/toPollOptions/clampExplanation + caption builders (shadowing, dialogue, grammar, monologue) + buildPhraseMessage.
 │       └── post.ts       postQuizPoll, postVoice/postDialogue/postGrammar/postMonologue (sendVoice), postPhrase/postPlainMessage; all take an optional chatId (default channel) for DM commands.
 ├── scripts/
 │   ├── send-test.ts       Manual dev sender (any slot name, or all).
 │   ├── post-welcome.ts    Post or edit-in-place the pinned welcome message.
 │   ├── audit-questions.ts Validate the quiz banks (ids, options, indices, lengths).
-│   ├── audit-speaking.ts  Validate the shadowing, dialogue, and phrase banks (ids, fields, lengths, audio names).
-│   └── generate-audio.ts  DEV ONLY: ElevenLabs TTS -> ffmpeg -> OGG (one voice for shadowing, two stitched for dialogues), idempotent.
+│   ├── audit-speaking.ts  Validate the shadowing, dialogue, grammar, monologue, prompt, and phrase banks.
+│   └── generate-audio.ts  DEV ONLY: ElevenLabs TTS -> ffmpeg -> OGG (one voice for shadowing/grammar/monologue, two stitched for dialogues/prompts), idempotent.
 ├── tests/                Vitest unit tests, no network.
 ├── docs/
 │   ├── DEPLOY.md         Host-agnostic deploy notes.
 │   ├── QUESTIONS.md      How to add a quiz question.
-│   └── SPEAKING.md       How to add a shadowing clip or a native phrase, and how to generate audio.
+│   ├── SPEAKING.md       How to add any speaking item (shadowing, dialogue, grammar, monologue, prompt, phrase) and generate audio.
+│   └── TUTOR.md          The optional personal-tutor database (commands, schema, setup).
 ├── .env.example          All env vars documented.
 ├── package.json
 └── tsconfig.json
@@ -73,7 +77,7 @@ fluent-owls/
 | -------- | --------------------------------------------------------------- |
 | Bot      | TypeScript, Grammy, node-cron v4, Node 20+                      |
 | Kernel   | `telegram-broadcast-kit` (logger, env, Scheduler, health, poll) |
-| Storage  | none, no database, no state file                                |
+| Storage  | none by default; optional MySQL (mysql2) for the personal tutor |
 | Packager | pnpm                                                            |
 | Tests    | Vitest, no network                                              |
 
@@ -95,7 +99,8 @@ fluent-owls/
 - **Dialogues are two voices stitched into one clip.** A role-play has a speaker A and a speaker B with different voices. `generate-audio.ts` synthesizes each turn separately, then concatenates them with a short silence via ffmpeg, so one voice message sounds like a real exchange. The learner shadows both roles.
 - **Grammar is text plus sound in one post.** A grammar voice message reads the example sentences aloud (with small gaps) while the caption shows the rule, a plain explanation, and those examples. So learners both read the rule and hear it used correctly, without a second message.
 - **Monologues and prompts are on-demand, not daily.** Longer model passages (/monologue, listen then retell) and question-prompt drills (/prompt, hear a question, pause, answer, compare) would make the daily batch too heavy, so they live in the banks and are pulled on demand. This keeps the daily set focused while still offering depth and the most credit-heavy audio. A prompt clip is the question voice, a built-in answer pause (a few seconds), then the model answer in a second voice, all stitched by `generate-audio.ts`.
-- **On-demand commands instead of a database.** The bot replies to /quiz, /grammar, /phrase, /dialogue, /shadow, /monologue with a random item, sent to whoever asked (the posters take an optional chatId). A random pick needs no per-user state, so the "no database" rule holds. A DB would only be worth it for per-user features (progress, streaks, a personal schedule, like the tilawah bot), which the channel does not need.
+- **On-demand commands are stateless; the tutor is the one stateful, opt-in extra.** The random commands (/quiz, /grammar, ...) need no per-user state, so they keep the no-DB default. The personal tutor (/next, /level, /streak) is the one feature that genuinely needs per-user progress, so it is gated behind `DATABASE_URL`: present -> tutor on; absent -> the DB modules export null/no-ops and nothing loads.
+- **Direct mysql2 driver, not Prisma; tables created on boot.** Unlike the tilawah bot (Prisma, rich per-user state), this bot has a tiny two-field schema and compiles to a slim dist/ image, where Prisma's generated client + a separate migrate compose service add fragile steps. So it uses mysql2 directly and runs `CREATE TABLE IF NOT EXISTS` at startup. No codegen, no migration step, no Dockerfile/CI changes. A boot-time DB failure is logged and disables the tutor for that run, never stopping the channel posts. The pure logic (streak math, item selection) lives in `src/lib/streak.ts` and `src/lib/tutor.ts` and is unit-tested without a DB.
 - **Evening, one ping.** `DAILY_CRON` defaults to 18:00 because educational channels get the most engagement on weekday evenings, and one focused daily drop beats scattering posts. The batch still rings only once (the last post), so a follower gets a single daily notification however many slots there are.
 
 ## How to change what it posts
@@ -114,19 +119,20 @@ To change WHEN the set posts, set `DAILY_CRON`. To change the ORDER, the slot KI
 
 ## Environment variables
 
-| Variable              | Required | Notes                                                           |
-| --------------------- | -------- | --------------------------------------------------------------- |
-| `BOT_TOKEN`           | yes      | From `@BotFather`.                                              |
-| `CHANNEL_CHAT_ID`     | yes      | Numeric `-100...` is best; `@channel` also works.               |
-| `CHANNEL_PUBLIC_URL`  | no       | Public link shown by `/start` in DMs.                           |
-| `ADMIN_TELEGRAM_ID`   | no       | Unlocks the `/admin_*` slot commands in DMs.                    |
-| `TZ_NAME`             | no       | Cron timezone. Default UTC.                                     |
-| `DAILY_CRON`          | no       | When the daily set posts (default `0 18 * * *`).                |
-| `PORT`                | no       | `/health` server port. Default 8080.                            |
-| `NODE_ENV`            | no       | `production` for hosted.                                        |
-| `ELEVENLABS_API_KEY`  | dev only | Only for `pnpm generate-audio`. Never read at runtime.          |
-| `ELEVENLABS_VOICE_ID` | dev only | Optional. Force one voice (else two American voices alternate). |
-| `ELEVENLABS_MODEL_ID` | dev only | Optional. Defaults to `eleven_multilingual_v2`.                 |
+| Variable              | Required | Notes                                                                                                                                   |
+| --------------------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| `BOT_TOKEN`           | yes      | From `@BotFather`.                                                                                                                      |
+| `CHANNEL_CHAT_ID`     | yes      | Numeric `-100...` is best; `@channel` also works.                                                                                       |
+| `CHANNEL_PUBLIC_URL`  | no       | Public link shown by `/start` in DMs.                                                                                                   |
+| `ADMIN_TELEGRAM_ID`   | no       | Unlocks the `/admin_*` slot commands in DMs.                                                                                            |
+| `TZ_NAME`             | no       | Cron timezone. Default UTC.                                                                                                             |
+| `DAILY_CRON`          | no       | When the daily set posts (default `0 18 * * *`).                                                                                        |
+| `DATABASE_URL`        | no       | Enables the personal tutor (/next, /level, /streak). MySQL/MariaDB; tables auto-create on boot. Unset = no database. See docs/TUTOR.md. |
+| `PORT`                | no       | `/health` server port. Default 8080.                                                                                                    |
+| `NODE_ENV`            | no       | `production` for hosted.                                                                                                                |
+| `ELEVENLABS_API_KEY`  | dev only | Only for `pnpm generate-audio`. Never read at runtime.                                                                                  |
+| `ELEVENLABS_VOICE_ID` | dev only | Optional. Force one voice (else two American voices alternate).                                                                         |
+| `ELEVENLABS_MODEL_ID` | dev only | Optional. Defaults to `eleven_multilingual_v2`.                                                                                         |
 
 The `ELEVENLABS_*` vars are used only by the audio-generation script. The running bot never touches a TTS API: it posts the committed `.ogg` files. Leave them unset in production.
 
@@ -148,9 +154,10 @@ The bot only needs **"Post messages"**. Quiz posts are never auto-deleted; the c
 - `pickForDay`: deterministic, cycles the pool, throws on empty (the typed picker; the kernel tests its timezone `dayOfYearIn`).
 - The caption/message builders (shadowing, dialogue, grammar, monologue, phrase) plus `buildPrompt` / `toPollOptions` / `clampExplanation`: headers, validation, clamping, LTR isolation, HTML escaping.
 - `runOnce` / `runDailyBatch` / `findSlot`: the batch posts every slot in the kind its schedule declares (quiz->poll, grammar/dialogue/shadow->voice, phrase->message), in order, with only the last one audible, and survives a total send failure.
+- The tutor logic: `nextStreak`/`dayKeyIn` (streak math: start, no double-count, consecutive, gap, month boundary) and `pickNext`/`kindForStep` (round-robin kind, sequence cursor, level-correct item, wrap-around). Both are pure and need no database.
 - `channelUrlFrom`: the `/start` DM link (port resolution moved to the kernel).
 
-No test needs a real bot token or any audio file; `vitest.config.ts` injects placeholders and the posters are mocked. `pnpm audit-all` (quizzes + speaking) is a separate, network-free data check.
+No test needs a real bot token, any audio file, or a database; `vitest.config.ts` injects placeholders (no `DATABASE_URL`, so the tutor stays off in tests) and the posters are mocked. `pnpm audit-all` (quizzes + speaking) is a separate, network-free data check.
 
 ## Common gotchas
 
@@ -160,7 +167,8 @@ No test needs a real bot token or any audio file; `vitest.config.ts` injects pla
 - **Poll text is pinned left-to-right**: the kernel wraps a poll's plain-text question and options in a bidi isolate, defaulting to RTL (its Arabic origin). Our content is English, so `postQuizPoll` passes `direction: 'ltr'` (kit v0.2.2+); without it the poll mirrors for the reader (a leading emoji/number flips to the wrong side). A scheduler test guards that the posted question starts with the LTR isolate mark.
 - **Polls are always anonymous**: by design. Nobody can see who voted, including the bot.
 - **All audio must be generated and committed**: the voice posters (`postVoice`, `postDialogue`, `postGrammar`, `postMonologue`) read `src/content/audio/<id>.ogg` from disk and upload via `sendVoice`. A missing file is caught and logged ("is the audio generated?") and the rest of the batch still posts. Run `pnpm generate-audio` (needs `ELEVENLABS_API_KEY` and `ffmpeg`), then commit the files. `pnpm audit-speaking --require-audio` fails on any gap across all four audio kinds, for a pre-deploy gate. Dialogues (one call per turn) and grammar (one call per example) make several calls and concatenate, so they use more credits per item than a single shadowing clip.
-- **On-demand commands reply to the asker, not the channel**: every poster takes an optional `chatId` (default `config.channelChatId`). The /quiz, /grammar, /phrase, /dialogue, /shadow, /monologue handlers pass `ctx.chat.id`, so a DM request gets a private reply. The picks are random (`Math.random`), which is fine here (this is the bot runtime, not a workflow script). No per-user state, so still no database.
+- **On-demand commands reply to the asker, not the channel**: every poster takes an optional `chatId` (default `config.channelChatId`). The /quiz, /grammar, /phrase, /dialogue, /shadow, /monologue, /prompt handlers pass `ctx.chat.id`, so a DM request gets a private reply. Random picks use `Math.random` (fine in the bot runtime).
+- **The tutor is optional and self-migrating**: `src/database/client.ts` builds the mysql2 pool only when `DATABASE_URL` is set (`dbEnabled`/`pool` are null otherwise), and `ensureSchema()` runs `CREATE TABLE IF NOT EXISTS` at boot, so there is no migration command and no Dockerfile/CI change. The /next, /level, /streak handlers and `setMyCommands` all branch on `dbEnabled`, so without a database they degrade cleanly and never appear. To change the schema, edit the `CREATE TABLE` in `client.ts` (additively); for a destructive change, alter the table by hand on the server.
 - **Audio path is resolved from `process.cwd()`** (the repo root), not from the compiled module, because `tsc` emits to `dist/` but never copies the `.ogg` files there. Start the bot from the project root (every documented recipe does). See `src/content/audio-path.ts`.
 - **`generate-audio` must not import `src/config`**: that would require `BOT_TOKEN` just to make audio. It loads env via the kernel's `loadEnv` and reads `ELEVENLABS_*` directly.
 - **The shadowing caption and the phrase message are pinned/escaped too**: `buildShadowingCaption` wraps the plain-text caption in an LTR isolate (same RTL-mirroring fix as the poll); `buildPhraseMessage` is HTML and escapes `& < >`. Keep both in mind when editing `format.ts`.

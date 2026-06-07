@@ -1,6 +1,6 @@
 # Deployment
 
-This bot is small and stateless. It runs anywhere Node 20 runs: Fly.io, Railway, Render, a VPS, a Docker container, or your laptop. There is no database, no migrations, and no volume to mount. A redeploy is the whole release process.
+This bot is small and (by default) stateless. It runs anywhere Node 20 runs: Fly.io, Railway, Render, a VPS, a Docker container, or your laptop. There is no volume to mount, and no database unless you opt into the personal tutor (`DATABASE_URL`), whose tables are created on boot, so there are still no migrations to run. A redeploy is the whole release process.
 
 ## What you need
 
@@ -10,20 +10,31 @@ This bot is small and stateless. It runs anywhere Node 20 runs: Fly.io, Railway,
 
 ## Environment variables
 
-| Variable             | Required | Notes                                             |
-| -------------------- | -------- | ------------------------------------------------- |
-| `BOT_TOKEN`          | yes      | From `@BotFather`.                                |
-| `CHANNEL_CHAT_ID`    | yes      | Numeric `-100...` is best; `@channel` also works. |
-| `CHANNEL_PUBLIC_URL` | no       | Public link shown by `/start` in DMs.             |
-| `ADMIN_TELEGRAM_ID`  | no       | Unlocks the `/admin_*` slot commands in DMs.      |
-| `TZ_NAME`            | no       | Cron timezone. Default UTC.                       |
-| `DAILY_CRON`         | no       | When the daily set posts (default `0 18 * * *`).  |
-| `PORT`               | no       | `/health` server port. Default 8080.              |
-| `NODE_ENV`           | no       | `production` for hosted.                          |
+| Variable             | Required | Notes                                                       |
+| -------------------- | -------- | ----------------------------------------------------------- |
+| `BOT_TOKEN`          | yes      | From `@BotFather`.                                          |
+| `CHANNEL_CHAT_ID`    | yes      | Numeric `-100...` is best; `@channel` also works.           |
+| `CHANNEL_PUBLIC_URL` | no       | Public link shown by `/start` in DMs.                       |
+| `ADMIN_TELEGRAM_ID`  | no       | Unlocks the `/admin_*` slot commands in DMs.                |
+| `TZ_NAME`            | no       | Cron timezone. Default UTC.                                 |
+| `DAILY_CRON`         | no       | When the daily set posts (default `0 18 * * *`).            |
+| `DATABASE_URL`       | no       | Enables the personal tutor; MySQL URL (tables auto-create). |
+| `PORT`               | no       | `/health` server port. Default 8080.                        |
+| `NODE_ENV`           | no       | `production` for hosted.                                    |
 
 The `.env` file is optional. If you set the variables in your host dashboard, you do not need a file at all.
 
-The `ELEVENLABS_*` variables in `.env.example` are **dev only**: they are used by `pnpm generate-audio` to create the audio clips once (shadowing, dialogues, grammar, monologues), and are never read by the running bot. Leave them unset in production. The committed `.ogg` files in `src/content/audio/` are all production needs, so make sure they ship with your deploy (the Docker recipe below copies the whole repo, so they are included).
+## Personal tutor (optional database)
+
+The bot runs with no database by default. To turn on the personal tutor (the `/next`, `/level`, `/streak` DM commands and per-user streaks), set `DATABASE_URL` to point at the shared MariaDB and redeploy:
+
+```
+DATABASE_URL="mysql://fluentowls:<password>@shared-db:3306/fluentowls_db"
+```
+
+There is **no migration step**: the bot runs `CREATE TABLE IF NOT EXISTS` on boot, so the `learners` table appears on first start. The shared DB and this bot's database/user are set up once on the server (see the server's `docs/05-databases.md`). If the DB is unreachable at boot, the bot logs it, disables the tutor for that run, and keeps posting to the channel. See [`TUTOR.md`](./TUTOR.md) for the full picture. To turn the tutor off, unset `DATABASE_URL` and redeploy.
+
+The `ELEVENLABS_*` variables in `.env.example` are **dev only**: they are used by `pnpm generate-audio` to create the audio clips once (shadowing, dialogues, grammar, monologues, prompts), and are never read by the running bot. Leave them unset in production. The committed `.ogg` files in `src/content/audio/` are all production needs, so make sure they ship with your deploy (the Docker recipe below copies the whole repo, so they are included).
 
 ## First post: the pinned welcome
 
