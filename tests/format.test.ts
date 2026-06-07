@@ -1,6 +1,12 @@
 import { describe, expect, it } from 'vitest';
-import { buildPrompt, clampExplanation, toPollOptions } from '../src/lib/format';
-import type { LeveledQuestion } from '../src/types';
+import {
+  buildPhraseMessage,
+  buildPrompt,
+  buildShadowingCaption,
+  clampExplanation,
+  toPollOptions,
+} from '../src/lib/format';
+import type { LeveledNativePhrase, LeveledQuestion, LeveledShadowingClip } from '../src/types';
 
 const sample: LeveledQuestion = {
   id: 'b1-001',
@@ -10,6 +16,25 @@ const sample: LeveledQuestion = {
   options: ['do', 'make', 'take', 'have'],
   correctIndex: 1,
   explanation: 'You make a decision.',
+};
+
+const sampleClip: LeveledShadowingClip = {
+  id: 'b1-sh-001',
+  level: 'b1',
+  text: 'Honestly, I think it is worth a try.',
+  context: 'Sharing an opinion',
+  focus: 'stress',
+  note: 'Lean on the strong words.',
+  audio: 'b1-sh-001.ogg',
+};
+
+const samplePhrase: LeveledNativePhrase = {
+  id: 'b1-ph-001',
+  level: 'b1',
+  phrase: 'I see your point, but ...',
+  situation: 'Disagreeing politely',
+  example: 'I see your point, but it is too expensive.',
+  fn: 'disagreeing',
 };
 
 describe('buildPrompt', () => {
@@ -71,5 +96,46 @@ describe('clampExplanation', () => {
     expect(out).toBeDefined();
     expect(out!.length).toBe(200);
     expect(out!.endsWith('…')).toBe(true);
+  });
+});
+
+describe('buildShadowingCaption', () => {
+  it('includes the level, context, transcript, and tip', () => {
+    const out = buildShadowingCaption(sampleClip);
+    expect(out).toContain('B1');
+    expect(out).toContain('Shadow this');
+    expect(out).toContain(sampleClip.context);
+    expect(out).toContain(sampleClip.text);
+    expect(out).toContain(sampleClip.note);
+  });
+
+  it('pins the caption left-to-right with a Unicode isolate', () => {
+    const out = buildShadowingCaption(sampleClip);
+    expect(out.codePointAt(0)).toBe(0x2066);
+    expect(out.codePointAt(out.length - 1)).toBe(0x2069);
+  });
+});
+
+describe('buildPhraseMessage', () => {
+  it('includes the level, function label, phrase, situation, and example', () => {
+    const out = buildPhraseMessage(samplePhrase);
+    expect(out).toContain('B1');
+    expect(out).toContain('Say it like a native');
+    expect(out).toContain('Disagreeing');
+    expect(out).toContain(samplePhrase.phrase);
+    expect(out).toContain(samplePhrase.situation);
+    expect(out).toContain(samplePhrase.example);
+  });
+
+  it('escapes HTML-special characters in the content', () => {
+    const out = buildPhraseMessage({
+      ...samplePhrase,
+      phrase: 'me & you < them',
+      example: '1 < 2 & true',
+    });
+    expect(out).toContain('me &amp; you &lt; them');
+    expect(out).toContain('1 &lt; 2 &amp; true');
+    // The raw, unescaped ampersand must not leak through.
+    expect(out).not.toContain('me & you');
   });
 });

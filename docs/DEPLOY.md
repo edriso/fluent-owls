@@ -23,6 +23,8 @@ This bot is small and stateless. It runs anywhere Node 20 runs: Fly.io, Railway,
 
 The `.env` file is optional. If you set the variables in your host dashboard, you do not need a file at all.
 
+The `ELEVENLABS_*` variables in `.env.example` are **dev only**: they are used by `pnpm generate-audio` to create the shadowing clips once, and are never read by the running bot. Leave them unset in production. The committed `.ogg` files in `src/content/audio/` are all production needs, so make sure they ship with your deploy (the Docker recipe below copies the whole repo, so they are included).
+
 ## First post: the pinned welcome
 
 Once the bot is up and is a channel admin, run:
@@ -43,8 +45,12 @@ pnpm post-welcome <message_id>
 pnpm send-test morning    # fires today's A1-A2 question to the channel now
 pnpm send-test midday     # B1-B2
 pnpm send-test evening    # C1-C2
-pnpm send-test all        # all three, in order
+pnpm send-test phrase     # today's "say it like a native" phrase
+pnpm send-test shadow     # today's shadowing voice clip (needs the .ogg generated)
+pnpm send-test all        # the whole daily set, in order
 ```
+
+The `shadow` slot posts a committed audio file, so run `pnpm generate-audio` (dev only, see [QUESTIONS.md](./QUESTIONS.md) and [SPEAKING.md](./SPEAKING.md)) and commit the `.ogg` files before relying on it.
 
 The script preflights `getChat` first, so a wrong token or channel id gives one clean error instead of two confusing ones.
 
@@ -99,7 +105,7 @@ Logs go to stdout. There is nothing to mount.
 
 ## Verifying it works
 
-1. Check `/health` returns 200 with `{"ok":true,"schedules":3,...}`.
+1. Check `/health` returns 200 with `{"ok":true,...}` (the startup log reports `posts: 5`, the size of the daily set).
 2. Tail the logs for a `Daily batch scheduled` line at startup.
 3. Send `/start` to the bot in a DM; you should get a reply pointing at the channel.
 4. Run `pnpm send-test morning` to verify a channel post end to end.
@@ -107,9 +113,10 @@ Logs go to stdout. There is nothing to mount.
 
 ## When something breaks
 
-- **No post arrived.** Check the logs for `Daily batch fired` then `Failed to post quiz poll`. The usual cause is the bot is not a channel admin or "Post messages" is off.
+- **No post arrived.** Check the logs for a `Failed to post...` line. The usual cause is the bot is not a channel admin or "Post messages" is off.
 - **403 from Telegram.** Same answer: admin rights.
 - **400 on sendPoll.** An option over 100 chars or a bad option count. Run `pnpm audit-questions`.
+- **The shadowing clip did not post** (`Failed to post shadowing voice (is the audio generated?)`). The `.ogg` file is missing. Run `pnpm generate-audio` and commit the files, or `pnpm audit-speaking --require-audio` to find every gap. The other posts are unaffected.
 
 ## Backups
 

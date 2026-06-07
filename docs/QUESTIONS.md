@@ -1,5 +1,9 @@
 # Adding and Editing Questions
 
+> Looking to add a **shadowing clip** or a **"say it like a native" phrase**
+> (the daily speaking exercises)? See [SPEAKING.md](./SPEAKING.md). This file
+> covers the quiz questions only.
+
 Questions are plain TypeScript objects, one file per CEFR level:
 
 ```

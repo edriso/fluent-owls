@@ -3,15 +3,22 @@ import { schedules } from '../src/schedules';
 import { LEVELS } from '../src/types';
 
 describe('schedules (the daily batch)', () => {
-  it('has the three CEFR bands in easy-to-hard order', () => {
-    expect(schedules.map((s) => s.name)).toEqual(['morning', 'midday', 'evening']);
+  it('runs the three quizzes first, then the phrase, then the shadowing clip', () => {
+    expect(schedules.map((s) => s.name)).toEqual([
+      'morning',
+      'midday',
+      'evening',
+      'phrase',
+      'shadow',
+    ]);
+    expect(schedules.map((s) => s.kind)).toEqual(['quiz', 'quiz', 'quiz', 'phrase', 'shadow']);
   });
 
   it('rings exactly once a day: only the last slot is audible', () => {
     const audible = schedules.filter((s) => !s.silent);
     expect(audible).toHaveLength(1);
     // The single audible post must be the last one, so the notification lands
-    // on the final message in the feed.
+    // on the final message in the feed (the shadowing clip).
     expect(audible[0]).toBe(schedules[schedules.length - 1]);
   });
 

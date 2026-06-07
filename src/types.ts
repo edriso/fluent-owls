@@ -82,3 +82,105 @@ export type LeveledQuestion = QuizQuestion & {
   /** The CEFR level this question belongs to. */
   level: Level;
 };
+
+/**
+ * The speaking skill a shadowing clip trains.
+ *
+ * Sounding like a confident native is mostly these few things, none of which a
+ * fill-in-the-blank quiz can teach. Each clip targets ONE so the tip stays
+ * concrete. The label is woven into the "listen and repeat" instruction.
+ *
+ *  - linking:     connected speech (run words together, "pick it up" -> "pi-ki-tup")
+ *  - stress:      sentence rhythm (stress the content words, swallow the rest)
+ *  - intonation:  pitch movement (rising questions, falling statements, emotion)
+ *  - reduction:   weak forms and contractions ("want to" -> "wanna", schwa sounds)
+ *  - pacing:      thought groups and pausing (where natives breathe, not word by word)
+ */
+export type ShadowingFocus = 'linking' | 'stress' | 'intonation' | 'reduction' | 'pacing';
+
+/**
+ * One shadowing clip: a short, natural model sentence the learner listens to
+ * and repeats out loud, copying the speaker's rhythm and melody. This is the
+ * single most effective drill for pronunciation and fluency, and it is pure
+ * broadcast: the bot delivers the model, the learner practises on their own.
+ *
+ * The audio is pre-generated once (scripts/generate-audio.ts) and committed as
+ * an OGG/Opus file, so the running bot never calls a text-to-speech API: no key,
+ * no cost, no new failure mode at runtime. The `text` is both the on-screen
+ * transcript (in the voice caption) and the script the audio is generated from,
+ * so the two can never drift.
+ *
+ * Constraints (validated by scripts/audit-speaking.ts and the unit tests):
+ *  - `text` is non-empty and <= TRANSCRIPT_MAX_CHARS (keeps clips short)
+ *  - the rendered caption is <= CAPTION_MAX_CHARS (Telegram media caption limit)
+ *  - no em-dashes anywhere (house style)
+ */
+export type ShadowingClip = {
+  /** Stable, unique id. Starts with the level and a "sh" marker, e.g. "b1-sh-001". */
+  id: string;
+  /** The sentence(s) to listen to and repeat. Also the script the audio is built from. */
+  text: string;
+  /** Short real-situation label shown above the line, e.g. "Catching up with a friend". */
+  context: string;
+  /** The one delivery skill this clip drills. Woven into the instruction. */
+  focus: ShadowingFocus;
+  /** One concrete tip on HOW to say it, tied to the focus. */
+  note: string;
+  /** File name of the committed OGG/Opus clip, e.g. "b1-sh-001.ogg". */
+  audio: string;
+};
+
+/** A shadowing clip tagged with the CEFR level it was loaded from. */
+export type LeveledShadowingClip = ShadowingClip & {
+  /** The CEFR level this clip belongs to. */
+  level: Level;
+};
+
+/**
+ * The conversational job a native phrase does.
+ *
+ * These are the moves that make speech sound fluent and confident: agreeing,
+ * disagreeing politely, giving an opinion, softening a request, buying time,
+ * reacting, telling a story. The label is shown as the header badge.
+ */
+export type PhraseFunction =
+  | 'opinion'
+  | 'agreeing'
+  | 'disagreeing'
+  | 'small-talk'
+  | 'softening'
+  | 'clarifying'
+  | 'reacting'
+  | 'storytelling'
+  | 'transitions'
+  | 'requests';
+
+/**
+ * One "say it like a native" phrase: a ready-made chunk for a real situation,
+ * with when to use it and an example. Text only (no audio), posted as a short
+ * HTML message. Chunks are how fluent speakers actually talk, in whole
+ * pre-built phrases rather than word by word, so memorising a few makes you
+ * sound natural fast.
+ *
+ * Constraints (validated by scripts/audit-speaking.ts and the unit tests):
+ *  - every field is non-empty and within its limit (see limits.ts)
+ *  - no em-dashes anywhere (house style)
+ */
+export type NativePhrase = {
+  /** Stable, unique id. Starts with the level and a "ph" marker, e.g. "b1-ph-001". */
+  id: string;
+  /** The natural chunk itself, e.g. "I see what you mean, but...". */
+  phrase: string;
+  /** When to reach for it, e.g. "Disagreeing politely in a discussion". */
+  situation: string;
+  /** A full sample sentence that uses the phrase in context. */
+  example: string;
+  /** The conversational job it does. Drives the header badge. */
+  fn: PhraseFunction;
+};
+
+/** A native phrase tagged with the CEFR level it was loaded from. */
+export type LeveledNativePhrase = NativePhrase & {
+  /** The CEFR level this phrase belongs to. */
+  level: Level;
+};

@@ -1,8 +1,12 @@
 # Fluent Owls 🦉
 
-A tiny Telegram bot that posts three short English quizzes a day to a channel, so people can level up their English a little every day. Each quiz is a fill-in-the-blank sentence with four options and an instant explanation, sent as a native Telegram quiz poll.
+A tiny Telegram bot that posts one short English set to a channel each day, so people can level up their English a little every day. The set is built to make you both **correct** and **well spoken**:
 
-The whole project is junior friendly on purpose. The questions are short, the English is plain, and the code is small and well documented.
+- **3 quizzes** (beginner to advanced): a fill-in-the-blank sentence with four options and an instant explanation, sent as a native Telegram quiz poll.
+- **1 "say it like a native" phrase**: a ready-made chunk for a real situation, with when to use it and an example.
+- **1 shadowing clip**: a short native-audio voice message with the transcript, to listen to and repeat (the fastest drill for a natural rhythm and accent).
+
+The whole project is junior friendly on purpose. The content is short, the English is plain, and the code is small and well documented.
 
 ## Why this format
 
@@ -18,18 +22,23 @@ Questions are organized by the international **CEFR** scale (A1 to C2) instead o
 
 ## The daily batch
 
-All three quizzes post together once a day, in order (easy to hard), so a
-follower gets a single notification but still receives every question. Only
-the last post makes a sound; the first two are sent silently.
+The whole set posts together once a day, in order, so a follower gets a single
+notification but still receives everything. Only the last post makes a sound;
+the rest are sent silently.
 
-| Order | Slot    | Levels | Notification |
-| ----- | ------- | ------ | ------------ |
-| 1     | Morning | A1, A2 | silent       |
-| 2     | Midday  | B1, B2 | silent       |
-| 3     | Evening | C1, C2 | rings        |
+| Order | Slot    | Kind      | Levels         | Notification |
+| ----- | ------- | --------- | -------------- | ------------ |
+| 1     | Morning | quiz      | A1, A2         | silent       |
+| 2     | Midday  | quiz      | B1, B2         | silent       |
+| 3     | Evening | quiz      | C1, C2         | silent       |
+| 4     | Phrase  | phrase    | all (A1 to C2) | silent       |
+| 5     | Shadow  | shadowing | all (A1 to C2) | rings        |
 
-The batch time is `DAILY_CRON` (default `0 14 * * *`, i.e. 14:00), run in the
-timezone set by `TZ_NAME` (default UTC).
+The quizzes climb the CEFR bands; the phrase and shadowing slots pool every
+level and show the level on each post, so learners self-select. The batch time
+is `DAILY_CRON` (default `0 14 * * *`, i.e. 14:00), run in the timezone set by
+`TZ_NAME` (default UTC). The order and which slots are silent live in
+`src/schedules.ts`.
 
 ## Tech stack
 
@@ -71,23 +80,33 @@ The bot picks today's question with `dayOfYearIn(today, TZ) % poolSize` for each
 - Each band advances independently across the year.
 - Add more questions and the cycle lengthens automatically. No config needed.
 
-## Adding a question
+## Adding content
 
-See [`docs/QUESTIONS.md`](docs/QUESTIONS.md). The short version: append an object to the right `src/content/questions-<level>.ts` file, then run `pnpm audit-questions` and `pnpm test`. If both pass, redeploy.
+- **A quiz question**: see [`docs/QUESTIONS.md`](docs/QUESTIONS.md). Append an object to the right `src/content/questions-<level>.ts`, then run `pnpm audit-questions` and `pnpm test`.
+- **A shadowing clip or a native phrase**: see [`docs/SPEAKING.md`](docs/SPEAKING.md). Append to `src/content/shadowing-<level>.ts` or `phrases-<level>.ts`, run `pnpm audit-speaking` and `pnpm test`, then `pnpm generate-audio` for any new clip and commit the new `.ogg`.
+
+If the checks pass, redeploy.
+
+## The shadowing audio
+
+The shadowing clips are AI-generated once with [ElevenLabs](https://elevenlabs.io) (one American voice per CEFR level) and committed as OGG/Opus under `src/content/audio/`. The running bot only reads them, so production needs no text-to-speech key and has no audio cost. Generating is a one-time dev step (`pnpm generate-audio`, needs `ELEVENLABS_API_KEY` and `ffmpeg`); see [`docs/SPEAKING.md`](docs/SPEAKING.md). The audio is **not** covered by this repo's MIT license, see [`NOTICE`](NOTICE).
 
 ## Scripts
 
-| Command                   | What it does                                                  |
-| ------------------------- | ------------------------------------------------------------- |
-| `pnpm dev`                | Start the bot locally with hot reload                         |
-| `pnpm start`              | Run the compiled bot (after `pnpm build`)                     |
-| `pnpm build`              | Compile TypeScript to `dist/`                                 |
-| `pnpm test`               | Run unit tests (no network)                                   |
-| `pnpm typecheck`          | TypeScript with no emit                                       |
-| `pnpm audit-questions`    | Validate the question banks                                   |
-| `pnpm send-test [slot]`   | Post one slot to the channel now (morning/midday/evening/all) |
-| `pnpm post-welcome [id?]` | Post the welcome message, or edit it in place by id           |
-| `pnpm format`             | Prettier across the repo                                      |
+| Command                   | What it does                                                 |
+| ------------------------- | ------------------------------------------------------------ |
+| `pnpm dev`                | Start the bot locally with hot reload                        |
+| `pnpm start`              | Run the compiled bot (after `pnpm build`)                    |
+| `pnpm build`              | Compile TypeScript to `dist/`                                |
+| `pnpm test`               | Run unit tests (no network)                                  |
+| `pnpm typecheck`          | TypeScript with no emit                                      |
+| `pnpm audit-questions`    | Validate the question banks                                  |
+| `pnpm audit-speaking`     | Validate the shadowing + phrase banks                        |
+| `pnpm audit-all`          | Run both content audits                                      |
+| `pnpm generate-audio`     | Dev only: generate the shadowing `.ogg` clips (ElevenLabs)   |
+| `pnpm send-test [slot]`   | Post one slot now (morning/midday/evening/phrase/shadow/all) |
+| `pnpm post-welcome [id?]` | Post the welcome message, or edit it in place by id          |
+| `pnpm format`             | Prettier across the repo                                     |
 
 ## Why no database
 
@@ -95,4 +114,9 @@ A daily question channel does not need accounts, saved votes, or a leaderboard. 
 
 ## License
 
-MIT.
+Code: MIT (see [`LICENSE`](LICENSE)).
+
+The generated voice clips in `src/content/audio/` are **not** MIT-licensed. They
+are AI-generated with ElevenLabs under a commercial license and are subject to
+the ElevenLabs Terms of Service. If you fork this project, generate your own
+audio rather than reusing those files. See [`NOTICE`](NOTICE).

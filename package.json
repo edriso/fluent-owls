@@ -16,6 +16,9 @@
     "send-test": "tsx scripts/send-test.ts",
     "post-welcome": "tsx scripts/post-welcome.ts",
     "audit-questions": "tsx scripts/audit-questions.ts",
+    "audit-speaking": "tsx scripts/audit-speaking.ts",
+    "audit-all": "pnpm audit-questions && pnpm audit-speaking",
+    "generate-audio": "tsx scripts/generate-audio.ts",
     "format": "prettier --write \"**/*.{ts,js,json,md,yml,yaml}\"",
     "format:check": "prettier --check \"**/*.{ts,js,json,md,yml,yaml}\"",
     "check": "pnpm typecheck && pnpm format:check && pnpm test"
