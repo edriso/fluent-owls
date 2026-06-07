@@ -294,4 +294,70 @@ export const a1Dialogues: Dialogue[] = [
     note: `On the phone, "Speaking." means you are talking to that person.`,
     audio: 'a1-dl-026.ogg',
   },
+  {
+    id: 'a1-dl-027',
+    situation: 'Asking for directions',
+    turns: [
+      { speaker: 'A', text: 'Excuse me, how do I get to the park?' },
+      { speaker: 'B', text: 'Go straight, then turn left.' },
+      { speaker: 'A', text: 'Thank you so much.' },
+    ],
+    note: `"Go straight, then turn left." gives simple directions.`,
+    audio: 'a1-dl-027.ogg',
+  },
+  {
+    id: 'a1-dl-028',
+    situation: 'At the supermarket',
+    turns: [
+      { speaker: 'A', text: 'Where is the milk?' },
+      { speaker: 'B', text: "It's at the back, on the right." },
+      { speaker: 'A', text: 'Great, thanks.' },
+    ],
+    note: `Find things with "Where is the ...?" Answer with a place.`,
+    audio: 'a1-dl-028.ogg',
+  },
+  {
+    id: 'a1-dl-029',
+    situation: 'Making a friend',
+    turns: [
+      { speaker: 'A', text: 'Do you want to sit together?' },
+      { speaker: 'B', text: "Sure, I'd like that." },
+      { speaker: 'A', text: 'Great!' },
+    ],
+    note: `"Do you want to ...?" is a simple way to invite someone.`,
+    audio: 'a1-dl-029.ogg',
+  },
+  {
+    id: 'a1-dl-030',
+    situation: 'Buying ice cream',
+    turns: [
+      { speaker: 'A', text: 'Can I have one scoop, please?' },
+      { speaker: 'B', text: 'Which flavor?' },
+      { speaker: 'A', text: 'Chocolate, please.' },
+    ],
+    note: `"Which flavor?" Answer with just the word: "Chocolate, please."`,
+    audio: 'a1-dl-030.ogg',
+  },
+  {
+    id: 'a1-dl-031',
+    situation: 'Asking for help in class',
+    turns: [
+      { speaker: 'A', text: 'Can you help me with this word?' },
+      { speaker: 'B', text: 'Of course. It means big.' },
+      { speaker: 'A', text: 'Oh, thank you!' },
+    ],
+    note: `"Can you help me with ...?" asks for help with one thing.`,
+    audio: 'a1-dl-031.ogg',
+  },
+  {
+    id: 'a1-dl-032',
+    situation: 'Saying sorry',
+    turns: [
+      { speaker: 'A', text: 'I am sorry, that was my fault.' },
+      { speaker: 'B', text: "It's okay, don't worry." },
+      { speaker: 'A', text: 'Thank you for understanding.' },
+    ],
+    note: `Apologize with "I am sorry", then "that was my fault."`,
+    audio: 'a1-dl-032.ogg',
+  },
 ];

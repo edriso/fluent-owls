@@ -293,4 +293,70 @@ export const b1Dialogues: Dialogue[] = [
     note: `"a lot on my plate" means very busy or overloaded.`,
     audio: 'b1-dl-026.ogg',
   },
+  {
+    id: 'b1-dl-027',
+    situation: 'Rescheduling a call',
+    turns: [
+      { speaker: 'A', text: 'Is now a good time to talk?' },
+      { speaker: 'B', text: 'Actually, can we make it in ten minutes?' },
+      { speaker: 'A', text: "No problem, I'll call back then." },
+    ],
+    note: `"Is now a good time?" lets the other person delay politely.`,
+    audio: 'b1-dl-027.ogg',
+  },
+  {
+    id: 'b1-dl-028',
+    situation: 'Picking up a discussion',
+    turns: [
+      { speaker: 'A', text: 'Where were we before lunch?' },
+      { speaker: 'B', text: 'We were deciding on the budget.' },
+      { speaker: 'A', text: "Right, let's pick that up." },
+    ],
+    note: `"Where were we?" restarts a paused conversation.`,
+    audio: 'b1-dl-028.ogg',
+  },
+  {
+    id: 'b1-dl-029',
+    situation: 'Asking for clarification',
+    turns: [
+      { speaker: 'A', text: 'Sorry, could you clarify what you mean?' },
+      { speaker: 'B', text: 'Sure, I mean we should start sooner.' },
+      { speaker: 'A', text: 'Got it, that makes sense.' },
+    ],
+    note: `"Could you clarify ...?" is a polite way to ask for detail.`,
+    audio: 'b1-dl-029.ogg',
+  },
+  {
+    id: 'b1-dl-030',
+    situation: 'Encouraging a friend',
+    turns: [
+      { speaker: 'A', text: "I'm not sure I can do this." },
+      { speaker: 'B', text: "You've handled worse than this before." },
+      { speaker: 'A', text: 'True. Thanks, I needed that.' },
+    ],
+    note: `"You've handled worse before." is a warm way to reassure.`,
+    audio: 'b1-dl-030.ogg',
+  },
+  {
+    id: 'b1-dl-031',
+    situation: 'Planning a trip',
+    turns: [
+      { speaker: 'A', text: 'Should we book the flights now?' },
+      { speaker: 'B', text: 'Let me know if prices drop a bit.' },
+      { speaker: 'A', text: "Good thinking, let's keep an eye on them." },
+    ],
+    note: `"keep an eye on" means watch something over time.`,
+    audio: 'b1-dl-031.ogg',
+  },
+  {
+    id: 'b1-dl-032',
+    situation: 'Sorting out a mix-up',
+    turns: [
+      { speaker: 'A', text: "I think there's been a mistake with my order." },
+      { speaker: 'B', text: 'Oh no, let me sort that out for you.' },
+      { speaker: 'A', text: 'Thanks, I appreciate it.' },
+    ],
+    note: `"let me sort that out" offers to fix a problem.`,
+    audio: 'b1-dl-032.ogg',
+  },
 ];

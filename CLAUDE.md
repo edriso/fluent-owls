@@ -161,8 +161,9 @@ The bot only needs **"Post messages"**. Quiz posts are never auto-deleted; the c
 - The tutor logic: `nextStreak`/`dayKeyIn` (streak math: start, no double-count, consecutive, gap, month boundary) and `pickNext`/`kindForStep` (round-robin kind, sequence cursor, level-correct item, wrap-around). Both are pure and need no database.
 - `searchGrammar`: finds the right grammar point by topic words, ignores stopwords, returns null for nonsense. Pure, no database.
 - `channelUrlFrom`: the `/start` DM link (port resolution moved to the kernel).
+- `audio-path`: `countAudioClips` counts the committed `.ogg` files and `audioPathFor` resolves under `AUDIO_DIR`. This backs the boot-time check in `index.ts` that logs loudly when the audio is missing from the running image (the bug that once left every voice post silent). It does NOT assert per-item audio parity: that stays the opt-in `pnpm audit-speaking --require-audio` gate, since content may be valid before its clips exist.
 
-No test needs a real bot token, any audio file, or a database; `vitest.config.ts` injects placeholders (no `DATABASE_URL`, so the tutor stays off in tests) and the posters are mocked. `pnpm audit-all` (quizzes + speaking) is a separate, network-free data check.
+No test needs a real bot token, a specific audio file, or a database; `vitest.config.ts` injects placeholders (no `DATABASE_URL`, so the tutor stays off in tests) and the posters are mocked. `audio-path.test.ts` only reads the committed clip directory, not any individual clip. `pnpm audit-all` (quizzes + speaking) is a separate, network-free data check.
 
 ## Common gotchas
 

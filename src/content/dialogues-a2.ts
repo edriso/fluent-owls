@@ -294,4 +294,70 @@ export const a2Dialogues: Dialogue[] = [
     note: `Explain briefly: "the bus was delayed." Then move on.`,
     audio: 'a2-dl-026.ogg',
   },
+  {
+    id: 'a2-dl-027',
+    situation: 'At the pharmacy',
+    turns: [
+      { speaker: 'A', text: 'Do you have anything for a cold?' },
+      { speaker: 'B', text: 'Yes, try this. Take one a day.' },
+      { speaker: 'A', text: 'Thanks, how much is it?' },
+    ],
+    note: `"Do you have anything for ...?" asks for a remedy.`,
+    audio: 'a2-dl-027.ogg',
+  },
+  {
+    id: 'a2-dl-028',
+    situation: 'Booking a table',
+    turns: [
+      { speaker: 'A', text: "I'd like a table for two, please." },
+      { speaker: 'B', text: 'Sure, for what time?' },
+      { speaker: 'A', text: 'Around eight, if possible.' },
+    ],
+    note: `"a table for two" plus "Around eight, if possible."`,
+    audio: 'a2-dl-028.ogg',
+  },
+  {
+    id: 'a2-dl-029',
+    situation: 'Chatting about work',
+    turns: [
+      { speaker: 'A', text: 'How long have you worked here?' },
+      { speaker: 'B', text: 'About three years now.' },
+      { speaker: 'A', text: 'Do you enjoy it?' },
+    ],
+    note: `"How long have you ...?" asks about duration up to now.`,
+    audio: 'a2-dl-029.ogg',
+  },
+  {
+    id: 'a2-dl-030',
+    situation: 'Reporting a lost item',
+    turns: [
+      { speaker: 'A', text: 'I think I left my bag here.' },
+      { speaker: 'B', text: 'What does it look like?' },
+      { speaker: 'A', text: "It's a small black backpack." },
+    ],
+    note: `Describe it: "It's a small black backpack."`,
+    audio: 'a2-dl-030.ogg',
+  },
+  {
+    id: 'a2-dl-031',
+    situation: 'Inviting a friend to dinner',
+    turns: [
+      { speaker: 'A', text: "We're having dinner on Friday. Want to come?" },
+      { speaker: 'B', text: "I'd love to. What can I bring?" },
+      { speaker: 'A', text: 'Just yourself!' },
+    ],
+    note: `Accept warmly: "I'd love to. What can I bring?"`,
+    audio: 'a2-dl-031.ogg',
+  },
+  {
+    id: 'a2-dl-032',
+    situation: 'Giving a compliment',
+    turns: [
+      { speaker: 'A', text: 'I really like your jacket.' },
+      { speaker: 'B', text: 'Oh, thanks! I got it last week.' },
+      { speaker: 'A', text: 'It suits you.' },
+    ],
+    note: `Take a compliment with "Oh, thanks!" then add a detail.`,
+    audio: 'a2-dl-032.ogg',
+  },
 ];

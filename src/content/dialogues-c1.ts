@@ -294,4 +294,70 @@ export const c1Dialogues: Dialogue[] = [
     note: `"Hear me out" asks for a chance to explain fully first.`,
     audio: 'c1-dl-026.ogg',
   },
+  {
+    id: 'c1-dl-027',
+    situation: 'Negotiating scope',
+    turns: [
+      { speaker: 'A', text: 'Can we add two more features?' },
+      { speaker: 'B', text: 'We can, but something else has to give.' },
+      { speaker: 'A', text: "Fair, let's prioritise together." },
+    ],
+    note: `"something has to give" means a trade-off is needed.`,
+    audio: 'c1-dl-027.ogg',
+  },
+  {
+    id: 'c1-dl-028',
+    situation: 'Mentoring',
+    turns: [
+      { speaker: 'A', text: 'I keep second-guessing my decisions.' },
+      { speaker: 'B', text: "That usually means you care, not that you're wrong." },
+      { speaker: 'A', text: "I hadn't thought of it that way." },
+    ],
+    note: `Reframe a worry: "That means you care, not that you're wrong."`,
+    audio: 'c1-dl-028.ogg',
+  },
+  {
+    id: 'c1-dl-029',
+    situation: 'Challenging a claim',
+    turns: [
+      { speaker: 'A', text: "I'm not sure the data supports that." },
+      { speaker: 'B', text: 'What would change your mind?' },
+      { speaker: 'A', text: 'A larger sample, for a start.' },
+    ],
+    note: `"What would change your mind?" invites real evidence.`,
+    audio: 'c1-dl-029.ogg',
+  },
+  {
+    id: 'c1-dl-030',
+    situation: 'Managing up',
+    turns: [
+      { speaker: 'A', text: "I think we're taking on too much." },
+      { speaker: 'B', text: 'What would you cut?' },
+      { speaker: 'A', text: 'The lowest-impact project, to protect the rest.' },
+    ],
+    note: `Propose a fix, not just a complaint: "to protect the rest."`,
+    audio: 'c1-dl-030.ogg',
+  },
+  {
+    id: 'c1-dl-031',
+    situation: 'Receiving criticism well',
+    turns: [
+      { speaker: 'A', text: 'Your draft buried the main point.' },
+      { speaker: 'B', text: "You're right, I'll lead with it." },
+      { speaker: 'A', text: "Exactly, that'll make it land." },
+    ],
+    note: `"You're right, I'll ..." accepts feedback without defensiveness.`,
+    audio: 'c1-dl-031.ogg',
+  },
+  {
+    id: 'c1-dl-032',
+    situation: 'Building consensus',
+    turns: [
+      { speaker: 'A', text: 'Are we all comfortable with this?' },
+      { speaker: 'B', text: "Mostly, though I'd like one more day." },
+      { speaker: 'A', text: "Reasonable, let's reconvene tomorrow." },
+    ],
+    note: `"Are we all comfortable with this?" tests for agreement.`,
+    audio: 'c1-dl-032.ogg',
+  },
 ];

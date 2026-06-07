@@ -294,4 +294,70 @@ export const c2Dialogues: Dialogue[] = [
     note: `"Couldn't have put it better myself" warmly agrees with someone.`,
     audio: 'c2-dl-026.ogg',
   },
+  {
+    id: 'c2-dl-027',
+    situation: 'A high-stakes negotiation',
+    turns: [
+      { speaker: 'A', text: "This is our final offer, I'm afraid." },
+      { speaker: 'B', text: 'Then we may have to walk away.' },
+      { speaker: 'A', text: "Let's not be hasty; what would change that?" },
+    ],
+    note: `"Let's not be hasty" keeps a tense negotiation open.`,
+    audio: 'c2-dl-027.ogg',
+  },
+  {
+    id: 'c2-dl-028',
+    situation: 'Coaching a peer',
+    turns: [
+      { speaker: 'A', text: 'I froze in the presentation.' },
+      { speaker: 'B', text: 'It happens to everyone; what did you learn?' },
+      { speaker: 'A', text: "To rehearse the opening until it's automatic." },
+    ],
+    note: `"what did you learn?" turns a setback into progress.`,
+    audio: 'c2-dl-028.ogg',
+  },
+  {
+    id: 'c2-dl-029',
+    situation: 'Staying out of office politics',
+    turns: [
+      { speaker: 'A', text: "I'd rather not get caught in the middle." },
+      { speaker: 'B', text: 'Understandable; stay neutral and stick to facts.' },
+      { speaker: 'A', text: "That's the line I'll take." },
+    ],
+    note: `"stay neutral and stick to facts" is safe, professional advice.`,
+    audio: 'c2-dl-029.ogg',
+  },
+  {
+    id: 'c2-dl-030',
+    situation: 'Delivering a hard truth',
+    turns: [
+      { speaker: 'A', text: 'Be straight with me, how was it?' },
+      { speaker: 'B', text: 'Strong ideas, but the execution let it down.' },
+      { speaker: 'A', text: "I'd rather hear that now than later." },
+    ],
+    note: `"Be straight with me" asks for an honest, direct answer.`,
+    audio: 'c2-dl-030.ogg',
+  },
+  {
+    id: 'c2-dl-031',
+    situation: 'Reaching a compromise',
+    turns: [
+      { speaker: 'A', text: "We're clearly not going to fully agree." },
+      { speaker: 'B', text: "No, but we don't have to; let's find the overlap." },
+      { speaker: 'A', text: "Agreed, that's where the deal is." },
+    ],
+    note: `"let's find the overlap" looks for common ground.`,
+    audio: 'c2-dl-031.ogg',
+  },
+  {
+    id: 'c2-dl-032',
+    situation: 'Closing a deal',
+    turns: [
+      { speaker: 'A', text: 'So, do we have an agreement?' },
+      { speaker: 'B', text: 'I believe we do, pending the paperwork.' },
+      { speaker: 'A', text: "Excellent, I'll have it drawn up." },
+    ],
+    note: `"pending the paperwork" means agreed, subject to formalities.`,
+    audio: 'c2-dl-032.ogg',
+  },
 ];

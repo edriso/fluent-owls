@@ -293,4 +293,70 @@ export const b2Dialogues: Dialogue[] = [
     note: `"I'm tied up" means too busy or already committed.`,
     audio: 'b2-dl-026.ogg',
   },
+  {
+    id: 'b2-dl-027',
+    situation: 'Delegating a task',
+    turns: [
+      { speaker: 'A', text: 'Could you take the lead on the report?' },
+      { speaker: 'B', text: 'Happy to. When do you need it by?' },
+      { speaker: 'A', text: 'End of next week would be ideal.' },
+    ],
+    note: `"take the lead on" means be the main person responsible.`,
+    audio: 'b2-dl-027.ogg',
+  },
+  {
+    id: 'b2-dl-028',
+    situation: 'Pushing back on a deadline',
+    turns: [
+      { speaker: 'A', text: 'Can you finish this by tonight?' },
+      { speaker: 'B', text: "Honestly, that's not realistic, but tomorrow morning is." },
+      { speaker: 'A', text: 'Okay, tomorrow morning works.' },
+    ],
+    note: `Offer an alternative: "that's not realistic, but ... is."`,
+    audio: 'b2-dl-028.ogg',
+  },
+  {
+    id: 'b2-dl-029',
+    situation: 'Networking about careers',
+    turns: [
+      { speaker: 'A', text: 'What got you into this field?' },
+      { speaker: 'B', text: 'A summer internship, almost by accident.' },
+      { speaker: 'A', text: 'Funny how those things work out.' },
+    ],
+    note: `"What got you into ...?" asks how someone started.`,
+    audio: 'b2-dl-029.ogg',
+  },
+  {
+    id: 'b2-dl-030',
+    situation: 'Resolving a double-booking',
+    turns: [
+      { speaker: 'A', text: 'It seems we booked the room twice.' },
+      { speaker: 'B', text: "Let me check; you can have it, we'll move." },
+      { speaker: 'A', text: "That's very kind, thank you." },
+    ],
+    note: `"It seems ..." raises a problem gently, without blame.`,
+    audio: 'b2-dl-030.ogg',
+  },
+  {
+    id: 'b2-dl-031',
+    situation: 'Explaining a process',
+    turns: [
+      { speaker: 'A', text: 'How do I submit the form?' },
+      { speaker: 'B', text: 'Upload it, then hit approve at the bottom.' },
+      { speaker: 'A', text: 'Ah, I missed that button.' },
+    ],
+    note: `Give steps clearly: "Upload it, then hit approve."`,
+    audio: 'b2-dl-031.ogg',
+  },
+  {
+    id: 'b2-dl-032',
+    situation: 'Softening bad news',
+    turns: [
+      { speaker: 'A', text: "I'm afraid the client said no." },
+      { speaker: 'B', text: "That's disappointing, but not the end." },
+      { speaker: 'A', text: "Agreed, let's see what we learn from it." },
+    ],
+    note: `"That's disappointing, but ..." keeps a setback in perspective.`,
+    audio: 'b2-dl-032.ogg',
+  },
 ];
