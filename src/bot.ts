@@ -4,7 +4,14 @@ import { config } from './config';
 import { findSlot, runOnce } from './scheduler';
 import { schedules } from './schedules';
 import { dbEnabled } from './database/client';
-import { getProfile, nextForLearner, registerLearner, setLevel } from './database/learners';
+import {
+  getProfile,
+  nextForLearner,
+  registerLearner,
+  setLevel,
+  setReminders,
+} from './database/learners';
+import { searchGrammar } from './lib/search';
 import { LEVELS, type Level } from './types';
 import { ALL_QUESTIONS } from './content/index';
 import { ALL_SHADOWING } from './content/shadowing';
@@ -91,8 +98,23 @@ export function buildBot(): Bot {
   bot.command('quiz', async (ctx) => {
     if (ctx.chat) await postQuizPoll(bot, randomOf(ALL_QUESTIONS), { chatId: ctx.chat.id });
   });
+  // /grammar with a topic searches the bank ("/grammar present perfect"); with
+  // no topic it sends a random point.
   bot.command('grammar', async (ctx) => {
-    if (ctx.chat) await postGrammar(bot, randomOf(ALL_GRAMMAR), { chatId: ctx.chat.id });
+    if (!ctx.chat) return;
+    const query = ctx.match.trim();
+    if (query) {
+      const found = searchGrammar(query);
+      if (!found) {
+        await ctx.reply(
+          `I could not find a grammar point for "${query}". Try a topic like "present perfect" or "conditionals", or send /grammar for a random one.`,
+        );
+        return;
+      }
+      await postGrammar(bot, found, { chatId: ctx.chat.id });
+      return;
+    }
+    await postGrammar(bot, randomOf(ALL_GRAMMAR), { chatId: ctx.chat.id });
   });
   bot.command('phrase', async (ctx) => {
     if (ctx.chat) await postPhrase(bot, randomOf(ALL_PHRASES), { chatId: ctx.chat.id });
@@ -184,7 +206,46 @@ export function buildBot(): Bot {
       return;
     }
     await ctx.reply(
-      `🔥 Streak: ${profile.streak} day(s)\nLevel: ${profile.level.toUpperCase()}\nSend /next to practice and keep it alive.`,
+      `🔥 Streak: ${profile.streak} day(s)\nLevel: ${profile.level.toUpperCase()}\nDaily reminder: ${profile.remindersOn ? 'on' : 'off'} (change with /reminders on|off)\nSend /next to practice and keep it alive.`,
+    );
+  });
+
+  bot.command('reminders', async (ctx) => {
+    if (!ctx.from) return;
+    if (!dbEnabled) {
+      await ctx.reply('Personal tracking is off here, so there are no reminders.');
+      return;
+    }
+    const arg = ctx.match.trim().toLowerCase();
+    if (arg === 'on' || arg === 'off') {
+      await setReminders(ctx.from.id, arg === 'on');
+      await ctx.reply(
+        arg === 'on'
+          ? '🔔 Daily reminders are on. I will nudge you each morning to practice.'
+          : '🔕 Daily reminders are off. Turn them back on with /reminders on.',
+      );
+      return;
+    }
+    const profile = await getProfile(ctx.from.id);
+    await ctx.reply(
+      `Daily reminders are ${profile?.remindersOn ? 'on' : 'off'}. Use /reminders on or /reminders off to change it.`,
+    );
+  });
+
+  // Free-text in a DM is treated as a grammar question: "present perfect" or
+  // "when do I use the passive?" returns the matching point with audio examples.
+  // Commands (starting with /) are handled above; this only catches plain text.
+  bot.on('message:text', async (ctx) => {
+    if (ctx.chat.type !== 'private') return;
+    const text = ctx.message.text.trim();
+    if (text.startsWith('/')) return;
+    const found = searchGrammar(text);
+    if (found) {
+      await postGrammar(bot, found, { chatId: ctx.chat.id });
+      return;
+    }
+    await ctx.reply(
+      'Ask me about a grammar point (for example "present perfect" or "second conditional") and I will send the rule with examples. Or try /next, /quiz, /shadow, or /prompt.',
     );
   });
 
@@ -223,13 +284,14 @@ export async function setBotProfile(bot: Bot): Promise<void> {
         { command: 'next', description: 'Your next item in sequence (keeps a streak)' },
         { command: 'level', description: 'Set your level: /level b1' },
         { command: 'streak', description: 'Show your streak and level' },
+        { command: 'reminders', description: 'Daily reminder on/off: /reminders off' },
       ]
     : [];
   await bot.api.setMyCommands([
     { command: 'start', description: 'What Fluent Owls is and how to join the channel' },
     { command: 'about', description: 'About this open-source bot' },
     { command: 'quiz', description: 'Send me a random quiz' },
-    { command: 'grammar', description: 'Send me a random grammar point (with audio)' },
+    { command: 'grammar', description: 'A grammar point; add a topic: /grammar present perfect' },
     { command: 'phrase', description: 'Send me a "say it like a native" phrase' },
     { command: 'dialogue', description: 'Send me a role-play dialogue (audio)' },
     { command: 'shadow', description: 'Send me a shadowing clip (audio)' },

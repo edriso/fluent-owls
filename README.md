@@ -96,11 +96,11 @@ If the checks pass, redeploy.
 
 ## On-demand commands
 
-Beyond the daily set, the bot answers commands in a DM and replies with a random item: **/quiz**, **/grammar**, **/phrase**, **/dialogue**, **/shadow**, **/monologue**, **/prompt**. They are stateless (a random pick), so there is no database. A learner who wants extra practice just asks.
+Beyond the daily set, message the bot ([@FluentOwlsBot](https://t.me/FluentOwlsBot)) and it replies with a random item: **/quiz**, **/grammar**, **/phrase**, **/dialogue**, **/shadow**, **/monologue**, **/prompt**. These are stateless (a random pick), so they need no database. You can also **ask about a grammar point** — `/grammar present perfect`, or just type a topic like "second conditional" in a DM — and the bot finds the matching rule and sends it with spoken examples.
 
 ## Personal tutor (optional)
 
-Set `DATABASE_URL` and the bot gains a personal tutor in its DMs: **/next** walks each learner through the content in sequence at their level (no repeats until a pool cycles) and keeps a daily **/streak**; **/level** sets the level. It stores per-user progress in the shared MariaDB via Prisma (with the MariaDB driver adapter, like the other DB-backed bots), applied by a `fluent-owls-migrate` step on deploy. Leave `DATABASE_URL` unset and the bot stays a stateless channel broadcaster with no database. See [`docs/TUTOR.md`](docs/TUTOR.md).
+Set `DATABASE_URL` and the bot gains a personal tutor in its DMs: **/next** walks each learner through the content in sequence at their level (no repeats until a pool cycles) and keeps a daily **/streak**; **/level** sets the level; **/reminders** toggles a once-a-day nudge (sent in the morning, `REMINDER_CRON`, to learners who have not practised that day). It stores per-user progress in the shared MariaDB via Prisma (with the MariaDB driver adapter, like the other DB-backed bots), applied by a `fluent-owls-migrate` step on deploy. Leave `DATABASE_URL` unset and the bot stays a stateless channel broadcaster with no database. See [`docs/TUTOR.md`](docs/TUTOR.md).
 
 ## The audio
 

@@ -212,7 +212,7 @@ Like the quizzes, the picker is `dayOfYearIn(today, TZ) % pool.length`. The
 shadowing and phrase slots pool every level, so the cycle length equals the
 total number of items, at one post a day. The bank ships with 40 shadowing clips
 per level (240 total, about 8 months before a repeat), 20 dialogues per level
-(120), 8 grammar points per level (48, the daily grammar slot, about 7 weeks),
+(120), 16 grammar points per level (96, the daily grammar slot, about 3 months),
 and 20 phrases per level (120). Monologues (10 per level, 60) and question
 prompts (12 per level, 72) are on-demand only. Add more to lengthen any cycle.
 Every post shows its level, so mixing levels day to day is fine: learners

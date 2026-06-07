@@ -6,9 +6,9 @@ A tiny Telegram bot (no database by default) that posts one short English set ea
 
 The aim is both halves of good English: the quizzes and grammar build what makes you _correct_; the phrase, dialogue, and shadowing clip build the chunks, the real back-and-forth, and the rhythm that make you _well spoken_ and natural. Quiz polls reveal the answer and a short explanation after the reader votes. Grammar, shadowing clips, dialogues, and monologues are voice messages with the text in the caption (a dialogue uses two voices, for speakers A and B).
 
-Beyond the daily set, the bot answers on-demand commands in a DM (/quiz, /grammar, /phrase, /dialogue, /shadow, /monologue, /prompt), each a random pick, so a keen learner can pull more whenever they want. Monologues (longer model passages to retell) and question prompts (hear a question, pause, answer, then a model answer) are on-demand only, not in the daily batch.
+Beyond the daily set, the bot answers on-demand commands in a DM (/quiz, /grammar, /phrase, /dialogue, /shadow, /monologue, /prompt), each a random pick, so a keen learner can pull more whenever they want. `/grammar <topic>` (or just typing a topic like "present perfect" in a DM) searches the grammar bank and returns the matching point with its spoken examples. Monologues (longer model passages to retell) and question prompts (hear a question, pause, answer, then a model answer) are on-demand only, not in the daily batch.
 
-The channel is read-only by design, and the on-demand commands are stateless, so the default deployment has NO database. One opt-in feature, the personal tutor, needs per-user state: set `DATABASE_URL` and the bot also answers /next (your next item in sequence at your level), /level, and /streak in DMs, storing progress in the shared MariaDB via Prisma (schema applied by a `fluent-owls-migrate` step on deploy). Unset, none of that loads and the bot is the pure broadcaster. The bot cannot hear or grade a learner's speaking; it delivers a great model and a clear "do this", and the learner practises on their own. The bot exists to deliver good content on a schedule.
+The channel is read-only by design, and the on-demand commands are stateless, so the default deployment has NO database. One opt-in feature, the personal tutor, needs per-user state: set `DATABASE_URL` and the bot also answers /next (your next item in sequence at your level), /level, /streak, and /reminders in DMs, and sends a once-a-day practice reminder (`REMINDER_CRON`, default 09:00) to learners who have not practised yet that day. Progress lives in the shared MariaDB via Prisma (schema applied by a `fluent-owls-migrate` step on deploy). Unset, none of that loads and the bot is the pure broadcaster. The bot cannot hear or grade a learner's speaking; it delivers a great model and a clear "do this", and the learner practises on their own. The bot exists to deliver good content on a schedule.
 
 ## Shared kernel
 
@@ -52,6 +52,7 @@ fluent-owls/
 │       ├── pick.ts       Typed day-of-year picker (reuses the kernel's dayOfYearIn).
 │       ├── streak.ts     Pure streak math for the tutor (dayKeyIn, nextStreak), unit-tested, no DB.
 │       ├── tutor.ts      Pure /next selection: round-robin kind + per-kind cursor -> typed item.
+│       ├── search.ts     Keyword search over the grammar bank (for /grammar <topic> and free-text DM questions).
 │       ├── format.ts     buildPrompt/toPollOptions/clampExplanation + caption builders (shadowing, dialogue, grammar, monologue) + buildPhraseMessage.
 │       └── post.ts       postQuizPoll, postVoice/postDialogue/postGrammar/postMonologue (sendVoice), postPhrase/postPlainMessage; all take an optional chatId (default channel) for DM commands.
 ├── scripts/
@@ -101,7 +102,7 @@ fluent-owls/
 - **Dialogues are two voices stitched into one clip.** A role-play has a speaker A and a speaker B with different voices. `generate-audio.ts` synthesizes each turn separately, then concatenates them with a short silence via ffmpeg, so one voice message sounds like a real exchange. The learner shadows both roles.
 - **Grammar is text plus sound in one post.** A grammar voice message reads the example sentences aloud (with small gaps) while the caption shows the rule, a plain explanation, and those examples. So learners both read the rule and hear it used correctly, without a second message.
 - **Monologues and prompts are on-demand, not daily.** Longer model passages (/monologue, listen then retell) and question-prompt drills (/prompt, hear a question, pause, answer, compare) would make the daily batch too heavy, so they live in the banks and are pulled on demand. This keeps the daily set focused while still offering depth and the most credit-heavy audio. A prompt clip is the question voice, a built-in answer pause (a few seconds), then the model answer in a second voice, all stitched by `generate-audio.ts`.
-- **On-demand commands are stateless; the tutor is the one stateful, opt-in extra.** The random commands (/quiz, /grammar, ...) need no per-user state, so they keep the no-DB default. The personal tutor (/next, /level, /streak) is the one feature that genuinely needs per-user progress, so it is gated behind `DATABASE_URL`: present -> tutor on; absent -> the DB modules export null/no-ops and nothing loads.
+- **On-demand commands are stateless; the tutor is the one stateful, opt-in extra.** The random commands (/quiz, /grammar, ...) and the grammar search (`/grammar <topic>` / free-text DM, via `src/lib/search.ts`) need no per-user state, so they keep the no-DB default. The personal tutor (/next, /level, /streak, /reminders, plus the daily reminder cron) is the one feature that genuinely needs per-user progress, so it is gated behind `DATABASE_URL`: present -> tutor on; absent -> the DB modules export null/no-ops, the tutor commands hide and the reminder job is not scheduled.
 - **Prisma + adapter-mariadb, matching the fleet.** The tutor uses Prisma like the tilawah bot, so it fits the shared-MariaDB + `<bot>-migrate` deploy convention. The `prisma-client` generator emits an ESM client into `src/database/generated` (gitignored; `prisma generate` runs via postinstall and explicitly in the Dockerfile builder). The connection URL is supplied at runtime by the driver adapter (no binary query engine). Tables are created by `prisma migrate deploy` (the `fluent-owls-migrate` service that targets the build stage), not at runtime. The pure logic (streak math, item selection) lives in `src/lib/streak.ts` and `src/lib/tutor.ts` and is unit-tested without a DB.
 - **Evening, one ping.** `DAILY_CRON` defaults to 18:00 because educational channels get the most engagement on weekday evenings, and one focused daily drop beats scattering posts. The batch still rings only once (the last post), so a follower gets a single daily notification however many slots there are.
 
@@ -121,20 +122,21 @@ To change WHEN the set posts, set `DAILY_CRON`. To change the ORDER, the slot KI
 
 ## Environment variables
 
-| Variable              | Required | Notes                                                                                                                                                      |
-| --------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `BOT_TOKEN`           | yes      | From `@BotFather`.                                                                                                                                         |
-| `CHANNEL_CHAT_ID`     | yes      | Numeric `-100...` is best; `@channel` also works.                                                                                                          |
-| `CHANNEL_PUBLIC_URL`  | no       | Public link shown by `/start` in DMs.                                                                                                                      |
-| `ADMIN_TELEGRAM_ID`   | no       | Unlocks the `/admin_*` slot commands in DMs.                                                                                                               |
-| `TZ_NAME`             | no       | Cron timezone. Default UTC.                                                                                                                                |
-| `DAILY_CRON`          | no       | When the daily set posts (default `0 18 * * *`).                                                                                                           |
-| `DATABASE_URL`        | no       | Enables the personal tutor (/next, /level, /streak). MySQL/MariaDB via Prisma; schema applied by the migrate step. Unset = no database. See docs/TUTOR.md. |
-| `PORT`                | no       | `/health` server port. Default 8080.                                                                                                                       |
-| `NODE_ENV`            | no       | `production` for hosted.                                                                                                                                   |
-| `ELEVENLABS_API_KEY`  | dev only | Only for `pnpm generate-audio`. Never read at runtime.                                                                                                     |
-| `ELEVENLABS_VOICE_ID` | dev only | Optional. Force one voice (else two American voices alternate).                                                                                            |
-| `ELEVENLABS_MODEL_ID` | dev only | Optional. Defaults to `eleven_multilingual_v2`.                                                                                                            |
+| Variable              | Required | Notes                                                                                                                                                                  |
+| --------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `BOT_TOKEN`           | yes      | From `@BotFather`.                                                                                                                                                     |
+| `CHANNEL_CHAT_ID`     | yes      | Numeric `-100...` is best; `@channel` also works.                                                                                                                      |
+| `CHANNEL_PUBLIC_URL`  | no       | Public link shown by `/start` in DMs.                                                                                                                                  |
+| `ADMIN_TELEGRAM_ID`   | no       | Unlocks the `/admin_*` slot commands in DMs.                                                                                                                           |
+| `TZ_NAME`             | no       | Cron timezone. Default Africa/Cairo.                                                                                                                                   |
+| `DAILY_CRON`          | no       | When the daily set posts (default `0 18 * * *`).                                                                                                                       |
+| `REMINDER_CRON`       | no       | When the per-user practice reminder fires (default `0 9 * * *`, tutor only).                                                                                           |
+| `DATABASE_URL`        | no       | Enables the personal tutor (/next, /level, /streak, /reminders). MySQL/MariaDB via Prisma; schema applied by the migrate step. Unset = no database. See docs/TUTOR.md. |
+| `PORT`                | no       | `/health` server port. Default 8080.                                                                                                                                   |
+| `NODE_ENV`            | no       | `production` for hosted.                                                                                                                                               |
+| `ELEVENLABS_API_KEY`  | dev only | Only for `pnpm generate-audio`. Never read at runtime.                                                                                                                 |
+| `ELEVENLABS_VOICE_ID` | dev only | Optional. Force one voice (else two American voices alternate).                                                                                                        |
+| `ELEVENLABS_MODEL_ID` | dev only | Optional. Defaults to `eleven_multilingual_v2`.                                                                                                                        |
 
 The `ELEVENLABS_*` vars are used only by the audio-generation script. The running bot never touches a TTS API: it posts the committed `.ogg` files. Leave them unset in production.
 
@@ -157,6 +159,7 @@ The bot only needs **"Post messages"**. Quiz posts are never auto-deleted; the c
 - The caption/message builders (shadowing, dialogue, grammar, monologue, phrase) plus `buildPrompt` / `toPollOptions` / `clampExplanation`: headers, validation, clamping, LTR isolation, HTML escaping.
 - `runOnce` / `runDailyBatch` / `findSlot`: the batch posts every slot in the kind its schedule declares (quiz->poll, grammar/dialogue/shadow->voice, phrase->message), in order, with only the last one audible, and survives a total send failure.
 - The tutor logic: `nextStreak`/`dayKeyIn` (streak math: start, no double-count, consecutive, gap, month boundary) and `pickNext`/`kindForStep` (round-robin kind, sequence cursor, level-correct item, wrap-around). Both are pure and need no database.
+- `searchGrammar`: finds the right grammar point by topic words, ignores stopwords, returns null for nonsense. Pure, no database.
 - `channelUrlFrom`: the `/start` DM link (port resolution moved to the kernel).
 
 No test needs a real bot token, any audio file, or a database; `vitest.config.ts` injects placeholders (no `DATABASE_URL`, so the tutor stays off in tests) and the posters are mocked. `pnpm audit-all` (quizzes + speaking) is a separate, network-free data check.

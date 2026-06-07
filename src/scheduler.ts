@@ -9,6 +9,9 @@ import { dialoguesPool } from './content/dialogues';
 import { grammarPool } from './content/grammar';
 import { pickForDay } from './lib/pick';
 import { postDialogue, postGrammar, postPhrase, postQuizPoll, postVoice } from './lib/post';
+import { dbEnabled } from './database/client';
+import { getLearnersToRemind } from './database/learners';
+import { dayKeyIn } from './lib/streak';
 
 // The bot-specific schedule layer. The generic cron plumbing (error
 // containment, the node-cron registry, cron validation) now lives in
@@ -103,6 +106,32 @@ export function findSlot(name: string): ScheduleDef | undefined {
 }
 
 /**
+ * Send the daily practice reminder (personal tutor only). DMs every learner who
+ * has reminders on, has practised before, and has not practised today, nudging
+ * them to keep their streak. Each send is wrapped so one blocked user cannot
+ * stop the rest. A no-op when the database is off.
+ */
+export async function runReminders(bot: Bot): Promise<void> {
+  if (!dbEnabled) return;
+  const today = dayKeyIn(new Date(), config.timezone);
+  const learners = await getLearnersToRemind(today);
+  let sent = 0;
+  for (const learner of learners) {
+    try {
+      await bot.api.sendMessage(
+        learner.telegramId,
+        `🦉 Time for today's English! Send /next to keep your ${learner.streak}-day streak going.`,
+      );
+      sent += 1;
+    } catch (err) {
+      // A blocked or deleted chat is routine; log and keep going.
+      logger.warn('Reminder send failed', { telegramId: learner.telegramId, error: String(err) });
+    }
+  }
+  logger.info('Reminders sent', { sent, candidates: learners.length });
+}
+
+/**
  * Register the single daily batch with the kernel's Scheduler. The Scheduler
  * validates the cron (a bad expression is logged and skipped, never crashing
  * the bot) and wraps every fire in error containment so one bad tick cannot
@@ -111,19 +140,32 @@ export function findSlot(name: string): ScheduleDef | undefined {
  */
 export function startScheduler(bot: Bot): number {
   scheduler = new Scheduler(config.timezone);
-  const registered = scheduler.start([
+  const jobs = [
     {
       name: 'daily-batch',
       cron: config.dailyCron,
       run: () => runDailyBatch(bot),
     },
-  ]);
+  ];
+  // Only schedule the personal reminder when the tutor database is enabled.
+  if (dbEnabled) {
+    jobs.push({
+      name: 'reminders',
+      cron: config.reminderCron,
+      run: () => runReminders(bot),
+    });
+  }
+  const registered = scheduler.start(jobs);
   if (registered === 0) {
-    logger.error('Invalid DAILY_CRON, scheduler not started', { cron: config.dailyCron });
+    logger.error('Invalid cron, scheduler not started', {
+      dailyCron: config.dailyCron,
+      reminderCron: config.reminderCron,
+    });
     return 0;
   }
-  logger.info('Daily batch scheduled', {
-    cron: config.dailyCron,
+  logger.info('Scheduler started', {
+    dailyCron: config.dailyCron,
+    reminderCron: dbEnabled ? config.reminderCron : null,
     posts: schedules.length,
     timezone: config.timezone,
   });

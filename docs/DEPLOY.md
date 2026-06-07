@@ -10,17 +10,18 @@ This bot is small and (by default) stateless. It runs anywhere Node 20 runs: Fly
 
 ## Environment variables
 
-| Variable             | Required | Notes                                                       |
-| -------------------- | -------- | ----------------------------------------------------------- |
-| `BOT_TOKEN`          | yes      | From `@BotFather`.                                          |
-| `CHANNEL_CHAT_ID`    | yes      | Numeric `-100...` is best; `@channel` also works.           |
-| `CHANNEL_PUBLIC_URL` | no       | Public link shown by `/start` in DMs.                       |
-| `ADMIN_TELEGRAM_ID`  | no       | Unlocks the `/admin_*` slot commands in DMs.                |
-| `TZ_NAME`            | no       | Cron timezone. Default UTC.                                 |
-| `DAILY_CRON`         | no       | When the daily set posts (default `0 18 * * *`).            |
-| `DATABASE_URL`       | no       | Enables the personal tutor; MySQL URL (tables auto-create). |
-| `PORT`               | no       | `/health` server port. Default 8080.                        |
-| `NODE_ENV`           | no       | `production` for hosted.                                    |
+| Variable             | Required | Notes                                                     |
+| -------------------- | -------- | --------------------------------------------------------- |
+| `BOT_TOKEN`          | yes      | From `@BotFather`.                                        |
+| `CHANNEL_CHAT_ID`    | yes      | Numeric `-100...` is best; `@channel` also works.         |
+| `CHANNEL_PUBLIC_URL` | no       | Public link shown by `/start` in DMs.                     |
+| `ADMIN_TELEGRAM_ID`  | no       | Unlocks the `/admin_*` slot commands in DMs.              |
+| `TZ_NAME`            | no       | Cron timezone. Default Africa/Cairo.                      |
+| `DAILY_CRON`         | no       | When the daily set posts (default `0 18 * * *`).          |
+| `REMINDER_CRON`      | no       | Per-user reminder time (default `0 9 * * *`, tutor only). |
+| `DATABASE_URL`       | no       | Enables the personal tutor; Prisma/MariaDB URL.           |
+| `PORT`               | no       | `/health` server port. Default 8080.                      |
+| `NODE_ENV`           | no       | `production` for hosted.                                  |
 
 The `.env` file is optional. If you set the variables in your host dashboard, you do not need a file at all.
 
@@ -126,7 +127,7 @@ Logs go to stdout. There is nothing to mount.
 ## Verifying it works
 
 1. Check `/health` returns 200 with `{"ok":true,...}` (the startup log reports `posts: 7`, the size of the daily set).
-2. Tail the logs for a `Daily batch scheduled` line at startup.
+2. Tail the logs for a `Scheduler started` line at startup.
 3. Send `/start` to the bot in a DM; you should get a reply pointing at the channel.
 4. Run `pnpm send-test morning` to verify a channel post end to end.
 5. Wait for a cron to fire. The first real fire is the final test.

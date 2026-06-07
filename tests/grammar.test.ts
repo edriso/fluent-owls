@@ -90,7 +90,7 @@ describe('grammarPool', () => {
 describe('grammar coverage', () => {
   it('ships a healthy number of rules per level', () => {
     for (const level of LEVELS) {
-      expect(grammarPool([level]).length, level).toBeGreaterThanOrEqual(8);
+      expect(grammarPool([level]).length, level).toBeGreaterThanOrEqual(16);
     }
   });
 });

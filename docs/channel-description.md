@@ -2,6 +2,7 @@
 
 - Channel name: **Fluent Owls 🦉**
 - Public handle: **@fluent_owls**
+- Bot: **@FluentOwlsBot** (DM it for on-demand practice and a personal track)
 - Audience: English learners at every level (A1 to C2)
 
 Telegram caps a channel description at **255 characters**. Every option
@@ -41,8 +42,9 @@ single notification:
 • 🎭 a role-play mini-dialogue (two voices) to act out
 • 🎧 an audio clip to shadow (listen and repeat)
 The quizzes and grammar make you correct; the phrase, dialogue, and shadowing
-clip make you sound natural. Want more anytime? Message the bot /quiz, /grammar, /phrase,
-/dialogue, /shadow, /monologue, or /prompt. No setup, no signup.
+clip make you sound natural. Want more anytime? Message @FluentOwlsBot: /quiz,
+/grammar, /phrase, /dialogue, /shadow, /monologue, /prompt, or /next for a
+personal track with a daily streak. No setup, no signup.
 
 > Note: the full pinned welcome message lives in `src/content/welcome.ts`
 > and is posted with `pnpm post-welcome`.

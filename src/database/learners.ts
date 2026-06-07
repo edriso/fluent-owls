@@ -10,8 +10,13 @@ import { dayKeyIn, nextStreak } from '../lib/streak';
 import { kindForStep, pickNext, type TutorPick } from '../lib/tutor';
 import { LEVELS, type Level } from '../types';
 
-/** A learner's profile, for /streak and /level. */
-export type LearnerProfile = { level: Level; streak: number; lastDay: string | null };
+/** A learner's profile, for /streak, /level, and /reminders. */
+export type LearnerProfile = {
+  level: Level;
+  streak: number;
+  lastDay: string | null;
+  remindersOn: boolean;
+};
 
 /** Parse the stored cursors JSON into a kind to position map. */
 function parseCursors(raw: string | null): Record<string, number> {
@@ -48,7 +53,41 @@ export async function registerLearner(telegramId: number): Promise<void> {
 export async function getProfile(telegramId: number): Promise<LearnerProfile | null> {
   if (!prisma) return null;
   const row = await getOrCreate(telegramId);
-  return { level: toLevel(row.level), streak: row.streak, lastDay: row.lastDay };
+  return {
+    level: toLevel(row.level),
+    streak: row.streak,
+    lastDay: row.lastDay,
+    remindersOn: row.remindersOn,
+  };
+}
+
+/**
+ * Learners due for today's reminder: opted in, have practised at least once
+ * before (so we never nag people who only typed /start), and not yet today.
+ * Returns an empty list when the database is off.
+ */
+export async function getLearnersToRemind(
+  today: string,
+): Promise<{ telegramId: number; streak: number }[]> {
+  if (!prisma) return [];
+  const rows = await prisma.learner.findMany({
+    where: { remindersOn: true, lastDay: { not: null } },
+    select: { telegramId: true, streak: true, lastDay: true },
+  });
+  return rows
+    .filter((r) => r.lastDay !== today)
+    .map((r) => ({ telegramId: Number(r.telegramId), streak: r.streak }));
+}
+
+/** Turn the daily reminder on or off for a learner. Returns false if the DB is off. */
+export async function setReminders(telegramId: number, on: boolean): Promise<boolean> {
+  if (!prisma) return false;
+  await prisma.learner.upsert({
+    where: { telegramId: BigInt(telegramId) },
+    create: { telegramId: BigInt(telegramId), cursors: '{}', remindersOn: on },
+    update: { remindersOn: on },
+  });
+  return true;
 }
 
 /** Set a learner's preferred level. Returns false if the database is off. */

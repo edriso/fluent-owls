@@ -50,13 +50,18 @@ export const config = Object.freeze({
   channelUrl: channelUrlFrom(channelPublicUrl || channelChatId),
   // Optional. If unset, /admin_* commands authorise nobody.
   adminTelegramId: optionalBigInt(process.env.ADMIN_TELEGRAM_ID),
-  // Timezone for the cron schedule. Defaults to UTC.
-  timezone: process.env.TZ_NAME?.trim() || 'UTC',
+  // Timezone for the cron schedules. Defaults to Africa/Cairo (the channel's
+  // home audience); override with TZ_NAME for another region.
+  timezone: process.env.TZ_NAME?.trim() || 'Africa/Cairo',
   // When the daily set posts (everything together), in the configured timezone.
   // Default 18:00 (6pm): research shows educational channels get the best
   // engagement on weekday evenings, and one focused daily drop beats scattering
   // posts. Override via env.
   dailyCron: process.env.DAILY_CRON?.trim() || '0 18 * * *',
+  // When the per-user practice reminder fires (personal tutor only), in the
+  // configured timezone. Default 09:00, a morning nudge separate from the
+  // evening channel drop. Override via env.
+  reminderCron: process.env.REMINDER_CRON?.trim() || '0 9 * * *',
   // Optional. When set, the personal-tutor commands (/next, /level, /streak)
   // turn on and store per-user progress in the shared MariaDB. When unset, the
   // bot runs exactly as before: a stateless channel broadcaster, no database.

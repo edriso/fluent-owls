@@ -7,11 +7,12 @@ sequence, and keeps a daily streak.
 
 ## Commands (DM the bot)
 
-| Command   | What it does                                                                                                                                                                                                                    |
-| --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `/next`   | Sends your next item, in sequence, at your level. Rotates through quiz, grammar, phrase, dialogue, shadow, and prompt, advancing a cursor per kind so you do not repeat until that kind's pool cycles. Keeps your daily streak. |
-| `/level`  | Set your level: `/level b1` (a1, a2, b1, b2, c1, c2). `/next` then matches it.                                                                                                                                                  |
-| `/streak` | Show your current streak and level.                                                                                                                                                                                             |
+| Command      | What it does                                                                                                                                                                                                                    |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `/next`      | Sends your next item, in sequence, at your level. Rotates through quiz, grammar, phrase, dialogue, shadow, and prompt, advancing a cursor per kind so you do not repeat until that kind's pool cycles. Keeps your daily streak. |
+| `/level`     | Set your level: `/level b1` (a1, a2, b1, b2, c1, c2). `/next` then matches it.                                                                                                                                                  |
+| `/streak`    | Show your current streak, level, and reminder setting.                                                                                                                                                                          |
+| `/reminders` | Turn the daily practice reminder on or off: `/reminders off`.                                                                                                                                                                   |
 
 The stateless on-demand commands (`/quiz`, `/grammar`, `/shadow`, ...) still work
 the same; `/next` is the one that tracks progress.
@@ -83,6 +84,23 @@ deploy` (`pnpm db:deploy`) inside the container. The initial migration uses
 `CREATE TABLE IF NOT EXISTS`, so it is safe to apply even if the table already
 exists. After a schema change, create a new migration with `pnpm db:migrate`
 against a dev database, commit it, and the deploy applies it.
+
+## Daily reminders
+
+When the tutor is on, a scheduled job (`REMINDER_CRON`, default 09:00 in
+`TZ_NAME`) DMs each learner who has reminders on, has practised at least once
+before, and has not practised yet today, nudging them to keep their streak. New
+users who only typed `/start` are never nagged (they have no practice day yet).
+Learners opt out with `/reminders off`. The job is only scheduled when the
+database is enabled, and each send is wrapped so one blocked user cannot stop the
+rest.
+
+## Asking about grammar
+
+Separate from the tutor (works with or without the database): in a DM, send
+`/grammar <topic>` or just type a topic ("present perfect", "second
+conditional") and the bot searches the grammar bank and replies with the
+matching rule plus its spoken examples. See `src/lib/search.ts`.
 
 ## Safety
 

@@ -23,10 +23,10 @@ One set lands together each evening, with a single notification:
 • Two or three times is enough. This is the fastest way to a natural accent.
 
 <b>Want more right now?</b>
-Message the bot and it sends one instantly: /quiz, /grammar, /phrase, /dialogue, /shadow, /monologue (a passage to retell), or /prompt (a question to answer out loud, then compare with a model).
+Message <a href="https://t.me/FluentOwlsBot">@FluentOwlsBot</a> and it sends one instantly: /quiz, /grammar, /phrase, /dialogue, /shadow, /monologue (a passage to retell), or /prompt (a question to answer out loud, then compare with a model). You can also just type a grammar topic, like "present perfect", and it replies with the rule and audio examples.
 
 <b>Want a personal track?</b>
-DM the bot /next and it walks you through everything at your level, in order, and keeps a daily streak. Set yours with /level (for example /level b1).
+DM <a href="https://t.me/FluentOwlsBot">@FluentOwlsBot</a> /next and it walks you through everything at your level, in order, and keeps a daily streak (with a gentle daily reminder). Set your level with /level (for example /level b1).
 
 <b>What you will practise</b>
 The words and rules that make you correct (vocabulary, collocations, phrasal verbs, idioms, grammar) AND the rhythm, real dialogue, and ready-made phrases that make you sound natural.
