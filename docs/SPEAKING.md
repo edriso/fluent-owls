@@ -14,6 +14,9 @@ Alongside the quizzes, the bot posts two speaking exercises each day:
 - **Monologues** — a longer model passage to listen to and then retell in your
   own words. On-demand only (the /monologue command), not in the daily set. One
   file per level: `src/content/monologues-a1.ts` ... `monologues-c2.ts`.
+- **Question prompts** — a question, a pause to answer out loud, then a model
+  answer to compare with. On-demand only (the /prompt command). One file per
+  level: `src/content/prompts-a1.ts` ... `prompts-c2.ts`.
 - **"Say it like a native" phrases** — ready-made chunks for real situations
   (text only, no audio). One file per level: `src/content/phrases-a1.ts` ...
   `phrases-c2.ts`.
@@ -116,6 +119,26 @@ enough to retell (well under the limit in `limits.ts`); scale length and richnes
 by level; no em-dashes. Monologues are pulled with the /monologue command, not
 posted in the daily batch.
 
+## Question prompts
+
+```ts
+type Prompt = {
+  id: string; // "b1-pr-013", unique, starts with the level and "-pr-"
+  topic: string; // short context label, e.g. "Talking about work"
+  question: string; // the question the learner hears and answers
+  answer: string; // a model answer, spoken after the pause
+  note: string; // a useful structure or phrase to reuse
+  audio: string; // must be "<id>.ogg"
+};
+```
+
+Authoring checklist: ask a real, open question a person would actually be asked;
+write a natural model answer that quietly teaches a reusable structure (call it
+out in the note); scale difficulty by level; no em-dashes. In the audio, the
+question and the answer use two different voices with a built-in pause between
+them (set by `generate-audio.ts`), so the learner answers in the gap and then
+compares with the model. Prompts are pulled with /prompt, not in the daily set.
+
 ## Native phrases
 
 ```ts
@@ -190,9 +213,10 @@ shadowing and phrase slots pool every level, so the cycle length equals the
 total number of items, at one post a day. The bank ships with 40 shadowing clips
 per level (240 total, about 8 months before a repeat), 20 dialogues per level
 (120), 8 grammar points per level (48, the daily grammar slot, about 7 weeks),
-and 20 phrases per level (120). Monologues (6 per level, 36) are on-demand only.
-Add more to lengthen any cycle. Every post shows its level, so mixing levels day
-to day is fine: learners self-select.
+and 20 phrases per level (120). Monologues (10 per level, 60) and question
+prompts (12 per level, 72) are on-demand only. Add more to lengthen any cycle.
+Every post shows its level, so mixing levels day to day is fine: learners
+self-select.
 
 Audio is cheap: run `pnpm audit-speaking` to see the total character count
 (roughly 1 ElevenLabs credit per character on the multilingual model). Even the

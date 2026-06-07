@@ -47,4 +47,32 @@ export const b1Monologues: Monologue[] = [
     note: `Past tenses for the scene, then a thoughtful final line.`,
     audio: 'b1-mn-006.ogg',
   },
+  {
+    id: 'b1-mn-007',
+    topic: 'A person who influenced me',
+    text: 'My first manager taught me a lot. She was patient and always explained things clearly. When I made mistakes, she helped me learn instead of getting angry. Because of her, I became more confident. I still use her advice today.',
+    note: `"Because of her" links cause and effect.`,
+    audio: 'b1-mn-007.ogg',
+  },
+  {
+    id: 'b1-mn-008',
+    topic: 'My morning routine',
+    text: 'I have a simple morning routine that keeps me focused. First, I drink some water and stretch for a few minutes. Then I plan the three most important things for the day. I avoid my phone until after breakfast. By the time I start work, I feel ready.',
+    note: `Sequencing words plus a relative clause ("that keeps me focused").`,
+    audio: 'b1-mn-008.ogg',
+  },
+  {
+    id: 'b1-mn-009',
+    topic: 'Something I would change',
+    text: 'One thing I would change about my city is the traffic. In the morning, the roads are completely full, and a short trip can take an hour. I think better public transport would help. It would save time and reduce pollution. I hope it improves soon.',
+    note: `"I would change" plus reasons with "would help / would save".`,
+    audio: 'b1-mn-009.ogg',
+  },
+  {
+    id: 'b1-mn-010',
+    topic: 'Something I am proud of',
+    text: 'I am proud that I finished my degree while working full time. It was exhausting, and many nights I wanted to give up. But I kept going, one assignment at a time. When I graduated, my family was so happy. It taught me that I can do hard things.',
+    note: `"I am proud that..." plus a story and a lesson.`,
+    audio: 'b1-mn-010.ogg',
+  },
 ];

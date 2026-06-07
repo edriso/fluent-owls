@@ -47,4 +47,32 @@ export const a2Monologues: Monologue[] = [
     note: `"going to" for plans, "will" for predictions.`,
     audio: 'a2-mn-006.ogg',
   },
+  {
+    id: 'a2-mn-007',
+    topic: 'A skill I want to learn',
+    text: 'I really want to learn how to swim. I never learned as a child, and now I feel a little scared of deep water. This summer, I am going to take lessons. I think it will be good for my health. I am excited to try.',
+    note: `"going to" for the plan, "I think it will" for the prediction.`,
+    audio: 'a2-mn-007.ogg',
+  },
+  {
+    id: 'a2-mn-008',
+    topic: 'My favorite place',
+    text: 'My favorite place is a small library near my house. It is always quiet and warm. I go there on Saturdays to read and study. The people are friendly, and the coffee is cheap. I feel calm there.',
+    note: `Describe a place with adjectives and what you do there.`,
+    audio: 'a2-mn-008.ogg',
+  },
+  {
+    id: 'a2-mn-009',
+    topic: 'A holiday I remember',
+    text: 'Two years ago, I visited the mountains with my family. We stayed in a small cabin. Every day, we walked and took photos. At night, we cooked together and laughed. It was simple, but I will never forget it.',
+    note: `Past simple story, ending with a feeling.`,
+    audio: 'a2-mn-009.ogg',
+  },
+  {
+    id: 'a2-mn-010',
+    topic: 'Why I am learning English',
+    text: 'I am learning English for my future. I want to travel and meet people from other countries. I also need it for my job. It is hard sometimes, but I practice every day. Step by step, I am getting better.',
+    note: `Give reasons with "for" and "to". "Step by step" sounds natural.`,
+    audio: 'a2-mn-010.ogg',
+  },
 ];

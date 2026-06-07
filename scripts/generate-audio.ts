@@ -1,14 +1,15 @@
 /**
  * One-time audio generator for the speaking clips. Run with `pnpm generate-audio`.
  *
- * This is a DEV-ONLY tool. It turns each shadowing clip and each role-play
- * dialogue into an OGG/Opus voice clip (what Telegram wants) under
- * src/content/audio/<id>.ogg, using ElevenLabs text-to-speech. Those files are
- * committed, so the RUNNING bot never calls a TTS API: no key, no cost, and no
- * new failure mode in production.
+ * This is a DEV-ONLY tool. It turns every audio item (shadowing clips, role-play
+ * dialogues, grammar examples, monologues, and question prompts) into an
+ * OGG/Opus voice clip (what Telegram wants) under src/content/audio/<id>.ogg,
+ * using ElevenLabs text-to-speech. Those files are committed, so the RUNNING bot
+ * never calls a TTS API: no key, no cost, and no new failure mode in production.
  *
- * Shadowing clips are one voice. Dialogues use two voices (speaker A and B) and
- * are stitched together with a short gap, so they sound like a real exchange.
+ * Shadowing, grammar, and monologues are one voice. Dialogues and prompts use
+ * two voices stitched with a gap (a short breath for dialogues; a longer pause
+ * for prompts, so the learner can answer before the model).
  *
  * It is idempotent: a clip whose .ogg already exists is skipped, so after adding
  * content you just run it again and only the new items are generated.
@@ -26,7 +27,7 @@
  * Run modes (combine freely):
  *   pnpm generate-audio              every item that has no .ogg yet
  *   pnpm generate-audio b1 c1        only these levels
- *   pnpm generate-audio shadowing    only that kind (also: dialogues, grammar, monologues)
+ *   pnpm generate-audio shadowing    only that kind (also: dialogues, grammar, monologues, prompts)
  *   pnpm generate-audio --sample     one of each kind per level (audition)
  *   pnpm generate-audio --force      regenerate, even items that already exist
  */
@@ -40,6 +41,7 @@ import { ALL_SHADOWING } from '../src/content/shadowing';
 import { ALL_DIALOGUES } from '../src/content/dialogues';
 import { ALL_GRAMMAR } from '../src/content/grammar';
 import { ALL_MONOLOGUES } from '../src/content/monologues';
+import { ALL_PROMPTS } from '../src/content/prompts';
 import { LEVELS, type Level } from '../src/types';
 
 loadEnv();
@@ -85,8 +87,17 @@ function voiceB(level: Level): string {
 
 /** A unit of audio to generate: one or more spoken segments, written to one file. */
 type Segment = { text: string; voiceId: string };
-type Kind = 'shadow' | 'dialogue' | 'grammar' | 'monologue';
-type Job = { id: string; level: Level; audio: string; kind: Kind; segments: Segment[] };
+type Kind = 'shadow' | 'dialogue' | 'grammar' | 'monologue' | 'prompt';
+/** `gap` is the silence (seconds) between segments. Prompts use a long pause so
+ *  the learner can answer; everything else uses a short breath. */
+type Job = {
+  id: string;
+  level: Level;
+  audio: string;
+  kind: Kind;
+  segments: Segment[];
+  gap?: number;
+};
 
 /** Map a command-line token to the content kind it filters to. */
 const KIND_TOKENS: Record<string, Kind> = {
@@ -94,7 +105,11 @@ const KIND_TOKENS: Record<string, Kind> = {
   dialogues: 'dialogue',
   grammar: 'grammar',
   monologues: 'monologue',
+  prompts: 'prompt',
 };
+
+/** Pause (seconds) the learner gets to answer, between a prompt question and the model answer. */
+const PROMPT_PAUSE_SECONDS = 4;
 
 /** Confirm ffmpeg is available, with a friendly message if it is not. */
 function checkFfmpeg(): Promise<void> {
@@ -258,7 +273,20 @@ function allJobs(): Job[] {
     kind: 'monologue',
     segments: [{ text: m.text, voiceId: voiceA(m.level) }],
   }));
-  return [...shadow, ...dialogue, ...grammar, ...monologue];
+  // Prompts: the question (asker's voice), a long pause to answer, then the model
+  // answer (a second voice).
+  const prompt: Job[] = ALL_PROMPTS.map((p) => ({
+    id: p.id,
+    level: p.level,
+    audio: p.audio,
+    kind: 'prompt',
+    gap: PROMPT_PAUSE_SECONDS,
+    segments: [
+      { text: p.question, voiceId: voiceA(p.level) },
+      { text: p.answer, voiceId: voiceB(p.level) },
+    ],
+  }));
+  return [...shadow, ...dialogue, ...grammar, ...monologue, ...prompt];
 }
 
 async function main(): Promise<void> {
@@ -320,7 +348,7 @@ async function main(): Promise<void> {
       const mp3s: Buffer[] = [];
       for (const seg of job.segments) mp3s.push(await textToMp3(seg.text, seg.voiceId, apiKey));
       if (mp3s.length === 1) await oneSegmentToOgg(mp3s[0]!, outPath);
-      else await segmentsToOgg(mp3s, outPath, 0.45);
+      else await segmentsToOgg(mp3s, outPath, job.gap ?? 0.45);
       ok += 1;
       logger.info('Generated', { id: job.id, kind: job.kind, n: `${i + 1}/${todo.length}` });
     } catch (err) {

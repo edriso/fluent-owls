@@ -9,11 +9,13 @@ import { ALL_DIALOGUES } from './content/dialogues';
 import { ALL_PHRASES } from './content/phrases';
 import { ALL_GRAMMAR } from './content/grammar';
 import { ALL_MONOLOGUES } from './content/monologues';
+import { ALL_PROMPTS } from './content/prompts';
 import {
   postDialogue,
   postGrammar,
   postMonologue,
   postPhrase,
+  postPrompt,
   postQuizPoll,
   postVoice,
 } from './lib/post';
@@ -31,7 +33,7 @@ export const botAbout =
 export const botDescription = [
   '🦉 Hi! Fluent Owls posts a short daily English set to its Telegram channel every evening, to help you be both correct and well spoken.',
   'Each day: three fill-in-the-blank quizzes (with instant explanations), a grammar point, a "say it like a native" phrase, a role-play dialogue, and an audio clip to shadow.',
-  'Want more anytime? Message me /quiz, /grammar, /phrase, /dialogue, /shadow, or /monologue and I will send one right away.',
+  'Want more anytime? Message me /quiz, /grammar, /phrase, /dialogue, /shadow, /monologue, or /prompt and I will send one right away.',
   'Organized by CEFR level (A1 to C2). No signup. Tap Start for the channel link.',
 ].join('\n');
 
@@ -58,7 +60,7 @@ export function buildBot(): Bot {
         '',
         'Each evening: three fill-in-the-blank quizzes (with instant explanations), a grammar point, a "say it like a native" phrase, a role-play dialogue, and an audio clip to shadow. A little every day, so you become both correct and well spoken.',
         '',
-        'Want more right now? Send me /quiz, /grammar, /phrase, /dialogue, /shadow, or /monologue.',
+        'Want more right now? Send me /quiz, /grammar, /phrase, /dialogue, /shadow, /monologue, or /prompt.',
         tail,
       ].join('\n'),
       { link_preview_options: { is_disabled: true } },
@@ -70,7 +72,7 @@ export function buildBot(): Bot {
       [
         'Fluent Owls is a tiny open-source Telegram bot that posts a daily English set to a channel: quizzes, grammar, phrases, role-play dialogues, and audio to shadow.',
         'It has no database. All content lives in the source, organized by CEFR level. Audio is pre-generated, so the bot needs no text-to-speech key to run.',
-        'Want more anytime? Try /quiz, /grammar, /phrase, /dialogue, /shadow, or /monologue.',
+        'Want more anytime? Try /quiz, /grammar, /phrase, /dialogue, /shadow, /monologue, or /prompt.',
       ].join('\n'),
     );
   });
@@ -95,6 +97,9 @@ export function buildBot(): Bot {
   });
   bot.command('monologue', async (ctx) => {
     if (ctx.chat) await postMonologue(bot, randomOf(ALL_MONOLOGUES), { chatId: ctx.chat.id });
+  });
+  bot.command('prompt', async (ctx) => {
+    if (ctx.chat) await postPrompt(bot, randomOf(ALL_PROMPTS), { chatId: ctx.chat.id });
   });
 
   // Admin-only manual fire, useful for previewing a slot without waiting for
@@ -135,6 +140,7 @@ export async function setBotProfile(bot: Bot): Promise<void> {
     { command: 'dialogue', description: 'Send me a role-play dialogue (audio)' },
     { command: 'shadow', description: 'Send me a shadowing clip (audio)' },
     { command: 'monologue', description: 'Send me a model passage to retell (audio)' },
+    { command: 'prompt', description: 'Send me a question to answer out loud (audio)' },
   ]);
   await bot.api.setMyShortDescription(botAbout);
   await bot.api.setMyDescription(botDescription);

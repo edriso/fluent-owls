@@ -6,7 +6,7 @@ A tiny no-database Telegram bot that posts one short English set each day to one
 
 The aim is both halves of good English: the quizzes and grammar build what makes you _correct_; the phrase, dialogue, and shadowing clip build the chunks, the real back-and-forth, and the rhythm that make you _well spoken_ and natural. Quiz polls reveal the answer and a short explanation after the reader votes. Grammar, shadowing clips, dialogues, and monologues are voice messages with the text in the caption (a dialogue uses two voices, for speakers A and B).
 
-Beyond the daily set, the bot answers on-demand commands in a DM (/quiz, /grammar, /phrase, /dialogue, /shadow, /monologue), each a random pick, so a keen learner can pull more whenever they want. Monologues (longer model passages to retell) are on-demand only, not in the daily batch.
+Beyond the daily set, the bot answers on-demand commands in a DM (/quiz, /grammar, /phrase, /dialogue, /shadow, /monologue, /prompt), each a random pick, so a keen learner can pull more whenever they want. Monologues (longer model passages to retell) and question prompts (hear a question, pause, answer, then a model answer) are on-demand only, not in the daily batch.
 
 The channel is read-only by design, and the on-demand commands are stateless, so there is still NO database. The bot cannot hear or grade a learner's speaking; it delivers a great model and a clear "do this", and the learner practises on their own (the same self-driven loop as the quiz). The bot exists to deliver good content on a schedule.
 
@@ -33,12 +33,14 @@ fluent-owls/
 │   │   ├── dialogues-a1.ts ... dialogues-c2.ts   One role-play dialogue bank per level.
 │   │   ├── grammar-a1.ts ... grammar-c2.ts       One grammar bank per level.
 │   │   ├── monologues-a1.ts ... monologues-c2.ts One monologue bank per level (on-demand).
+│   │   ├── prompts-a1.ts ... prompts-c2.ts       One question-prompt bank per level (on-demand).
 │   │   ├── phrases-a1.ts ... phrases-c2.ts       One native-phrase bank per level.
 │   │   ├── index.ts        Quiz registry: tags each bank with its level, builds pools.
 │   │   ├── shadowing.ts     Shadowing registry (ALL_SHADOWING, shadowingPool).
 │   │   ├── dialogues.ts     Dialogue registry (ALL_DIALOGUES, dialoguesPool).
 │   │   ├── grammar.ts       Grammar registry (ALL_GRAMMAR, grammarPool).
 │   │   ├── monologues.ts    Monologue registry (ALL_MONOLOGUES, monologuesPool).
+│   │   ├── prompts.ts       Prompt registry (ALL_PROMPTS, promptsPool).
 │   │   ├── phrases.ts       Phrase registry (ALL_PHRASES, phrasesPool).
 │   │   ├── pool.ts          Generic interleave-by-level helper, shared by all three registries.
 │   │   ├── audio-path.ts    Where the committed .ogg clips live and how to find one.
@@ -92,7 +94,7 @@ fluent-owls/
 - **Shadowing and dialogues are voice messages, not audio files.** `postVoice`/`postDialogue` use `sendVoice` (not `sendAudio`), so a clip gets the inline waveform player and Telegram's built-in playback-speed control, which is exactly what a shadower wants.
 - **Dialogues are two voices stitched into one clip.** A role-play has a speaker A and a speaker B with different voices. `generate-audio.ts` synthesizes each turn separately, then concatenates them with a short silence via ffmpeg, so one voice message sounds like a real exchange. The learner shadows both roles.
 - **Grammar is text plus sound in one post.** A grammar voice message reads the example sentences aloud (with small gaps) while the caption shows the rule, a plain explanation, and those examples. So learners both read the rule and hear it used correctly, without a second message.
-- **Monologues are on-demand, not daily.** Longer model passages (listen, then retell in your own words) would make the daily batch too heavy, so they live in the banks and are pulled with /monologue. This keeps the daily set focused while still offering depth, and is the natural home for the longest (most credit-heavy) audio.
+- **Monologues and prompts are on-demand, not daily.** Longer model passages (/monologue, listen then retell) and question-prompt drills (/prompt, hear a question, pause, answer, compare) would make the daily batch too heavy, so they live in the banks and are pulled on demand. This keeps the daily set focused while still offering depth and the most credit-heavy audio. A prompt clip is the question voice, a built-in answer pause (a few seconds), then the model answer in a second voice, all stitched by `generate-audio.ts`.
 - **On-demand commands instead of a database.** The bot replies to /quiz, /grammar, /phrase, /dialogue, /shadow, /monologue with a random item, sent to whoever asked (the posters take an optional chatId). A random pick needs no per-user state, so the "no database" rule holds. A DB would only be worth it for per-user features (progress, streaks, a personal schedule, like the tilawah bot), which the channel does not need.
 - **Evening, one ping.** `DAILY_CRON` defaults to 18:00 because educational channels get the most engagement on weekday evenings, and one focused daily drop beats scattering posts. The batch still rings only once (the last post), so a follower gets a single daily notification however many slots there are.
 
@@ -141,6 +143,7 @@ The bot only needs **"Post messages"**. Quiz posts are never auto-deleted; the c
 - The dialogue banks: unique `<level>-dl-` ids, 2 to 4 turns that alternate A/B, each line within limits, a caption that renders and is LTR-pinned, an audio name of `<id>.ogg`, and no em-dashes.
 - The grammar banks: unique `<level>-gr-` ids, a rule/explanation/note within limits, 2 to 3 example sentences within limits, a caption that renders and is LTR-pinned, an audio name of `<id>.ogg`, and no em-dashes.
 - The monologue banks: unique `<level>-mn-` ids, a topic/text/note within limits, a caption that renders and is LTR-pinned, an audio name of `<id>.ogg`, and no em-dashes.
+- The prompt banks: unique `<level>-pr-` ids, topic/question/answer/note within limits, a caption that renders and is LTR-pinned, an audio name of `<id>.ogg`, and no em-dashes.
 - The phrase banks: unique `<level>-ph-` ids, phrase/situation/example within limits, a valid function, a rendered message that contains the phrase, and no em-dashes.
 - `pickForDay`: deterministic, cycles the pool, throws on empty (the typed picker; the kernel tests its timezone `dayOfYearIn`).
 - The caption/message builders (shadowing, dialogue, grammar, monologue, phrase) plus `buildPrompt` / `toPollOptions` / `clampExplanation`: headers, validation, clamping, LTR isolation, HTML escaping.

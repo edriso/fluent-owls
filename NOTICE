@@ -24,7 +24,8 @@ with your own ElevenLabs account and API key (see docs/SPEAKING.md). The
 transcripts themselves (the `text` fields in src/content/shadowing-*.ts) are part
 of the source and are MIT-licensed like the rest of the code.
 
-The audio covers shadowing clips, role-play dialogues, grammar examples, and
-monologues. Voices used (ElevenLabs premade), one per CEFR level:
+The audio covers shadowing clips, role-play dialogues, grammar examples,
+monologues, and question prompts. Voices used (ElevenLabs premade), one per CEFR
+level:
   A1 Sarah, A2 Brian, B1 Rachel, B2 Adam, C1 Matilda, C2 Bill.
-Role-play dialogues pair two of these voices (a speaker A and B) per level.
+Dialogues and question prompts pair two of these voices per level.

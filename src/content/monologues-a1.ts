@@ -48,4 +48,32 @@ export const a1Monologues: Monologue[] = [
     note: `Present simple for habits. Notice "sometimes" before the verb.`,
     audio: 'a1-mn-006.ogg',
   },
+  {
+    id: 'a1-mn-007',
+    topic: 'My best friend',
+    text: 'My best friend is Ali. We met at school ten years ago. He is funny and kind. We play football every weekend. I am lucky to have him.',
+    note: `Describe a person with simple adjectives: funny, kind.`,
+    audio: 'a1-mn-007.ogg',
+  },
+  {
+    id: 'a1-mn-008',
+    topic: 'My home',
+    text: 'I live in a small apartment. It has two rooms and a little kitchen. My favorite place is the balcony. I drink my coffee there every morning. It is quiet and nice.',
+    note: `Use "there is/has" and "my favorite place is" to describe a home.`,
+    audio: 'a1-mn-008.ogg',
+  },
+  {
+    id: 'a1-mn-009',
+    topic: 'A normal morning',
+    text: 'I wake up early. I make tea and read the news. Then I take a shower and get dressed. I leave for work at eight. I like calm mornings.',
+    note: `Sequence with "then". Present simple for a routine.`,
+    audio: 'a1-mn-009.ogg',
+  },
+  {
+    id: 'a1-mn-010',
+    topic: 'My pet',
+    text: 'I have a small dog. Her name is Luna. She is brown and very friendly. We walk in the park every day. She makes me happy.',
+    note: `"makes me happy" is a useful little phrase.`,
+    audio: 'a1-mn-010.ogg',
+  },
 ];

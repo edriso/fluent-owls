@@ -75,7 +75,7 @@ describe('monologuesPool', () => {
 describe('monologue coverage', () => {
   it('ships a healthy number of monologues per level', () => {
     for (const level of LEVELS) {
-      expect(monologuesPool([level]).length, level).toBeGreaterThanOrEqual(6);
+      expect(monologuesPool([level]).length, level).toBeGreaterThanOrEqual(10);
     }
   });
 });

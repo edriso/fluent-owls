@@ -41,8 +41,8 @@ single notification:
 • 🎭 a role-play mini-dialogue (two voices) to act out
 • 🎧 an audio clip to shadow (listen and repeat)
 The quizzes and grammar make you correct; the phrase, dialogue, and shadowing
-clip make you sound natural. Want more anytime? Message the bot /quiz, /grammar,
-/phrase, /dialogue, /shadow, or /monologue. No setup, no signup.
+clip make you sound natural. Want more anytime? Message the bot /quiz, /grammar, /phrase,
+/dialogue, /shadow, /monologue, or /prompt. No setup, no signup.
 
 > Note: the full pinned welcome message lives in `src/content/welcome.ts`
 > and is posted with `pnpm post-welcome`.

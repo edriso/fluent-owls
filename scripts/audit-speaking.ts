@@ -22,11 +22,13 @@ import { ALL_PHRASES } from '../src/content/phrases';
 import { ALL_DIALOGUES } from '../src/content/dialogues';
 import { ALL_GRAMMAR } from '../src/content/grammar';
 import { ALL_MONOLOGUES } from '../src/content/monologues';
+import { ALL_PROMPTS } from '../src/content/prompts';
 import {
   buildDialogueCaption,
   buildGrammarCaption,
   buildMonologueCaption,
   buildPhraseMessage,
+  buildPromptCaption,
   buildShadowingCaption,
 } from '../src/lib/format';
 import {
@@ -43,6 +45,8 @@ import {
   MONOLOGUE_MAX_CHARS,
   NOTE_MAX_CHARS,
   PHRASE_MAX_CHARS,
+  PROMPT_ANSWER_MAX_CHARS,
+  PROMPT_QUESTION_MAX_CHARS,
   RULE_MAX_CHARS,
   SITUATION_MAX_CHARS,
   TOPIC_MAX_CHARS,
@@ -215,6 +219,31 @@ for (const m of ALL_MONOLOGUES) {
   if (!existsSync(audioPathFor(m.audio))) missingAudio += 1;
 }
 
+// --- Question prompts ------------------------------------------------------
+const seenPrompts = new Set<string>();
+const seenPromptText = new Set<string>();
+
+for (const p of ALL_PROMPTS) {
+  if (seenPrompts.has(p.id)) add(p.id, 'id', 'duplicate id');
+  seenPrompts.add(p.id);
+  if (!p.id.startsWith(`${p.level}-pr-`)) add(p.id, 'id', `must start with "${p.level}-pr-"`);
+
+  checkText(p.id, 'topic', p.topic, TOPIC_MAX_CHARS);
+  checkText(p.id, 'question', p.question, PROMPT_QUESTION_MAX_CHARS);
+  checkText(p.id, 'answer', p.answer, PROMPT_ANSWER_MAX_CHARS);
+  checkText(p.id, 'note', p.note, NOTE_MAX_CHARS);
+
+  const norm = p.question.trim().toLowerCase();
+  if (seenPromptText.has(norm)) add(p.id, 'question', 'duplicate question');
+  seenPromptText.add(norm);
+
+  if (p.audio !== `${p.id}.ogg`) add(p.id, 'audio', `should be "${p.id}.ogg", got "${p.audio}"`);
+  const pcap = buildPromptCaption(p).length;
+  if (pcap > CAPTION_MAX_CHARS)
+    add(p.id, 'caption', `rendered caption ${pcap} > ${CAPTION_MAX_CHARS}`);
+  if (!existsSync(audioPathFor(p.audio))) missingAudio += 1;
+}
+
 // --- Summary ---------------------------------------------------------------
 for (const level of LEVELS) {
   const sh = ALL_SHADOWING.filter((c) => c.level === level).length;
@@ -222,12 +251,13 @@ for (const level of LEVELS) {
   const dl = ALL_DIALOGUES.filter((d) => d.level === level).length;
   const gr = ALL_GRAMMAR.filter((g) => g.level === level).length;
   const mn = ALL_MONOLOGUES.filter((m) => m.level === level).length;
+  const pr = ALL_PROMPTS.filter((p) => p.level === level).length;
   console.log(
-    `  ${level.toUpperCase()}: ${sh} shadowing, ${dl} dialogues, ${gr} grammar, ${mn} monologues, ${ph} phrases`,
+    `  ${level.toUpperCase()}: ${sh} shadow, ${dl} dialogue, ${gr} grammar, ${mn} monologue, ${pr} prompt, ${ph} phrase`,
   );
 }
 console.log(
-  `Total: ${ALL_SHADOWING.length} shadowing, ${ALL_DIALOGUES.length} dialogues, ${ALL_GRAMMAR.length} grammar, ${ALL_MONOLOGUES.length} monologues, ${ALL_PHRASES.length} phrases`,
+  `Total: ${ALL_SHADOWING.length} shadowing, ${ALL_DIALOGUES.length} dialogues, ${ALL_GRAMMAR.length} grammar, ${ALL_MONOLOGUES.length} monologues, ${ALL_PROMPTS.length} prompts, ${ALL_PHRASES.length} phrases`,
 );
 
 // Audio cost estimate. ElevenLabs bills ~1 credit per character on the
@@ -238,13 +268,18 @@ const totalAudioChars =
   ALL_SHADOWING.reduce((sum, c) => sum + c.text.length, 0) +
   ALL_DIALOGUES.reduce((sum, d) => sum + d.turns.reduce((s, t) => s + t.text.length, 0), 0) +
   ALL_GRAMMAR.reduce((sum, g) => sum + g.examples.reduce((s, e) => s + e.length, 0), 0) +
-  ALL_MONOLOGUES.reduce((sum, m) => sum + m.text.length, 0);
+  ALL_MONOLOGUES.reduce((sum, m) => sum + m.text.length, 0) +
+  ALL_PROMPTS.reduce((sum, p) => sum + p.question.length + p.answer.length, 0);
 console.log(
   `Audio: ~${totalAudioChars} characters total (~${totalAudioChars} credits to generate every clip once on multilingual v2).`,
 );
 
 const totalAudioItems =
-  ALL_SHADOWING.length + ALL_DIALOGUES.length + ALL_GRAMMAR.length + ALL_MONOLOGUES.length;
+  ALL_SHADOWING.length +
+  ALL_DIALOGUES.length +
+  ALL_GRAMMAR.length +
+  ALL_MONOLOGUES.length +
+  ALL_PROMPTS.length;
 const requireAudio = process.argv.slice(2).includes('--require-audio');
 if (missingAudio > 0) {
   const line = `${missingAudio}/${totalAudioItems} audio clip(s) have no .ogg yet. Run "pnpm generate-audio".`;

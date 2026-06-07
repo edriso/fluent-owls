@@ -5,6 +5,7 @@ import type {
   LeveledGrammarRule,
   LeveledMonologue,
   LeveledNativePhrase,
+  LeveledPrompt,
   LeveledQuestion,
   LeveledShadowingClip,
   PhraseFunction,
@@ -195,6 +196,27 @@ export function buildMonologueCaption(monologue: LeveledMonologue): string {
     '',
     '▶️ Listen, then say it again in your own words. Aim for smooth, clear flow.',
     `🎯 ${monologue.note}`,
+  ].join('\n');
+  return ltrIsolate(caption);
+}
+
+/**
+ * Build the caption for a question-prompt voice message: the question, then the
+ * model answer, with the listen-pause-answer-compare instruction and a tip. In
+ * the audio, a long silence sits between the question and the answer so the
+ * learner can speak. Plain text in an LTR isolate.
+ */
+export function buildPromptCaption(prompt: LeveledPrompt): string {
+  const badge = LEVEL_BADGE[prompt.level] ?? prompt.level.toUpperCase();
+  const caption = [
+    `🎤 Answer the question  ·  ${badge}`,
+    `💬 ${prompt.topic}`,
+    '',
+    `❓ "${prompt.question}"`,
+    `✅ Model answer: "${prompt.answer}"`,
+    '',
+    '▶️ Hear the question, pause the clip, answer out loud, then play on and compare with the model.',
+    `🎯 ${prompt.note}`,
   ].join('\n');
   return ltrIsolate(caption);
 }

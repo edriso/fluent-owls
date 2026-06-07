@@ -71,3 +71,8 @@ export const GRAMMAR_EXAMPLE_MAX_CHARS = 120;
 export const TOPIC_MAX_CHARS = 70;
 /** Maximum length of a monologue passage (kept to a short, repeatable model). */
 export const MONOLOGUE_MAX_CHARS = 600;
+
+/** Maximum length of a prompt question. */
+export const PROMPT_QUESTION_MAX_CHARS = 120;
+/** Maximum length of a prompt's model answer. */
+export const PROMPT_ANSWER_MAX_CHARS = 220;

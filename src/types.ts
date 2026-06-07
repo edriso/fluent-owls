@@ -291,3 +291,36 @@ export type LeveledMonologue = Monologue & {
   /** The CEFR level this monologue belongs to. */
   level: Level;
 };
+
+/**
+ * One question-prompt drill: a real conversation question, then (in the audio) a
+ * pause for the learner to answer out loud, then a model answer. This trains
+ * speaking on demand, the hardest part of fluency: the prompt removes "what do I
+ * say?" so the learner can focus on HOW they say it, then self-compares with the
+ * model. Two voices (the asker and the answerer). Audio generated once.
+ *
+ * Constraints (validated by scripts/audit-speaking.ts and the unit tests):
+ *  - question, answer, topic, and note non-empty within their limits
+ *  - the rendered caption is <= CAPTION_MAX_CHARS
+ *  - no em-dashes anywhere (house style)
+ */
+export type Prompt = {
+  /** Stable, unique id. Starts with the level and a "pr" marker, e.g. "b1-pr-001". */
+  id: string;
+  /** Short context label, e.g. "Talking about work". */
+  topic: string;
+  /** The question the learner hears and answers. */
+  question: string;
+  /** A model answer, shown and spoken after the pause. */
+  answer: string;
+  /** One concrete tip: a useful structure or phrase to reuse in your own answer. */
+  note: string;
+  /** File name of the committed OGG/Opus clip, e.g. "b1-pr-001.ogg". */
+  audio: string;
+};
+
+/** A prompt tagged with the CEFR level it was loaded from. */
+export type LeveledPrompt = Prompt & {
+  /** The CEFR level this prompt belongs to. */
+  level: Level;
+};

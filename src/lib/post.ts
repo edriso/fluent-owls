@@ -7,6 +7,7 @@ import type {
   LeveledGrammarRule,
   LeveledMonologue,
   LeveledNativePhrase,
+  LeveledPrompt,
   LeveledQuestion,
   LeveledShadowingClip,
 } from '../types';
@@ -16,6 +17,7 @@ import {
   buildMonologueCaption,
   buildPhraseMessage,
   buildPrompt,
+  buildPromptCaption,
   buildShadowingCaption,
   clampExplanation,
   toPollOptions,
@@ -174,6 +176,20 @@ export async function postMonologue(
     chatId: opts.chatId,
     logName: 'monologue',
     logFields: { id: monologue.id, level: monologue.level },
+  });
+}
+
+/** Post one question-prompt as a voice message (question, pause, model answer). */
+export async function postPrompt(
+  bot: Bot<Context>,
+  prompt: LeveledPrompt,
+  opts: PostOpts = {},
+): Promise<number | null> {
+  return sendVoiceFile(bot, prompt.audio, buildPromptCaption(prompt), {
+    silent: opts.silent,
+    chatId: opts.chatId,
+    logName: 'question prompt',
+    logFields: { id: prompt.id, level: prompt.level },
   });
 }
 

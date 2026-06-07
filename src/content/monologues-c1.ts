@@ -47,4 +47,32 @@ export const c1Monologues: Monologue[] = [
     note: `A second conditional opener and a short, punchy three-part ending.`,
     audio: 'c1-mn-006.ogg',
   },
+  {
+    id: 'c1-mn-007',
+    topic: 'On the value of curiosity',
+    text: 'Curiosity, I have come to believe, is the engine of a meaningful life. The people I most admire are not the cleverest, but the most interested, always asking questions and following them wherever they lead. Curiosity keeps the mind young and the work fresh. When I feel stuck, it is usually because I have stopped being curious.',
+    note: `An inserted "I have come to believe" adds a thoughtful, fluent tone.`,
+    audio: 'c1-mn-007.ogg',
+  },
+  {
+    id: 'c1-mn-008',
+    topic: 'Why I value simplicity',
+    text: 'Over the years, I have learned to prize simplicity in almost everything. A simple plan is easier to follow; a simple message is easier to remember; a simple life is easier to enjoy. Complexity often hides a lack of clarity. Stripping things back takes effort and courage, but what remains is usually what mattered all along.',
+    note: `Parallel structure (a simple X is easier to...) gives rhythm.`,
+    audio: 'c1-mn-008.ogg',
+  },
+  {
+    id: 'c1-mn-009',
+    topic: 'On handling criticism',
+    text: 'Learning to handle criticism well has been one of the most useful skills I have developed. My instinct used to be to defend myself immediately, but that taught me nothing. Now I try to listen fully, separate the useful from the unkind, and thank the person regardless. Not all feedback is right, but almost all of it holds a grain of truth.',
+    note: `Contrast your old instinct with your current approach.`,
+    audio: 'c1-mn-009.ogg',
+  },
+  {
+    id: 'c1-mn-010',
+    topic: 'What I have learned about time',
+    text: 'If there is one thing experience has taught me, it is that time is our most honest currency. We can always earn more money, but never more hours. For a long time I spent my time carelessly. These days I try to ask what truly deserves my attention and protect it fiercely. How we spend our days, after all, is how we spend our lives.',
+    note: `"If there is one thing..." is a strong, fluent opener.`,
+    audio: 'c1-mn-010.ogg',
+  },
 ];

@@ -47,4 +47,32 @@ export const c2Monologues: Monologue[] = [
     note: `Formal hedging and a confident, summarizing final line.`,
     audio: 'c2-mn-006.ogg',
   },
+  {
+    id: 'c2-mn-007',
+    topic: 'The courage to change your mind',
+    text: 'There is a quiet courage in changing your mind, and it is badly underrated. We treat consistency as a virtue and reversal as weakness, yet clinging to a belief against the evidence is not strength but stubbornness. The thinkers I admire hold their views firmly but loosely, ready to update the moment the facts demand it. The goal, after all, was never to be right yesterday, but to be right today.',
+    note: `"firmly but loosely" is a memorable paradox; "yet" pivots the argument.`,
+    audio: 'c2-mn-007.ogg',
+  },
+  {
+    id: 'c2-mn-008',
+    topic: 'The myth of overnight success',
+    text: 'We love the story of the overnight success, but it is almost always a comfortable fiction. Behind the sudden breakthrough lie years of unglamorous, invisible work, the failures no one filmed and the doubts no one shared. What looks like luck is usually preparation meeting opportunity. I find this oddly reassuring: the path is open to anyone patient enough to walk it quietly, long before anyone is watching.',
+    note: `Inversion ("Behind the breakthrough lie years...") adds polish.`,
+    audio: 'c2-mn-008.ogg',
+  },
+  {
+    id: 'c2-mn-009',
+    topic: 'Listening to disagree well',
+    text: "Disagreement is not the enemy of good thinking; it is the engine of it. The danger is not that we argue, but that we argue badly, hearing only enough to prepare our rebuttal. Real listening means trying to build the other person's case better than they did, and only then responding. It is slow, humbling work, and it is where genuine understanding begins.",
+    note: `"not X; it is Y" and "not that... but that..." carry a nuanced point.`,
+    audio: 'c2-mn-009.ogg',
+  },
+  {
+    id: 'c2-mn-010',
+    topic: 'What attention reveals about us',
+    text: 'Tell me what you pay attention to, and I will tell you who you are. Attention is not a passive lens but an active choice, repeated thousands of times a day, and those choices quietly shape the self. We become, over time, what we repeatedly notice and ignore. In an age engineered to capture our focus, deciding for ourselves where it goes may be the most important freedom we have left.',
+    note: `Opens with a bold conditional; "not X but Y" sharpens the idea.`,
+    audio: 'c2-mn-010.ogg',
+  },
 ];

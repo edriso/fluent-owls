@@ -8,7 +8,7 @@ A tiny Telegram bot that posts one short English set to a channel each day, so p
 - **1 role-play mini-dialogue**: a short two-voice exchange to act out both sides, for real-conversation practice.
 - **1 shadowing clip**: a short native-audio voice message with the transcript, to listen to and repeat (the fastest drill for a natural rhythm and accent).
 
-Want more at any time? Message the bot **/quiz**, **/grammar**, **/phrase**, **/dialogue**, **/shadow**, or **/monologue** (a longer passage to listen to and retell) and it sends one right away. No database; each is a stateless random pick.
+Want more at any time? Message the bot **/quiz**, **/grammar**, **/phrase**, **/dialogue**, **/shadow**, **/monologue** (a longer passage to retell), or **/prompt** (a question to answer out loud, then compare with a model) and it sends one right away. No database; each is a stateless random pick.
 
 The whole project is junior friendly on purpose. The content is short, the English is plain, and the code is small and well documented.
 
@@ -96,11 +96,11 @@ If the checks pass, redeploy.
 
 ## On-demand commands
 
-Beyond the daily set, the bot answers commands in a DM and replies with a random item: **/quiz**, **/grammar**, **/phrase**, **/dialogue**, **/shadow**, **/monologue**. They are stateless (a random pick), so there is no database. A learner who wants extra practice just asks.
+Beyond the daily set, the bot answers commands in a DM and replies with a random item: **/quiz**, **/grammar**, **/phrase**, **/dialogue**, **/shadow**, **/monologue**, **/prompt**. They are stateless (a random pick), so there is no database. A learner who wants extra practice just asks.
 
 ## The audio
 
-The shadowing clips, role-play dialogues, grammar examples, and monologues are AI-generated once with [ElevenLabs](https://elevenlabs.io) and committed as OGG/Opus under `src/content/audio/`. Shadowing, grammar, and monologues use one American voice per CEFR level; dialogues use two voices (a speaker A and B) stitched together. The running bot only reads the files, so production needs no text-to-speech key and has no audio cost. Generating is a one-time dev step (`pnpm generate-audio`, needs `ELEVENLABS_API_KEY` and `ffmpeg`); see [`docs/SPEAKING.md`](docs/SPEAKING.md). The audio is **not** covered by this repo's MIT license, see [`NOTICE`](NOTICE).
+The shadowing clips, role-play dialogues, grammar examples, monologues, and question prompts are AI-generated once with [ElevenLabs](https://elevenlabs.io) and committed as OGG/Opus under `src/content/audio/`. Shadowing, grammar, and monologues use one American voice per CEFR level; dialogues and prompts use two voices (an asker and an answerer), and prompts include a built-in pause so the learner can answer before the model. The running bot only reads the files, so production needs no text-to-speech key and has no audio cost. Generating is a one-time dev step (`pnpm generate-audio`, needs `ELEVENLABS_API_KEY` and `ffmpeg`); see [`docs/SPEAKING.md`](docs/SPEAKING.md). The audio is **not** covered by this repo's MIT license, see [`NOTICE`](NOTICE).
 
 ## Scripts
 

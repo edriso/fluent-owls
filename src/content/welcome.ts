@@ -23,7 +23,7 @@ One set lands together each evening, with a single notification:
 • Two or three times is enough. This is the fastest way to a natural accent.
 
 <b>Want more right now?</b>
-Message the bot and it sends one instantly: /quiz, /grammar, /phrase, /dialogue, /shadow, or /monologue (a short passage to listen to and retell in your own words).
+Message the bot and it sends one instantly: /quiz, /grammar, /phrase, /dialogue, /shadow, /monologue (a passage to retell), or /prompt (a question to answer out loud, then compare with a model).
 
 <b>What you will practise</b>
 The words and rules that make you correct (vocabulary, collocations, phrasal verbs, idioms, grammar) AND the rhythm, real dialogue, and ready-made phrases that make you sound natural.

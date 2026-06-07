@@ -47,4 +47,32 @@ export const b2Monologues: Monologue[] = [
     note: `"had added up" (past perfect) shows a result built over time.`,
     audio: 'b2-mn-006.ogg',
   },
+  {
+    id: 'b2-mn-007',
+    topic: 'The best advice I ever got',
+    text: 'The best advice I ever received was to focus on progress, not perfection. For years, I waited until things were perfect before sharing them, and I missed many chances. Now I try to start, learn, and improve as I go. It is far less stressful, and I get more done. Perfection, I have realized, is often just an excuse to delay.',
+    note: `"focus on X, not Y" is a crisp way to frame advice.`,
+    audio: 'b2-mn-007.ogg',
+  },
+  {
+    id: 'b2-mn-008',
+    topic: 'How travel changed me',
+    text: 'Traveling alone for the first time changed how I see the world. I had to solve problems on my own, from missed trains to lost bookings. At first it was frightening, but slowly I grew more capable and calm. I came home more confident and more open to people who are different from me. That trip taught me more than any classroom could.',
+    note: `Past narrative with a clear before-and-after.`,
+    audio: 'b2-mn-008.ogg',
+  },
+  {
+    id: 'b2-mn-009',
+    topic: 'My view on remote work',
+    text: 'Remote work has clear advantages and real drawbacks. On the one hand, it saves commuting time and lets me focus deeply. On the other, it can feel isolating, and the line between work and home gets blurry. What works for me is a fixed schedule and a real break for lunch. With a little discipline, the benefits outweigh the costs.',
+    note: `"On the one hand... on the other..." structures a balanced view.`,
+    audio: 'b2-mn-009.ogg',
+  },
+  {
+    id: 'b2-mn-010',
+    topic: 'A goal I am chasing',
+    text: 'Right now, I am working toward giving a talk at a conference. Public speaking used to terrify me, so this is a real stretch. I have started small, presenting to my team and asking for honest feedback. Each time, the fear shrinks a little. I may not be ready yet, but I am closer than I was.',
+    note: `Present continuous for a current goal; "used to" for the past fear.`,
+    audio: 'b2-mn-010.ogg',
+  },
 ];
