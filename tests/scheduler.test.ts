@@ -4,14 +4,16 @@ import { findSlot, runDailyBatch, runOnce } from '../src/scheduler';
 import { schedules } from '../src/schedules';
 
 /**
- * A minimal fake bot: only the one method the poster touches (api.sendPoll).
+ * A minimal fake bot covering the three Bot API methods the posters touch:
+ * sendPoll (quizzes), sendVoice (shadowing), and sendMessage (native phrases).
  * No network, no token. We record every call so we can assert the batch posts
- * in order and silences all but the last question.
+ * in order and silences all but the last post.
  */
-type SentPoll = { question: string; silent: boolean };
+type Sent = { kind: 'poll' | 'voice' | 'message'; silent: boolean; text: string };
 
-function fakeBot(): { bot: Bot; sent: SentPoll[] } {
-  const sent: SentPoll[] = [];
+function fakeBot(): { bot: Bot; sent: Sent[] } {
+  const sent: Sent[] = [];
+  let n = 0;
   const api = {
     sendPoll: vi.fn(
       async (
@@ -20,8 +22,28 @@ function fakeBot(): { bot: Bot; sent: SentPoll[] } {
         _options: unknown,
         extra: { disable_notification?: boolean },
       ) => {
-        sent.push({ question, silent: extra.disable_notification ?? false });
-        return { message_id: sent.length };
+        sent.push({ kind: 'poll', silent: extra.disable_notification ?? false, text: question });
+        return { message_id: (n += 1) };
+      },
+    ),
+    sendVoice: vi.fn(
+      async (
+        _chatId: string,
+        _voice: unknown,
+        extra: { caption?: string; disable_notification?: boolean },
+      ) => {
+        sent.push({
+          kind: 'voice',
+          silent: extra.disable_notification ?? false,
+          text: extra.caption ?? '',
+        });
+        return { message_id: (n += 1) };
+      },
+    ),
+    sendMessage: vi.fn(
+      async (_chatId: string, text: string, extra: { disable_notification?: boolean }) => {
+        sent.push({ kind: 'message', silent: extra?.disable_notification ?? false, text });
+        return { message_id: (n += 1) };
       },
     ),
   };
@@ -31,33 +53,43 @@ function fakeBot(): { bot: Bot; sent: SentPoll[] } {
 describe('findSlot', () => {
   it('returns a known slot and undefined for an unknown one', () => {
     expect(findSlot('midday')?.name).toBe('midday');
+    expect(findSlot('shadow')?.name).toBe('shadow');
     expect(findSlot('nope')).toBeUndefined();
   });
 });
 
 describe('runOnce', () => {
-  it('posts one poll and honours the slot silent flag', async () => {
-    const { bot, sent } = fakeBot();
-    const evening = findSlot('evening')!;
-    await runOnce(evening, bot);
-    expect(sent).toHaveLength(1);
-    // evening is the audible slot
-    expect(sent[0]?.silent).toBe(false);
-  });
-
-  it('posts silently for a silent slot', async () => {
+  it('posts a quiz poll for a quiz slot and honours its silent flag', async () => {
     const { bot, sent } = fakeBot();
     await runOnce(findSlot('morning')!, bot);
+    expect(sent).toHaveLength(1);
+    expect(sent[0]?.kind).toBe('poll');
     expect(sent[0]?.silent).toBe(true);
   });
 
-  it('pins the poll left-to-right so English text never mirrors on RTL clients', () => {
+  it('posts a voice message for the shadow slot, audibly', async () => {
+    const { bot, sent } = fakeBot();
+    await runOnce(findSlot('shadow')!, bot);
+    expect(sent).toHaveLength(1);
+    expect(sent[0]?.kind).toBe('voice');
+    expect(sent[0]?.silent).toBe(false);
+  });
+
+  it('posts an HTML message for the phrase slot', async () => {
+    const { bot, sent } = fakeBot();
+    await runOnce(findSlot('phrase')!, bot);
+    expect(sent).toHaveLength(1);
+    expect(sent[0]?.kind).toBe('message');
+    expect(sent[0]?.text).toContain('Say it like a native');
+  });
+
+  it('pins the quiz poll left-to-right so English text never mirrors on RTL clients', () => {
     // postQuizPoll passes direction:'ltr', so the kernel wraps the question in
     // a Unicode LTR isolate (U+2066 ... U+2069). Guard the first/last marks so
     // a regression to the kernel's RTL default is caught here.
     const { bot, sent } = fakeBot();
     return runOnce(findSlot('evening')!, bot).then(() => {
-      const q = sent[0]!.question;
+      const q = sent[0]!.text;
       expect(q.codePointAt(0)).toBe(0x2066);
       expect(q.codePointAt(q.length - 1)).toBe(0x2069);
     });
@@ -75,20 +107,33 @@ describe('runDailyBatch', () => {
     expect(silentFlags[silentFlags.length - 1]).toBe(false);
   });
 
+  it('posts each slot in the kind its schedule declares', async () => {
+    const { bot, sent } = fakeBot();
+    await runDailyBatch(bot);
+    const expected = schedules.map((s) =>
+      s.kind === 'quiz' ? 'poll' : s.kind === 'shadow' ? 'voice' : 'message',
+    );
+    expect(sent.map((s) => s.kind)).toEqual(expected);
+  });
+
   it('never throws even when every send fails', async () => {
-    // postQuizPoll swallows its own send errors (returns null) and the batch
+    // Each poster swallows its own send error (returns null) and the batch
     // wraps each slot in its own try/catch, so a total Telegram outage must
     // resolve cleanly rather than crash the cron tick. Nothing lands, but the
     // process survives to try again on the next fire.
     const { bot, sent } = fakeBot();
-    // Force every send to reject, simulating a total Telegram outage.
-    (
-      bot.api.sendPoll as unknown as {
-        mockImplementation: (fn: () => Promise<never>) => void;
-      }
-    ).mockImplementation(async () => {
+    const boom = async () => {
       throw new Error('telegram down');
-    });
+    };
+    (
+      bot.api.sendPoll as unknown as { mockImplementation: (fn: () => Promise<never>) => void }
+    ).mockImplementation(boom);
+    (
+      bot.api.sendVoice as unknown as { mockImplementation: (fn: () => Promise<never>) => void }
+    ).mockImplementation(boom);
+    (
+      bot.api.sendMessage as unknown as { mockImplementation: (fn: () => Promise<never>) => void }
+    ).mockImplementation(boom);
     await expect(runDailyBatch(bot)).resolves.toBeUndefined();
     expect(sent).toHaveLength(0);
   });

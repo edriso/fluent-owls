@@ -1,4 +1,13 @@
-import type { Level, LeveledQuestion, Topic } from '../types';
+import { ltrIsolate } from 'telegram-broadcast-kit';
+import type {
+  Level,
+  LeveledNativePhrase,
+  LeveledQuestion,
+  LeveledShadowingClip,
+  PhraseFunction,
+  ShadowingFocus,
+  Topic,
+} from '../types';
 import { EXPLANATION_MAX_CHARS, MAX_OPTIONS, MIN_OPTIONS, OPTION_MAX_CHARS } from './limits';
 
 /**
@@ -67,4 +76,78 @@ export function clampExplanation(explanation: string | undefined): string | unde
   if (trimmed.length === 0) return undefined;
   if (trimmed.length <= EXPLANATION_MAX_CHARS) return trimmed;
   return trimmed.slice(0, EXPLANATION_MAX_CHARS - 1) + '…';
+}
+
+/**
+ * What to copy when shadowing each focus, phrased to drop into the "say it WITH
+ * the speaker, copying the ___" instruction. Keeps the on-screen tip concrete.
+ */
+const FOCUS_PHRASE: Record<ShadowingFocus, string> = {
+  linking: 'the way the words link together',
+  stress: 'the rhythm and the stressed words',
+  intonation: 'the melody, the rise and fall',
+  reduction: 'the relaxed, reduced sounds',
+  pacing: 'the pauses and the pacing',
+};
+
+/** Human-friendly label for each conversational function, shown on a phrase post. */
+const FUNCTION_LABEL: Record<PhraseFunction, string> = {
+  opinion: 'Giving an opinion',
+  agreeing: 'Agreeing',
+  disagreeing: 'Disagreeing politely',
+  'small-talk': 'Small talk',
+  softening: 'Softening',
+  clarifying: 'Clarifying',
+  reacting: 'Reacting',
+  storytelling: 'Storytelling',
+  transitions: 'Steering the conversation',
+  requests: 'Making a request',
+};
+
+/**
+ * Build the caption shown under a shadowing voice message: a header with the
+ * level, the real-situation context, the line to copy in quotes, then the
+ * listen-and-repeat instruction and a concrete tip.
+ *
+ * The whole caption is wrapped in a left-to-right bidi isolate (like the quiz
+ * poll, see post.ts) so a leading emoji never flips to the wrong side for a
+ * reader on an RTL-locale client. Stays plain text (no parse_mode) for the same
+ * safety reason the kernel's poster does.
+ */
+export function buildShadowingCaption(clip: LeveledShadowingClip): string {
+  const badge = LEVEL_BADGE[clip.level] ?? clip.level.toUpperCase();
+  const caption = [
+    `🎧 Shadow this  ·  ${badge}`,
+    `💬 ${clip.context}`,
+    '',
+    `"${clip.text}"`,
+    '',
+    `▶️ Listen 2-3 times, then say it WITH the speaker, copying ${FOCUS_PHRASE[clip.focus]}.`,
+    `🎯 ${clip.note}`,
+  ].join('\n');
+  return ltrIsolate(caption);
+}
+
+/** Escape the five characters that matter for Telegram's HTML parse mode. */
+function escapeHtml(text: string): string {
+  return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+/**
+ * Build the HTML message for a "say it like a native" phrase: a header with the
+ * level and the conversational function, the phrase itself in bold, when to use
+ * it, and a worked example. Posted with parse_mode HTML (see post.ts), so the
+ * dynamic fields are HTML-escaped here.
+ */
+export function buildPhraseMessage(phrase: LeveledNativePhrase): string {
+  const badge = LEVEL_BADGE[phrase.level] ?? phrase.level.toUpperCase();
+  const fn = FUNCTION_LABEL[phrase.fn] ?? phrase.fn;
+  return [
+    `🗣️ <b>Say it like a native</b>  ·  ${badge}`,
+    `<i>${fn}</i>`,
+    '',
+    `💬 <b>"${escapeHtml(phrase.phrase)}"</b>`,
+    `<b>When:</b> ${escapeHtml(phrase.situation)}`,
+    `<b>Example:</b> ${escapeHtml(phrase.example)}`,
+  ].join('\n');
 }

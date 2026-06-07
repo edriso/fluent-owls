@@ -2,21 +2,22 @@ import { Bot } from 'grammy';
 import { logger } from 'telegram-broadcast-kit';
 import { config } from './config';
 import { findSlot, runOnce } from './scheduler';
+import { schedules } from './schedules';
 
 // Public profile texts the bot self-sets on start (commands + About +
 // Description). The name, botpic, and other profile fields cannot be set via the
 // Bot API; those stay in @BotFather.
 //
-// About is BotFather's "short description": ≤120 code points (115 here).
+// About is BotFather's "short description": ≤120 code points (118 here).
 export const botAbout =
-  'Daily English quizzes 🦉 Three a day, beginner to advanced, each with an explanation. Tap Start to join the channel.';
+  'Daily English 🦉 Quizzes, a native phrase, and an audio shadowing clip every day, beginner to advanced. Tap Start to join.';
 
-// Description: BotFather's "description", ≤512 code points (≈472 here). Shown on
-// the empty-chat start screen before the user presses Start.
+// Description: BotFather's "description", ≤512 code points. Shown on the
+// empty-chat start screen before the user presses Start.
 export const botDescription = [
-  '🦉 Hi! Fluent Owls posts three short English quizzes to its Telegram channel every afternoon: a beginner warm-up, an intermediate question, and an advanced challenge.',
-  'Each is a quick fill-in-the-blank sentence. Tap the word that fits, then Telegram reveals the correct answer and a short explanation right after you vote.',
-  'Vocabulary, collocations, idioms, grammar, and more, organized by CEFR level (A1 to C2). No signup, nothing to install.',
+  '🦉 Hi! Fluent Owls posts a short daily English set to its Telegram channel every afternoon, to help you be both correct and well spoken.',
+  'Each day you get three quick fill-in-the-blank quizzes (beginner to advanced, with instant explanations), one "say it like a native" phrase for real situations, and one audio clip to shadow: listen and repeat to build a natural rhythm.',
+  'Organized by CEFR level (A1 to C2). No signup, nothing to install.',
   'Tap Start for the channel link.',
 ].join('\n');
 
@@ -34,9 +35,9 @@ export function buildBot(): Bot {
     const tail = link ? `\n\nJoin the channel: ${link}` : '';
     await ctx.reply(
       [
-        '🦉 Hi! Fluent Owls posts three short English quizzes a day to its Telegram channel.',
+        '🦉 Hi! Fluent Owls posts a short daily English set to its Telegram channel.',
         '',
-        'A beginner warm-up, an intermediate question, and an advanced challenge, posted together each afternoon. Each is a quick fill-in-the-blank quiz with an instant explanation, so you learn a little every day.',
+        'Each afternoon: three quick fill-in-the-blank quizzes (beginner to advanced, with instant explanations), one "say it like a native" phrase, and one audio clip to shadow (listen and repeat). A little every day, so you become both correct and well spoken.',
         tail,
       ].join('\n'),
       { link_preview_options: { is_disabled: true } },
@@ -53,9 +54,11 @@ export function buildBot(): Bot {
   });
 
   // Admin-only manual fire, useful for previewing a slot without waiting for
-  // the cron. Anyone other than the configured admin is silently ignored, so
-  // the bot never leaks the command to strangers in DMs.
-  for (const slot of ['morning', 'midday', 'evening']) {
+  // the cron. One command per slot in the daily batch (derived from schedules,
+  // so a new slot gets its /admin_* command for free). Anyone other than the
+  // configured admin is silently ignored, so the bot never leaks the command to
+  // strangers in DMs.
+  for (const slot of schedules.map((s) => s.name)) {
     bot.command(`admin_${slot}`, async (ctx) => {
       if (!isAdmin(ctx.from?.id)) return;
       const def = findSlot(slot);

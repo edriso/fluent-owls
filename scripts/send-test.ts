@@ -3,14 +3,19 @@
  * for previewing content or formatting without waiting for the daily cron.
  *
  * Usage:
- *   pnpm send-test            -> sends the morning slot (A1-A2)
- *   pnpm send-test morning    -> sends the morning slot (A1-A2)
- *   pnpm send-test midday     -> sends the midday slot (B1-B2)
- *   pnpm send-test evening    -> sends the evening slot (C1-C2)
- *   pnpm send-test all        -> sends all three, in order
+ *   pnpm send-test            -> sends the morning slot (A1-A2 quiz)
+ *   pnpm send-test morning    -> A1-A2 quiz
+ *   pnpm send-test midday     -> B1-B2 quiz
+ *   pnpm send-test evening    -> C1-C2 quiz
+ *   pnpm send-test phrase     -> today's "say it like a native" phrase
+ *   pnpm send-test shadow     -> today's shadowing clip (needs the .ogg generated)
+ *   pnpm send-test all        -> the whole daily set, in order
+ *
+ * The slot names come from src/schedules.ts, so a new slot works here for free.
  *
  * Requirements: BOT_TOKEN and CHANNEL_CHAT_ID in env (or .env), and the bot
- * must be a channel admin with "Post messages" permission.
+ * must be a channel admin with "Post messages" permission. The shadow slot also
+ * needs the audio generated and committed (pnpm generate-audio).
  */
 import { Bot } from 'grammy';
 import { logger } from 'telegram-broadcast-kit';

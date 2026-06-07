@@ -10,6 +10,7 @@
  * add it to LEVEL_BANKS. Nothing else needs to change.
  */
 import { LEVELS, type Level, type LeveledQuestion, type QuizQuestion } from '../types';
+import { interleaveByLevel } from './pool';
 
 import { a1Questions } from './questions-a1';
 import { a2Questions } from './questions-a2';
@@ -39,27 +40,14 @@ export const ALL_QUESTIONS: LeveledQuestion[] = LEVELS.flatMap((level) =>
 );
 
 /**
- * Build a pool of questions drawn from the given band of levels.
- *
- * The result is round-robin interleaved by level (a1, a2, a1, a2, ...) rather
- * than concatenated (all a1, then all a2). This matters because the daily
- * picker walks the pool in order: interleaving makes a two-level slot alternate
- * levels day to day, instead of showing only the easier level for weeks before
- * switching. Order is still fully deterministic, so the picker stays stable.
+ * Build a pool of questions drawn from the given band of levels, interleaved by
+ * level so a two-level slot alternates day to day. See {@link interleaveByLevel}
+ * for the why; the interleave logic is shared with the shadowing and phrase
+ * banks so all three content types rotate the same way.
  *
  * @param levels The CEFR levels to include (e.g. ['b1', 'b2']).
  * @returns The questions for those levels, interleaved by level.
  */
 export function poolForLevels(levels: readonly Level[]): LeveledQuestion[] {
-  const byLevel = levels.map((level) => ALL_QUESTIONS.filter((q) => q.level === level));
-  const longest = byLevel.reduce((max, list) => Math.max(max, list.length), 0);
-
-  const interleaved: LeveledQuestion[] = [];
-  for (let i = 0; i < longest; i += 1) {
-    for (const list of byLevel) {
-      const question = list[i];
-      if (question) interleaved.push(question);
-    }
-  }
-  return interleaved;
+  return interleaveByLevel(ALL_QUESTIONS, levels);
 }

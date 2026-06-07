@@ -1,8 +1,15 @@
-import type { Bot, Context } from 'grammy';
+import { InputFile, type Bot, type Context } from 'grammy';
 import { logger, sendPoll } from 'telegram-broadcast-kit';
 import { config } from '../config';
-import type { LeveledQuestion } from '../types';
-import { buildPrompt, clampExplanation, toPollOptions } from './format';
+import { audioPathFor } from '../content/audio-path';
+import type { LeveledNativePhrase, LeveledQuestion, LeveledShadowingClip } from '../types';
+import {
+  buildPhraseMessage,
+  buildPrompt,
+  buildShadowingCaption,
+  clampExplanation,
+  toPollOptions,
+} from './format';
 
 /**
  * Post one question as a native Telegram quiz poll, via the shared kernel's
@@ -63,19 +70,85 @@ export async function postQuizPoll(
 }
 
 /**
- * Plain message poster used by the welcome script. Kept local (not routed
- * through the kernel's `post`) because it disables the link preview and posts
- * HTML, neither of which the kernel's plain-text-first poster exposes.
+ * Post one shadowing clip as a Telegram voice message: the committed OGG/Opus
+ * audio with a caption (the transcript plus the listen-and-repeat instruction).
+ * We send it as a voice message (sendVoice), not an audio file, so it gets the
+ * inline waveform player and Telegram's built-in playback-speed control, which
+ * is exactly what a shadower wants.
+ *
+ * The audio is read from disk by file path (see content/audio-path.ts). A
+ * missing file (audio not generated yet) throws inside the Bot API call, which
+ * we catch and log, returning null so the daily batch keeps going. Run
+ * `pnpm generate-audio` to create the files. Returns the message_id, or null on
+ * failure.
+ */
+export async function postVoice(
+  bot: Bot<Context>,
+  clip: LeveledShadowingClip,
+  opts: { silent?: boolean } = {},
+): Promise<number | null> {
+  try {
+    const message = await bot.api.sendVoice(
+      config.channelChatId,
+      new InputFile(audioPathFor(clip.audio)),
+      {
+        caption: buildShadowingCaption(clip),
+        disable_notification: opts.silent ?? false,
+      },
+    );
+    logger.info('Posted shadowing voice', {
+      id: clip.id,
+      level: clip.level,
+      focus: clip.focus,
+      messageId: message.message_id,
+    });
+    return message.message_id;
+  } catch (err) {
+    logger.error('Failed to post shadowing voice (is the audio generated?)', {
+      id: clip.id,
+      audio: clip.audio,
+      error: String(err),
+    });
+    return null;
+  }
+}
+
+/**
+ * Post one "say it like a native" phrase as a short HTML message. Reuses
+ * postPlainMessage (HTML, link preview off), which buildPhraseMessage has
+ * already escaped for. Returns the message_id, or null on failure.
+ */
+export async function postPhrase(
+  bot: Bot<Context>,
+  phrase: LeveledNativePhrase,
+  opts: { silent?: boolean } = {},
+): Promise<number | null> {
+  const messageId = await postPlainMessage(bot, buildPhraseMessage(phrase), {
+    parseMode: 'HTML',
+    silent: opts.silent,
+  });
+  if (messageId !== null) {
+    logger.info('Posted native phrase', { id: phrase.id, level: phrase.level, messageId });
+  }
+  return messageId;
+}
+
+/**
+ * Plain message poster used by the welcome script and the phrase poster. Kept
+ * local (not routed through the kernel's `post`) because it disables the link
+ * preview and posts HTML, neither of which the kernel's plain-text-first poster
+ * exposes. `silent` maps to Telegram's disable_notification.
  */
 export async function postPlainMessage(
   bot: Bot<Context>,
   text: string,
-  opts: { parseMode?: 'HTML' } = {},
+  opts: { parseMode?: 'HTML'; silent?: boolean } = {},
 ): Promise<number | null> {
   try {
     const message = await bot.api.sendMessage(config.channelChatId, text, {
       parse_mode: opts.parseMode,
       link_preview_options: { is_disabled: true },
+      disable_notification: opts.silent ?? false,
     });
     return message.message_id;
   } catch (err) {

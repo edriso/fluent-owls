@@ -18,7 +18,7 @@ async function main(): Promise<void> {
   logger.info('Starting bot', {
     timezone: config.timezone,
     dailyCron: config.dailyCron,
-    questions: scheduleCount,
+    posts: scheduleCount,
     isDev: config.isDev,
   });
 
