@@ -228,4 +228,70 @@ export const c1Dialogues: Dialogue[] = [
     note: `Reflect: "In hindsight, we moved too fast."`,
     audio: 'c1-dl-020.ogg',
   },
+  {
+    id: 'c1-dl-021',
+    situation: 'Debating an idea',
+    turns: [
+      { speaker: 'A', text: "I'm not convinced this is the right call." },
+      { speaker: 'B', text: "What's giving you doubts?" },
+      { speaker: 'A', text: 'Mainly the cost, to be frank.' },
+    ],
+    note: `"What's giving you doubts?" draws out the real concern.`,
+    audio: 'c1-dl-021.ogg',
+  },
+  {
+    id: 'c1-dl-022',
+    situation: 'Diplomatic disagreement',
+    turns: [
+      { speaker: 'A', text: "I'd argue the opposite, actually." },
+      { speaker: 'B', text: "Go on, I'm curious to hear why." },
+      { speaker: 'A', text: 'Well, the data points the other way.' },
+    ],
+    note: `"I'd argue the opposite" disagrees while inviting discussion.`,
+    audio: 'c1-dl-022.ogg',
+  },
+  {
+    id: 'c1-dl-023',
+    situation: 'Networking',
+    turns: [
+      { speaker: 'A', text: "I've heard great things about your work." },
+      { speaker: 'B', text: "That's kind of you to say." },
+      { speaker: 'A', text: 'We should compare notes sometime.' },
+    ],
+    note: `"compare notes" means share experiences and ideas.`,
+    audio: 'c1-dl-023.ogg',
+  },
+  {
+    id: 'c1-dl-024',
+    situation: 'Managing expectations',
+    turns: [
+      { speaker: 'A', text: 'Will it be ready by Friday?' },
+      { speaker: 'B', text: "I'll be honest, it's looking tight." },
+      { speaker: 'A', text: 'Understood, keep me posted.' },
+    ],
+    note: `"it's looking tight" warns of a deadline you may miss.`,
+    audio: 'c1-dl-024.ogg',
+  },
+  {
+    id: 'c1-dl-025',
+    situation: 'Clearing the air',
+    turns: [
+      { speaker: 'A', text: 'I think we got off on the wrong foot.' },
+      { speaker: 'B', text: "Maybe we did. Let's start over." },
+      { speaker: 'A', text: "I'd like that." },
+    ],
+    note: `"got off on the wrong foot" means started a relationship badly.`,
+    audio: 'c1-dl-025.ogg',
+  },
+  {
+    id: 'c1-dl-026',
+    situation: 'Pitching an idea',
+    turns: [
+      { speaker: 'A', text: 'Hear me out before you say no.' },
+      { speaker: 'B', text: 'Alright, you have my attention.' },
+      { speaker: 'A', text: 'What if we tried it for a month?' },
+    ],
+    note: `"Hear me out" asks for a chance to explain fully first.`,
+    audio: 'c1-dl-026.ogg',
+  },
 ];

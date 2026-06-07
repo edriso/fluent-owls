@@ -228,4 +228,70 @@ export const a2Dialogues: Dialogue[] = [
     note: `End a visit with "Thanks for having me." and "Let's do it again soon."`,
     audio: 'a2-dl-020.ogg',
   },
+  {
+    id: 'a2-dl-021',
+    situation: 'Making weekend plans',
+    turns: [
+      { speaker: 'A', text: 'Are you free this weekend?' },
+      { speaker: 'B', text: "I think so. What's up?" },
+      { speaker: 'A', text: 'Do you want to see a film?' },
+    ],
+    note: `Open plans with "Are you free this weekend?"`,
+    audio: 'a2-dl-021.ogg',
+  },
+  {
+    id: 'a2-dl-022',
+    situation: 'Checking in at a hotel',
+    turns: [
+      { speaker: 'A', text: 'I have a booking under Lee.' },
+      { speaker: 'B', text: 'Let me check. Yes, room 12.' },
+      { speaker: 'A', text: 'Great, thank you.' },
+    ],
+    note: `Check in with "I have a booking under ..." plus your name.`,
+    audio: 'a2-dl-022.ogg',
+  },
+  {
+    id: 'a2-dl-023',
+    situation: 'Returning an item',
+    turns: [
+      { speaker: 'A', text: "I'd like to return this, please." },
+      { speaker: 'B', text: 'Sure, do you have the receipt?' },
+      { speaker: 'A', text: 'Yes, here it is.' },
+    ],
+    note: `"I'd like to return this." Keep the receipt ready.`,
+    audio: 'a2-dl-023.ogg',
+  },
+  {
+    id: 'a2-dl-024',
+    situation: 'Talking about the weekend',
+    turns: [
+      { speaker: 'A', text: 'How was your weekend?' },
+      { speaker: 'B', text: 'Pretty good, I went hiking.' },
+      { speaker: 'A', text: 'Nice, that sounds fun.' },
+    ],
+    note: `React with "That sounds fun." to keep the chat going.`,
+    audio: 'a2-dl-024.ogg',
+  },
+  {
+    id: 'a2-dl-025',
+    situation: 'Asking a small favour',
+    turns: [
+      { speaker: 'A', text: 'Could you give me a hand?' },
+      { speaker: 'B', text: 'Sure, what do you need?' },
+      { speaker: 'A', text: 'Just hold this for a second.' },
+    ],
+    note: `"Could you give me a hand?" is a friendly way to ask for help.`,
+    audio: 'a2-dl-025.ogg',
+  },
+  {
+    id: 'a2-dl-026',
+    situation: 'Arriving late',
+    turns: [
+      { speaker: 'A', text: "Sorry I'm late, the bus was delayed." },
+      { speaker: 'B', text: 'No worries, we just started.' },
+      { speaker: 'A', text: 'Phew, thanks.' },
+    ],
+    note: `Explain briefly: "the bus was delayed." Then move on.`,
+    audio: 'a2-dl-026.ogg',
+  },
 ];

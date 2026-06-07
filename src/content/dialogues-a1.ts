@@ -228,4 +228,70 @@ export const a1Dialogues: Dialogue[] = [
     note: `Ask first: "Can I pay by card?" then hand it over: "Here you go."`,
     audio: 'a1-dl-020.ogg',
   },
+  {
+    id: 'a1-dl-021',
+    situation: 'Asking the time',
+    turns: [
+      { speaker: 'A', text: 'Excuse me, what time is it?' },
+      { speaker: 'B', text: "It's half past two." },
+      { speaker: 'A', text: 'Thank you!' },
+    ],
+    note: `Ask politely: "Excuse me, what time is it?" Answer with "It's half past two."`,
+    audio: 'a1-dl-021.ogg',
+  },
+  {
+    id: 'a1-dl-022',
+    situation: 'At the doctor',
+    turns: [
+      { speaker: 'A', text: "I don't feel well." },
+      { speaker: 'B', text: "What's wrong?" },
+      { speaker: 'A', text: 'I have a headache.' },
+    ],
+    note: `Say the problem simply: "I have a headache."`,
+    audio: 'a1-dl-022.ogg',
+  },
+  {
+    id: 'a1-dl-023',
+    situation: 'Ordering food',
+    turns: [
+      { speaker: 'A', text: "I'd like a sandwich, please." },
+      { speaker: 'B', text: 'Anything to drink?' },
+      { speaker: 'A', text: 'Just water, thanks.' },
+    ],
+    note: `"Anything to drink?" Answer short: "Just water, thanks."`,
+    audio: 'a1-dl-023.ogg',
+  },
+  {
+    id: 'a1-dl-024',
+    situation: 'Meeting someone new',
+    turns: [
+      { speaker: 'A', text: "Hi, I'm Sam." },
+      { speaker: 'B', text: 'Nice to meet you, Sam.' },
+      { speaker: 'A', text: 'Nice to meet you too.' },
+    ],
+    note: `Bounce it back: "Nice to meet you too."`,
+    audio: 'a1-dl-024.ogg',
+  },
+  {
+    id: 'a1-dl-025',
+    situation: 'Asking for a place',
+    turns: [
+      { speaker: 'A', text: 'Is there a bank near here?' },
+      { speaker: 'B', text: "Yes, it's over there." },
+      { speaker: 'A', text: 'Great, thanks!' },
+    ],
+    note: `Use "Is there a ... near here?" to find a place.`,
+    audio: 'a1-dl-025.ogg',
+  },
+  {
+    id: 'a1-dl-026',
+    situation: 'On the phone',
+    turns: [
+      { speaker: 'A', text: 'Hello, can I speak to Anna?' },
+      { speaker: 'B', text: "Speaking. Who's this?" },
+      { speaker: 'A', text: "It's Sam." },
+    ],
+    note: `On the phone, "Speaking." means you are talking to that person.`,
+    audio: 'a1-dl-026.ogg',
+  },
 ];

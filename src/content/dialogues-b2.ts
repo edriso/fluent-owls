@@ -227,4 +227,70 @@ export const b2Dialogues: Dialogue[] = [
     note: `Wrap up: "Let's circle back next week."`,
     audio: 'b2-dl-020.ogg',
   },
+  {
+    id: 'b2-dl-021',
+    situation: 'Negotiating a deadline',
+    turns: [
+      { speaker: 'A', text: 'Could we push the deadline back a bit?' },
+      { speaker: 'B', text: 'How much time were you thinking?' },
+      { speaker: 'A', text: 'A couple of days would help.' },
+    ],
+    note: `"push the deadline back" means move it to a later date.`,
+    audio: 'b2-dl-021.ogg',
+  },
+  {
+    id: 'b2-dl-022',
+    situation: 'Giving feedback',
+    turns: [
+      { speaker: 'A', text: "Overall it's strong, but the intro drags." },
+      { speaker: 'B', text: "Fair point, I'll tighten it up." },
+      { speaker: 'A', text: 'Perfect, that should do it.' },
+    ],
+    note: `"I'll tighten it up" means make it shorter and sharper.`,
+    audio: 'b2-dl-022.ogg',
+  },
+  {
+    id: 'b2-dl-023',
+    situation: 'Small talk at an event',
+    turns: [
+      { speaker: 'A', text: 'So, how do you know the host?' },
+      { speaker: 'B', text: 'We used to work together. You?' },
+      { speaker: 'A', text: 'Old university friends.' },
+    ],
+    note: `"How do you know the host?" is a classic event opener.`,
+    audio: 'b2-dl-023.ogg',
+  },
+  {
+    id: 'b2-dl-024',
+    situation: 'Handling a complaint',
+    turns: [
+      { speaker: 'A', text: "I'm afraid my order arrived damaged." },
+      { speaker: 'B', text: "I'm so sorry, we'll replace it right away." },
+      { speaker: 'A', text: 'I appreciate that, thank you.' },
+    ],
+    note: `"I'm afraid ..." softens bad news politely.`,
+    audio: 'b2-dl-024.ogg',
+  },
+  {
+    id: 'b2-dl-025',
+    situation: 'Weighing two options',
+    turns: [
+      { speaker: 'A', text: 'Should we drive or take the train?' },
+      { speaker: 'B', text: "The train's less hassle, to be honest." },
+      { speaker: 'A', text: "Good shout, let's do that." },
+    ],
+    note: `"Good shout" is informal for "good idea".`,
+    audio: 'b2-dl-025.ogg',
+  },
+  {
+    id: 'b2-dl-026',
+    situation: 'Declining an invitation',
+    turns: [
+      { speaker: 'A', text: 'Can you join us on Friday?' },
+      { speaker: 'B', text: "I'd love to, but I'm tied up that day." },
+      { speaker: 'A', text: 'No problem, next time.' },
+    ],
+    note: `"I'm tied up" means too busy or already committed.`,
+    audio: 'b2-dl-026.ogg',
+  },
 ];

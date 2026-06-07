@@ -228,4 +228,70 @@ export const c2Dialogues: Dialogue[] = [
     note: `Reflect with wisdom: "I'd have trusted my instincts sooner."`,
     audio: 'c2-dl-020.ogg',
   },
+  {
+    id: 'c2-dl-021',
+    situation: 'Navigating a delicate topic',
+    turns: [
+      { speaker: 'A', text: 'Can I be candid with you?' },
+      { speaker: 'B', text: "Please do, I'd rather know." },
+      { speaker: 'A', text: "I think you're selling yourself short." },
+    ],
+    note: `"selling yourself short" means underrating your own worth.`,
+    audio: 'c2-dl-021.ogg',
+  },
+  {
+    id: 'c2-dl-022',
+    situation: 'Negotiating on price',
+    turns: [
+      { speaker: 'A', text: "We're some way apart on price." },
+      { speaker: 'B', text: 'Where would you need us to be?' },
+      { speaker: 'A', text: 'Meet us halfway and we have a deal.' },
+    ],
+    note: `"meet us halfway" means both sides compromise.`,
+    audio: 'c2-dl-022.ogg',
+  },
+  {
+    id: 'c2-dl-023',
+    situation: 'Graceful disagreement',
+    turns: [
+      { speaker: 'A', text: 'With respect, I see it rather differently.' },
+      { speaker: 'B', text: "That's fair. Walk me through it." },
+      { speaker: 'A', text: 'It comes down to timing, really.' },
+    ],
+    note: `"With respect, I see it differently" disagrees without offence.`,
+    audio: 'c2-dl-023.ogg',
+  },
+  {
+    id: 'c2-dl-024',
+    situation: 'Reading the room',
+    turns: [
+      { speaker: 'A', text: 'Shall we table this for now?' },
+      { speaker: 'B', text: 'Probably wise, tempers are fraying.' },
+      { speaker: 'A', text: "Agreed, let's revisit it fresh." },
+    ],
+    note: `"table this for now" means postpone the discussion.`,
+    audio: 'c2-dl-024.ogg',
+  },
+  {
+    id: 'c2-dl-025',
+    situation: 'Offering measured praise',
+    turns: [
+      { speaker: 'A', text: 'You handled that remarkably well.' },
+      { speaker: 'B', text: "I had my doubts, I'll admit." },
+      { speaker: 'A', text: "It didn't show for a second." },
+    ],
+    note: `"It didn't show" reassures that nerves were not visible.`,
+    audio: 'c2-dl-025.ogg',
+  },
+  {
+    id: 'c2-dl-026',
+    situation: 'Closing on a high note',
+    turns: [
+      { speaker: 'A', text: "I think that's a fitting place to end." },
+      { speaker: 'B', text: "Couldn't have put it better myself." },
+      { speaker: 'A', text: "Then let's leave it there." },
+    ],
+    note: `"Couldn't have put it better myself" warmly agrees with someone.`,
+    audio: 'c2-dl-026.ogg',
+  },
 ];

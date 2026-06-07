@@ -227,4 +227,70 @@ export const b1Dialogues: Dialogue[] = [
     note: `"That's what friends are for." and "I owe you one." for warm thanks.`,
     audio: 'b1-dl-020.ogg',
   },
+  {
+    id: 'b1-dl-021',
+    situation: 'Checking on a task',
+    turns: [
+      { speaker: 'A', text: 'Have you finished the report?' },
+      { speaker: 'B', text: 'Almost, I just need to check the figures.' },
+      { speaker: 'A', text: 'No rush, take your time.' },
+    ],
+    note: `Soften pressure with "No rush, take your time."`,
+    audio: 'b1-dl-021.ogg',
+  },
+  {
+    id: 'b1-dl-022',
+    situation: 'Catching up with a friend',
+    turns: [
+      { speaker: 'A', text: 'Long time no see! How have you been?' },
+      { speaker: 'B', text: 'Busy, but good. And you?' },
+      { speaker: 'A', text: "Can't complain, really." },
+    ],
+    note: `"Long time no see!" and "Can't complain" are warm, natural openers.`,
+    audio: 'b1-dl-022.ogg',
+  },
+  {
+    id: 'b1-dl-023',
+    situation: 'Splitting the bill',
+    turns: [
+      { speaker: 'A', text: "Why don't we split the bill?" },
+      { speaker: 'B', text: "Good idea, that's easier." },
+      { speaker: 'A', text: "Let's do that then." },
+    ],
+    note: `Suggest something with "Why don't we ...?"`,
+    audio: 'b1-dl-023.ogg',
+  },
+  {
+    id: 'b1-dl-024',
+    situation: 'Disagreeing gently',
+    turns: [
+      { speaker: 'A', text: 'I think we should leave early.' },
+      { speaker: 'B', text: "I'm not so sure, traffic's worse then." },
+      { speaker: 'A', text: "Fair enough, let's wait." },
+    ],
+    note: `"I'm not so sure" disagrees softly, without a flat "no".`,
+    audio: 'b1-dl-024.ogg',
+  },
+  {
+    id: 'b1-dl-025',
+    situation: 'Asking for advice',
+    turns: [
+      { speaker: 'A', text: 'What would you do in my place?' },
+      { speaker: 'B', text: "Honestly, I'd talk to her directly." },
+      { speaker: 'A', text: "Yeah, maybe you're right." },
+    ],
+    note: `"What would you do in my place?" invites real advice.`,
+    audio: 'b1-dl-025.ogg',
+  },
+  {
+    id: 'b1-dl-026',
+    situation: 'Offering support',
+    turns: [
+      { speaker: 'A', text: 'You look stressed, is everything okay?' },
+      { speaker: 'B', text: 'Just a lot on my plate right now.' },
+      { speaker: 'A', text: 'Let me know if I can help.' },
+    ],
+    note: `"a lot on my plate" means very busy or overloaded.`,
+    audio: 'b1-dl-026.ogg',
+  },
 ];

@@ -42,7 +42,7 @@ docker compose up -d --build fluent-owls
 
 The CI deploy runs both for you on push. The exact `fluent-owls-migrate` service block, schema, and commands are in [`TUTOR.md`](./TUTOR.md). The shared DB and this bot's database/user are set up once on the server (see the server's `docs/05-databases.md`). To turn the tutor off, unset `DATABASE_URL` and remove the migrate step from the deploy.
 
-The `ELEVENLABS_*` variables in `.env.example` are **dev only**: they are used by `pnpm generate-audio` to create the audio clips once (shadowing, dialogues, grammar, monologues, prompts), and are never read by the running bot. Leave them unset in production. The committed `.ogg` files in `src/content/audio/` are all production needs, so make sure they ship with your deploy (the Docker recipe below copies the whole repo, so they are included).
+The `ELEVENLABS_*` variables in `.env.example` are **dev only**: they are used by `pnpm generate-audio` to create the audio clips once (shadowing, dialogues, grammar, monologues, prompts), and are never read by the running bot. Leave them unset in production. The committed `.ogg` files in `src/content/audio/` are all production needs, so make sure they ship with your deploy. The bot resolves them from `src/content/audio` relative to the working directory, so that folder must exist in the running image. The multi-stage `Dockerfile` copies the compiled `dist/` **and** `src/content/audio/` into the slim runtime stage for exactly this reason: `tsc` only emits `.ts -> .js` and never copies `.ogg` files, so copying `dist/` alone would leave every voice post failing silently. If you change the build, keep that audio copy, and watch the boot log: index.ts logs `No audio clips found` (an error) if the directory is missing, or `Audio clips available` with a count when it is present.
 
 ## First post: the pinned welcome
 
@@ -138,6 +138,7 @@ Logs go to stdout. There is nothing to mount.
 - **403 from Telegram.** Same answer: admin rights.
 - **400 on sendPoll.** An option over 100 chars or a bad option count. Run `pnpm audit-questions`.
 - **A voice post did not arrive** (`Failed to post shadowing voice` or `Failed to post role-play dialogue`, "is the audio generated?"). The `.ogg` file is missing. Run `pnpm generate-audio` and commit the files, or `pnpm audit-speaking --require-audio` to find every gap. The other posts are unaffected.
+- **Every voice post fails at once, but quizzes and the text phrase still arrive** (you see `No audio clips found` at boot, or a wall of "is the audio generated?" for grammar, dialogue, and shadow together). The audio did not make it into the running image. Confirm with `docker compose exec fluent-owls ls src/content/audio | head` (expect a `No such file or directory` when broken). The `Dockerfile` runtime stage must `COPY --from=builder /app/src/content/audio ./src/content/audio`; rebuild with `docker compose up -d --build fluent-owls`. This is distinct from one clip missing above: here the whole directory is absent.
 
 ## Backups
 
