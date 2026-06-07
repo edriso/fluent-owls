@@ -3,3 +3,6 @@ node_modules/
 pnpm-lock.yaml
 .cache/
 .claude/
+
+# Prisma generated client (machine-written, never hand-edited).
+src/database/generated/

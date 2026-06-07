@@ -16,36 +16,29 @@ sequence, and keeps a daily streak.
 The stateless on-demand commands (`/quiz`, `/grammar`, `/shadow`, ...) still work
 the same; `/next` is the one that tracks progress.
 
-## Why a direct driver, not Prisma
+## Stack
 
-The tilawah bot uses Prisma because it tracks rich per-user reading state. This
-bot needs only two tiny tables and **compiles to `dist/` with a slim runtime
-image**, where Prisma's generated client and a separate `migrate` compose service
-add fragile build steps. So this bot uses the `mysql2` driver directly and
-creates its tables with `CREATE TABLE IF NOT EXISTS` on boot. That means:
+Prisma with the MariaDB driver adapter (`@prisma/adapter-mariadb`), the same as
+the tilawah bot, so it fits the fleet: a shared MariaDB and a `<bot>-migrate`
+deploy step. The connection URL is supplied at runtime by the adapter; the
+generated client lives in `src/database/generated` (gitignored, recreated by
+`prisma generate`). The schema is one table:
 
-- no codegen, no `prisma generate` in the Dockerfile or CI;
-- **no migration step** to run, ever (the tables appear on first boot);
-- the database is **optional**: no `DATABASE_URL`, no database, bot unchanged.
-
-If the fleet later standardizes on Prisma everywhere, this is easy to swap.
-
-## Schema
-
-One table (a second is room to grow). Created automatically; you never run SQL.
-
-```sql
-CREATE TABLE learners (
-  telegram_id BIGINT PRIMARY KEY,   -- the learner's Telegram user id
-  level       VARCHAR(2)  DEFAULT 'b1',
-  step        INT         DEFAULT 0,   -- round-robin position across kinds
-  cursors     TEXT,                    -- JSON: { kind: position } per kind
-  streak      INT         DEFAULT 0,
-  last_day    VARCHAR(10),             -- YYYY-MM-DD in TZ_NAME, for the streak
-  created_at  TIMESTAMP   DEFAULT CURRENT_TIMESTAMP,
-  updated_at  TIMESTAMP   DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-);
+```prisma
+model Learner {
+  telegramId BigInt   @id @map("telegram_id")  // the learner's Telegram user id
+  level      String   @default("b1")           // CEFR level for /next
+  step       Int      @default(0)              // round-robin position across kinds
+  cursors    String?  @db.Text                 // JSON { kind: position } per kind
+  streak     Int      @default(0)
+  lastDay    String?  @map("last_day")         // YYYY-MM-DD in TZ_NAME, for the streak
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
 ```
+
+The pure logic (streak math in `src/lib/streak.ts`, item selection in
+`src/lib/tutor.ts`) is unit-tested with no database connection.
 
 ## Setup (server)
 
@@ -53,26 +46,47 @@ The shared MariaDB and this bot's database/user already exist (see the server's
 `docs/05-databases.md`). To enable the tutor:
 
 1. In the bot's `.env`, set `DATABASE_URL="mysql://fluentowls:<password>@shared-db:3306/fluentowls_db"`.
-2. Bring up the bot: `cd /opt/bots && docker compose up -d --build fluent-owls`
-   (a push to `main` also deploys via CI). On boot the bot connects and creates
-   the `learners` table. There is **nothing else to run**.
+2. Make sure `/opt/bots/docker-compose.yml` has a **`fluent-owls-migrate`** service
+   that targets the build stage with the prisma CLI and runs `pnpm db:deploy`:
 
-To turn the tutor off again, unset `DATABASE_URL` and redeploy.
+   ```yaml
+   fluent-owls-migrate:
+     build:
+       context: ./telegram/fluent-owls # your path to the bot
+       target: builder # the build stage keeps the prisma CLI
+     env_file: ./telegram/fluent-owls/.env
+     command: pnpm db:deploy # = prisma migrate deploy
+     depends_on:
+       shared-db:
+         condition: service_healthy
+     restart: 'no'
+     profiles: ['migrate']
+   ```
 
-### About the `<bot>-migrate` service
+3. Apply the migration, then start the bot:
 
-This bot does NOT use Prisma, so the shared `compose-with-db.yml` template's
-default command (`pnpm prisma migrate deploy`) fails with "Command prisma not
-found". You do not need a migrate service at all (tables auto-create on boot).
-If you keep one for fleet consistency, set its command to **`pnpm db:deploy`** —
-a tiny entrypoint (`src/migrate.ts`) that runs the same `CREATE TABLE IF NOT
-EXISTS` and exits. It reuses the bot image (which has tsx + mysql2 + dist), so no
-`target: builder` is needed.
+   ```bash
+   cd /opt/bots && docker compose run --rm --build fluent-owls-migrate
+   docker compose up -d --build fluent-owls
+   ```
+
+   With auto-deploy, the GitHub workflow runs both steps for you on push.
+
+To turn the tutor off again, unset `DATABASE_URL` and redeploy (the migrate step
+will be a no-op against an empty URL, so also remove it from the deploy if you
+fully disable the DB).
+
+## Migrations
+
+Migrations live in `prisma/migrations` and are applied with `prisma migrate
+deploy` (`pnpm db:deploy`) inside the container. The initial migration uses
+`CREATE TABLE IF NOT EXISTS`, so it is safe to apply even if the table already
+exists. After a schema change, create a new migration with `pnpm db:migrate`
+against a dev database, commit it, and the deploy applies it.
 
 ## Safety
 
-- If `DATABASE_URL` is wrong or the database is down at boot, the bot logs the
-  error, disables the tutor for that run, and **keeps posting to the channel**.
-  A database problem never stops the daily content.
-- The pure logic (streak math in `src/lib/streak.ts`, item selection in
-  `src/lib/tutor.ts`) is unit-tested with no database connection.
+- The database is OPTIONAL. With no `DATABASE_URL`, `prisma` is null, the tutor
+  commands hide themselves (`setMyCommands` omits them) and reply that they are
+  off, and the channel broadcaster runs unchanged.
+- The bot connects lazily; the daily channel posts do not depend on the database.

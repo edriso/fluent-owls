@@ -11,3 +11,6 @@ coverage
 
 # Temp staging files from generate-audio (the committed .ogg clips are kept).
 src/content/audio/*.tmp.mp3
+
+# Prisma generated client (machine-written; recreated by `prisma generate`).
+src/database/generated/

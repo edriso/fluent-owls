@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "main": "dist/src/index.js",
-  "description": "A tiny no-database Telegram bot that posts daily English quizzes to a channel to help people level up their English.",
+  "description": "A tiny Telegram bot that posts a daily English set to a channel, with an optional personal tutor.",
   "packageManager": "pnpm@10.33.2",
   "scripts": {
     "dev": "tsx watch src/index.ts",
@@ -19,17 +19,24 @@
     "audit-speaking": "tsx scripts/audit-speaking.ts",
     "audit-all": "pnpm audit-questions && pnpm audit-speaking",
     "generate-audio": "tsx scripts/generate-audio.ts",
-    "db:deploy": "node --import tsx dist/src/migrate.js",
+    "db:generate": "prisma generate",
+    "db:deploy": "prisma migrate deploy",
+    "db:push": "prisma db push",
+    "db:migrate": "prisma migrate dev",
+    "db:studio": "prisma studio",
     "format": "prettier --write \"**/*.{ts,js,json,md,yml,yaml}\"",
     "format:check": "prettier --check \"**/*.{ts,js,json,md,yml,yaml}\"",
-    "check": "pnpm typecheck && pnpm format:check && pnpm test"
+    "check": "pnpm typecheck && pnpm format:check && pnpm test",
+    "postinstall": "prisma generate"
   },
   "engines": {
     "node": ">=20.0.0"
   },
   "dependencies": {
+    "@prisma/adapter-mariadb": "^7.8.0",
+    "@prisma/client": "^7.8.0",
     "grammy": "^1.43.0",
-    "mysql2": "^3.22.5",
+    "mariadb": "^3.5.2",
     "node-cron": "^4.2.1",
     "telegram-broadcast-kit": "github:edriso/telegram-broadcast-kit#v0.2.3",
     "tsx": "^4.22.3"
@@ -38,7 +45,15 @@
     "@types/node": "^20.19.41",
     "@types/node-cron": "^3.0.11",
     "prettier": "^3.3.3",
+    "prisma": "^7.8.0",
     "typescript": "^5.9.3",
     "vitest": "^1.6.1"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "prisma",
+      "@prisma/client",
+      "@prisma/engines"
+    ]
   }
 }

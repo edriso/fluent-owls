@@ -100,7 +100,7 @@ Beyond the daily set, the bot answers commands in a DM and replies with a random
 
 ## Personal tutor (optional)
 
-Set `DATABASE_URL` and the bot gains a personal tutor in its DMs: **/next** walks each learner through the content in sequence at their level (no repeats until a pool cycles) and keeps a daily **/streak**; **/level** sets the level. It stores per-user progress in the shared MariaDB, and the tables are created automatically on boot (no migration step). Leave `DATABASE_URL` unset and the bot stays a stateless channel broadcaster with no database. See [`docs/TUTOR.md`](docs/TUTOR.md).
+Set `DATABASE_URL` and the bot gains a personal tutor in its DMs: **/next** walks each learner through the content in sequence at their level (no repeats until a pool cycles) and keeps a daily **/streak**; **/level** sets the level. It stores per-user progress in the shared MariaDB via Prisma (with the MariaDB driver adapter, like the other DB-backed bots), applied by a `fluent-owls-migrate` step on deploy. Leave `DATABASE_URL` unset and the bot stays a stateless channel broadcaster with no database. See [`docs/TUTOR.md`](docs/TUTOR.md).
 
 ## The audio
 
@@ -125,7 +125,7 @@ The shadowing clips, role-play dialogues, grammar examples, monologues, and ques
 
 ## Why no database by default
 
-A daily question channel does not need accounts, saved votes, or a leaderboard. Telegram already tallies the anonymous quiz poll and reveals the answer on the spot. Staying stateless means fewer moving parts and no privacy footprint. The one feature that genuinely needs per-user state, the personal tutor (progress and streaks), is opt-in via `DATABASE_URL` and creates its own tables on boot, so the default deployment stays database-free.
+A daily question channel does not need accounts, saved votes, or a leaderboard. Telegram already tallies the anonymous quiz poll and reveals the answer on the spot. Staying stateless means fewer moving parts and no privacy footprint. The one feature that genuinely needs per-user state, the personal tutor (progress and streaks), is opt-in via `DATABASE_URL` (Prisma on the shared MariaDB), so the default deployment stays database-free.
 
 ## License
 

@@ -3,6 +3,8 @@
 
 node_modules
 dist
+# Prisma generated client: recreated inside the image by `prisma generate`.
+src/database/generated
 .git
 .gitignore
 

@@ -5,8 +5,11 @@
 # it SSHes into the VPS, pulls the latest code, and rebuilds just this bot's
 # container.
 #
-# This is a NO-DATABASE bot, so there is no migrate step (unlike the ayah
-# bot, whose workflow runs `<bot>-migrate` first).
+# This bot has an OPTIONAL database (the personal tutor). The deploy runs the
+# `fluent-owls-migrate` service first (it applies Prisma migrations and exits),
+# then starts the bot, the same pattern the other DB-backed bots use. The
+# migrate service and the bot's DATABASE_URL must exist on the server; see
+# docs/TUTOR.md.
 #
 # Required GitHub secrets (repo -> Settings -> Secrets and variables ->
 # Actions -> New repository secret):
@@ -69,5 +72,6 @@ jobs:
           script: |
             set -e
             cd /opt/bots/telegram/fluent-owls && git pull
-            cd /opt/bots && docker compose up -d --build fluent-owls
+            cd /opt/bots && docker compose run --rm --build fluent-owls-migrate
+            docker compose up -d --build fluent-owls
             docker image prune -f

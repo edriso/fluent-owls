@@ -1,6 +1,6 @@
 # Deployment
 
-This bot is small and (by default) stateless. It runs anywhere Node 20 runs: Fly.io, Railway, Render, a VPS, a Docker container, or your laptop. There is no volume to mount, and no database unless you opt into the personal tutor (`DATABASE_URL`), whose tables are created on boot, so there are still no migrations to run. A redeploy is the whole release process.
+This bot is small and (by default) stateless. It runs anywhere Node 20 runs: Fly.io, Railway, Render, a VPS, a Docker container, or your laptop. There is no volume to mount, and no database unless you opt into the personal tutor (`DATABASE_URL`), whose Prisma schema is applied by a one-off `fluent-owls-migrate` step on deploy. A redeploy is the whole release process.
 
 ## What you need
 
@@ -26,21 +26,20 @@ The `.env` file is optional. If you set the variables in your host dashboard, yo
 
 ## Personal tutor (optional database)
 
-The bot runs with no database by default. To turn on the personal tutor (the `/next`, `/level`, `/streak` DM commands and per-user streaks), set `DATABASE_URL` to point at the shared MariaDB and redeploy:
+The bot runs with no database by default. To turn on the personal tutor (the `/next`, `/level`, `/streak` DM commands and per-user streaks), set `DATABASE_URL` to point at the shared MariaDB:
 
 ```
 DATABASE_URL="mysql://fluentowls:<password>@shared-db:3306/fluentowls_db"
 ```
 
-**No migration step is required**: the bot runs `CREATE TABLE IF NOT EXISTS` on boot, so the `learners` table appears on first start. Just bring up the bot:
+It uses **Prisma**, like the other DB-backed bots, so it follows the standard `<bot>-migrate` pattern. Add a `fluent-owls-migrate` service to `/opt/bots/docker-compose.yml` that targets the build stage (which keeps the prisma CLI) and runs `pnpm db:deploy`, then apply migrations and start the bot:
 
 ```bash
-cd /opt/bots && docker compose up -d --build fluent-owls
+cd /opt/bots && docker compose run --rm --build fluent-owls-migrate
+docker compose up -d --build fluent-owls
 ```
 
-The shared DB and this bot's database/user are set up once on the server (see the server's `docs/05-databases.md`). If the DB is unreachable at boot, the bot logs it, disables the tutor for that run, and keeps posting to the channel. To turn the tutor off, unset `DATABASE_URL` and redeploy.
-
-This bot does **not** use Prisma, so a `fluent-owls-migrate` service is optional. If you keep one for the fleet's `<bot>-migrate` habit, set its command to **`pnpm db:deploy`** (which runs the same idempotent table creation and exits), NOT `pnpm prisma migrate deploy` (there is no `prisma` CLI in the image). Otherwise just remove that service. See [`TUTOR.md`](./TUTOR.md).
+The CI deploy runs both for you on push. The exact `fluent-owls-migrate` service block, schema, and commands are in [`TUTOR.md`](./TUTOR.md). The shared DB and this bot's database/user are set up once on the server (see the server's `docs/05-databases.md`). To turn the tutor off, unset `DATABASE_URL` and remove the migrate step from the deploy.
 
 The `ELEVENLABS_*` variables in `.env.example` are **dev only**: they are used by `pnpm generate-audio` to create the audio clips once (shadowing, dialogues, grammar, monologues, prompts), and are never read by the running bot. Leave them unset in production. The committed `.ogg` files in `src/content/audio/` are all production needs, so make sure they ship with your deploy (the Docker recipe below copies the whole repo, so they are included).
 
