@@ -213,7 +213,7 @@ shadowing and phrase slots pool every level, so the cycle length equals the
 total number of items, at one post a day. The bank ships with 54 shadowing clips
 per level (324 total, nearly a year before a repeat), 32 dialogues per level
 (192), 22 grammar points per level (132, the daily grammar slot, about 4.5
-months), and 20 phrases per level (120). Monologues (22 per level, 132) and
+months), and 20 phrases per level (120). Monologues (28 per level, 168) and
 question prompts (26 per level, 156) are on-demand only. Add more to lengthen any
 cycle.
 Every post shows its level, so mixing levels day to day is fine: learners
@@ -221,7 +221,7 @@ self-select.
 
 Audio is cheap: run `pnpm audit-speaking` to see the total character count
 (roughly 1 ElevenLabs credit per character on the multilingual model). The full
-bank (936 voice clips) is around 86k credits to generate once, well within a
+bank (972 voice clips) is around 95k credits to generate once, well within a
 Creator month's 131k, and the running bot never pays again: the clips are
 committed and only ever read. Adding content and re-running `pnpm generate-audio`
 only generates the new items (it is idempotent). Each CEFR level has its own
