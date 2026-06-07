@@ -11,6 +11,7 @@ import type {
   LeveledPronunciationDrill,
   LeveledQuestion,
   LeveledShadowingClip,
+  LeveledVocabularyEntry,
 } from '../types';
 import {
   buildDialogueCaption,
@@ -21,6 +22,7 @@ import {
   buildPromptCaption,
   buildPronunciationCaption,
   buildShadowingCaption,
+  buildVocabularyMessage,
   clampExplanation,
   toPollOptions,
 } from './format';
@@ -199,6 +201,21 @@ export async function postPrompt(
     chatId: opts.chatId,
     logName: 'question prompt',
     logFields: { id: prompt.id, level: prompt.level },
+  });
+}
+
+/** Post one vocabulary entry as a voice message (word + examples read aloud, HTML caption). */
+export async function postVocabulary(
+  bot: Bot<Context>,
+  entry: LeveledVocabularyEntry,
+  opts: PostOpts = {},
+): Promise<number | null> {
+  return sendVoiceFile(bot, entry.audio, buildVocabularyMessage(entry), {
+    silent: opts.silent,
+    chatId: opts.chatId,
+    parseMode: 'HTML',
+    logName: 'vocabulary entry',
+    logFields: { id: entry.id, level: entry.level },
   });
 }
 

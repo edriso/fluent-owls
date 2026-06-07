@@ -44,6 +44,7 @@ import { ALL_MONOLOGUES } from '../src/content/monologues';
 import { ALL_PROMPTS } from '../src/content/prompts';
 import { ALL_PRONUNCIATION } from '../src/content/pronunciation';
 import { ALL_PHRASES } from '../src/content/phrases';
+import { ALL_VOCABULARY } from '../src/content/vocabulary';
 import { LEVELS, type Level } from '../src/types';
 
 loadEnv();
@@ -89,7 +90,15 @@ function voiceB(level: Level): string {
 
 /** A unit of audio to generate: one or more spoken segments, written to one file. */
 type Segment = { text: string; voiceId: string };
-type Kind = 'shadow' | 'dialogue' | 'grammar' | 'monologue' | 'prompt' | 'pron' | 'phrase';
+type Kind =
+  | 'shadow'
+  | 'dialogue'
+  | 'grammar'
+  | 'monologue'
+  | 'prompt'
+  | 'pron'
+  | 'phrase'
+  | 'vocab';
 /** `gap` is the silence (seconds) between segments. Prompts use a long pause so
  *  the learner can answer; everything else uses a short breath. */
 type Job = {
@@ -110,6 +119,7 @@ const KIND_TOKENS: Record<string, Kind> = {
   prompts: 'prompt',
   pronunciation: 'pron',
   phrases: 'phrase',
+  vocabulary: 'vocab',
 };
 
 /** Pause (seconds) the learner gets to answer, between a prompt question and the model answer. */
@@ -312,7 +322,28 @@ function allJobs(): Job[] {
       { text: p.example, voiceId: voiceA(p.level) },
     ],
   }));
-  return [...shadow, ...dialogue, ...grammar, ...monologue, ...prompt, ...pron, ...phrase];
+  // Vocabulary: the word read aloud, then the example sentences, in one voice
+  // with a small gap. Posted as a voice message with an HTML caption.
+  const vocab: Job[] = ALL_VOCABULARY.map((v) => ({
+    id: v.id,
+    level: v.level,
+    audio: v.audio,
+    kind: 'vocab',
+    segments: [
+      { text: v.word, voiceId: voiceA(v.level) },
+      ...v.examples.map((text) => ({ text, voiceId: voiceA(v.level) })),
+    ],
+  }));
+  return [
+    ...shadow,
+    ...dialogue,
+    ...grammar,
+    ...monologue,
+    ...prompt,
+    ...pron,
+    ...phrase,
+    ...vocab,
+  ];
 }
 
 async function main(): Promise<void> {

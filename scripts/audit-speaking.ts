@@ -24,6 +24,7 @@ import { ALL_GRAMMAR } from '../src/content/grammar';
 import { ALL_MONOLOGUES } from '../src/content/monologues';
 import { ALL_PROMPTS } from '../src/content/prompts';
 import { ALL_PRONUNCIATION } from '../src/content/pronunciation';
+import { ALL_VOCABULARY } from '../src/content/vocabulary';
 import {
   buildDialogueCaption,
   buildGrammarCaption,
@@ -32,6 +33,7 @@ import {
   buildPromptCaption,
   buildPronunciationCaption,
   buildShadowingCaption,
+  buildVocabularyMessage,
 } from '../src/lib/format';
 import {
   CAPTION_MAX_CHARS,
@@ -58,6 +60,11 @@ import {
   SITUATION_MAX_CHARS,
   TOPIC_MAX_CHARS,
   TRANSCRIPT_MAX_CHARS,
+  VOCAB_EXAMPLE_MAX_CHARS,
+  VOCAB_MAX_EXAMPLES,
+  VOCAB_MEANING_MAX_CHARS,
+  VOCAB_MIN_EXAMPLES,
+  VOCAB_WORD_MAX_CHARS,
 } from '../src/lib/limits';
 import { LEVELS } from '../src/types';
 
@@ -279,6 +286,40 @@ for (const d of ALL_PRONUNCIATION) {
   if (!existsSync(audioPathFor(d.audio))) missingAudio += 1;
 }
 
+// --- Vocabulary entries ----------------------------------------------------
+const seenVocab = new Set<string>();
+const seenWord = new Set<string>();
+
+for (const v of ALL_VOCABULARY) {
+  if (seenVocab.has(v.id)) add(v.id, 'id', 'duplicate id');
+  seenVocab.add(v.id);
+  if (!v.id.startsWith(`${v.level}-vc-`)) add(v.id, 'id', `must start with "${v.level}-vc-"`);
+
+  // Two entries for the same word waste a rotation slot.
+  const normWord = v.word.trim().toLowerCase();
+  if (seenWord.has(normWord)) add(v.id, 'word', `duplicate word "${v.word}"`);
+  seenWord.add(normWord);
+
+  checkText(v.id, 'word', v.word, VOCAB_WORD_MAX_CHARS);
+  checkText(v.id, 'meaning', v.meaning, VOCAB_MEANING_MAX_CHARS);
+  checkText(v.id, 'note', v.note, NOTE_MAX_CHARS);
+
+  if (v.examples.length < VOCAB_MIN_EXAMPLES || v.examples.length > VOCAB_MAX_EXAMPLES) {
+    add(
+      v.id,
+      'examples',
+      `must have ${VOCAB_MIN_EXAMPLES}-${VOCAB_MAX_EXAMPLES}, found ${v.examples.length}`,
+    );
+  }
+  v.examples.forEach((ex, i) => checkText(v.id, `examples[${i}]`, ex, VOCAB_EXAMPLE_MAX_CHARS));
+
+  if (v.audio !== `${v.id}.ogg`) add(v.id, 'audio', `should be "${v.id}.ogg", got "${v.audio}"`);
+  const vcap = buildVocabularyMessage(v).length;
+  if (vcap > CAPTION_MAX_CHARS)
+    add(v.id, 'caption', `rendered caption ${vcap} > ${CAPTION_MAX_CHARS}`);
+  if (!existsSync(audioPathFor(v.audio))) missingAudio += 1;
+}
+
 // --- Summary ---------------------------------------------------------------
 for (const level of LEVELS) {
   const sh = ALL_SHADOWING.filter((c) => c.level === level).length;
@@ -288,12 +329,13 @@ for (const level of LEVELS) {
   const mn = ALL_MONOLOGUES.filter((m) => m.level === level).length;
   const pr = ALL_PROMPTS.filter((p) => p.level === level).length;
   const pn = ALL_PRONUNCIATION.filter((d) => d.level === level).length;
+  const vc = ALL_VOCABULARY.filter((v) => v.level === level).length;
   console.log(
-    `  ${level.toUpperCase()}: ${sh} shadow, ${dl} dialogue, ${gr} grammar, ${mn} monologue, ${pr} prompt, ${pn} pron, ${ph} phrase`,
+    `  ${level.toUpperCase()}: ${sh} shadow, ${dl} dialogue, ${gr} grammar, ${mn} monologue, ${pr} prompt, ${pn} pron, ${vc} vocab, ${ph} phrase`,
   );
 }
 console.log(
-  `Total: ${ALL_SHADOWING.length} shadowing, ${ALL_DIALOGUES.length} dialogues, ${ALL_GRAMMAR.length} grammar, ${ALL_MONOLOGUES.length} monologues, ${ALL_PROMPTS.length} prompts, ${ALL_PRONUNCIATION.length} pronunciation, ${ALL_PHRASES.length} phrases`,
+  `Total: ${ALL_SHADOWING.length} shadowing, ${ALL_DIALOGUES.length} dialogues, ${ALL_GRAMMAR.length} grammar, ${ALL_MONOLOGUES.length} monologues, ${ALL_PROMPTS.length} prompts, ${ALL_PRONUNCIATION.length} pronunciation, ${ALL_VOCABULARY.length} vocabulary, ${ALL_PHRASES.length} phrases`,
 );
 
 // Audio cost estimate. ElevenLabs bills ~1 credit per character on the
@@ -307,7 +349,11 @@ const totalAudioChars =
   ALL_MONOLOGUES.reduce((sum, m) => sum + m.text.length, 0) +
   ALL_PROMPTS.reduce((sum, p) => sum + p.question.length + p.answer.length, 0) +
   ALL_PRONUNCIATION.reduce((sum, d) => sum + d.items.reduce((s, it) => s + it.length, 0), 0) +
-  ALL_PHRASES.reduce((sum, p) => sum + p.phrase.length + p.example.length, 0);
+  ALL_PHRASES.reduce((sum, p) => sum + p.phrase.length + p.example.length, 0) +
+  ALL_VOCABULARY.reduce(
+    (sum, v) => sum + v.word.length + v.examples.reduce((s, e) => s + e.length, 0),
+    0,
+  );
 console.log(
   `Audio: ~${totalAudioChars} characters total (~${totalAudioChars} credits to generate every clip once on multilingual v2).`,
 );
@@ -319,6 +365,7 @@ const totalAudioItems =
   ALL_MONOLOGUES.length +
   ALL_PROMPTS.length +
   ALL_PRONUNCIATION.length +
+  ALL_VOCABULARY.length +
   ALL_PHRASES.length;
 const requireAudio = process.argv.slice(2).includes('--require-audio');
 if (missingAudio > 0) {

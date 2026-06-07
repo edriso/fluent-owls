@@ -9,6 +9,7 @@ import type {
   LeveledPronunciationDrill,
   LeveledQuestion,
   LeveledShadowingClip,
+  LeveledVocabularyEntry,
   PhraseFunction,
   PronunciationFocus,
   ShadowingFocus,
@@ -140,6 +141,7 @@ const PRON_FOCUS_LABEL: Record<PronunciationFocus, string> = {
   'connected-speech': 'Connected speech',
   'word-stress': 'Word stress',
   'weak-forms': 'Weak forms',
+  'spelling-sound': 'Sound and spelling',
 };
 
 /**
@@ -253,6 +255,27 @@ export function buildPromptCaption(prompt: LeveledPrompt): string {
     `🎯 ${prompt.note}`,
   ].join('\n');
   return ltrIsolate(caption);
+}
+
+/**
+ * Build the HTML caption for a vocabulary entry voice message: a header with the
+ * level, the word in bold, its plain meaning, the example sentences (which the
+ * audio reads aloud), and a usage tip. Posted with parse_mode HTML (see post.ts),
+ * so the dynamic fields are HTML-escaped here.
+ */
+export function buildVocabularyMessage(entry: LeveledVocabularyEntry): string {
+  const badge = LEVEL_BADGE[entry.level] ?? entry.level.toUpperCase();
+  const examples = entry.examples.map((e) => `• ${escapeHtml(e)}`);
+  return [
+    `📖 <b>Word builder</b>  ·  ${badge}`,
+    `<b>${escapeHtml(entry.word)}</b>`,
+    `<i>${escapeHtml(entry.meaning)}</i>`,
+    '',
+    '<b>Examples:</b>',
+    ...examples,
+    '',
+    `🎯 ${escapeHtml(entry.note)}`,
+  ].join('\n');
 }
 
 /**

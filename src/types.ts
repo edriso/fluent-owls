@@ -337,8 +337,14 @@ export type LeveledPrompt = Prompt & {
  *  - connected-speech:  how words blend, link, and reduce in natural speech (gonna, didja)
  *  - word-stress:       which syllable is stressed (REcord vs reCORD), which changes meaning
  *  - weak-forms:        how small words shrink when unstressed (to -> tuh, can -> kn)
+ *  - spelling-sound:    how spelling maps to sound (silent letters, -ed endings, "ough"), to decode words
  */
-export type PronunciationFocus = 'minimal-pair' | 'connected-speech' | 'word-stress' | 'weak-forms';
+export type PronunciationFocus =
+  | 'minimal-pair'
+  | 'connected-speech'
+  | 'word-stress'
+  | 'weak-forms'
+  | 'spelling-sound';
 
 /**
  * One pronunciation drill: a short, targeted listen-and-repeat exercise on a
@@ -373,5 +379,41 @@ export type PronunciationDrill = {
 /** A pronunciation drill tagged with the CEFR level it was loaded from. */
 export type LeveledPronunciationDrill = PronunciationDrill & {
   /** The CEFR level this drill belongs to. */
+  level: Level;
+};
+
+/**
+ * One vocabulary entry: a single useful word taught in depth, with a plain
+ * meaning, example sentences, and a usage tip (a collocation, synonym, or common
+ * mistake). Unlike a quiz (which tests a word) or a phrase (a whole chunk), this
+ * TEACHES one word richly. Posted as a voice message whose audio reads the word
+ * and the examples aloud, so learners hear the pronunciation and the usage, with
+ * the same text in an HTML caption. Depth of vocabulary, with correct
+ * pronunciation, is a core part of sounding fluent.
+ *
+ * Constraints (validated by scripts/audit-speaking.ts and the unit tests):
+ *  - word, meaning, and note non-empty within their limits
+ *  - 2 to 3 non-empty example sentences, each within its limit (read aloud)
+ *  - the rendered caption is <= CAPTION_MAX_CHARS
+ *  - no em-dashes anywhere (house style)
+ */
+export type VocabularyEntry = {
+  /** Stable, unique id. Starts with the level and a "vc" marker, e.g. "b1-vc-001". */
+  id: string;
+  /** The target word (or short phrase), e.g. "reliable". */
+  word: string;
+  /** A plain, junior-friendly definition. */
+  meaning: string;
+  /** Two or three example sentences. The audio reads the word, then these. */
+  examples: string[];
+  /** One usage tip: a common collocation, a synonym, or a mistake to avoid. */
+  note: string;
+  /** File name of the committed OGG/Opus clip, e.g. "b1-vc-001.ogg". */
+  audio: string;
+};
+
+/** A vocabulary entry tagged with the CEFR level it was loaded from. */
+export type LeveledVocabularyEntry = VocabularyEntry & {
+  /** The CEFR level this entry belongs to. */
   level: Level;
 };

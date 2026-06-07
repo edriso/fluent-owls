@@ -17,9 +17,16 @@ Alongside the quizzes, the bot posts two speaking exercises each day:
 - **Question prompts** — a question, a pause to answer out loud, then a model
   answer to compare with. On-demand only (the /prompt command). One file per
   level: `src/content/prompts-a1.ts` ... `prompts-c2.ts`.
-- **"Say it like a native" phrases** — ready-made chunks for real situations
-  (text only, no audio). One file per level: `src/content/phrases-a1.ts` ...
-  `phrases-c2.ts`.
+- **Pronunciation drills** — a sound contrast or speech feature (minimal pairs,
+  connected speech, word stress, weak forms, sound-and-spelling), with the items
+  read aloud to copy. On-demand only (the /pron command). One file per level:
+  `src/content/pronunciation-a1.ts` ... `pronunciation-c2.ts`.
+- **Vocabulary** — one useful word taught in depth: meaning, examples read
+  aloud, and a usage tip. On-demand only (the /vocab command). One file per
+  level: `src/content/vocabulary-a1.ts` ... `vocabulary-c2.ts`.
+- **"Say it like a native" phrases** — ready-made chunks for real situations,
+  now voice messages (the chunk and example read aloud) with an HTML caption. One
+  file per level: `src/content/phrases-a1.ts` ... `phrases-c2.ts`.
 
 The id prefix must match the file and the type: a shadowing clip in
 `shadowing-b1.ts` has an id like `b1-sh-013`; a phrase in `phrases-b1.ts` has an
@@ -214,16 +221,16 @@ total number of items, at one post a day. The bank ships with 60 shadowing clips
 per level (360 total, about a year before a repeat), 48 dialogues per level
 (288), 22 grammar points per level (132, the daily grammar slot, about 4.5
 months), and 20 phrases per level (120, now voice messages with audio).
-Monologues (34 per level, 204), question prompts (40 per level, 240), and
-pronunciation drills (8 per level, 48) are on-demand only. Add more to lengthen
-any cycle.
+Monologues (34 per level, 204), question prompts (40 per level, 240),
+pronunciation drills (20 per level, 120), and vocabulary entries (8 per level, 48) are on-demand only. Add more to lengthen any cycle.
 Every post shows its level, so mixing levels day to day is fine: learners
 self-select.
 
 Audio is cheap: run `pnpm audit-speaking` to see the total character count
 (roughly 1 ElevenLabs credit per character on the multilingual model). The full
-bank (1,392 voice clips, every speaking type including phrases and pronunciation)
-is around 128k credits to generate once, and the running bot never pays again:
+bank (1,512 voice clips, every speaking type including phrases, pronunciation,
+and vocabulary) is around 134k credits to generate once (spread across months as
+you add content), and the running bot never pays again:
 the clips are committed and only ever read. Adding content and re-running
 `pnpm generate-audio` only generates the new items (it is idempotent). Each CEFR
 level has its own American voice (speaker A) plus a contrasting partner voice for

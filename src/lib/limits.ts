@@ -86,3 +86,13 @@ export const PRON_MIN_ITEMS = 2;
 export const PRON_MAX_ITEMS = 6;
 /** Maximum length of a single pronunciation item (a word pair or short sentence). */
 export const PRON_ITEM_MAX_CHARS = 120;
+
+/** Maximum length of a vocabulary word (or short phrase). */
+export const VOCAB_WORD_MAX_CHARS = 40;
+/** Maximum length of a vocabulary definition. */
+export const VOCAB_MEANING_MAX_CHARS = 160;
+/** Fewest / most example sentences per vocabulary entry. */
+export const VOCAB_MIN_EXAMPLES = 2;
+export const VOCAB_MAX_EXAMPLES = 3;
+/** Maximum length of a single vocabulary example sentence. */
+export const VOCAB_EXAMPLE_MAX_CHARS = 160;

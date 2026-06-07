@@ -17,6 +17,7 @@ const VALID_FOCUS: PronunciationFocus[] = [
   'connected-speech',
   'word-stress',
   'weak-forms',
+  'spelling-sound',
 ];
 
 describe('pronunciation banks', () => {
