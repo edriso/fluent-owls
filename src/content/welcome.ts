@@ -1,3 +1,5 @@
+// The pinned channel welcome message (HTML). After posting it with
+// `pnpm post-welcome`, pin it in the channel so new members see it first.
 export const welcomeHtml = `<b>🦉 Welcome to Fluent Owls</b>
 
 Level up your English a little every day. The goal is not just to be correct, but to be well spoken: confident, natural, and easy to listen to.
@@ -33,6 +35,4 @@ DM <a href="https://t.me/FluentOwlsBot">@FluentOwlsBot</a> /next and it walks yo
 The words and rules that make you correct (vocabulary, collocations, phrasal verbs, idioms, grammar) AND the rhythm, real dialogue, and ready-made phrases that make you sound natural.
 
 <b>Who it is for</b>
-Learners at every level, from first words to fluency. Every post shows its level, so pick the ones that fit you. No setup, no signup, no streaks to lose.
-
-<i>Pin this message so new members see it first.</i>`;
+Learners at every level, from first words to fluency. Every post shows its level, so pick the ones that fit you. No setup, no signup, no streaks to lose.`;
