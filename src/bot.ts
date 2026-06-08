@@ -80,7 +80,7 @@ export function buildBot(): Bot {
         '',
         'Each evening: three fill-in-the-blank quizzes (with instant explanations), a grammar point, a "say it like a native" phrase, a role-play dialogue, a rotating bonus (a story, idiom, useful talk, and more, a different one each day), and an audio clip to shadow. A little every day, so you become both correct and well spoken.',
         '',
-        'Want more right now? Send /listen for any audio clip, or pick a type: /quiz, /grammar, /phrase, /dialogue, /shadow, /monologue, /prompt, /pron, /vocab, /idiom, /story, /talk. Add a level like "b1" to target it (e.g. /story b1), or /help for the full list.' +
+        'Want more right now? Send /listen for any audio clip, or pick a type: /quiz, /grammar, /phrase, /dialogue, /shadow, /monologue, /prompt, /pronounce, /vocab, /idiom, /story, /talk. Add a level like "b1" to target it (e.g. /story b1), or /help for the full list.' +
           tutorLine,
         tail,
       ].join('\n'),
@@ -159,7 +159,9 @@ export function buildBot(): Bot {
         chatId: ctx.chat.id,
       });
   });
-  bot.command('pron', async (ctx) => {
+  // /pronounce is the public name; /pron stays as a quiet (unlisted) alias so
+  // anyone who learned the old command is not broken.
+  bot.command(['pronounce', 'pron'], async (ctx) => {
     if (ctx.chat)
       await postPronunciation(bot, randomOf(poolForLevel(ALL_PRONUNCIATION, ctx.match)), {
         chatId: ctx.chat.id,
@@ -256,7 +258,7 @@ export function buildBot(): Bot {
         '🔁 Shadowing clip: /shadow',
         '🎙️ Monologue to retell: /monologue',
         '🎤 Question to answer: /prompt',
-        '🔊 Pronunciation drill: /pron',
+        '🔊 Pronunciation drill: /pronounce',
         '📖 Vocabulary word: /vocab',
         '💡 Idiom: /idiom',
         '📚 Short story: /story',
@@ -425,7 +427,6 @@ export async function setBotProfile(bot: Bot): Promise<void> {
     : [];
   await bot.api.setMyCommands([
     { command: 'start', description: 'What Fluent Owls is and how to join the channel' },
-    { command: 'about', description: 'About this bot' },
     { command: 'help', description: 'List everything I can send you' },
     { command: 'listen', description: 'Any audio clip, at random (add a level: /listen b1)' },
     { command: 'quiz', description: 'A random quiz (add a level: /quiz a2)' },
@@ -435,7 +436,7 @@ export async function setBotProfile(bot: Bot): Promise<void> {
     { command: 'shadow', description: 'A shadowing clip (audio; add a level)' },
     { command: 'monologue', description: 'A passage to retell (audio; add a level)' },
     { command: 'prompt', description: 'A question to answer out loud (audio; add a level)' },
-    { command: 'pron', description: 'A pronunciation drill (audio; add a level)' },
+    { command: 'pronounce', description: 'A pronunciation drill (audio; add a level)' },
     { command: 'vocab', description: 'A word to learn, with examples (audio; add a level)' },
     { command: 'idiom', description: 'An idiom to sound native (audio; add a level)' },
     { command: 'story', description: 'A short story to listen to and retell (audio; add a level)' },
@@ -444,6 +445,8 @@ export async function setBotProfile(bot: Bot): Promise<void> {
       description: 'A useful talk on focus, health, or habits (audio; add a level)',
     },
     ...tutorCommands,
+    // /about goes last in the menu, by preference.
+    { command: 'about', description: 'About this bot' },
   ]);
   await bot.api.setMyShortDescription(botAbout);
   await bot.api.setMyDescription(botDescription);

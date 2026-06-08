@@ -21,7 +21,7 @@ shadowing clip), and offers every type on demand in a DM. The banks:
   One file per level: `src/content/prompts-a1.ts` ... `prompts-c2.ts`.
 - **Pronunciation drills** — a sound contrast or speech feature (minimal pairs,
   connected speech, word stress, weak forms, sound-and-spelling), with the items
-  read aloud to copy. On demand (the /pron command) and in the bonus slot. One
+  read aloud to copy. On demand (the /pronounce command) and in the bonus slot. One
   file per level: `src/content/pronunciation-a1.ts` ... `pronunciation-c2.ts`.
 - **Vocabulary** — one useful word taught in depth: meaning, examples read
   aloud, and a usage tip. On demand (the /vocab command) and in the bonus slot.
