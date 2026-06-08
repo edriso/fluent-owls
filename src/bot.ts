@@ -417,35 +417,43 @@ export function buildBot(): Bot {
  */
 export async function setBotProfile(bot: Bot): Promise<void> {
   // The personal-tutor commands appear only when a database is configured.
-  const tutorCommands = dbEnabled
+  // /next is a high-use daily action, so it leads the menu; the tutor settings
+  // (level, streak, reminders) are occasional, so they sit lower with the other
+  // utility commands.
+  const tutorNext = dbEnabled
+    ? [{ command: 'next', description: 'Your next item in sequence (keeps a streak)' }]
+    : [];
+  const tutorSettings = dbEnabled
     ? [
-        { command: 'next', description: 'Your next item in sequence (keeps a streak)' },
         { command: 'level', description: 'Set your level: /level b1' },
         { command: 'streak', description: 'Show your streak and level' },
         { command: 'reminders', description: 'Daily reminder on/off: /reminders off' },
       ]
     : [];
+  // Ordered most-used first for better UX: the personal track and quick practice
+  // lead, then the content types roughly by popularity, then the settings and
+  // meta commands (help, start, about) last.
   await bot.api.setMyCommands([
-    { command: 'start', description: 'What Fluent Owls is and how to join the channel' },
-    { command: 'help', description: 'List everything I can send you' },
-    { command: 'listen', description: 'Any audio clip, at random (add a level: /listen b1)' },
+    ...tutorNext,
     { command: 'quiz', description: 'A random quiz (add a level: /quiz a2)' },
+    { command: 'listen', description: 'Any audio clip, at random (add a level: /listen b1)' },
     { command: 'grammar', description: 'A grammar point; add a topic or level: /grammar b1' },
+    { command: 'story', description: 'A short story to listen to and retell (audio; add a level)' },
+    { command: 'vocab', description: 'A word to learn, with examples (audio; add a level)' },
     { command: 'phrase', description: 'A "say it like a native" phrase (audio; add a level)' },
+    { command: 'idiom', description: 'An idiom to sound native (audio; add a level)' },
     { command: 'dialogue', description: 'A role-play dialogue (audio; add a level)' },
     { command: 'shadow', description: 'A shadowing clip (audio; add a level)' },
-    { command: 'monologue', description: 'A passage to retell (audio; add a level)' },
-    { command: 'prompt', description: 'A question to answer out loud (audio; add a level)' },
-    { command: 'pronounce', description: 'A pronunciation drill (audio; add a level)' },
-    { command: 'vocab', description: 'A word to learn, with examples (audio; add a level)' },
-    { command: 'idiom', description: 'An idiom to sound native (audio; add a level)' },
-    { command: 'story', description: 'A short story to listen to and retell (audio; add a level)' },
     {
       command: 'talk',
       description: 'A useful talk on focus, health, or habits (audio; add a level)',
     },
-    ...tutorCommands,
-    // /about goes last in the menu, by preference.
+    { command: 'monologue', description: 'A passage to retell (audio; add a level)' },
+    { command: 'prompt', description: 'A question to answer out loud (audio; add a level)' },
+    { command: 'pronounce', description: 'A pronunciation drill (audio; add a level)' },
+    ...tutorSettings,
+    { command: 'help', description: 'List everything I can send you' },
+    { command: 'start', description: 'What Fluent Owls is and how to join the channel' },
     { command: 'about', description: 'About this bot' },
   ]);
   await bot.api.setMyShortDescription(botAbout);
