@@ -27,6 +27,7 @@ import { ALL_PRONUNCIATION } from '../src/content/pronunciation';
 import { ALL_VOCABULARY } from '../src/content/vocabulary';
 import { ALL_IDIOMS } from '../src/content/idioms';
 import { ALL_STORIES } from '../src/content/stories';
+import { ALL_TALKS } from '../src/content/talks';
 import {
   buildDialogueCaption,
   buildGrammarCaption,
@@ -37,6 +38,7 @@ import {
   buildPronunciationCaption,
   buildShadowingCaption,
   buildStoryCaption,
+  buildTalkCaption,
   buildVocabularyMessage,
 } from '../src/lib/format';
 import {
@@ -69,6 +71,8 @@ import {
   SITUATION_MAX_CHARS,
   STORY_MAX_CHARS,
   STORY_TITLE_MAX_CHARS,
+  TALK_MAX_CHARS,
+  TALK_TOPIC_MAX_CHARS,
   TOPIC_MAX_CHARS,
   TRANSCRIPT_MAX_CHARS,
   VOCAB_EXAMPLE_MAX_CHARS,
@@ -385,6 +389,25 @@ for (const s of ALL_STORIES) {
   if (!existsSync(audioPathFor(s.audio))) missingAudio += 1;
 }
 
+// --- Useful talks ----------------------------------------------------------
+const seenTalk = new Set<string>();
+
+for (const t of ALL_TALKS) {
+  if (seenTalk.has(t.id)) add(t.id, 'id', 'duplicate id');
+  seenTalk.add(t.id);
+  if (!t.id.startsWith(`${t.level}-tk-`)) add(t.id, 'id', `must start with "${t.level}-tk-"`);
+
+  checkText(t.id, 'topic', t.topic, TALK_TOPIC_MAX_CHARS);
+  checkText(t.id, 'text', t.text, TALK_MAX_CHARS);
+  checkText(t.id, 'note', t.note, NOTE_MAX_CHARS);
+
+  if (t.audio !== `${t.id}.ogg`) add(t.id, 'audio', `should be "${t.id}.ogg", got "${t.audio}"`);
+  const tcap = buildTalkCaption(t).length;
+  if (tcap > CAPTION_MAX_CHARS)
+    add(t.id, 'caption', `rendered caption ${tcap} > ${CAPTION_MAX_CHARS}`);
+  if (!existsSync(audioPathFor(t.audio))) missingAudio += 1;
+}
+
 // --- Summary ---------------------------------------------------------------
 for (const level of LEVELS) {
   const sh = ALL_SHADOWING.filter((c) => c.level === level).length;
@@ -397,12 +420,13 @@ for (const level of LEVELS) {
   const vc = ALL_VOCABULARY.filter((v) => v.level === level).length;
   const id = ALL_IDIOMS.filter((i) => i.level === level).length;
   const st = ALL_STORIES.filter((s) => s.level === level).length;
+  const tk = ALL_TALKS.filter((t) => t.level === level).length;
   console.log(
-    `  ${level.toUpperCase()}: ${sh} shadow, ${dl} dialogue, ${gr} grammar, ${mn} monologue, ${pr} prompt, ${pn} pron, ${vc} vocab, ${id} idiom, ${st} story, ${ph} phrase`,
+    `  ${level.toUpperCase()}: ${sh} shadow, ${dl} dialogue, ${gr} grammar, ${mn} monologue, ${pr} prompt, ${pn} pron, ${vc} vocab, ${id} idiom, ${st} story, ${tk} talk, ${ph} phrase`,
   );
 }
 console.log(
-  `Total: ${ALL_SHADOWING.length} shadowing, ${ALL_DIALOGUES.length} dialogues, ${ALL_GRAMMAR.length} grammar, ${ALL_MONOLOGUES.length} monologues, ${ALL_PROMPTS.length} prompts, ${ALL_PRONUNCIATION.length} pronunciation, ${ALL_VOCABULARY.length} vocabulary, ${ALL_IDIOMS.length} idioms, ${ALL_STORIES.length} stories, ${ALL_PHRASES.length} phrases`,
+  `Total: ${ALL_SHADOWING.length} shadowing, ${ALL_DIALOGUES.length} dialogues, ${ALL_GRAMMAR.length} grammar, ${ALL_MONOLOGUES.length} monologues, ${ALL_PROMPTS.length} prompts, ${ALL_PRONUNCIATION.length} pronunciation, ${ALL_VOCABULARY.length} vocabulary, ${ALL_IDIOMS.length} idioms, ${ALL_STORIES.length} stories, ${ALL_TALKS.length} talks, ${ALL_PHRASES.length} phrases`,
 );
 
 // Audio cost estimate. ElevenLabs bills ~1 credit per character on the
@@ -425,7 +449,8 @@ const totalAudioChars =
     (sum, it) => sum + it.idiom.length + it.examples.reduce((s, e) => s + e.length, 0),
     0,
   ) +
-  ALL_STORIES.reduce((sum, s) => sum + s.text.length, 0);
+  ALL_STORIES.reduce((sum, s) => sum + s.text.length, 0) +
+  ALL_TALKS.reduce((sum, t) => sum + t.text.length, 0);
 console.log(
   `Audio: ~${totalAudioChars} characters total (~${totalAudioChars} credits to generate every clip once on multilingual v2).`,
 );
@@ -440,6 +465,7 @@ const totalAudioItems =
   ALL_VOCABULARY.length +
   ALL_IDIOMS.length +
   ALL_STORIES.length +
+  ALL_TALKS.length +
   ALL_PHRASES.length;
 const requireAudio = process.argv.slice(2).includes('--require-audio');
 if (missingAudio > 0) {

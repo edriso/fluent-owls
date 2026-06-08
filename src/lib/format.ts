@@ -11,6 +11,7 @@ import type {
   LeveledQuestion,
   LeveledShadowingClip,
   LeveledStory,
+  LeveledTalk,
   LeveledVocabularyEntry,
   PhraseFunction,
   PronunciationFocus,
@@ -152,6 +153,26 @@ export function buildStoryCaption(story: LeveledStory): string {
     '',
     '▶️ Listen and enjoy. Then try to retell the story in your own words.',
     `🎯 ${story.note}`,
+  ].join('\n');
+  return ltrIsolate(caption);
+}
+
+/**
+ * Build the caption for a useful-talk voice message: a header with the level,
+ * the topic, the informative passage in quotes, then a listen-and-act
+ * instruction and the practical takeaway. Plain text in an LTR isolate, like the
+ * story and monologue captions.
+ */
+export function buildTalkCaption(talk: LeveledTalk): string {
+  const badge = LEVEL_BADGE[talk.level] ?? talk.level.toUpperCase();
+  const caption = [
+    `🧠 Useful talk  ·  ${badge}`,
+    talk.topic,
+    '',
+    `"${talk.text}"`,
+    '',
+    '▶️ Listen for the ideas, then try one small change this week.',
+    `🎯 ${talk.note}`,
   ].join('\n');
   return ltrIsolate(caption);
 }

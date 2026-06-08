@@ -47,6 +47,7 @@ import { ALL_PHRASES } from '../src/content/phrases';
 import { ALL_VOCABULARY } from '../src/content/vocabulary';
 import { ALL_IDIOMS } from '../src/content/idioms';
 import { ALL_STORIES } from '../src/content/stories';
+import { ALL_TALKS } from '../src/content/talks';
 import { LEVELS, type Level } from '../src/types';
 
 loadEnv();
@@ -102,7 +103,8 @@ type Kind =
   | 'phrase'
   | 'vocab'
   | 'idiom'
-  | 'story';
+  | 'story'
+  | 'talk';
 /** `gap` is the silence (seconds) between segments. Prompts use a long pause so
  *  the learner can answer; everything else uses a short breath. */
 type Job = {
@@ -126,6 +128,7 @@ const KIND_TOKENS: Record<string, Kind> = {
   vocabulary: 'vocab',
   idioms: 'idiom',
   stories: 'story',
+  talks: 'talk',
 };
 
 /** Pause (seconds) the learner gets to answer, between a prompt question and the model answer. */
@@ -360,6 +363,14 @@ function allJobs(): Job[] {
     kind: 'story',
     segments: [{ text: s.text, voiceId: voiceA(s.level) }],
   }));
+  // Talks: the whole informative passage read in one voice, like a story.
+  const talk: Job[] = ALL_TALKS.map((t) => ({
+    id: t.id,
+    level: t.level,
+    audio: t.audio,
+    kind: 'talk',
+    segments: [{ text: t.text, voiceId: voiceA(t.level) }],
+  }));
   return [
     ...shadow,
     ...dialogue,
@@ -371,6 +382,7 @@ function allJobs(): Job[] {
     ...vocab,
     ...idiom,
     ...story,
+    ...talk,
   ];
 }
 

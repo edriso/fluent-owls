@@ -486,3 +486,41 @@ export type LeveledStory = Story & {
   /** The CEFR level this story belongs to. */
   level: Level;
 };
+
+/**
+ * One useful talk: a short, informative mini-talk on a practical life skill
+ * (focus and deep work, cutting down on social media, eating well, staying
+ * active, sleep, building habits), grounded in mainstream, widely-accepted
+ * advice. It gives the channel real-world value beyond language drills while
+ * being extended-listening practice: the longest audio after stories, with the
+ * text shown and a small "try this" takeaway. Posted as a voice message (the
+ * talk narrated) with the text in the caption.
+ *
+ * The advice is deliberately general and safely framed (no medical claims, no
+ * prescriptions), the kind of sensible guidance you would find in any reputable
+ * popular source.
+ *
+ * Constraints (validated by scripts/audit-speaking.ts and the unit tests):
+ *  - topic and note non-empty within their limits
+ *  - `text` non-empty and <= TALK_MAX_CHARS
+ *  - the rendered caption is <= CAPTION_MAX_CHARS
+ *  - no em-dashes anywhere (house style)
+ */
+export type Talk = {
+  /** Stable, unique id. Starts with the level and a "tk" marker, e.g. "b1-tk-001". */
+  id: string;
+  /** Short topic label, e.g. "Focus and deep work". */
+  topic: string;
+  /** The informative passage to listen to. Also the script the audio uses. */
+  text: string;
+  /** One concrete, practical takeaway: a small change to try. */
+  note: string;
+  /** File name of the committed OGG/Opus clip, e.g. "b1-tk-001.ogg". */
+  audio: string;
+};
+
+/** A talk tagged with the CEFR level it was loaded from. */
+export type LeveledTalk = Talk & {
+  /** The CEFR level this talk belongs to. */
+  level: Level;
+};

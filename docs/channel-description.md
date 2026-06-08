@@ -44,7 +44,7 @@ single notification:
 The quizzes and grammar make you correct; the phrase, dialogue, and shadowing
 clip make you sound natural. Want more anytime? Message @FluentOwlsBot: /quiz,
 /grammar, /phrase, /dialogue, /shadow, /monologue, /prompt, /pron, /vocab,
-/idiom, /story, or /next for a personal track with a daily streak. No signup.
+/idiom, /story, /talk, or /next for a personal track. No signup.
 
 > Note: the full pinned welcome message lives in `src/content/welcome.ts`
 > and is posted with `pnpm post-welcome`.

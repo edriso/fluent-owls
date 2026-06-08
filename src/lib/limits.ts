@@ -111,3 +111,8 @@ export const IDIOM_EXAMPLE_MAX_CHARS = 160;
 export const STORY_TITLE_MAX_CHARS = 80;
 /** Maximum length of a story (a short narrated passage; longer than a monologue). */
 export const STORY_MAX_CHARS = 700;
+
+/** Maximum length of a talk's topic label. */
+export const TALK_TOPIC_MAX_CHARS = 70;
+/** Maximum length of a talk (a short informative passage, like a story). */
+export const TALK_MAX_CHARS = 700;
