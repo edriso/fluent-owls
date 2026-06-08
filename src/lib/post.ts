@@ -12,6 +12,7 @@ import type {
   LeveledPronunciationDrill,
   LeveledQuestion,
   LeveledShadowingClip,
+  LeveledStory,
   LeveledVocabularyEntry,
 } from '../types';
 import {
@@ -24,6 +25,7 @@ import {
   buildPromptCaption,
   buildPronunciationCaption,
   buildShadowingCaption,
+  buildStoryCaption,
   buildVocabularyMessage,
   clampExplanation,
   toPollOptions,
@@ -203,6 +205,20 @@ export async function postPrompt(
     chatId: opts.chatId,
     logName: 'question prompt',
     logFields: { id: prompt.id, level: prompt.level },
+  });
+}
+
+/** Post one story as a voice message (the story narrated, with the text in the caption). */
+export async function postStory(
+  bot: Bot<Context>,
+  story: LeveledStory,
+  opts: PostOpts = {},
+): Promise<number | null> {
+  return sendVoiceFile(bot, story.audio, buildStoryCaption(story), {
+    silent: opts.silent,
+    chatId: opts.chatId,
+    logName: 'story',
+    logFields: { id: story.id, level: story.level },
   });
 }
 

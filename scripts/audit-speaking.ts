@@ -26,6 +26,7 @@ import { ALL_PROMPTS } from '../src/content/prompts';
 import { ALL_PRONUNCIATION } from '../src/content/pronunciation';
 import { ALL_VOCABULARY } from '../src/content/vocabulary';
 import { ALL_IDIOMS } from '../src/content/idioms';
+import { ALL_STORIES } from '../src/content/stories';
 import {
   buildDialogueCaption,
   buildGrammarCaption,
@@ -35,6 +36,7 @@ import {
   buildPromptCaption,
   buildPronunciationCaption,
   buildShadowingCaption,
+  buildStoryCaption,
   buildVocabularyMessage,
 } from '../src/lib/format';
 import {
@@ -65,6 +67,8 @@ import {
   PRON_TITLE_MAX_CHARS,
   RULE_MAX_CHARS,
   SITUATION_MAX_CHARS,
+  STORY_MAX_CHARS,
+  STORY_TITLE_MAX_CHARS,
   TOPIC_MAX_CHARS,
   TRANSCRIPT_MAX_CHARS,
   VOCAB_EXAMPLE_MAX_CHARS,
@@ -362,6 +366,25 @@ for (const it of ALL_IDIOMS) {
   if (!existsSync(audioPathFor(it.audio))) missingAudio += 1;
 }
 
+// --- Stories ---------------------------------------------------------------
+const seenStory = new Set<string>();
+
+for (const s of ALL_STORIES) {
+  if (seenStory.has(s.id)) add(s.id, 'id', 'duplicate id');
+  seenStory.add(s.id);
+  if (!s.id.startsWith(`${s.level}-st-`)) add(s.id, 'id', `must start with "${s.level}-st-"`);
+
+  checkText(s.id, 'title', s.title, STORY_TITLE_MAX_CHARS);
+  checkText(s.id, 'text', s.text, STORY_MAX_CHARS);
+  checkText(s.id, 'note', s.note, NOTE_MAX_CHARS);
+
+  if (s.audio !== `${s.id}.ogg`) add(s.id, 'audio', `should be "${s.id}.ogg", got "${s.audio}"`);
+  const scap = buildStoryCaption(s).length;
+  if (scap > CAPTION_MAX_CHARS)
+    add(s.id, 'caption', `rendered caption ${scap} > ${CAPTION_MAX_CHARS}`);
+  if (!existsSync(audioPathFor(s.audio))) missingAudio += 1;
+}
+
 // --- Summary ---------------------------------------------------------------
 for (const level of LEVELS) {
   const sh = ALL_SHADOWING.filter((c) => c.level === level).length;
@@ -373,12 +396,13 @@ for (const level of LEVELS) {
   const pn = ALL_PRONUNCIATION.filter((d) => d.level === level).length;
   const vc = ALL_VOCABULARY.filter((v) => v.level === level).length;
   const id = ALL_IDIOMS.filter((i) => i.level === level).length;
+  const st = ALL_STORIES.filter((s) => s.level === level).length;
   console.log(
-    `  ${level.toUpperCase()}: ${sh} shadow, ${dl} dialogue, ${gr} grammar, ${mn} monologue, ${pr} prompt, ${pn} pron, ${vc} vocab, ${id} idiom, ${ph} phrase`,
+    `  ${level.toUpperCase()}: ${sh} shadow, ${dl} dialogue, ${gr} grammar, ${mn} monologue, ${pr} prompt, ${pn} pron, ${vc} vocab, ${id} idiom, ${st} story, ${ph} phrase`,
   );
 }
 console.log(
-  `Total: ${ALL_SHADOWING.length} shadowing, ${ALL_DIALOGUES.length} dialogues, ${ALL_GRAMMAR.length} grammar, ${ALL_MONOLOGUES.length} monologues, ${ALL_PROMPTS.length} prompts, ${ALL_PRONUNCIATION.length} pronunciation, ${ALL_VOCABULARY.length} vocabulary, ${ALL_IDIOMS.length} idioms, ${ALL_PHRASES.length} phrases`,
+  `Total: ${ALL_SHADOWING.length} shadowing, ${ALL_DIALOGUES.length} dialogues, ${ALL_GRAMMAR.length} grammar, ${ALL_MONOLOGUES.length} monologues, ${ALL_PROMPTS.length} prompts, ${ALL_PRONUNCIATION.length} pronunciation, ${ALL_VOCABULARY.length} vocabulary, ${ALL_IDIOMS.length} idioms, ${ALL_STORIES.length} stories, ${ALL_PHRASES.length} phrases`,
 );
 
 // Audio cost estimate. ElevenLabs bills ~1 credit per character on the
@@ -400,7 +424,8 @@ const totalAudioChars =
   ALL_IDIOMS.reduce(
     (sum, it) => sum + it.idiom.length + it.examples.reduce((s, e) => s + e.length, 0),
     0,
-  );
+  ) +
+  ALL_STORIES.reduce((sum, s) => sum + s.text.length, 0);
 console.log(
   `Audio: ~${totalAudioChars} characters total (~${totalAudioChars} credits to generate every clip once on multilingual v2).`,
 );
@@ -414,6 +439,7 @@ const totalAudioItems =
   ALL_PRONUNCIATION.length +
   ALL_VOCABULARY.length +
   ALL_IDIOMS.length +
+  ALL_STORIES.length +
   ALL_PHRASES.length;
 const requireAudio = process.argv.slice(2).includes('--require-audio');
 if (missingAudio > 0) {

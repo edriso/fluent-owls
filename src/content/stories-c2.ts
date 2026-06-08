@@ -1,0 +1,51 @@
+/**
+ * C2 (mastery) stories: polished, literary short narratives with a thoughtful
+ * point, sophisticated vocabulary, and varied rhythm, the kind a fluent speaker
+ * enjoys and learns from.
+ */
+import type { Story } from '../types';
+
+export const c2Stories: Story[] = [
+  {
+    id: 'c2-st-001',
+    title: 'The lighthouse keeper',
+    text: 'For forty years, a lighthouse keeper lit the lamp every night, though ships had long since learned to navigate by other means. Visitors asked why he bothered, since no one depended on him anymore. He considered the question, then said that he had never lit the lamp for the ships alone, but for anyone, anywhere, who might glance across the dark water and take comfort in a single, steady light. Some duties, he believed, outlive their usefulness and become something quieter: a kind of faith.',
+    note: `The closing reframes duty as faith; note the long, balanced final sentence.`,
+    audio: 'c2-st-001.ogg',
+  },
+  {
+    id: 'c2-st-002',
+    title: 'The collector',
+    text: 'A wealthy man spent his life collecting rare and beautiful objects, certain that owning enough of them would finally make him feel complete. His house grew crowded; his heart did not. Near the end, he gave everything away to a small museum and kept only a chipped cup his late wife had loved. Standing in his empty rooms, he felt, for the first time in years, that he had more than enough. We rarely lack what we need. We simply mistake it for what we want.',
+    note: `The final two sentences distil the whole story into an aphorism.`,
+    audio: 'c2-st-002.ogg',
+  },
+  {
+    id: 'c2-st-003',
+    title: 'The translator',
+    text: 'A celebrated translator was asked to render a famous poem into another language. She laboured for a year and produced something technically flawless, yet it felt lifeless. In despair, she set aside the rules and wrote what the poem had made her feel as a girl. Critics complained that she had taken liberties. Readers wept. She had learned that fidelity is not always the same as truth, and that the closest translation is sometimes the boldest one.',
+    note: `"fidelity is not always the same as truth" is the heart of it.`,
+    audio: 'c2-st-003.ogg',
+  },
+  {
+    id: 'c2-st-004',
+    title: 'The argument',
+    text: 'Two old friends fell into a bitter argument over a matter neither could later remember. For years, each waited for the other to apologise first, mistaking stubbornness for principle. When one of them fell ill, the other came at once, and not a word about the quarrel was spoken. They simply sat together, as they always had. Pride, they discovered, is a very expensive way to be lonely.',
+    note: `The wry final line names the real cost of the silence.`,
+    audio: 'c2-st-004.ogg',
+  },
+  {
+    id: 'c2-st-005',
+    title: 'The understudy',
+    text: 'For three seasons, an actor played the same small part, watching the lead take every bow. He could have grown bitter, and at times he did. Yet he used those quiet years to study everything: timing, silence, the weight of a single glance. When the lead finally fell ill, he stepped into the role and gave a performance no one forgot. The wait had not been wasted; it had been a rehearsal.',
+    note: `"it had been a rehearsal" turns a frustration into preparation.`,
+    audio: 'c2-st-005.ogg',
+  },
+  {
+    id: 'c2-st-006',
+    title: 'The cartographer',
+    text: 'A cartographer devoted his life to drawing the perfect map of his island, adding ever finer detail until the map was nearly as large as the land itself. He died with it unfinished, convinced he had failed. His daughter, folding the vast, imperfect map away, understood what he had not: that no map can ever contain the territory, and that the love of looking closely had been the whole point. The map was never the achievement. The attention was.',
+    note: `The map-and-territory idea closes on a crisp, two-sentence reversal.`,
+    audio: 'c2-st-006.ogg',
+  },
+];

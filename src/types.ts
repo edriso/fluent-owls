@@ -452,3 +452,37 @@ export type LeveledIdiomEntry = IdiomEntry & {
   /** The CEFR level this entry belongs to. */
   level: Level;
 };
+
+/**
+ * One short story: a narrated mini-story or anecdote (a few sentences with a
+ * beginning, middle, and end) plus a takeaway. Unlike a monologue (a first-person
+ * model passage to retell), a story is a third-person narrative to listen to and
+ * enjoy. It builds listening stamina, exposes the learner to natural narrative
+ * tenses and sequencing, and trains the rhythm of storytelling, all of which make
+ * speech more articulate and native. Posted as a voice message (the story
+ * narrated) with the text in the caption.
+ *
+ * Constraints (validated by scripts/audit-speaking.ts and the unit tests):
+ *  - title and note non-empty within their limits
+ *  - `text` non-empty and <= STORY_MAX_CHARS
+ *  - the rendered caption is <= CAPTION_MAX_CHARS
+ *  - no em-dashes anywhere (house style)
+ */
+export type Story = {
+  /** Stable, unique id. Starts with the level and an "st" marker, e.g. "b1-st-001". */
+  id: string;
+  /** Short title, e.g. "The two travellers". */
+  title: string;
+  /** The narrative to listen to. Also the script the audio is generated from. */
+  text: string;
+  /** One concrete takeaway: the point, the moral, or what to notice. */
+  note: string;
+  /** File name of the committed OGG/Opus clip, e.g. "b1-st-001.ogg". */
+  audio: string;
+};
+
+/** A story tagged with the CEFR level it was loaded from. */
+export type LeveledStory = Story & {
+  /** The CEFR level this story belongs to. */
+  level: Level;
+};

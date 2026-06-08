@@ -223,15 +223,16 @@ per level (396 total, well over a year before a repeat), 48 dialogues per level
 months), and 20 phrases per level (120, now voice messages with audio).
 Monologues (34 per level, 204), question prompts (40 per level, 240),
 pronunciation drills (20 per level, 120), vocabulary entries (28 per level, 168),
-and idioms (10 per level, 60) are on-demand only. Add more to lengthen any cycle.
+idioms (16 per level, 96), and stories (6 per level, 36) are on-demand only. Add
+more to lengthen any cycle.
 Every post shows its level, so mixing levels day to day is fine: learners
 self-select.
 
 Audio is cheap: run `pnpm audit-speaking` to see the total character count
 (roughly 1 ElevenLabs credit per character on the multilingual model). The full
-bank (1,740 voice clips, every speaking type including phrases, pronunciation,
-vocabulary, and idioms) is around 148k credits to generate once (spread across
-months as you add content), and the running bot never pays again:
+bank (1,812 voice clips, every speaking type including phrases, pronunciation,
+vocabulary, idioms, and stories) is around 162k credits to generate once (spread
+across months as you add content), and the running bot never pays again:
 the clips are committed and only ever read. Adding content and re-running
 `pnpm generate-audio` only generates the new items (it is idempotent). Each CEFR
 level has its own American voice (speaker A) plus a contrasting partner voice for

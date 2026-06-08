@@ -106,3 +106,8 @@ export const IDIOM_MIN_EXAMPLES = 2;
 export const IDIOM_MAX_EXAMPLES = 3;
 /** Maximum length of a single idiom example sentence. */
 export const IDIOM_EXAMPLE_MAX_CHARS = 160;
+
+/** Maximum length of a story title. */
+export const STORY_TITLE_MAX_CHARS = 80;
+/** Maximum length of a story (a short narrated passage; longer than a monologue). */
+export const STORY_MAX_CHARS = 700;

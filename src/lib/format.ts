@@ -10,6 +10,7 @@ import type {
   LeveledPronunciationDrill,
   LeveledQuestion,
   LeveledShadowingClip,
+  LeveledStory,
   LeveledVocabularyEntry,
   PhraseFunction,
   PronunciationFocus,
@@ -132,6 +133,25 @@ export function buildShadowingCaption(clip: LeveledShadowingClip): string {
     '',
     `▶️ Listen 2-3 times, then say it WITH the speaker, copying ${FOCUS_PHRASE[clip.focus]}.`,
     `🎯 ${clip.note}`,
+  ].join('\n');
+  return ltrIsolate(caption);
+}
+
+/**
+ * Build the caption for a story voice message: a header with the level, the
+ * title, the narrative in quotes, then a listen-and-retell instruction and the
+ * takeaway. Plain text in an LTR isolate, like the monologue caption.
+ */
+export function buildStoryCaption(story: LeveledStory): string {
+  const badge = LEVEL_BADGE[story.level] ?? story.level.toUpperCase();
+  const caption = [
+    `📚 Story  ·  ${badge}`,
+    story.title,
+    '',
+    `"${story.text}"`,
+    '',
+    '▶️ Listen and enjoy. Then try to retell the story in your own words.',
+    `🎯 ${story.note}`,
   ].join('\n');
   return ltrIsolate(caption);
 }
