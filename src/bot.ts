@@ -42,20 +42,20 @@ import {
 } from './lib/post';
 
 // Public profile texts the bot self-sets on start (commands + About +
-// Description). The name, botpic, and other profile fields cannot be set via the
-// Bot API; those stay in @BotFather.
+// Description). The bot's display NAME (set to "Professor Owlivia 🦉"), botpic,
+// and other profile fields are set in @BotFather, not via the Bot API.
 //
 // About is BotFather's "short description": ≤120 code points.
 export const botAbout =
-  'Daily English 🦉 Quizzes, phrases, role-plays, grammar, and audio to shadow, A1 to C2. Or pull any on demand. Tap Start.';
+  'Meet Owlivia 🦉 your English buddy: daily quizzes, phrases, grammar, and audio to shadow, A1 to C2. Tap Start.';
 
 // Description: BotFather's "description", ≤512 code points. Shown on the
 // empty-chat start screen before the user presses Start.
 export const botDescription = [
-  '🦉 Hi! Fluent Owls posts a short daily English set to its Telegram channel every evening, to help you be both correct and well spoken.',
-  'Each day: three quizzes (with explanations), a grammar point, a native phrase, a role-play dialogue, and an audio clip to shadow.',
-  'Want more? DM /listen for any audio clip, or /help to see all the exercise types. Add a level like b1 to target it. Or /next for a personal track with a daily streak.',
-  'By CEFR level (A1 to C2). No signup. Tap Start for the channel link.',
+  "🦉 Hi! I'm Owlivia (like Olivia, but owl), your tutor at Fluent Owls. Every evening I post a short English set to the channel, to make you both correct and well spoken.",
+  'Each day: three quizzes (with explanations), a grammar point, a native phrase, a role-play dialogue, a rotating bonus, and an audio clip to shadow.',
+  'Want more? DM /listen for any audio, or /help for all the types. Add a level like b1. Or /next for a personal track with a daily streak.',
+  'CEFR A1 to C2. No signup. Tap Start for the channel link.',
 ].join('\n');
 
 /**
@@ -76,7 +76,7 @@ export function buildBot(): Bot {
       : '';
     await ctx.reply(
       [
-        '🦉 Hi! Fluent Owls posts a short daily English set to its Telegram channel.',
+        "🦉 Hi! I'm Professor Owlivia (like Olivia, but owl). Call me Owlivia, your tutor at Fluent Owls, which posts a short daily English set to its Telegram channel.",
         '',
         'Each evening: three fill-in-the-blank quizzes (with instant explanations), a grammar point, a "say it like a native" phrase, a role-play dialogue, a rotating bonus (a story, idiom, useful talk, and more, a different one each day), and an audio clip to shadow. A little every day, so you become both correct and well spoken.',
         '',
@@ -91,7 +91,7 @@ export function buildBot(): Bot {
   bot.command('about', async (ctx) => {
     await ctx.reply(
       [
-        'Fluent Owls is a tiny Telegram bot that posts a daily English set to a channel: quizzes, grammar, phrases, role-play dialogues, a rotating bonus (stories, idioms, talks, and more), and audio to shadow.',
+        'Fluent Owls is a tiny Telegram bot, run by Owlivia 🦉, that posts a daily English set to a channel: quizzes, grammar, phrases, role-play dialogues, a rotating bonus (stories, idioms, talks, and more), and audio to shadow.',
         'It has no database. All content lives in the source, organized by CEFR level. Audio is pre-generated, so the bot needs no text-to-speech key to run.',
         'Want more anytime? Send /listen for any audio clip, or /help to see every exercise type. Add a level like b1 to target any of them.',
       ].join('\n'),
