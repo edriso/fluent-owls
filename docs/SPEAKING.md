@@ -222,7 +222,7 @@ per level (396 total, well over a year before a repeat), 48 dialogues per level
 (288), 24 grammar points per level (144, the daily grammar slot, about 5
 months), and 20 phrases per level (120, now voice messages with audio).
 Monologues (34 per level, 204), question prompts (40 per level, 240),
-pronunciation drills (20 per level, 120), vocabulary entries (28 per level, 168),
+pronunciation drills (20 per level, 120), vocabulary entries (34 per level, 204),
 idioms (34 per level, 204), stories (12 per level, 72), and useful talks (10 per
 level, 60) are on-demand only. Add more to lengthen any cycle.
 Every post shows its level, so mixing levels day to day is fine: learners
@@ -230,8 +230,8 @@ self-select.
 
 Audio is cheap: run `pnpm audit-speaking` to see the total character count
 (roughly 1 ElevenLabs credit per character on the multilingual model). The full
-bank (2,016 voice clips, every speaking type including phrases, pronunciation,
-vocabulary, idioms, stories, and useful talks) is around 202k credits to generate
+bank (2,052 voice clips, every speaking type including phrases, pronunciation,
+vocabulary, idioms, stories, and useful talks) is around 204k credits to generate
 once (spread across months as you add content), and the running bot never pays
 again:
 the clips are committed and only ever read. Adding content and re-running
