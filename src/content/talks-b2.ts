@@ -96,4 +96,25 @@ export const b2Talks: Talk[] = [
     note: `Try this: define the single next action, and exactly when you will do it.`,
     audio: 'b2-tk-013.ogg',
   },
+  {
+    id: 'b2-tk-014',
+    topic: 'Keeping your word',
+    text: 'A promise is a small thing to make and a large thing to keep. Each time you do what you said you would, you build trust, both in other people and in yourself. Each time you break your word, that trust quietly weakens, often without a single complaint. The fix is simple but not easy: promise less, and deliver fully. Be careful with the words "I will". In the long run, a person whose word can be trusted carries a quiet, lasting kind of strength.',
+    note: `Try this: this week, only say "I will" when you are sure you can.`,
+    audio: 'b2-tk-014.ogg',
+  },
+  {
+    id: 'b2-tk-015',
+    topic: 'The habit of curiosity',
+    text: 'We often admire people who have answers, but the sharpest minds are usually the ones who ask the best questions. A good question opens a door that statements keep shut. It invites others to think, and it reveals the things we have assumed without noticing. Curiosity works like a muscle: the more honestly you ask, the more the world explains itself to you. Try replacing "I already know this" with "what am I missing here?" and see how much more you learn.',
+    note: `Try this: ask one real question today instead of giving an opinion.`,
+    audio: 'b2-tk-015.ogg',
+  },
+  {
+    id: 'b2-tk-016',
+    topic: 'Choose your company well',
+    text: 'We like to think we are fully in charge of who we become, but the people around us shape us more than we admit. We slowly pick up the habits, the standards, and even the moods of those we spend the most time with. This is not a reason to use people, but a reason to choose wisely. Spend your time with those who are honest, kind, and growing, and you will quietly rise toward them. Good company is one of the most powerful and most overlooked influences on a life.',
+    note: `Try this: spend a little more time this week with someone you admire.`,
+    audio: 'b2-tk-016.ogg',
+  },
 ];

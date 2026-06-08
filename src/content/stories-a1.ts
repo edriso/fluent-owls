@@ -111,4 +111,25 @@ export const a1Stories: Story[] = [
     note: `Short, clear sentences build to a happy ending.`,
     audio: 'a1-st-015.ogg',
   },
+  {
+    id: 'a1-st-016',
+    title: 'The heavy bags',
+    text: 'An old man walked home with two heavy bags. A boy saw him on the street. The boy ran to help. He carried one bag to the door. The old man said thank you. The boy felt happy. Helping is easy and kind.',
+    note: `Past simple verbs: walked, saw, ran, carried, said, felt.`,
+    audio: 'a1-st-016.ogg',
+  },
+  {
+    id: 'a1-st-017',
+    title: 'The first day',
+    text: "It was Ana's first day at school. She was afraid. A girl gave her a pen and a smile. They sat together all day. School was fun. A kind friend makes a hard day easy.",
+    note: `The last line gives the point: a kind friend makes a hard day easy.`,
+    audio: 'a1-st-017.ogg',
+  },
+  {
+    id: 'a1-st-018',
+    title: 'The found wallet',
+    text: 'Lena found a wallet on the road. There was money in it. She did not keep it. She took it to the shop. The owner came back and was very happy. He said thank you. Lena felt good inside.',
+    note: `"did not keep" shows her honest choice.`,
+    audio: 'a1-st-018.ogg',
+  },
 ];

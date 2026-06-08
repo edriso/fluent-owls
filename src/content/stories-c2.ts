@@ -111,4 +111,25 @@ export const c2Stories: Story[] = [
     note: `A quiet comment on attention in a world that performs for us.`,
     audio: 'c2-st-015.ogg',
   },
+  {
+    id: 'c2-st-016',
+    title: 'The night guard',
+    text: `A night guard worked alone for thirty years among priceless paintings. Visitors assumed his job was dull, a matter of locked doors and silent halls. Yet he came to know each painting as a neighbour knows a face, noticing how the same canvas shifted with the season's light. When he retired, he said he had not so much guarded the art as kept it company. Attention, given long enough, becomes a kind of love.`,
+    note: `The closing line turns mere watching into devotion.`,
+    audio: 'c2-st-016.ogg',
+  },
+  {
+    id: 'c2-st-017',
+    title: 'The gardener',
+    text: `A celebrated gardener was asked the secret of her extraordinary roses. Visitors expected a rare technique or some secret soil. She replied that she simply walked the garden each morning and noticed what every plant was quietly asking for. The secret, she said, was not doing more, but seeing more. Most of what we fail to grow, we have merely failed to notice.`,
+    note: `"not doing more, but seeing more" is the whole point.`,
+    audio: 'c2-st-017.ogg',
+  },
+  {
+    id: 'c2-st-018',
+    title: 'The late apology',
+    text: `An old man finally wrote the apology he had owed a friend for forty years. The letter came back unopened; the friend had died that spring. He sat with it a long while, then read it aloud to the empty room. The words, he realised, had already changed him in the writing, whether or not they were ever received. Some debts are settled simply by being honestly faced.`,
+    note: `The act of writing matters even when it cannot be delivered.`,
+    audio: 'c2-st-018.ogg',
+  },
 ];

@@ -96,4 +96,25 @@ export const a2Talks: Talk[] = [
     note: `Try this: make your goal specific and easy to measure.`,
     audio: 'a2-tk-013.ogg',
   },
+  {
+    id: 'a2-tk-014',
+    topic: 'Learn from your mistakes',
+    text: 'Everyone makes mistakes. A mistake is not a bad thing; it is a chance to learn. When something goes wrong, try not to feel angry with yourself. Instead, ask one simple question: what can I do better next time? Then try again. People who are not afraid of mistakes learn the fastest. Remember, every expert was once a beginner who kept going.',
+    note: `Try this: after a mistake, write down one thing to do differently.`,
+    audio: 'a2-tk-014.ogg',
+  },
+  {
+    id: 'a2-tk-015',
+    topic: 'Ask for help',
+    text: 'Many people are afraid to ask for help. They think it makes them look weak. In fact, it is the opposite. Asking is smart: it saves time and helps you learn faster. Most people are happy to help when you ask them kindly. You do not have to do everything alone. A good question can solve a problem in minutes.',
+    note: `Try this: ask one person for help with something this week.`,
+    audio: 'a2-tk-015.ogg',
+  },
+  {
+    id: 'a2-tk-016',
+    topic: 'Take short breaks',
+    text: 'When you work for a long time without a rest, your mind gets tired and slow. Short breaks help you stay fresh. Try to work for about thirty minutes, then take a break for five. Stand up, stretch, or look out of the window. A small rest helps you focus better when you come back. Breaks are not lazy; they are part of good work.',
+    note: `Try this: take a five-minute break after every focused session.`,
+    audio: 'a2-tk-016.ogg',
+  },
 ];

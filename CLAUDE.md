@@ -70,13 +70,14 @@ fluent-owls/
 │   ├── post-welcome.ts    Post or edit-in-place the pinned welcome message.
 │   ├── audit-questions.ts Validate the quiz banks (ids, options, indices, lengths).
 │   ├── audit-speaking.ts  Validate the shadowing, dialogue, grammar, monologue, prompt, and phrase banks.
-│   └── generate-audio.ts  DEV ONLY: ElevenLabs TTS -> ffmpeg -> OGG (one voice for shadowing/grammar/monologue, two stitched for dialogues/prompts), idempotent.
+│   └── generate-audio.ts  DEV ONLY: ElevenLabs TTS -> ffmpeg -> OGG (one voice for the narration types: shadowing/grammar/monologue/story/talk/vocab/idiom/pron/phrase; two stitched for dialogues/prompts), idempotent.
 ├── tests/                Vitest unit tests, no network.
 ├── docs/
 │   ├── DEPLOY.md         Host-agnostic deploy notes.
 │   ├── QUESTIONS.md      How to add a quiz question.
 │   ├── SPEAKING.md       How to add any speaking item (shadowing, dialogue, grammar, monologue, prompt, phrase) and generate audio.
-│   └── TUTOR.md          The optional personal-tutor database (commands, schema, setup).
+│   ├── TUTOR.md          The optional personal-tutor database (commands, schema, setup).
+│   └── channel-description.md  Copy-paste channel description options + the longer blurb.
 ├── prisma/               schema.prisma (Learner model) + migrations/ (for the optional tutor).
 ├── prisma.config.ts      Prisma 7 CLI config (schema path, migrations path, DATABASE_URL).
 ├── .env.example          All env vars documented.

@@ -96,4 +96,25 @@ export const c2Talks: Talk[] = [
     note: `Try this: ask who you must become, not merely what you must do.`,
     audio: 'c2-tk-013.ogg',
   },
+  {
+    id: 'c2-tk-014',
+    topic: 'The art of saying no',
+    text: 'Every yes is also a no to something else: your time, your attention, and your energy are finite, however much we pretend otherwise. People who do deep, meaningful work are usually not those who do the most, but those who have learned to decline gracefully. Saying no is uncomfortable, because we fear disappointing others. Yet a clear, kind no protects your ability to give a wholehearted yes to what truly matters. Guard your commitments as carefully as you would guard your money, for in the end they are the same thing: your life, being spent.',
+    note: `Try this: decline one low-value request this week, kindly and clearly.`,
+    audio: 'c2-tk-014.ogg',
+  },
+  {
+    id: 'c2-tk-015',
+    topic: 'The generosity of attention',
+    text: 'In an age that sells our attention to the highest bidder, giving it freely has quietly become a rare gift. To listen to someone without reaching for your phone, to watch a sunset without filming it, to read a page without skimming, is to push back against a constant pull. Undivided attention is, in the end, a form of respect: for other people, for your work, and for your own brief and unrepeatable life. What you choose to attend to, fully and often, is slowly and surely what your life becomes.',
+    note: `Try this: give one person or task your complete, undistracted attention today.`,
+    audio: 'c2-tk-015.ogg',
+  },
+  {
+    id: 'c2-tk-016',
+    topic: 'The value of solitude',
+    text: "In a connected world, solitude has come to feel almost suspicious, as though time alone were time wasted. Yet some of the most important work of a life, thinking clearly, knowing your own mind, recovering a sense of proportion, can only be done in quiet, without an audience. Solitude is not the same as loneliness; it is a chosen stillness in which your own thoughts can finally be heard above the noise. Those who never sit alone with themselves risk living entirely by other people's opinions. Make a little room for silence.",
+    note: `Try this: spend ten quiet minutes alone, with no screen, today.`,
+    audio: 'c2-tk-016.ogg',
+  },
 ];

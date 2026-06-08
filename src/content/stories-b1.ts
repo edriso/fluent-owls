@@ -110,4 +110,25 @@ export const b1Stories: Story[] = [
     note: `"the only real failure was quitting" is the lesson.`,
     audio: 'b1-st-015.ogg',
   },
+  {
+    id: 'b1-st-016',
+    title: 'The missed train',
+    text: 'Maria always took the same train to work. One morning, she missed it by a minute and felt terrible. While she waited for the next one, she helped a lost traveller find his way. It turned out he worked at a company she hoped to join one day. They stayed in touch, and months later, he told her about a job there. A bad start sometimes hides a good turn.',
+    note: `Notice "While she waited" and "It turned out" moving the story along.`,
+    audio: 'b1-st-016.ogg',
+  },
+  {
+    id: 'b1-st-017',
+    title: 'The quiet student',
+    text: 'There was a student who never spoke in class. Everyone thought he was not interested. In fact, he was simply shy. One day, the teacher asked the class to write their ideas down instead. His notes were full of thought and care. After that, she found new ways to hear from him. Quiet does not mean empty.',
+    note: `"In fact" corrects what everyone wrongly assumed.`,
+    audio: 'b1-st-017.ogg',
+  },
+  {
+    id: 'b1-st-018',
+    title: 'The old chair',
+    text: "Daniel's grandfather gave him an old, broken chair. His friends told him to throw it away. Instead, he spent a weekend learning how to repair it. The work was slow and difficult, but the chair became beautiful again. Years later, it was his favourite thing in the house. Some things are worth saving.",
+    note: `"Instead" marks his choice to repair, not replace.`,
+    audio: 'b1-st-018.ogg',
+  },
 ];

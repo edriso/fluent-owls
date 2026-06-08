@@ -96,4 +96,25 @@ export const c1Talks: Talk[] = [
     note: `Try this: judge a goal by whether its next step is obvious and small.`,
     audio: 'c1-tk-013.ogg',
   },
+  {
+    id: 'c1-tk-014',
+    topic: 'The discipline of finishing',
+    text: 'Starting something is exciting; finishing it is hard. The first rush of energy fades, the work turns ordinary, and a hundred newer ideas compete for your attention. Yet almost all real value lies in the finishing, in carrying something through the dull middle to a complete end. The world is full of brilliant beginnings that no one ever saw through. Train yourself to close the loop: finish the book, complete the project, have the difficult conversation. The reputation you build over time is made of things completed, not things merely begun.',
+    note: `Try this: choose one unfinished thing and carry it all the way to done.`,
+    audio: 'c1-tk-014.ogg',
+  },
+  {
+    id: 'c1-tk-015',
+    topic: 'Small acts of kindness',
+    text: 'We tend to imagine that kindness must be grand to matter: large gifts, dramatic rescues. In daily life, though, it is the small acts that shape how people feel and how a community holds together. A genuine thank you, a patient reply, holding a door, checking on someone who seems low. These cost almost nothing, yet they ripple outward in ways we rarely see. Kindness is not a talent reserved for a few; it is a habit anyone can practise, one small choice at a time.',
+    note: `Try this: do one small, unasked kindness for someone today.`,
+    audio: 'c1-tk-015.ogg',
+  },
+  {
+    id: 'c1-tk-016',
+    topic: 'The courage to start',
+    text: 'Many good things never happen, not because they were too hard, but because we waited to feel ready. Readiness, however, rarely arrives in advance; it is usually the result of starting, not the condition for it. The first step is almost always taken in some doubt. Whether it is a new skill, a difficult conversation, or a long-delayed project, the courage to begin imperfectly is what separates those who do from those who only intend. Start small, start unsure if you must, but start.',
+    note: `Try this: take the first small step on something you have been delaying.`,
+    audio: 'c1-tk-016.ogg',
+  },
 ];

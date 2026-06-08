@@ -96,4 +96,25 @@ export const b1Talks: Talk[] = [
     note: `Try this: turn your goal into a daily habit with a fixed time.`,
     audio: 'b1-tk-013.ogg',
   },
+  {
+    id: 'b1-tk-014',
+    topic: 'The skill of listening',
+    text: 'Most people listen only to reply. They wait for their turn to speak, already planning their answer in their head. Real listening is different and rare. It means giving someone your full attention, without judging or interrupting, until they feel truly heard. This builds trust faster than any clever words. Next time someone speaks to you, try to understand them completely before you say a single thing. You will be surprised how much people open up to a good listener.',
+    note: `Try this: in your next conversation, listen fully before you reply.`,
+    audio: 'b1-tk-014.ogg',
+  },
+  {
+    id: 'b1-tk-015',
+    topic: 'The power of patience',
+    text: 'We live in a world built for speed, where waiting can feel like failing. Yet most things worth having grow slowly: a skill, a friendship, good health, a good name. Patience is not doing nothing; it is staying steady while the slow work happens. When you feel the urge to quit because results are not instant, remember that the people you admire simply kept going longer than others. Give your goals the time they honestly need.',
+    note: `Try this: pick one slow goal and stay with it for a full month.`,
+    audio: 'b1-tk-015.ogg',
+  },
+  {
+    id: 'b1-tk-016',
+    topic: 'Start your morning well',
+    text: "How you start your morning often shapes the whole day. If you grab your phone the moment you wake up, your mind fills with other people's news and worries before you have had a single calm thought. Try a gentler start instead: a glass of water, a few minutes of quiet, and one clear plan for the day. You do not need a long routine. A simple, calm beginning gives you a sense of control that lasts for hours.",
+    note: `Try this: wait one hour before checking your phone in the morning.`,
+    audio: 'b1-tk-016.ogg',
+  },
 ];

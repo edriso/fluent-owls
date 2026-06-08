@@ -110,4 +110,25 @@ export const b2Stories: Story[] = [
     note: `"knowledge shared does not shrink; it grows" is the point.`,
     audio: 'b2-st-015.ogg',
   },
+  {
+    id: 'b2-st-016',
+    title: 'The honest review',
+    text: 'A young writer asked a well-known author to read her first book, hoping for praise. Instead, he sent back pages of honest notes, marking every weak line. At first she felt crushed and wanted to give up. But she read the notes again, slowly, and saw that each one was true. She rewrote the book, and it became a quiet success. The kindest help is sometimes the most honest.',
+    note: `"At first... But..." traces her change from hurt to grateful.`,
+    audio: 'b2-st-016.ogg',
+  },
+  {
+    id: 'b2-st-017',
+    title: 'The last seat',
+    text: 'On a crowded bus, a tired man finally got the last free seat. A moment later, an elderly woman got on, carrying heavy bags. He pretended not to notice her. A teenager nearby stood up at once and offered his own seat. The man watched, and at the next stop, he quietly gave up his seat too. Good behaviour spreads, if someone is brave enough to start it.',
+    note: `The man changes because he sees someone else act first.`,
+    audio: 'b2-st-017.ogg',
+  },
+  {
+    id: 'b2-st-018',
+    title: 'The first language',
+    text: 'A woman moved abroad as a child and slowly forgot her first language. For years she felt a quiet loss she could not explain. In her thirties, she began to study it again, word by word. Old memories returned with the words: her grandmother singing, the smell of the family kitchen. Learning the language back felt like coming home. Some doors are never truly closed.',
+    note: `Notice the past tenses: moved, forgot, began, returned.`,
+    audio: 'b2-st-018.ogg',
+  },
 ];

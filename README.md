@@ -111,7 +111,7 @@ Set `DATABASE_URL` and the bot gains a personal tutor in its DMs: **/next** walk
 
 ## The audio
 
-The shadowing clips, role-play dialogues, grammar examples, monologues, and question prompts are AI-generated once with [ElevenLabs](https://elevenlabs.io) and committed as OGG/Opus under `src/content/audio/`. Shadowing, grammar, and monologues use one American voice per CEFR level; dialogues and prompts use two voices (an asker and an answerer), and prompts include a built-in pause so the learner can answer before the model. The running bot only reads the files, so production needs no text-to-speech key and has no audio cost. Generating is a one-time dev step (`pnpm generate-audio`, needs `ELEVENLABS_API_KEY` and `ffmpeg`); see [`docs/SPEAKING.md`](docs/SPEAKING.md). The audio is **not** covered by this repo's MIT license, see [`NOTICE`](NOTICE).
+Every spoken item (shadowing clips, role-play dialogues, grammar examples, monologues, question prompts, pronunciation drills, vocabulary, idioms, stories, useful talks, and native phrases) is AI-generated once with [ElevenLabs](https://elevenlabs.io) and committed as OGG/Opus under `src/content/audio/`. Most types use one American voice per CEFR level; dialogues and prompts use two voices (an asker and an answerer), and prompts include a built-in pause so the learner can answer before the model. The running bot only reads the files, so production needs no text-to-speech key and has no audio cost. Generating is a one-time dev step (`pnpm generate-audio`, needs `ELEVENLABS_API_KEY` and `ffmpeg`); see [`docs/SPEAKING.md`](docs/SPEAKING.md). The audio is **not** covered by this repo's MIT license, see [`NOTICE`](NOTICE).
 
 ## Scripts
 

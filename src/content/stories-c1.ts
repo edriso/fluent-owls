@@ -110,4 +110,25 @@ export const c1Stories: Story[] = [
     note: `"the tree is gone, but the garden is not" holds the theme.`,
     audio: 'c1-st-015.ogg',
   },
+  {
+    id: 'c1-st-016',
+    title: 'The unfinished bridge',
+    text: `An engineer spent his career building a great bridge across a wide river. He died before it was complete, certain that he had failed. His students finished the final span using his careful plans. On opening day, no one remembered who had laid the last stone, only that the bridge stood and held. He had built something larger than the years he was given. Not every work is finished by the one who begins it.`,
+    note: `"larger than the years he was given" reframes an unfinished life.`,
+    audio: 'c1-st-016.ogg',
+  },
+  {
+    id: 'c1-st-017',
+    title: 'The patient interviewer',
+    text: `A manager was known for hiring well, though her method puzzled people. She asked few clever questions. Instead, she simply listened, longer than felt comfortable, until the real person appeared behind the rehearsed answers. Most people, she found, reveal themselves in the silences they rush to fill. Her gift was not asking, but waiting.`,
+    note: `"not asking, but waiting" names the surprising skill.`,
+    audio: 'c1-st-017.ogg',
+  },
+  {
+    id: 'c1-st-018',
+    title: 'The one reader',
+    text: `A poet published a book that almost no one bought, and he nearly stopped writing. Then a letter arrived from a stranger in a distant town, describing exactly how one poem had helped her through a hard winter. He kept that letter for the rest of his life. He had reached one reader completely, which was worth more than reaching a thousand halfway.`,
+    note: `Depth over reach: one reader fully, not a thousand halfway.`,
+    audio: 'c1-st-018.ogg',
+  },
 ];

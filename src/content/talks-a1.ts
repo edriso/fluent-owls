@@ -96,4 +96,25 @@ export const a1Talks: Talk[] = [
     note: `Try this: write one small, clear goal for this week.`,
     audio: 'a1-tk-013.ogg',
   },
+  {
+    id: 'a1-tk-014',
+    topic: 'Drink enough water',
+    text: 'Your body needs water every day. When you do not drink enough, you can feel tired, and your head can hurt. Water helps your body and your mind work well. Keep a bottle near you. Drink some in the morning, and many times in the day. It is a small habit, but it helps a lot.',
+    note: `Try this: drink a glass of water when you wake up.`,
+    audio: 'a1-tk-014.ogg',
+  },
+  {
+    id: 'a1-tk-015',
+    topic: 'Spend time outside',
+    text: 'Fresh air is good for you. Sitting inside all day can make you tired. Try to go outside every day, even for a short time. Walk in a park. Look at the trees and the sky. A few minutes outside can make your mind feel calm and fresh.',
+    note: `Try this: go outside for a short walk once a day.`,
+    audio: 'a1-tk-015.ogg',
+  },
+  {
+    id: 'a1-tk-016',
+    topic: 'Be kind to people',
+    text: 'Kindness is easy, and it makes the world better. You can smile at someone. You can say a kind word. You can help a person carry a bag. These small things cost nothing. They make other people happy, and they make you happy too. Try to do one kind thing every day.',
+    note: `Try this: do one small kind thing for someone today.`,
+    audio: 'a1-tk-016.ogg',
+  },
 ];

@@ -110,4 +110,25 @@ export const a2Stories: Story[] = [
     note: `"bit by bit" shows slow, patient effort.`,
     audio: 'a2-st-012.ogg',
   },
+  {
+    id: 'a2-st-016',
+    title: 'The shared umbrella',
+    text: 'It was raining hard, and Omar had no umbrella. A woman next to him at the bus stop saw this. She shared her umbrella with him. They talked while they waited. When the rain stopped, they were new friends. Sometimes a small problem brings a nice surprise.',
+    note: `"while" and "when" link the actions in time.`,
+    audio: 'a2-st-016.ogg',
+  },
+  {
+    id: 'a2-st-017',
+    title: 'The warm bread',
+    text: 'A new family moved in next door. Nobody knew them, so they felt alone. One evening, Sara made some warm bread and gave it to them. They were very happy. After that day, the two families became good friends. A small gift can open a door.',
+    note: `"so" gives a reason; "after that day" marks a change.`,
+    audio: 'a2-st-017.ogg',
+  },
+  {
+    id: 'a2-st-018',
+    title: 'The one book',
+    text: 'Ali never liked reading. One day, his teacher gave him a book about space. At first, he did not open it. Then, one quiet night, he started to read, and he could not stop. Now he reads every week. One good book can change everything.',
+    note: `"At first... Then... Now" shows how he changed over time.`,
+    audio: 'a2-st-018.ogg',
+  },
 ];
