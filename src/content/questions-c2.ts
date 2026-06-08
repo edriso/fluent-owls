@@ -509,4 +509,37 @@ export const c2Questions: QuizQuestion[] = [
     explanation: "'Whatever its merits' concedes the point: no matter what merits it has.",
     topic: 'grammar',
   },
+  {
+    id: 'c2-061',
+    prompt:
+      "A few words of genuine ____ at the right moment can change the whole course of someone's life.",
+    options: ['discouragement', 'indifference', 'encouragement', 'resentment'],
+    correctIndex: 2,
+    explanation: "'Encouragement' is support that gives someone confidence and hope.",
+    topic: 'vocabulary',
+  },
+  {
+    id: 'c2-062',
+    prompt: 'A good teacher knows how to ____ her students up when their confidence is low.',
+    options: ['let', 'put', 'turn', 'lift'],
+    correctIndex: 3,
+    explanation: "'Lift someone up' means to encourage them and raise their spirits.",
+    topic: 'phrasal-verbs',
+  },
+  {
+    id: 'c2-063',
+    prompt: 'A true friend shows unwavering ____, staying close even when it is inconvenient.',
+    options: ['jealousy', 'indifference', 'loyalty', 'rivalry'],
+    correctIndex: 2,
+    explanation: "'Loyalty' is firm, faithful support for someone over time.",
+    topic: 'vocabulary',
+  },
+  {
+    id: 'c2-064',
+    prompt: 'Real friends ____ up for each other in hard times, without being asked.',
+    options: ['give', 'make', 'back', 'show'],
+    correctIndex: 3,
+    explanation: "'Show up for someone' means to be present and support them when it matters.",
+    topic: 'phrasal-verbs',
+  },
 ];
