@@ -90,4 +90,25 @@ export const c2Stories: Story[] = [
     note: `The whole career distilled into "pay attention".`,
     audio: 'c2-st-012.ogg',
   },
+  {
+    id: 'c2-st-013',
+    title: "The philosopher's silence",
+    text: `A renowned philosopher was famous for his dazzling arguments, winning every debate. Late in life, a student asked him for his greatest lesson. He paused for a long time, then said only that he had spent his youth learning to speak, and his old age learning when not to. The student understood: the sharpest mind he had ever met now valued silence above victory.`,
+    note: `Knowing when not to speak as the final wisdom.`,
+    audio: 'c2-st-013.ogg',
+  },
+  {
+    id: 'c2-st-014',
+    title: 'The inheritance',
+    text: `A dying man left his two sons a single instruction: divide the estate so that one brother cuts and the other chooses. They expected a trick. Instead, they found that fairness was built into the method itself; neither could cheat without harming his own share. Long after the money was spent, they kept the lesson: a good system makes good behaviour easy.`,
+    note: `"a good system makes good behaviour easy" is the takeaway.`,
+    audio: 'c2-st-014.ogg',
+  },
+  {
+    id: 'c2-st-015',
+    title: 'The empty frame',
+    text: `In a great gallery hung a single empty frame, labelled only "Your attention". Visitors laughed, photographed it, and moved on. One woman, however, simply stood and looked at the blank wall for a long while. She later said it was the only piece that had asked something of her rather than performing for her. The emptiest frame, she thought, had been the fullest.`,
+    note: `A quiet comment on attention in a world that performs for us.`,
+    audio: 'c2-st-015.ogg',
+  },
 ];

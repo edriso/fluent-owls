@@ -75,4 +75,25 @@ export const c1Talks: Talk[] = [
     note: `Try this: be specific, "the warm light this morning" beats "my home".`,
     audio: 'c1-tk-010.ogg',
   },
+  {
+    id: 'c1-tk-011',
+    topic: 'Reading as a deliberate practice',
+    text: 'Deep, sustained reading is quietly under threat, crowded out by feeds designed to fragment attention. Yet few habits repay the effort so richly: a larger vocabulary, sharper focus, and the empathy that comes from inhabiting other minds. The aim is not dutiful self-improvement but genuine pleasure; we read most when we read what we love. Protect a small daily slot, note the words and ideas that strike you, and let the habit compound over years.',
+    note: `Try this: keep a running note of words and ideas worth remembering.`,
+    audio: 'c1-tk-011.ogg',
+  },
+  {
+    id: 'c1-tk-012',
+    topic: 'The quiet discipline of money',
+    text: 'Sound personal finance rests on a few unglamorous principles, consistently applied. Spend less than you earn, save and invest the surplus automatically, hold a buffer for emergencies, and avoid borrowing for things that lose value. Wealth, for most people, is built less by clever bets than by steady habits and patience. The real prize is not riches but freedom from financial anxiety.',
+    note: `Try this: automate the saving so it happens without a decision.`,
+    audio: 'c1-tk-012.ogg',
+  },
+  {
+    id: 'c1-tk-013',
+    topic: 'Designing goals that endure',
+    text: 'We tend to blame willpower for failed goals, when the fault usually lies in their design. Effective goals are specific, measurable, and reduced to a tiny next action anchored to an existing habit. Wise goal-setters focus on the system rather than the outcome, track progress where they can see it, and treat setbacks as data rather than defeat. Consistency, not intensity, is what carries a goal across the months.',
+    note: `Try this: judge a goal by whether its next step is obvious and small.`,
+    audio: 'c1-tk-013.ogg',
+  },
 ];

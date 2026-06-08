@@ -75,4 +75,25 @@ export const a1Talks: Talk[] = [
     note: `Try this: name one good thing from your day each night.`,
     audio: 'a1-tk-010.ogg',
   },
+  {
+    id: 'a1-tk-011',
+    topic: 'Read every day',
+    text: 'Reading is good for your mind. Try to read a little every day. It can be a book, a short story, or the news. Even ten minutes helps. The more you read, the better your English gets.',
+    note: `Try this: read for ten minutes every day.`,
+    audio: 'a1-tk-011.ogg',
+  },
+  {
+    id: 'a1-tk-012',
+    topic: 'Save a little money',
+    text: 'It is good to save money. Each week, put a small amount away. Do not spend all of it. Over time, small amounts grow into more. A little saving gives you peace of mind.',
+    note: `Try this: save a small amount each week, before you spend.`,
+    audio: 'a1-tk-012.ogg',
+  },
+  {
+    id: 'a1-tk-013',
+    topic: 'Set a small goal',
+    text: 'A goal gives you something to aim for. Make it small and clear. For example, "I will walk every day." Write it down. Check it each week. Small goals are easy to reach.',
+    note: `Try this: write one small, clear goal for this week.`,
+    audio: 'a1-tk-013.ogg',
+  },
 ];

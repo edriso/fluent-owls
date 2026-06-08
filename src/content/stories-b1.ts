@@ -89,4 +89,25 @@ export const b1Stories: Story[] = [
     note: `A fable about honesty: the only true pot was the empty one.`,
     audio: 'b1-st-012.ogg',
   },
+  {
+    id: 'b1-st-013',
+    title: 'The wrong bag',
+    text: `At the airport, a man grabbed the wrong bag by mistake. Inside, he found a child's drawings and a note that read, "For Grandma." Instead of leaving it, he tracked down the owner and posted it back. Weeks later, a thank-you card arrived, signed by a little girl. He kept it for years.`,
+    note: `A small effort for a stranger becomes a lasting memory.`,
+    audio: 'b1-st-013.ogg',
+  },
+  {
+    id: 'b1-st-014',
+    title: 'The quiet volunteer',
+    text: `Every Saturday, a woman cleaned the small park, alone and unpaid. People barely noticed. When she fell ill and stopped, the park slowly filled with litter. Only then did the neighbours see how much one quiet person had done. They formed a group to continue her work.`,
+    note: `We often notice quiet good work only once it stops.`,
+    audio: 'b1-st-014.ogg',
+  },
+  {
+    id: 'b1-st-015',
+    title: 'The second chance',
+    text: `A young man failed his driving test three times. Embarrassed, he almost gave up. His sister reminded him that the only real failure was quitting. He practised for one more month and passed. Years later, he taught his own daughter to drive, with the same patience.`,
+    note: `"the only real failure was quitting" is the lesson.`,
+    audio: 'b1-st-015.ogg',
+  },
 ];

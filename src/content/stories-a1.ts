@@ -90,4 +90,25 @@ export const a1Stories: Story[] = [
     note: `A gentle, open ending: "Maybe one day..."`,
     audio: 'a1-st-012.ogg',
   },
+  {
+    id: 'a1-st-013',
+    title: 'The kind bus driver',
+    text: `A bus driver saw a boy running for the bus. The boy was far away. The driver waited for him. The boy got on and said thank you with a big smile. A small kind act made the boy happy all day.`,
+    note: `Past simple verbs: saw, waited, got, said, made.`,
+    audio: 'a1-st-013.ogg',
+  },
+  {
+    id: 'a1-st-014',
+    title: 'The shared lunch',
+    text: `Two children sat together at school. One of them forgot his lunch. The other child shared her food with him. They ate and laughed together. From that day, they were best friends.`,
+    note: `"From that day" marks the start of something new.`,
+    audio: 'a1-st-014.ogg',
+  },
+  {
+    id: 'a1-st-015',
+    title: 'The brave little dog',
+    text: `A small dog lived with a family. One night, it barked and barked. It woke everyone up. There was a fire in the kitchen. The little dog saved them all. Now they call it a hero.`,
+    note: `Short, clear sentences build to a happy ending.`,
+    audio: 'a1-st-015.ogg',
+  },
 ];

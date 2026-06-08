@@ -75,4 +75,25 @@ export const a2Talks: Talk[] = [
     note: `Try this: list three good things at the end of each day.`,
     audio: 'a2-tk-010.ogg',
   },
+  {
+    id: 'a2-tk-011',
+    topic: 'The habit of reading',
+    text: 'Reading every day is one of the best habits you can build. It grows your vocabulary, helps you focus, and relaxes your mind. You do not need long books. Read what you enjoy, even for ten minutes before bed. Little by little, it becomes a natural part of your day.',
+    note: `Try this: keep a book by your bed and read a page each night.`,
+    audio: 'a2-tk-011.ogg',
+  },
+  {
+    id: 'a2-tk-012',
+    topic: 'Be smart with money',
+    text: 'Saving money is a skill anyone can learn. A simple rule is to save a little before you spend, not after. Keep track of where your money goes for one week; the result often surprises people. Small, steady saving beats trying to save a lot all at once.',
+    note: `Try this: save first, then spend what is left.`,
+    audio: 'a2-tk-012.ogg',
+  },
+  {
+    id: 'a2-tk-013',
+    topic: 'Set goals that work',
+    text: 'A good goal is clear and small enough to start today. Instead of "get fit", try "walk 20 minutes, three times a week". Write it down and check your progress. When you reach it, set the next one. Clear, small goals keep you moving forward.',
+    note: `Try this: make your goal specific and easy to measure.`,
+    audio: 'a2-tk-013.ogg',
+  },
 ];

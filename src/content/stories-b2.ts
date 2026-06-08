@@ -89,4 +89,25 @@ export const b2Stories: Story[] = [
     note: `"not for the bargains, but for the feeling of being known" lands it.`,
     audio: 'b2-st-012.ogg',
   },
+  {
+    id: 'b2-st-013',
+    title: 'The interview that changed him',
+    text: `A confident graduate breezed through interviews, certain he deserved the best job. He was rejected again and again. Finally, an honest interviewer told him the truth: his skills were fine, but he never listened. Stung, he learned to ask questions and truly hear the answers. At the next interview he got the job, and kept it for a decade.`,
+    note: `The turning point is learning to listen, not to talk.`,
+    audio: 'b2-st-013.ogg',
+  },
+  {
+    id: 'b2-st-014',
+    title: "The neighbour's wall",
+    text: `Two neighbours argued for years over a crumbling wall between their gardens, each refusing to pay. One harsh winter, the wall finally fell. Rather than argue again, one of them simply began to rebuild it alone. Quietly, the other came out and joined him. By spring, they had a new wall and, to their surprise, a friendship.`,
+    note: `Action, not argument, repaired both the wall and the bond.`,
+    audio: 'b2-st-014.ogg',
+  },
+  {
+    id: 'b2-st-015',
+    title: 'The recipe',
+    text: `A famous chef guarded her signature recipe for years, fearing others would steal it. A young cook begged to learn. Reluctantly, she taught him, and to her shock, he improved it. Instead of anger, she felt pride. She realised that knowledge shared does not shrink; it grows in new hands.`,
+    note: `"knowledge shared does not shrink; it grows" is the point.`,
+    audio: 'b2-st-015.ogg',
+  },
 ];

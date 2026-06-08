@@ -48,6 +48,27 @@ export const a2Stories: Story[] = [
     audio: 'a2-st-006.ogg',
   },
   {
+    id: 'a2-st-013',
+    title: 'The honest taxi driver',
+    text: `A woman left her phone in a taxi. She was sure it was gone forever. An hour later, the driver came back to return it. He had driven right across the city. She tried to give him money, but he only smiled. Honesty, he said, was free.`,
+    note: `Notice "had driven" (past perfect) for the earlier action.`,
+    audio: 'a2-st-013.ogg',
+  },
+  {
+    id: 'a2-st-014',
+    title: 'The patient teacher',
+    text: `A boy found it very hard to read. Some children laughed at him, but his teacher never gave up. Every day, she helped him a little more. One morning, he read a whole page alone. The class was silent, and then everyone cheered.`,
+    note: `"never gave up" carries the heart of the story.`,
+    audio: 'a2-st-014.ogg',
+  },
+  {
+    id: 'a2-st-015',
+    title: 'The garden on the roof',
+    text: `An old man had no garden, so he grew plants on his roof. His neighbours thought it was strange. Then they tasted his tomatoes. Soon, the whole building had a rooftop garden. One small idea fed everyone.`,
+    note: `"so" links the problem to his clever solution.`,
+    audio: 'a2-st-015.ogg',
+  },
+  {
     id: 'a2-st-007',
     title: 'The broken phone',
     text: `Dan dropped his phone and the screen broke. He was upset all morning. But without his phone, he started talking to people on the bus. He even helped a lost tourist find her hotel. By evening, he felt the broken phone had given him a better day.`,

@@ -75,4 +75,25 @@ export const b2Talks: Talk[] = [
     note: `Try this: write three specific things you appreciate today.`,
     audio: 'b2-tk-010.ogg',
   },
+  {
+    id: 'b2-tk-011',
+    topic: 'The case for reading widely',
+    text: 'In an age of short videos and endless scrolling, deep reading is becoming a rare and valuable skill. It strengthens attention, expands vocabulary, and builds empathy by placing you inside other minds. The trick is not discipline but enjoyment: read what genuinely grips you, fiction or non-fiction, and protect a small daily slot. Over time, a reading habit quietly reshapes how clearly you think and speak.',
+    note: `Try this: always have a book within reach, on paper or your phone.`,
+    audio: 'b2-tk-011.ogg',
+  },
+  {
+    id: 'b2-tk-012',
+    topic: 'Sensible money habits',
+    text: 'Personal finance is simpler than the industry suggests. Spend less than you earn, save and invest the difference steadily, and keep an emergency fund for surprises. Automate your savings so willpower is not required, and be wary of debt for things that lose value. The goal is not to obsess over money, but to remove it as a source of stress.',
+    note: `Try this: build a small emergency fund before anything else.`,
+    audio: 'b2-tk-012.ogg',
+  },
+  {
+    id: 'b2-tk-013',
+    topic: 'Setting goals you will actually keep',
+    text: 'Ambitious goals often fail not from weak willpower but from poor design. Make goals specific and measurable, break them into the smallest next action, and attach that action to an existing routine. Focus on the process you can control, not only the outcome you cannot. Track progress visibly, expect setbacks, and adjust rather than quit. Systems, repeated, outperform motivation.',
+    note: `Try this: define the single next action, and exactly when you will do it.`,
+    audio: 'b2-tk-013.ogg',
+  },
 ];

@@ -75,4 +75,25 @@ export const b1Talks: Talk[] = [
     note: `Try this: keep a short gratitude note for one week.`,
     audio: 'b1-tk-010.ogg',
   },
+  {
+    id: 'b1-tk-011',
+    topic: 'Why reading matters',
+    text: 'Reading is a quiet superpower. It builds vocabulary faster than almost anything else, sharpens focus in a world full of distractions, and lets you live a thousand lives. You do not need difficult books. Choose what genuinely interests you, read a little each day, and keep a list of new words. Over a year, that small daily habit adds up to a real change.',
+    note: `Try this: read something you enjoy for 15 minutes a day.`,
+    audio: 'b1-tk-011.ogg',
+  },
+  {
+    id: 'b1-tk-012',
+    topic: 'Simple money habits',
+    text: 'Managing money is less about how much you earn and more about your habits. Three simple ones go a long way: spend less than you earn, save a fixed amount automatically, and avoid debt for things that lose value. Track your spending for a month to see the truth. You do not need to be an expert; you need to be consistent.',
+    note: `Try this: set up an automatic transfer to savings each payday.`,
+    audio: 'b1-tk-012.ogg',
+  },
+  {
+    id: 'b1-tk-013',
+    topic: 'How to set goals that stick',
+    text: 'Most goals fail because they are too big and too vague. The fix is to make them small, specific, and tied to a habit. Instead of "learn English", say "study 20 minutes after breakfast". Track it where you can see it, and focus on the system, not just the result. Tiny, consistent steps beat bursts of motivation every time.',
+    note: `Try this: turn your goal into a daily habit with a fixed time.`,
+    audio: 'b1-tk-013.ogg',
+  },
 ];

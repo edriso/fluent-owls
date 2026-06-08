@@ -89,4 +89,25 @@ export const c1Stories: Story[] = [
     note: `"knowledge grows when it is given away" is the quiet lesson.`,
     audio: 'c1-st-012.ogg',
   },
+  {
+    id: 'c1-st-013',
+    title: 'The locked door',
+    text: `A scholar spent decades trying to open a famous locked door said to hide great wisdom. He tried every key and tool, growing old and bitter. On his last day, frustrated, he simply leaned against it, and it swung open; it had never been locked. The wisdom inside was a single line: most walls are doors we never thought to push.`,
+    note: `The twist reframes a lifelong struggle in one sentence.`,
+    audio: 'c1-st-013.ogg',
+  },
+  {
+    id: 'c1-st-014',
+    title: 'The borrowed voice',
+    text: `A shy poet could never read her work aloud, so a confident friend performed it for her, to great applause. In time, people praised the friend, not the poet. One evening, trembling, she read a poem herself. It was quiet and imperfect, yet the room fell still. Her own voice, however small, carried what no borrowed one could.`,
+    note: `An imperfect true voice beats a polished borrowed one.`,
+    audio: 'c1-st-014.ogg',
+  },
+  {
+    id: 'c1-st-015',
+    title: 'The gardener and the storm',
+    text: `A gardener spent ten years growing a magnificent tree. One night, a storm tore it down. His neighbours expected him to grieve. Instead, he gathered the seeds it had dropped and planted them at dawn. "The tree is gone," he said, "but the garden is not." Loss, he had learned, is rarely the end of growing.`,
+    note: `"the tree is gone, but the garden is not" holds the theme.`,
+    audio: 'c1-st-015.ogg',
+  },
 ];

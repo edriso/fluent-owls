@@ -75,4 +75,25 @@ export const c2Talks: Talk[] = [
     note: `Try this: count the good as carefully as you tend to count the bad.`,
     audio: 'c2-tk-010.ogg',
   },
+  {
+    id: 'c2-tk-011',
+    topic: 'On the lost art of deep reading',
+    text: 'Sustained, immersive reading is among the casualties of an attention economy engineered to keep us skimming. The loss is subtle but real, for deep reading does what scrolling cannot: it builds vocabulary, lengthens attention, and cultivates empathy by lodging us inside other minds. The recovery is not a matter of grim discipline but of rediscovered pleasure. Choose what truly absorbs you, defend a daily half-hour, and let the slow accumulation reshape how you think.',
+    note: `Try this: treat a daily reading slot as seriously as you treat sleep.`,
+    audio: 'c2-tk-011.ogg',
+  },
+  {
+    id: 'c2-tk-012',
+    topic: 'The unglamorous truth about money',
+    text: 'Personal finance, stripped of its mystique, reduces to a handful of durable habits: live below your means, save and invest the difference automatically, keep a cushion against misfortune, and shun debt for things that lose value. The industry profits from complexity, but the fundamentals are almost boring in their simplicity. The point is not accumulation for its own sake, but the quiet freedom that a margin of safety affords.',
+    note: `Try this: measure wealth in months of freedom, not in possessions.`,
+    audio: 'c2-tk-012.ogg',
+  },
+  {
+    id: 'c2-tk-013',
+    topic: 'The architecture of lasting goals',
+    text: 'We habitually mistake a failure of design for a failure of will. Goals endure when they are specific, measurable, and distilled into a next action so small that beginning is almost effortless, then anchored to an established routine. The thoughtful practitioner attends to the system rather than the outcome, makes progress visible, and reframes setbacks as information. In the end, identity is the deepest lever: act consistently, and you become the person for whom the goal is simply normal.',
+    note: `Try this: ask who you must become, not merely what you must do.`,
+    audio: 'c2-tk-013.ogg',
+  },
 ];
