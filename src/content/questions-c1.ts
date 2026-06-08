@@ -90,7 +90,7 @@ export const c1Questions: QuizQuestion[] = [
   },
   {
     id: 'c1-010',
-    prompt: 'Passengers are kindly asked to ____ from smoking inside the station.',
+    prompt: 'Passengers are kindly asked to ____ from eating inside the station.',
     options: ['restrain', 'refrain', 'retain', 'refresh'],
     correctIndex: 1,
     explanation:
@@ -240,7 +240,7 @@ export const c1Questions: QuizQuestion[] = [
   },
   {
     id: 'c1-028',
-    prompt: 'Smoking is strictly ____ inside the building.',
+    prompt: 'Flash photography is strictly ____ inside the museum.',
     options: ['inhibited', 'prohibited', 'exhibited', 'inhabited'],
     correctIndex: 1,
     explanation: "'Prohibited' means forbidden. 'Inhibit' means to slow or restrain a process.",

@@ -63,7 +63,7 @@ export const b1Questions: QuizQuestion[] = [
   },
   {
     id: 'b1-007',
-    prompt: "I'm trying to ____ smoking this year.",
+    prompt: "I'm trying to ____ sugar this year.",
     options: ['give in', 'give up', 'give out', 'give away'],
     correctIndex: 1,
     explanation: "'Give up' means to stop doing something. 'Give in' means to surrender.",
@@ -419,7 +419,7 @@ export const b1Questions: QuizQuestion[] = [
   },
   {
     id: 'b1-051',
-    prompt: 'He finally ____ smoking last year.',
+    prompt: 'He finally ____ fast food last year.',
     options: ['gave up', 'gave in', 'gave away', 'gave off'],
     correctIndex: 0,
     explanation: "'Give up' means to stop a habit. 'Give away' means to donate.",

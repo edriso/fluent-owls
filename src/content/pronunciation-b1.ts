@@ -29,7 +29,7 @@ export const b1Pronunciation: PronunciationDrill[] = [
     focus: 'minimal-pair',
     title: 'vest vs west',
     explanation: `"v" rests the top teeth on the bottom lip; "w" rounds the lips with no teeth.`,
-    items: ['vest, west', 'vine, wine', 'veil, wail', 'The west wind is cold.'],
+    items: ['vest, west', 'vent, went', 'veil, wail', 'The west wind is cold.'],
     note: `For v, the top teeth touch the bottom lip and buzz.`,
     audio: 'b1-pn-003.ogg',
   },

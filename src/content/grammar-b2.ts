@@ -205,7 +205,7 @@ export const b2Grammar: GrammarRule[] = [
     id: 'b2-gr-018',
     rule: `Verbs that change meaning: stop, remember, try`,
     explanation: `Some verbs mean something different with -ing or with "to".`,
-    examples: ['I stopped smoking.', 'I stopped to smoke.', 'Remember to lock the door.'],
+    examples: ['I stopped eating.', 'I stopped to eat.', 'Remember to lock the door.'],
     note: `stop doing = quit it; stop to do = pause in order to do it.`,
     audio: 'b2-gr-018.ogg',
   },

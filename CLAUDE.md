@@ -200,6 +200,19 @@ No test needs a real bot token, a specific audio file, or a database; `vitest.co
 - **`generate-audio` must not import `src/config`**: that would require `BOT_TOKEN` just to make audio. It loads env via the kernel's `loadEnv` and reads `ELEVENLABS_*` directly.
 - **The shadowing caption and the phrase message are pinned/escaped too**: `buildShadowingCaption` wraps the plain-text caption in an LTR isolate (same RTL-mirroring fix as the poll); `buildPhraseMessage` is HTML and escapes `& < >`. Keep both in mind when editing `format.ts`.
 
+## Content values (halal, family-friendly)
+
+This is a Muslim-run channel. ALL content must be halal and wholesome, the kind anyone of any age can read without harm:
+
+- **No haram themes, not even in passing.** Do not mention or normalize alcohol (wine, beer, etc.), smoking/vaping, gambling, pork, dating/romance, or anything that could nudge a reader to try a forbidden thing or treat it as normal. This applies to every field a learner sees: quiz sentences, options, grammar examples, dialogues, stories, talks, idioms, pronunciation items, everything. A health message like "quit smoking" is still off limits here; just pick a neutral topic (sugar, fast food, a bad habit) instead.
+- **No bad language.** No profanity, slurs, swear words (the "F word" and the like), crude insults, or vulgarity. Keep it clean and kind.
+- **No adult or violent content.** Nothing sexual, gory, or otherwise unsuitable for all ages.
+- **Prefer genuinely good content.** Topics that build the learner up: useful skills, good character, family, learning, health (framed positively), nature, work, kindness. The talks bank in particular sticks to mainstream, safely-framed advice (no medical claims).
+
+When in doubt, choose the wholesome option. If you ever find content that breaks these rules, replace it with a clean alternative and regenerate its audio (`pnpm generate-audio`) so the spoken clip matches.
+
+(Note for maintainers: a commit like "talks (+18)" means eighteen items were added; it is NOT an age rating. All content here is all-ages.)
+
 ## Style and Git
 
 - Plain, junior-friendly English in both content and comments. Short sentences.
