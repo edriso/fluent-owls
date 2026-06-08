@@ -117,4 +117,18 @@ export const b1Talks: Talk[] = [
     note: `Try this: wait one hour before checking your phone in the morning.`,
     audio: 'b1-tk-016.ogg',
   },
+  {
+    id: 'b1-tk-017',
+    topic: 'Manage your energy, not just your time',
+    text: 'We spend a lot of effort managing our time, but we often ignore something just as important: our energy. You can have a free hour and still get nothing done if you are tired and drained. Notice when in the day you feel sharp and alert, and save your hardest work for those hours. Rest, food, movement, and sleep all refill your energy. A short break at the right moment can be worth more than another hour of tired effort.',
+    note: `Try this: do your most important task during your highest-energy hour.`,
+    audio: 'b1-tk-017.ogg',
+  },
+  {
+    id: 'b1-tk-018',
+    topic: 'How to take feedback well',
+    text: 'Feedback can be hard to hear, but it is one of the fastest ways to improve. The trick is to separate the message from your feelings. When someone points out a weakness, try not to defend yourself at once. Instead, listen, thank them, and ask a question to understand better. You do not have to agree with everything, but look for the useful part. People who can take honest feedback grow far faster than those who only want praise.',
+    note: `Try this: next time you get feedback, just say "thank you" and think it over.`,
+    audio: 'b1-tk-018.ogg',
+  },
 ];

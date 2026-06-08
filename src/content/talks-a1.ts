@@ -117,4 +117,18 @@ export const a1Talks: Talk[] = [
     note: `Try this: do one small kind thing for someone today.`,
     audio: 'a1-tk-016.ogg',
   },
+  {
+    id: 'a1-tk-017',
+    topic: 'Spend time with family',
+    text: 'Family time is special. We are often busy with work and phones, and the days go by fast. Try to spend a little real time with your family every day. Eat a meal together. Ask about their day. Listen well. These small moments build strong, happy bonds that last for years.',
+    note: `Try this: eat one meal with your family, with no phones.`,
+    audio: 'a1-tk-017.ogg',
+  },
+  {
+    id: 'a1-tk-018',
+    topic: 'Move a little every hour',
+    text: 'Sitting for a long time is not good for your body. Try to move a little every hour. Stand up. Stretch your arms. Walk around the room. It only takes one minute. These small breaks help your back, your legs, and your mind. A body that moves feels better.',
+    note: `Try this: stand up and stretch once every hour.`,
+    audio: 'a1-tk-018.ogg',
+  },
 ];

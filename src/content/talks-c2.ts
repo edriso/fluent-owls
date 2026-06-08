@@ -117,4 +117,11 @@ export const c2Talks: Talk[] = [
     note: `Try this: spend ten quiet minutes alone, with no screen, today.`,
     audio: 'c2-tk-016.ogg',
   },
+  {
+    id: 'c2-tk-017',
+    topic: 'Playing the long game',
+    text: 'Almost everything worthwhile rewards patience over speed: health, mastery, trust, and reputation are all built slowly and lost quickly. Yet we are constantly pulled toward the short term, toward the quick win, the instant reply, the easy shortcut that costs us later. Playing the long game means making choices today that your future self will thank you for, even when they bring no immediate reward. It is the willingness to plant trees whose shade you may never sit in. Those who think in years, while others think in minutes, quietly end up living a different kind of life.',
+    note: `Try this: make one small choice today that helps you a year from now.`,
+    audio: 'c2-tk-017.ogg',
+  },
 ];

@@ -117,4 +117,11 @@ export const c1Talks: Talk[] = [
     note: `Try this: take the first small step on something you have been delaying.`,
     audio: 'c1-tk-016.ogg',
   },
+  {
+    id: 'c1-tk-017',
+    topic: 'The art of being content',
+    text: 'Modern life runs on the quiet message that you do not yet have enough: not enough success, not enough possessions, not enough status. There is always a newer thing to want. Contentment is the rare skill of noticing what is already good in your life, without pretending that nothing could ever be better. It is not laziness or giving up; it is refusing to let an endless chase steal your peace. The person who has learned to feel that they have enough is, in a real sense, rich, whatever their bank balance says.',
+    note: `Try this: each day, name three things you already have and value.`,
+    audio: 'c1-tk-017.ogg',
+  },
 ];

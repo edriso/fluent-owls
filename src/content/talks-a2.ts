@@ -117,4 +117,18 @@ export const a2Talks: Talk[] = [
     note: `Try this: take a five-minute break after every focused session.`,
     audio: 'a2-tk-016.ogg',
   },
+  {
+    id: 'a2-tk-017',
+    topic: 'Write things down',
+    text: 'Our minds are good at thinking, but not so good at remembering everything. When you try to keep all your tasks and ideas in your head, you feel stressed and you forget things. The answer is simple: write them down. Keep a small notebook, or use your phone. When an idea or a task comes, write it. Your mind feels lighter, and you forget far less.',
+    note: `Try this: write down every task as soon as you think of it.`,
+    audio: 'a2-tk-017.ogg',
+  },
+  {
+    id: 'a2-tk-018',
+    topic: 'Help others when you can',
+    text: 'Helping other people is good for them and for you. When you help someone, they feel cared for, and you feel happy and useful. You do not need to do big things. You can help a neighbour, share what you know, or give a little of your time. Small acts of help make your community kinder, one person at a time.',
+    note: `Try this: offer to help one person with something this week.`,
+    audio: 'a2-tk-018.ogg',
+  },
 ];

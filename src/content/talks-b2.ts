@@ -117,4 +117,18 @@ export const b2Talks: Talk[] = [
     note: `Try this: spend a little more time this week with someone you admire.`,
     audio: 'b2-tk-016.ogg',
   },
+  {
+    id: 'b2-tk-017',
+    topic: 'Why boredom can be good',
+    text: "We have learned to fear boredom, filling every empty moment with a screen. Yet a little boredom is surprisingly valuable. When the mind has nothing to react to, it begins to wander, connect ideas, and create. Many of our best thoughts arrive not when we are busy, but when we are washing dishes or walking with no music. By always reaching for our phones, we may be trading away our own creativity for a steady stream of other people's content. Let yourself be bored sometimes.",
+    note: `Try this: take a short walk with no phone and let your mind wander.`,
+    audio: 'b2-tk-017.ogg',
+  },
+  {
+    id: 'b2-tk-018',
+    topic: 'End your day with a quick review',
+    text: 'Most of us rush from one day into the next without ever looking back. A short daily review changes that. At the end of the day, take just a few minutes to ask three questions: what went well, what did not, and what will I do differently tomorrow? This simple habit turns ordinary experience into real learning. Over weeks and months, those small reflections add up to steady, deliberate growth that most people never reach.',
+    note: `Try this: each night, name one win and one thing to improve.`,
+    audio: 'b2-tk-018.ogg',
+  },
 ];

@@ -29,4 +29,6 @@ grammar examples, monologues, question prompts, pronunciation drills, vocabulary
 entries, idioms, short stories, useful talks, and native phrases. Voices used
 (ElevenLabs premade), one per CEFR level:
   A1 Sarah, A2 Brian, B1 Rachel, B2 Adam, C1 Matilda, C2 Bill.
-Dialogues and question prompts pair two of these voices per level.
+Dialogues and question prompts pair two of these voices per level. The talks bank
+rotates through a wider set of American premade voices for variety, adding:
+  Aria, Roger, Laura, Liam.

@@ -9,7 +9,8 @@
  *
  * Shadowing, grammar, and monologues are one voice. Dialogues and prompts use
  * two voices stitched with a gap (a short breath for dialogues; a longer pause
- * for prompts, so the learner can answer before the model).
+ * for prompts, so the learner can answer before the model). Talks rotate through
+ * a set of American voices (one per talk, by id) so the bank has variety.
  *
  * It is idempotent: a clip whose .ogg already exists is skipped, so after adding
  * content you just run it again and only the new items are generated.
@@ -73,8 +74,33 @@ const VOICE_B_BY_LEVEL: Record<Level, { id: string; name: string }> = {
   c2: { id: 'EXAVITQu4vr4xnSDxMaL', name: 'Sarah' },
 };
 
+// A set of distinct American ElevenLabs premade voices used ONLY for the talks
+// bank, so the long talks do not all sound like a single narrator. Each talk is
+// assigned one of these by a stable hash of its id (same talk, same voice every
+// run). All are American, all are on every account. FORCED_VOICE still wins.
+const AMERICAN_TALK_VOICES: { id: string; name: string }[] = [
+  { id: 'EXAVITQu4vr4xnSDxMaL', name: 'Sarah' },
+  { id: 'nPczCjzI2devNBz1zQrb', name: 'Brian' },
+  { id: '21m00Tcm4TlvDq8ikWAM', name: 'Rachel' },
+  { id: 'pNInz6obpgDQGcFmaJgB', name: 'Adam' },
+  { id: 'XrExE9yKIg1WjnnlVkGX', name: 'Matilda' },
+  { id: 'pqHfZKP75CvOlQylNhV4', name: 'Bill' },
+  { id: '9BWtsMINqrJLrRacOk9x', name: 'Aria' },
+  { id: 'CwhRBWXzGAHq8TQ4Fs17', name: 'Roger' },
+  { id: 'FGY2WhTYpPnrIDTdsKH5', name: 'Laura' },
+  { id: 'TX3LPaxmHKxFdv7VOQHJ', name: 'Liam' },
+];
+
 const MODEL_ID = process.env.ELEVENLABS_MODEL_ID?.trim() || 'eleven_multilingual_v2';
 const FORCED_VOICE = process.env.ELEVENLABS_VOICE_ID?.trim();
+
+/** Pick a talk's American voice deterministically from its id (for variety). */
+function voiceForTalk(id: string): string {
+  if (FORCED_VOICE) return FORCED_VOICE;
+  let h = 0;
+  for (let i = 0; i < id.length; i += 1) h = (h * 31 + id.charCodeAt(i)) >>> 0;
+  return AMERICAN_TALK_VOICES[h % AMERICAN_TALK_VOICES.length]!.id;
+}
 
 /** Voice for speaker A (single-voice shadowing also uses this). */
 function voiceA(level: Level): string {
@@ -363,13 +389,15 @@ function allJobs(): Job[] {
     kind: 'story',
     segments: [{ text: s.text, voiceId: voiceA(s.level) }],
   }));
-  // Talks: the whole informative passage read in one voice, like a story.
+  // Talks: the whole informative passage read in one voice. Unlike the other
+  // types, talks rotate through a set of American voices (by id) so the bank does
+  // not sound like one narrator. See voiceForTalk / AMERICAN_TALK_VOICES.
   const talk: Job[] = ALL_TALKS.map((t) => ({
     id: t.id,
     level: t.level,
     audio: t.audio,
     kind: 'talk',
-    segments: [{ text: t.text, voiceId: voiceA(t.level) }],
+    segments: [{ text: t.text, voiceId: voiceForTalk(t.id) }],
   }));
   return [
     ...shadow,
