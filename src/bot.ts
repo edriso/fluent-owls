@@ -78,7 +78,7 @@ export function buildBot(): Bot {
       [
         '🦉 Hi! Fluent Owls posts a short daily English set to its Telegram channel.',
         '',
-        'Each evening: three fill-in-the-blank quizzes (with instant explanations), a grammar point, a "say it like a native" phrase, a role-play dialogue, and an audio clip to shadow. A little every day, so you become both correct and well spoken.',
+        'Each evening: three fill-in-the-blank quizzes (with instant explanations), a grammar point, a "say it like a native" phrase, a role-play dialogue, a rotating bonus (a story, idiom, useful talk, and more, a different one each day), and an audio clip to shadow. A little every day, so you become both correct and well spoken.',
         '',
         'Want more right now? Send /listen for any audio clip, or pick a type: /quiz, /grammar, /phrase, /dialogue, /shadow, /monologue, /prompt, /pron, /vocab, /idiom, /story, /talk. Add a level like "b1" to target it (e.g. /story b1), or /help for the full list.' +
           tutorLine,
@@ -91,7 +91,7 @@ export function buildBot(): Bot {
   bot.command('about', async (ctx) => {
     await ctx.reply(
       [
-        'Fluent Owls is a tiny open-source Telegram bot that posts a daily English set to a channel: quizzes, grammar, phrases, role-play dialogues, and audio to shadow.',
+        'Fluent Owls is a tiny Telegram bot that posts a daily English set to a channel: quizzes, grammar, phrases, role-play dialogues, a rotating bonus (stories, idioms, talks, and more), and audio to shadow.',
         'It has no database. All content lives in the source, organized by CEFR level. Audio is pre-generated, so the bot needs no text-to-speech key to run.',
         'Want more anytime? Send /listen for any audio clip, or /help to see every exercise type. Add a level like b1 to target any of them.',
       ].join('\n'),
@@ -425,7 +425,7 @@ export async function setBotProfile(bot: Bot): Promise<void> {
     : [];
   await bot.api.setMyCommands([
     { command: 'start', description: 'What Fluent Owls is and how to join the channel' },
-    { command: 'about', description: 'About this open-source bot' },
+    { command: 'about', description: 'About this bot' },
     { command: 'help', description: 'List everything I can send you' },
     { command: 'listen', description: 'Any audio clip, at random (add a level: /listen b1)' },
     { command: 'quiz', description: 'A random quiz (add a level: /quiz a2)' },

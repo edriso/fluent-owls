@@ -3,7 +3,7 @@ import { schedules } from '../src/schedules';
 import { LEVELS } from '../src/types';
 
 describe('schedules (the daily batch)', () => {
-  it('runs the three quizzes first, then grammar, phrase, dialogue, and shadowing', () => {
+  it('runs the three quizzes first, then grammar, phrase, dialogue, bonus, and shadowing', () => {
     expect(schedules.map((s) => s.name)).toEqual([
       'morning',
       'midday',
@@ -11,6 +11,7 @@ describe('schedules (the daily batch)', () => {
       'grammar',
       'phrase',
       'dialogue',
+      'bonus',
       'shadow',
     ]);
     expect(schedules.map((s) => s.kind)).toEqual([
@@ -20,6 +21,7 @@ describe('schedules (the daily batch)', () => {
       'grammar',
       'phrase',
       'dialogue',
+      'bonus',
       'shadow',
     ]);
   });

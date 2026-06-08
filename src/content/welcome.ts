@@ -10,6 +10,7 @@ One set lands together each evening, with a single notification:
 • 📘 a grammar point, with examples you can hear
 • 🗣️ a "say it like a native" phrase for a real situation
 • 🎭 a role-play mini-dialogue (two voices) to act out
+• 🎁 a rotating bonus: a short story, an idiom, a useful talk, and more (a different one each day)
 • 🎧 an audio clip to shadow (listen and repeat)
 
 <b>How the quizzes work</b>
@@ -23,7 +24,7 @@ One set lands together each evening, with a single notification:
 • Two or three times is enough. This is the fastest way to a natural accent.
 
 <b>Want more right now?</b>
-Message <a href="https://t.me/FluentOwlsBot">@FluentOwlsBot</a> and it sends one instantly: /quiz, /grammar, /phrase, /dialogue, /shadow, /monologue (a passage to retell), or /prompt (a question to answer out loud, then compare with a model). You can also just type a grammar topic, like "present perfect", and it replies with the rule and audio examples.
+Message <a href="https://t.me/FluentOwlsBot">@FluentOwlsBot</a> and it sends one instantly: /listen (any audio clip), /quiz, /grammar, /phrase, /dialogue, /shadow, /monologue (a passage to retell), /prompt (a question to answer out loud, then compare with a model), /pron, /vocab, /idiom, /story, or /talk. Send /help to see them all. Add a level to target it, like /story b1. You can also just type a grammar topic, like "present perfect", and it replies with the rule and audio examples.
 
 <b>Want a personal track?</b>
 DM <a href="https://t.me/FluentOwlsBot">@FluentOwlsBot</a> /next and it walks you through everything at your level, in order, and keeps a daily streak (with a gentle daily reminder). Set your level with /level (for example /level b1).

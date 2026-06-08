@@ -8,6 +8,8 @@
  *   pnpm send-test midday     -> B1-B2 quiz
  *   pnpm send-test evening    -> C1-C2 quiz
  *   pnpm send-test phrase     -> today's "say it like a native" phrase
+ *   pnpm send-test dialogue   -> today's role-play dialogue
+ *   pnpm send-test bonus      -> today's rotating bonus (story/idiom/talk/...)
  *   pnpm send-test shadow     -> today's shadowing clip (needs the .ogg generated)
  *   pnpm send-test all        -> the whole daily set, in order
  *

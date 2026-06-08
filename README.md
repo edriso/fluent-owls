@@ -6,6 +6,7 @@ A tiny Telegram bot that posts one short English set to a channel each day, so p
 - **1 grammar point**: a short rule with a plain explanation and example sentences you can hear (text plus audio).
 - **1 "say it like a native" phrase**: a ready-made chunk for a real situation, with when to use it and an example.
 - **1 role-play mini-dialogue**: a short two-voice exchange to act out both sides, for real-conversation practice.
+- **1 rotating bonus**: a different extra type each day (a short story, an idiom, a useful talk, a vocabulary word, a pronunciation drill, a monologue, or a question prompt), so the channel slowly shows off the whole library.
 - **1 shadowing clip**: a short native-audio voice message with the transcript, to listen to and repeat (the fastest drill for a natural rhythm and accent).
 
 Want more at any time? Send the bot **/listen** for any audio clip (add a level like `b1` to target it), or pick a type: **/quiz**, **/grammar**, **/phrase**, **/dialogue**, **/shadow**, **/monologue** (a longer passage to retell), **/prompt** (a question to answer out loud, then compare with a model), **/pron** (a pronunciation drill: a sound contrast or speech feature, with words read aloud to copy), **/vocab** (a useful word taught with meaning and examples), **/idiom** (a common idiom, to sound native), **/story** (a short story to listen to and retell), or **/talk** (a useful talk on focus, health, or habits) and it sends one right away. Add a CEFR level to any of them (for example `/story b1`), or send **/help** for the full menu. No database; each is a stateless random pick.
@@ -38,9 +39,15 @@ the rest are sent silently.
 | 4     | Grammar  | grammar   | all (A1 to C2) | silent       |
 | 5     | Phrase   | phrase    | all (A1 to C2) | silent       |
 | 6     | Dialogue | dialogue  | all (A1 to C2) | silent       |
-| 7     | Shadow   | shadowing | all (A1 to C2) | rings        |
+| 7     | Bonus    | bonus     | all (A1 to C2) | silent       |
+| 8     | Shadow   | shadowing | all (A1 to C2) | rings        |
 
-The quizzes climb the CEFR bands; the grammar, phrase, dialogue, and shadowing
+The "bonus" slot rotates by day of year through the richer types (vocabulary,
+idiom, story, talk, pronunciation, monologue, prompt), so channel followers meet
+the whole library over time without ever DMing the bot. It reuses the
+already-committed audio, so it adds no generation cost.
+
+The quizzes climb the CEFR bands; the grammar, phrase, dialogue, bonus, and shadowing
 slots pool every level and show the level on each post, so learners self-select.
 The batch time is `DAILY_CRON` (default `0 18 * * *`, i.e. 18:00), run in the
 timezone set by `TZ_NAME` (default UTC). Evening on a weekday is when
@@ -108,20 +115,33 @@ The shadowing clips, role-play dialogues, grammar examples, monologues, and ques
 
 ## Scripts
 
-| Command                   | What it does                                                                  |
-| ------------------------- | ----------------------------------------------------------------------------- |
-| `pnpm dev`                | Start the bot locally with hot reload                                         |
-| `pnpm start`              | Run the compiled bot (after `pnpm build`)                                     |
-| `pnpm build`              | Compile TypeScript to `dist/`                                                 |
-| `pnpm test`               | Run unit tests (no network)                                                   |
-| `pnpm typecheck`          | TypeScript with no emit                                                       |
-| `pnpm audit-questions`    | Validate the question banks                                                   |
-| `pnpm audit-speaking`     | Validate the shadowing, dialogue, grammar, monologue, and phrase banks        |
-| `pnpm audit-all`          | Run both content audits                                                       |
-| `pnpm generate-audio`     | Dev only: generate the audio `.ogg` clips (ElevenLabs)                        |
-| `pnpm send-test [slot]`   | Post one slot now (morning/midday/evening/grammar/phrase/dialogue/shadow/all) |
-| `pnpm post-welcome [id?]` | Post the welcome message, or edit it in place by id                           |
-| `pnpm format`             | Prettier across the repo                                                      |
+| Command                   | What it does                                                                                                                                                                               |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `pnpm dev`                | Start the bot locally with hot reload                                                                                                                                                      |
+| `pnpm start`              | Run the compiled bot (after `pnpm build`)                                                                                                                                                  |
+| `pnpm build`              | Compile TypeScript to `dist/`                                                                                                                                                              |
+| `pnpm test`               | Run unit tests (no network)                                                                                                                                                                |
+| `pnpm typecheck`          | TypeScript with no emit                                                                                                                                                                    |
+| `pnpm audit-questions`    | Validate the question banks                                                                                                                                                                |
+| `pnpm audit-speaking`     | Validate every speaking bank (shadowing, dialogue, grammar, monologue, prompt, pronunciation, vocabulary, idiom, story, talk, phrase); add `--require-audio` to fail on any missing `.ogg` |
+| `pnpm audit-all`          | Run both content audits                                                                                                                                                                    |
+| `pnpm generate-audio`     | Dev only: generate the audio `.ogg` clips (ElevenLabs)                                                                                                                                     |
+| `pnpm send-test [slot]`   | Post one slot now (morning/midday/evening/grammar/phrase/dialogue/bonus/shadow/all)                                                                                                        |
+| `pnpm post-welcome [id?]` | Post the welcome message, or edit it in place by id                                                                                                                                        |
+| `pnpm format`             | Prettier across the repo                                                                                                                                                                   |
+
+### Database commands (only for the optional tutor)
+
+These are needed only if you enable the personal tutor with `DATABASE_URL`. With
+it unset, the bot has no database and you never touch these. See
+[`docs/TUTOR.md`](docs/TUTOR.md) for the full setup.
+
+| Command            | What it does                                                                  |
+| ------------------ | ----------------------------------------------------------------------------- |
+| `pnpm db:generate` | Generate the Prisma client (also runs automatically on `pnpm install`)        |
+| `pnpm db:migrate`  | Create and apply a new migration against a dev database (after a schema edit) |
+| `pnpm db:deploy`   | Apply existing migrations to a database (what the deploy step runs)           |
+| `pnpm db:studio`   | Open Prisma Studio to browse the data                                         |
 
 ## Why no database by default
 

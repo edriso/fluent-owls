@@ -1,5 +1,5 @@
 import type { Bot } from 'grammy';
-import { Scheduler, logger } from 'telegram-broadcast-kit';
+import { Scheduler, logger, dayOfYearIn } from 'telegram-broadcast-kit';
 import { config } from './config';
 import { schedules, type ScheduleDef } from './schedules';
 import { poolForLevels } from './content/index';
@@ -7,8 +7,28 @@ import { shadowingPool } from './content/shadowing';
 import { phrasesPool } from './content/phrases';
 import { dialoguesPool } from './content/dialogues';
 import { grammarPool } from './content/grammar';
+import { monologuesPool } from './content/monologues';
+import { promptsPool } from './content/prompts';
+import { pronunciationPool } from './content/pronunciation';
+import { vocabularyPool } from './content/vocabulary';
+import { idiomsPool } from './content/idioms';
+import { storiesPool } from './content/stories';
+import { talksPool } from './content/talks';
 import { pickForDay } from './lib/pick';
-import { postDialogue, postGrammar, postPhrase, postQuizPoll, postVoice } from './lib/post';
+import {
+  postDialogue,
+  postGrammar,
+  postIdiom,
+  postMonologue,
+  postPhrase,
+  postPrompt,
+  postPronunciation,
+  postQuizPoll,
+  postStory,
+  postTalk,
+  postVocabulary,
+  postVoice,
+} from './lib/post';
 import { dbEnabled } from './database/client';
 import { getLearnersToRemind } from './database/learners';
 import { dayKeyIn } from './lib/streak';
@@ -22,6 +42,54 @@ import { dayKeyIn } from './lib/streak';
 // One Scheduler per bot, holding the live cron task so it can be stopped on
 // shutdown. Built lazily on the first startScheduler call.
 let scheduler: Scheduler | null = null;
+
+/**
+ * The "bonus" slot rotation. The daily batch posts ONE of these richer types
+ * each day, cycling through the list by day of year, so channel followers slowly
+ * meet the whole library (vocabulary, idioms, stories, talks, pronunciation,
+ * monologues, prompts) without ever DMing the bot. These types are otherwise
+ * on-demand only; the bonus slot is how they reach the channel. It reuses the
+ * already-committed audio, so it costs nothing extra to run.
+ *
+ * Each entry builds its pool for the slot's levels and posts the day's pick in
+ * its own shape. Order is the rotation order; add or reorder to taste.
+ */
+type BonusType = {
+  label: string;
+  /**
+   * Post the day's item for this type, or return false if its bank is empty
+   * (logged, never an error). Each entry closes over its own pool and poster, so
+   * the pool element type and the poster's argument type always agree.
+   */
+  run: (bot: Bot, slot: ScheduleDef, now: Date) => Promise<boolean>;
+};
+
+/** Build one rotation entry, pairing a pool with its matching poster. */
+function bonusType<T>(
+  label: string,
+  pool: (levels: readonly import('./types').Level[]) => T[],
+  post: (bot: Bot, item: T, opts: { silent: boolean }) => Promise<number | null>,
+): BonusType {
+  return {
+    label,
+    run: async (bot, slot, now) => {
+      const items = pool(slot.levels);
+      if (items.length === 0) return false;
+      await post(bot, pickForDay(items, now, config.timezone), { silent: slot.silent });
+      return true;
+    },
+  };
+}
+
+const BONUS_ROTATION: readonly BonusType[] = [
+  bonusType('vocabulary', vocabularyPool, postVocabulary),
+  bonusType('idiom', idiomsPool, postIdiom),
+  bonusType('story', storiesPool, postStory),
+  bonusType('talk', talksPool, postTalk),
+  bonusType('pronunciation', pronunciationPool, postPronunciation),
+  bonusType('monologue', monologuesPool, postMonologue),
+  bonusType('prompt', promptsPool, postPrompt),
+];
 
 /**
  * Fire one slot: pick today's item from the slot's content bank (deterministic
@@ -79,6 +147,22 @@ export async function runOnce(slot: ScheduleDef, bot: Bot): Promise<void> {
         return;
       }
       await postGrammar(bot, pickForDay(pool, now, config.timezone), { silent: slot.silent });
+      return;
+    }
+    case 'bonus': {
+      // Rotate the richer on-demand types by day of year, so the channel slowly
+      // sees the whole library. The same day always picks the same type and item
+      // (no state), matching the rest of the batch.
+      const doy = dayOfYearIn(now, config.timezone);
+      const bonus = BONUS_ROTATION[(doy - 1) % BONUS_ROTATION.length]!;
+      const posted = await bonus.run(bot, slot, now);
+      if (!posted) {
+        logger.warn('No bonus items for slot, skipping', {
+          slot: slot.name,
+          type: bonus.label,
+          levels: slot.levels,
+        });
+      }
       return;
     }
   }

@@ -7,11 +7,14 @@ import { LEVELS, type Level } from './types';
  *  - 'phrase':   a "say it like a native"  (phrases-*.ts    -> postPhrase)
  *  - 'dialogue': a role-play voice message (dialogues-*.ts  -> postDialogue)
  *  - 'grammar':  a grammar voice message   (grammar-*.ts    -> postGrammar)
- *
- * (Monologues are not scheduled; they are on-demand only, via the /monologue
- * command. See bot.ts.)
+ *  - 'bonus':    a rotating extra. Each day it posts ONE of the richer
+ *                on-demand types (vocabulary, idiom, story, talk, pronunciation,
+ *                monologue, or prompt), cycling by day of year. This surfaces the
+ *                whole library to channel followers over time, so they keep
+ *                getting fresh, varied content without ever DMing the bot. See
+ *                BONUS_ROTATION and runOnce in scheduler.ts.
  */
-export type SlotKind = 'quiz' | 'shadow' | 'phrase' | 'dialogue' | 'grammar';
+export type SlotKind = 'quiz' | 'shadow' | 'phrase' | 'dialogue' | 'grammar' | 'bonus';
 
 /** One post in the daily batch. */
 export type ScheduleDef = {
@@ -31,7 +34,7 @@ export type ScheduleDef = {
 
 /**
  * The daily posting plan. Everything goes out together once a day, at
- * config.dailyCron (default 14:00 in the configured timezone), posted in this
+ * config.dailyCron (default 18:00 in the configured timezone), posted in this
  * order so the feed reads as a single rounded daily lesson:
  *
  *   morning  quiz      beginner warm-up   (A1, A2)        silent
@@ -40,6 +43,7 @@ export type ScheduleDef = {
  *   grammar  grammar   grammar point          (all levels) silent
  *   phrase   phrase    "say it like a native" (all levels) silent
  *   dialogue dialogue  role-play exchange     (all levels) silent
+ *   bonus    bonus     rotating extra type    (all levels) silent
  *   shadow   shadow    speaking practice      (all levels) rings
  *
  * THIS IS THE EDIT POINT for the batch: change the order, the level bands, which
@@ -53,10 +57,10 @@ export type ScheduleDef = {
  *
  * Why one batch with a single ping: fewer interruptions. A follower gets one
  * notification (the last post), opens the channel once, and finds the whole set
- * waiting. Six posts a day is a lot; if it feels heavy, drop or reorder a slot
+ * waiting. Eight posts a day is a lot; if it feels heavy, drop or reorder a slot
  * here (it is the only place that decides the daily set).
  *
- * The phrase, dialogue, and shadowing slots pool every level: a learner meets a
+ * The grammar, phrase, dialogue, bonus, and shadowing slots pool every level: a learner meets a
  * different level each day, and every post shows its level, so anyone can pick
  * the ones that fit them. Add more items to lengthen the no-repeat cycle.
  */
@@ -67,5 +71,6 @@ export const schedules: readonly ScheduleDef[] = [
   { name: 'grammar', kind: 'grammar', levels: [...LEVELS], silent: true },
   { name: 'phrase', kind: 'phrase', levels: [...LEVELS], silent: true },
   { name: 'dialogue', kind: 'dialogue', levels: [...LEVELS], silent: true },
+  { name: 'bonus', kind: 'bonus', levels: [...LEVELS], silent: true },
   { name: 'shadow', kind: 'shadow', levels: [...LEVELS], silent: false },
 ];

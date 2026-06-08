@@ -40,6 +40,7 @@ single notification:
 • 📘 a grammar point, with examples you can hear
 • 🗣️ a "say it like a native" phrase for a real situation
 • 🎭 a role-play mini-dialogue (two voices) to act out
+• 🎁 a rotating bonus (a story, idiom, talk, and more, a different one daily)
 • 🎧 an audio clip to shadow (listen and repeat)
 The quizzes and grammar make you correct; the phrase, dialogue, and shadowing
 clip make you sound natural. Want more anytime? Message @FluentOwlsBot: /listen

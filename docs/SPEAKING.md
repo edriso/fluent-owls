@@ -1,6 +1,8 @@
 # Adding Speaking Exercises (Shadowing + Native Phrases)
 
-Alongside the quizzes, the bot posts two speaking exercises each day:
+Alongside the quizzes, the bot posts several speaking exercises each day
+(grammar, a native phrase, a role-play dialogue, a rotating bonus, and a
+shadowing clip), and offers every type on demand in a DM. The banks:
 
 - **Shadowing clips** — a short native audio line you listen to and repeat, to
   build a natural rhythm and accent. One file per CEFR level:
@@ -12,18 +14,27 @@ Alongside the quizzes, the bot posts two speaking exercises each day:
   the audio reads aloud (text plus sound). One file per level:
   `src/content/grammar-a1.ts` ... `grammar-c2.ts`.
 - **Monologues** — a longer model passage to listen to and then retell in your
-  own words. On-demand only (the /monologue command), not in the daily set. One
-  file per level: `src/content/monologues-a1.ts` ... `monologues-c2.ts`.
+  own words. On demand (the /monologue command) and in the channel's rotating
+  bonus slot. One file per level: `src/content/monologues-a1.ts` ... `monologues-c2.ts`.
 - **Question prompts** — a question, a pause to answer out loud, then a model
-  answer to compare with. On-demand only (the /prompt command). One file per
-  level: `src/content/prompts-a1.ts` ... `prompts-c2.ts`.
+  answer to compare with. On demand (the /prompt command) and in the bonus slot.
+  One file per level: `src/content/prompts-a1.ts` ... `prompts-c2.ts`.
 - **Pronunciation drills** — a sound contrast or speech feature (minimal pairs,
   connected speech, word stress, weak forms, sound-and-spelling), with the items
-  read aloud to copy. On-demand only (the /pron command). One file per level:
-  `src/content/pronunciation-a1.ts` ... `pronunciation-c2.ts`.
+  read aloud to copy. On demand (the /pron command) and in the bonus slot. One
+  file per level: `src/content/pronunciation-a1.ts` ... `pronunciation-c2.ts`.
 - **Vocabulary** — one useful word taught in depth: meaning, examples read
-  aloud, and a usage tip. On-demand only (the /vocab command). One file per
-  level: `src/content/vocabulary-a1.ts` ... `vocabulary-c2.ts`.
+  aloud, and a usage tip. On demand (the /vocab command) and in the bonus slot.
+  One file per level: `src/content/vocabulary-a1.ts` ... `vocabulary-c2.ts`.
+- **Idioms** — a common idiom with its meaning and worked examples, to sound
+  native. On demand (the /idiom command) and in the bonus slot. One file per
+  level: `src/content/idioms-a1.ts` ... `idioms-c2.ts`.
+- **Stories** — a short narrative to listen to and retell, with a takeaway. On
+  demand (the /story command) and in the bonus slot. One file per level:
+  `src/content/stories-a1.ts` ... `stories-c2.ts`.
+- **Useful talks** — a short, practical talk (focus, health, habits) from solid
+  ideas, to listen to and learn from. On demand (the /talk command) and in the
+  bonus slot. One file per level: `src/content/talks-a1.ts` ... `talks-c2.ts`.
 - **"Say it like a native" phrases** — ready-made chunks for real situations,
   now voice messages (the chunk and example read aloud) with an HTML caption. One
   file per level: `src/content/phrases-a1.ts` ... `phrases-c2.ts`.
@@ -224,7 +235,9 @@ months), and 20 phrases per level (120, now voice messages with audio).
 Monologues (34 per level, 204), question prompts (40 per level, 240),
 pronunciation drills (20 per level, 120), vocabulary entries (34 per level, 204),
 idioms (34 per level, 204), stories (15 per level, 90), and useful talks (13 per
-level, 78) are on-demand only. Add more to lengthen any cycle.
+level, 78) are pulled on demand AND surfaced in the channel's rotating "bonus"
+slot (one type per day, cycling through all seven). Add more to lengthen any
+cycle.
 Every post shows its level, so mixing levels day to day is fine: learners
 self-select.
 
