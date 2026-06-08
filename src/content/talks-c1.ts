@@ -124,4 +124,18 @@ export const c1Talks: Talk[] = [
     note: `Try this: each day, name three things you already have and value.`,
     audio: 'c1-tk-017.ogg',
   },
+  {
+    id: 'c1-tk-018',
+    topic: 'The importance of honesty',
+    text: 'Honesty is more than simply not lying. It is the steady habit of letting your words match the truth, even when a small lie would be easier or more flattering. Honest people are not always the loudest or the most comfortable to be around, but they are the ones we trust with what matters. Each truthful word, even an awkward one, builds a reputation that no clever image can replace. And honesty turns inward too: the hardest and most valuable truths are often the ones we must admit to ourselves. A life built on honesty is simpler, because there is nothing to keep track of and nothing to hide.',
+    note: `Try this: tell one small, kind truth today that you might normally avoid.`,
+    audio: 'c1-tk-018.ogg',
+  },
+  {
+    id: 'c1-tk-019',
+    topic: 'Take a real day of rest',
+    text: 'In a culture that praises being busy, true rest has become almost suspicious, as though stopping were a kind of failure. Yet rest is not the opposite of productivity; it is part of it. The mind and body recover and return sharper. A real day of rest means more than collapsing in front of a screen. It means stepping back from work and constant input: a slower morning, time with people you love, a walk, a book, a quiet hour with your thoughts. Many traditions built a weekly day of rest into life for good reason. Without it, we wear ourselves down slowly, mistaking exhaustion for dedication. Protect one afternoon as genuinely free, and you will return renewed.',
+    note: `Try this: choose one afternoon this week to fully step away from work.`,
+    audio: 'c1-tk-019.ogg',
+  },
 ];

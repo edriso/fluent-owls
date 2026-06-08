@@ -132,4 +132,11 @@ export const c2Stories: Story[] = [
     note: `The act of writing matters even when it cannot be delivered.`,
     audio: 'c2-st-018.ogg',
   },
+  {
+    id: 'c2-st-019',
+    title: 'The keeper of letters',
+    text: `In a small town there lived a postmaster who, over forty years, came to know his neighbours through the letters in his care. He never read what was sealed, yet he understood, from the weight and the waiting, how much each envelope held. When letters gave way to screens, the town thought his work finished. But people still came to his window, not to post anything, simply to talk, for he had become the one person who remembered everyone's story without judgement. On the day he died, the town found drawers of letters he had written but never sent: notes of thanks to people who never knew he had noticed them. Some lives are measured not by what they send, but by what they faithfully carry.`,
+    note: `A life of quiet, unrewarded attention, measured by what it carried.`,
+    audio: 'c2-st-019.ogg',
+  },
 ];

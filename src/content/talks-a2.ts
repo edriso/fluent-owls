@@ -131,4 +131,18 @@ export const a2Talks: Talk[] = [
     note: `Try this: offer to help one person with something this week.`,
     audio: 'a2-tk-018.ogg',
   },
+  {
+    id: 'a2-tk-019',
+    topic: 'Learn to cook simple meals',
+    text: 'Cooking at home is a useful skill for everyone. When you cook, you know exactly what is in your food, and you save money too. You do not need to be a chef. Start with a few simple meals, like rice and vegetables, eggs, or soup. Follow an easy recipe. The more you practise, the better and faster you get. A simple home meal is healthy and satisfying.',
+    note: `Try this: learn to cook one new simple meal this week.`,
+    audio: 'a2-tk-019.ogg',
+  },
+  {
+    id: 'a2-tk-020',
+    topic: 'Good manners matter',
+    text: 'Good manners are small actions that make life nicer for everyone. Saying please and thank you, holding a door, and waiting for your turn all show respect. They cost nothing, but people remember them. Good manners help you make friends and leave a good impression. Treat others the way you would like to be treated, and the world around you becomes kinder.',
+    note: `Try this: say please and thank you to everyone you speak to today.`,
+    audio: 'a2-tk-020.ogg',
+  },
 ];

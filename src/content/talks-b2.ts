@@ -131,4 +131,18 @@ export const b2Talks: Talk[] = [
     note: `Try this: each night, name one win and one thing to improve.`,
     audio: 'b2-tk-018.ogg',
   },
+  {
+    id: 'b2-tk-019',
+    topic: 'The power of small steps',
+    text: 'We often dream of big, dramatic change, then feel discouraged when it does not happen overnight. Yet almost all lasting progress is built from small, repeated steps. A single page a day becomes a book in a year. A short daily walk becomes a habit, then a healthier life. The magic is not in the size of each step, but in the fact that you keep taking them. Small steps feel almost too easy to matter, which is exactly why they work: they are easy enough to repeat, and repetition is what builds everything worthwhile.',
+    note: `Try this: pick one tiny step you can repeat every day this week.`,
+    audio: 'b2-tk-019.ogg',
+  },
+  {
+    id: 'b2-tk-020',
+    topic: 'Beat procrastination: do it now',
+    text: 'Procrastination is rarely about laziness; it is usually about avoiding an uncomfortable feeling. The task feels hard, boring, or scary, so we put it off, and the worry only grows. One simple cure is the two-minute rule: if something takes less than two minutes, do it right now. For larger tasks, promise yourself to work on it for just five minutes. Starting is the hardest part, and once you begin, you often keep going. Action is the fastest way to quiet the worry that delay quietly feeds.',
+    note: `Try this: when you catch yourself delaying, start the task for just five minutes.`,
+    audio: 'b2-tk-020.ogg',
+  },
 ];

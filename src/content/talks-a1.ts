@@ -131,4 +131,18 @@ export const a1Talks: Talk[] = [
     note: `Try this: stand up and stretch once every hour.`,
     audio: 'a1-tk-018.ogg',
   },
+  {
+    id: 'a1-tk-019',
+    topic: 'Have a hobby',
+    text: 'A hobby is something you do for fun. It can be drawing, cooking, reading, or playing a sport. A hobby helps you relax after work or school. It also makes you happy and helps you meet new people. Find one thing you enjoy, and make a little time for it each week. Life is better with a hobby.',
+    note: `Try this: spend 30 minutes on a hobby you enjoy this week.`,
+    audio: 'a1-tk-019.ogg',
+  },
+  {
+    id: 'a1-tk-020',
+    topic: 'Be on time',
+    text: 'Being on time is a good habit. When you are late, other people wait, and they can feel upset. When you are on time, people trust you. Try to leave a little early, so traffic or small problems do not make you late. Being on time shows respect for other people and their time.',
+    note: `Try this: plan to arrive ten minutes early for your next meeting.`,
+    audio: 'a1-tk-020.ogg',
+  },
 ];

@@ -131,4 +131,18 @@ export const b1Talks: Talk[] = [
     note: `Try this: next time you get feedback, just say "thank you" and think it over.`,
     audio: 'b1-tk-018.ogg',
   },
+  {
+    id: 'b1-tk-019',
+    topic: 'How to apologize well',
+    text: 'Everyone makes mistakes, but few people know how to apologize well. A good apology is simple and honest. First, say sorry clearly, without excuses. Do not say "I am sorry if you felt upset"; that blames the other person. Instead, name what you did wrong and show that you understand why it hurt. Then, if you can, offer to fix it. A real apology rebuilds trust, while a weak one often makes things worse. The courage to say a clear sorry is a sign of strength, not weakness.',
+    note: `Try this: if you owe someone an apology, give a clear one with no excuses.`,
+    audio: 'b1-tk-019.ogg',
+  },
+  {
+    id: 'b1-tk-020',
+    topic: 'Do not compare yourself to others',
+    text: "It is easy to look at other people and feel that you are behind. Social media makes this worse, because people share only their best moments. But comparing your everyday life to someone else's highlights is unfair to yourself. Everyone has a different path, a different start, and struggles you cannot see. A healthier habit is to compare yourself only to who you were yesterday. Are you a little better, a little kinder, a little wiser? That is the only race worth running.",
+    note: `Try this: each day, measure your progress against your own past, not others.`,
+    audio: 'b1-tk-020.ogg',
+  },
 ];

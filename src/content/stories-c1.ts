@@ -131,4 +131,11 @@ export const c1Stories: Story[] = [
     note: `Depth over reach: one reader fully, not a thousand halfway.`,
     audio: 'c1-st-018.ogg',
   },
+  {
+    id: 'c1-st-019',
+    title: 'The mountain school',
+    text: `High in a quiet valley, an old teacher ran a small school that taught only one subject: attention. Students arrived expecting mathematics or language, and at first they were disappointed. Each morning, the teacher asked them to watch the same mountain and describe what had changed. For weeks they saw nothing new and grew impatient. Then, slowly, their eyes began to open: the shift of light on the rock, the first thin line of snow. One student later became a writer. Asked about her gift for noticing true things, she said she had learned everything from a mountain that never moved, and a teacher who taught her how to look. The lesson was never about the mountain. It was about the looking.`,
+    note: `The repeated act of looking, not the subject, was the real lesson.`,
+    audio: 'c1-st-019.ogg',
+  },
 ];
