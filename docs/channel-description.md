@@ -42,9 +42,10 @@ single notification:
 • 🎭 a role-play mini-dialogue (two voices) to act out
 • 🎧 an audio clip to shadow (listen and repeat)
 The quizzes and grammar make you correct; the phrase, dialogue, and shadowing
-clip make you sound natural. Want more anytime? Message @FluentOwlsBot: /quiz,
-/grammar, /phrase, /dialogue, /shadow, /monologue, /prompt, /pron, /vocab,
-/idiom, /story, /talk, or /next for a personal track. No signup.
+clip make you sound natural. Want more anytime? Message @FluentOwlsBot: /listen
+for any audio clip, or /help for the full menu (quizzes, grammar, phrases,
+dialogues, shadowing, pronunciation, vocabulary, idioms, stories, talks, and
+more). Add a level like b1 to target it. No signup.
 
 > Note: the full pinned welcome message lives in `src/content/welcome.ts`
 > and is posted with `pnpm post-welcome`.
