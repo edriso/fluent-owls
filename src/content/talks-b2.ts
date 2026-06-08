@@ -47,4 +47,32 @@ export const b2Talks: Talk[] = [
     note: `Try this: define the smallest possible version of your habit.`,
     audio: 'b2-tk-006.ogg',
   },
+  {
+    id: 'b2-tk-007',
+    topic: 'The art of managing your time',
+    text: "Time management is less about squeezing in more and more about protecting what matters. Begin by deciding your few real priorities, then guard time for them before the day fills with other people's requests. Tackle demanding work when your energy peaks, and batch shallow tasks into a single block. Saying no, kindly but clearly, is often the most powerful tool you have.",
+    note: `Try this: block your top priority into your calendar first.`,
+    audio: 'b2-tk-007.ogg',
+  },
+  {
+    id: 'b2-tk-008',
+    topic: 'A healthier response to stress',
+    text: 'Stress itself is not the enemy; our relationship with it is. Chronic, unmanaged stress harms health, focus, and mood, but the fix is rarely dramatic. Sleep, movement, time in nature, and genuine connection all lower it reliably. Equally important is perception: viewing pressure as a challenge rather than a threat changes how your body responds. Build the habits, and reframe the story.',
+    note: `Try this: reframe one stressful task as a challenge, not a threat.`,
+    audio: 'b2-tk-008.ogg',
+  },
+  {
+    id: 'b2-tk-009',
+    topic: 'How to actually learn',
+    text: 'Decades of research point to a few simple, underused methods. Active recall, testing yourself rather than rereading, dramatically strengthens memory. Spaced repetition, revisiting material over days and weeks, beats cramming. Interleaving, mixing related topics, builds flexible understanding. These techniques feel harder and slower in the moment, which is exactly why they work so well.',
+    note: `Try this: replace rereading with self-testing this week.`,
+    audio: 'b2-tk-009.ogg',
+  },
+  {
+    id: 'b2-tk-010',
+    topic: 'The quiet power of gratitude',
+    text: 'Our attention is naturally drawn to what is missing or wrong, a useful instinct that often misfires in modern life. Gratitude deliberately redirects that attention. Research links a regular gratitude practice to better mood, sleep, and relationships. The method is humble: note a few specific things you appreciate, ideally in writing. Specific beats generic, and consistency beats intensity.',
+    note: `Try this: write three specific things you appreciate today.`,
+    audio: 'b2-tk-010.ogg',
+  },
 ];

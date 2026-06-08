@@ -47,4 +47,32 @@ export const b1Talks: Talk[] = [
     note: `Try this: make your new habit two minutes long to start.`,
     audio: 'b1-tk-006.ogg',
   },
+  {
+    id: 'b1-tk-007',
+    topic: 'Manage your time well',
+    text: 'Time management is really about choices. Each day brings more tasks than hours, so the skill is deciding what matters. Try planning your day the night before, and start with your hardest, most important task while your energy is high. Group small jobs together, and protect time for focused work. A clear plan removes the stress of deciding all day long.',
+    note: `Try this: plan tomorrow before you go to sleep tonight.`,
+    audio: 'b1-tk-007.ogg',
+  },
+  {
+    id: 'b1-tk-008',
+    topic: 'How to handle stress',
+    text: 'Some stress is useful; it helps us act. The problem is constant, unmanaged stress, which harms both body and mind. Build simple habits that lower it: regular sleep, movement, time outdoors, and real conversations. Learn to notice your early signs of stress and respond before it grows. You cannot remove all stress, but you can build the habits that handle it.',
+    note: `Try this: name one early stress signal and a small response to it.`,
+    audio: 'b1-tk-008.ogg',
+  },
+  {
+    id: 'b1-tk-009',
+    topic: 'Learn how to learn',
+    text: 'Most of us were never taught how to learn. Two methods stand out. First, test yourself: trying to recall something is far more powerful than rereading it. Second, space your practice over several days instead of cramming it all at once. Add short breaks and mix topics. These methods feel harder, but they make learning stick far better.',
+    note: `Try this: quiz yourself today on something you learned yesterday.`,
+    audio: 'b1-tk-009.ogg',
+  },
+  {
+    id: 'b1-tk-010',
+    topic: 'Why gratitude matters',
+    text: 'Our minds naturally focus on problems and worries. That instinct once kept us safe, but today it often just makes us anxious. Gratitude is a simple counterweight. Regularly noticing what is good, in a journal or just in your head, trains your attention toward the positive. It will not solve every problem, but it reliably lifts your mood over time.',
+    note: `Try this: keep a short gratitude note for one week.`,
+    audio: 'b1-tk-010.ogg',
+  },
 ];

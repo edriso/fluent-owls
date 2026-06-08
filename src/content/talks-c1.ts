@@ -47,4 +47,32 @@ export const c1Talks: Talk[] = [
     note: `Try this: track the habit on a simple calendar and keep the streak.`,
     audio: 'c1-tk-006.ogg',
   },
+  {
+    id: 'c1-tk-007',
+    topic: 'Time management as priority management',
+    text: 'We speak of managing time, but time is fixed; what we really manage is attention and priority. The decisive question is not how to do more, but what deserves doing at all. Ruthlessly clarify your few important goals, then defend time for them before the urgent crowds them out. Energy matters as much as hours, so align demanding work with your natural peaks. Productivity, in the end, is mostly the courage to say no.',
+    note: `Try this: each morning, name the one task that would make the day a success.`,
+    audio: 'c1-tk-007.ogg',
+  },
+  {
+    id: 'c1-tk-008',
+    topic: 'Understanding and managing stress',
+    text: "Stress is the body's response to demand, and in short bursts it sharpens us. The danger is chronic activation with no recovery, which erodes health and judgment. Managing it well is less about elimination than about rhythm: alternating effort with genuine rest, sleep, movement, nature, and connection. Your interpretation matters too, since viewing pressure as a challenge rather than a threat measurably changes the physical response.",
+    note: `Try this: build one real recovery period into each working day.`,
+    audio: 'c1-tk-008.ogg',
+  },
+  {
+    id: 'c1-tk-009',
+    topic: 'The science of learning',
+    text: 'Much of how we study is intuitive and wrong. Rereading and highlighting feel productive but fade fast. The evidence favours harder, humbler methods: retrieval practice, where you test yourself; spaced repetition, where you revisit over time; and interleaving, where you mix problems. These create what researchers call desirable difficulties, struggles that feel uncomfortable yet build durable, flexible knowledge.',
+    note: `Try this: turn your notes into questions and answer them from memory.`,
+    audio: 'c1-tk-009.ogg',
+  },
+  {
+    id: 'c1-tk-010',
+    topic: 'Gratitude as a discipline',
+    text: 'Gratitude is often dismissed as soft, yet it functions as a practical discipline of attention. The mind defaults to scarcity and threat, scanning for what is wrong. Deliberately noticing what is good does not deny problems; it simply restores balance. The most effective practice is specific and regular, naming particular things rather than vague ones. Over time, gratitude reshapes not just mood but how you see your whole life.',
+    note: `Try this: be specific, "the warm light this morning" beats "my home".`,
+    audio: 'c1-tk-010.ogg',
+  },
 ];

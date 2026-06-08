@@ -47,4 +47,32 @@ export const c2Talks: Talk[] = [
     note: `Try this: ask not "what do I want to do" but "who do I want to become".`,
     audio: 'c2-tk-006.ogg',
   },
+  {
+    id: 'c2-tk-007',
+    topic: 'On the management of time and attention',
+    text: 'The phrase time management is quietly misleading, for time cannot be managed; it elapses regardless. What we govern is attention and intention. The mastery lies in deciding, with some ruthlessness, what genuinely deserves our finite hours, and then defending that choice against the endless pull of the merely urgent. Align demanding work with your energy, batch the trivial, and learn that a graceful no is the guardian of every meaningful yes.',
+    note: `Try this: protect your peak hour for your most important work, daily.`,
+    audio: 'c2-tk-007.ogg',
+  },
+  {
+    id: 'c2-tk-008',
+    topic: 'Stress, recovery, and the stories we tell',
+    text: 'Stress is not a malfunction but a mobilisation, the body marshalling resources to meet a demand. The trouble is sustained arousal without recovery, which corrodes health and clouds thought. Wise management is therefore rhythmic: deliberate oscillation between exertion and genuine rest, supported by sleep, movement, nature, and human connection. Subtler still is interpretation, for the meaning we assign to pressure measurably shapes how our physiology answers it.',
+    note: `Try this: pair every push of effort with a real, scheduled recovery.`,
+    audio: 'c2-tk-008.ogg',
+  },
+  {
+    id: 'c2-tk-009',
+    topic: 'How learning really works',
+    text: 'Our instincts about studying are largely mistaken. Rereading and highlighting produce a comforting fluency that masks shallow retention. The robust findings point elsewhere, toward effortful retrieval, spaced over time, and interleaved across topics. These so-called desirable difficulties feel like failure in the moment precisely because the brain is working to consolidate. Embrace the discomfort: the struggle to recall is not an obstacle to learning but its very mechanism.',
+    note: `Try this: if studying feels too easy, you are probably not learning much.`,
+    audio: 'c2-tk-009.ogg',
+  },
+  {
+    id: 'c2-tk-010',
+    topic: 'The discipline of gratitude',
+    text: 'Gratitude suffers from a reputation for sentimentality it does not deserve. In truth it is a rigorous correction to a cognitive bias: the mind, evolved to hunt for threats and deficits, systematically underweights what is already good. A deliberate practice, specific, regular, and honest, rebalances that ledger. It neither denies hardship nor manufactures cheer; it simply insists that the good, too, be counted. Done faithfully, it alters the texture of an ordinary life.',
+    note: `Try this: count the good as carefully as you tend to count the bad.`,
+    audio: 'c2-tk-010.ogg',
+  },
 ];

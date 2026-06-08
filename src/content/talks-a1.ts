@@ -47,4 +47,32 @@ export const a1Talks: Talk[] = [
     note: `Try this: pick one tiny habit and do it daily for a week.`,
     audio: 'a1-tk-006.ogg',
   },
+  {
+    id: 'a1-tk-007',
+    topic: 'Plan your day',
+    text: 'A short plan helps a lot. In the morning, write three things to do. Do the most important one first. Cross it off when it is done. A small list keeps your day calm and clear.',
+    note: `Try this: write three tasks each morning.`,
+    audio: 'a1-tk-007.ogg',
+  },
+  {
+    id: 'a1-tk-008',
+    topic: 'When you feel stressed',
+    text: 'Everyone feels stressed sometimes. When you do, stop and take a slow breath. Drink some water. Go for a short walk. Talk to a friend. Small, simple things help your mind feel calm again.',
+    note: `Try this: take three slow breaths when you feel stressed.`,
+    audio: 'a1-tk-008.ogg',
+  },
+  {
+    id: 'a1-tk-009',
+    topic: 'How to learn better',
+    text: 'You learn best in small steps. Study for a short time, then take a break. Say new words out loud. Use them the same day. A little every day is better than a lot once a week.',
+    note: `Try this: study for 20 minutes, then rest.`,
+    audio: 'a1-tk-009.ogg',
+  },
+  {
+    id: 'a1-tk-010',
+    topic: 'Say thank you',
+    text: 'Saying thank you makes you and other people feel good. Each night, think of one good thing from your day. It can be small, like a nice cup of coffee. This simple habit helps you feel happier.',
+    note: `Try this: name one good thing from your day each night.`,
+    audio: 'a1-tk-010.ogg',
+  },
 ];
