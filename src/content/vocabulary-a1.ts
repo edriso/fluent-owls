@@ -8,6 +8,7 @@ export const a1Vocabulary: VocabularyEntry[] = [
   {
     id: 'a1-vc-001',
     word: 'busy',
+    pronunciation: '/ˈbɪzi/ (BIZ-ee)',
     meaning: 'having a lot to do.',
     examples: ['I am very busy today.', 'She is busy at work.'],
     note: `Opposite of "free". We say "busy with work" or "busy doing something".`,
@@ -16,6 +17,7 @@ export const a1Vocabulary: VocabularyEntry[] = [
   {
     id: 'a1-vc-002',
     word: 'cheap',
+    pronunciation: '/tʃiːp/ (cheep)',
     meaning: 'not expensive; low in price.',
     examples: ['This bag is very cheap.', 'I found a cheap hotel.'],
     note: `Opposite of "expensive". For people, "cheap" can sound rude; use "careful with money".`,
@@ -24,6 +26,7 @@ export const a1Vocabulary: VocabularyEntry[] = [
   {
     id: 'a1-vc-003',
     word: 'tired',
+    pronunciation: '/ˈtaɪərd/ (TY-erd)',
     meaning: 'needing to rest or sleep.',
     examples: ['I am tired after work.', 'You look tired today.'],
     note: `"Tired of something" means bored with it: "I am tired of waiting."`,
@@ -32,6 +35,7 @@ export const a1Vocabulary: VocabularyEntry[] = [
   {
     id: 'a1-vc-004',
     word: 'hungry',
+    pronunciation: '/ˈhʌŋɡri/ (HUNG-gree)',
     meaning: 'wanting to eat.',
     examples: ['I am so hungry.', 'Are you hungry yet?'],
     note: `"Thirsty" is the same idea for drinks: wanting to drink.`,
@@ -40,6 +44,7 @@ export const a1Vocabulary: VocabularyEntry[] = [
   {
     id: 'a1-vc-005',
     word: 'early',
+    pronunciation: '/ˈɜːrli/ (UR-lee)',
     meaning: 'before the usual or expected time.',
     examples: ['I wake up early.', 'We arrived early.'],
     note: `Opposite of "late". "Early in the morning" is a common phrase.`,
@@ -48,6 +53,7 @@ export const a1Vocabulary: VocabularyEntry[] = [
   {
     id: 'a1-vc-006',
     word: 'careful',
+    pronunciation: '/ˈkɛrfəl/ (KAIR-ful)',
     meaning: 'giving attention so you do not make a mistake or get hurt.',
     examples: ['Be careful with the hot water.', 'She is a careful driver.'],
     note: `"Be careful!" is a common warning. The adverb is "carefully".`,
@@ -56,6 +62,7 @@ export const a1Vocabulary: VocabularyEntry[] = [
   {
     id: 'a1-vc-007',
     word: 'friendly',
+    pronunciation: '/ˈfrɛndli/ (FREND-lee)',
     meaning: 'kind and easy to talk to.',
     examples: ['The staff are very friendly.', 'He has a friendly smile.'],
     note: `It ends in "-ly" but it is an adjective, not an adverb.`,
@@ -64,6 +71,7 @@ export const a1Vocabulary: VocabularyEntry[] = [
   {
     id: 'a1-vc-008',
     word: 'favorite',
+    pronunciation: '/ˈfeɪvərɪt/ (FAY-vuh-rit)',
     meaning: 'the one you like best.',
     examples: ['Blue is my favorite color.', 'What is your favorite food?'],
     note: `In British English it is spelled "favourite".`,
@@ -72,6 +80,7 @@ export const a1Vocabulary: VocabularyEntry[] = [
   {
     id: 'a1-vc-009',
     word: 'clean',
+    pronunciation: '/kliːn/ (kleen)',
     meaning: 'not dirty.',
     examples: ['The room is very clean.', 'Please keep the table clean.'],
     note: `Opposite of "dirty". As a verb: "clean the house".`,
@@ -80,6 +89,7 @@ export const a1Vocabulary: VocabularyEntry[] = [
   {
     id: 'a1-vc-010',
     word: 'quiet',
+    pronunciation: '/ˈkwaɪət/ (KWY-it)',
     meaning: 'with little or no noise.',
     examples: ['The library is quiet.', 'Please be quiet.'],
     note: `Opposite of "loud" or "noisy".`,
@@ -88,6 +98,7 @@ export const a1Vocabulary: VocabularyEntry[] = [
   {
     id: 'a1-vc-011',
     word: 'loud',
+    pronunciation: '/laʊd/ (lowd)',
     meaning: 'making a lot of noise.',
     examples: ['The music is too loud.', 'He has a loud voice.'],
     note: `Opposite of "quiet". The adverb is "loudly".`,
@@ -96,6 +107,7 @@ export const a1Vocabulary: VocabularyEntry[] = [
   {
     id: 'a1-vc-012',
     word: 'easy',
+    pronunciation: '/ˈiːzi/ (EE-zee)',
     meaning: 'not difficult to do.',
     examples: ['The test was easy.', 'It is easy to use.'],
     note: `Opposite of "difficult" or "hard".`,
@@ -104,6 +116,7 @@ export const a1Vocabulary: VocabularyEntry[] = [
   {
     id: 'a1-vc-013',
     word: 'difficult',
+    pronunciation: '/ˈdɪfɪkəlt/ (DIF-i-kult)',
     meaning: 'not easy; hard to do.',
     examples: ['This question is difficult.', 'It is difficult to choose.'],
     note: `A common synonym is "hard".`,
@@ -112,6 +125,7 @@ export const a1Vocabulary: VocabularyEntry[] = [
   {
     id: 'a1-vc-014',
     word: 'expensive',
+    pronunciation: '/ɪkˈspɛnsɪv/ (ik-SPEN-siv)',
     meaning: 'costing a lot of money.',
     examples: ['That car is expensive.', 'Hotels here are expensive.'],
     note: `Opposite of "cheap".`,
@@ -120,6 +134,7 @@ export const a1Vocabulary: VocabularyEntry[] = [
   {
     id: 'a1-vc-015',
     word: 'heavy',
+    pronunciation: '/ˈhɛvi/ (HEV-ee)',
     meaning: 'weighing a lot.',
     examples: ['This bag is heavy.', 'The box is too heavy to lift.'],
     note: `Opposite of "light". Also used in "heavy rain".`,
@@ -128,6 +143,7 @@ export const a1Vocabulary: VocabularyEntry[] = [
   {
     id: 'a1-vc-016',
     word: 'empty',
+    pronunciation: '/ˈɛmpti/ (EMP-tee)',
     meaning: 'with nothing inside.',
     examples: ['The bottle is empty.', 'The streets were empty.'],
     note: `Opposite of "full".`,
@@ -136,6 +152,7 @@ export const a1Vocabulary: VocabularyEntry[] = [
   {
     id: 'a1-vc-017',
     word: 'safe',
+    pronunciation: '/seɪf/ (sayf)',
     meaning: 'not in danger, or not dangerous.',
     examples: ['It is safe here.', 'Keep your money safe.'],
     note: `The noun is "safety". Opposite: "dangerous".`,
@@ -144,6 +161,7 @@ export const a1Vocabulary: VocabularyEntry[] = [
   {
     id: 'a1-vc-018',
     word: 'ready',
+    pronunciation: '/ˈrɛdi/ (RED-ee)',
     meaning: 'prepared for something.',
     examples: ['Are you ready?', 'Dinner is ready.'],
     note: `Use "ready for" something or "ready to" do it.`,
@@ -152,6 +170,7 @@ export const a1Vocabulary: VocabularyEntry[] = [
   {
     id: 'a1-vc-019',
     word: 'sure',
+    pronunciation: '/ʃʊr/ (shoor)',
     meaning: 'having no doubt; certain.',
     examples: ['I am sure he will come.', 'Are you sure?'],
     note: `"sure about" something. A synonym is "certain".`,
@@ -160,6 +179,7 @@ export const a1Vocabulary: VocabularyEntry[] = [
   {
     id: 'a1-vc-020',
     word: 'free',
+    pronunciation: '/friː/ (free)',
     meaning: 'not busy, or costing no money.',
     examples: ['Are you free tomorrow?', 'The app is free.'],
     note: `It has two meanings: not busy, and no cost.`,
@@ -168,6 +188,7 @@ export const a1Vocabulary: VocabularyEntry[] = [
   {
     id: 'a1-vc-021',
     word: 'cold',
+    pronunciation: '/koʊld/ (kohld)',
     meaning: 'having a low temperature.',
     examples: ['The water is cold.', 'It is cold outside.'],
     note: `Opposite of "hot". "I am cold" means you feel cold.`,
@@ -176,6 +197,7 @@ export const a1Vocabulary: VocabularyEntry[] = [
   {
     id: 'a1-vc-022',
     word: 'warm',
+    pronunciation: '/wɔːrm/ (wawrm)',
     meaning: 'a little hot, in a pleasant way.',
     examples: ['The soup is warm.', 'It is warm and sunny.'],
     note: `Between "cold" and "hot". Also "a warm welcome".`,
@@ -184,6 +206,7 @@ export const a1Vocabulary: VocabularyEntry[] = [
   {
     id: 'a1-vc-023',
     word: 'beautiful',
+    pronunciation: '/ˈbjuːtɪfəl/ (BYOO-ti-ful)',
     meaning: 'very nice to look at.',
     examples: ['What a beautiful day.', 'The view is beautiful.'],
     note: `Stronger than "nice". For people, "good-looking" is also common.`,
@@ -192,6 +215,7 @@ export const a1Vocabulary: VocabularyEntry[] = [
   {
     id: 'a1-vc-024',
     word: 'delicious',
+    pronunciation: '/dɪˈlɪʃəs/ (di-LISH-us)',
     meaning: 'tasting very good.',
     examples: ['This cake is delicious.', 'The food was delicious.'],
     note: `Stronger than "good" for food and drink.`,
@@ -200,6 +224,7 @@ export const a1Vocabulary: VocabularyEntry[] = [
   {
     id: 'a1-vc-025',
     word: 'important',
+    pronunciation: '/ɪmˈpɔːrtənt/ (im-POR-tunt)',
     meaning: 'mattering a lot.',
     examples: ['This is an important day.', 'Family is important to me.'],
     note: `The noun is "importance".`,
@@ -208,6 +233,7 @@ export const a1Vocabulary: VocabularyEntry[] = [
   {
     id: 'a1-vc-026',
     word: 'interesting',
+    pronunciation: '/ˈɪntrəstɪŋ/ (IN-truh-sting)',
     meaning: 'making you want to know more.',
     examples: ['The book is interesting.', 'That is an interesting idea.'],
     note: `You feel "interested"; a thing is "interesting".`,
@@ -216,6 +242,7 @@ export const a1Vocabulary: VocabularyEntry[] = [
   {
     id: 'a1-vc-027',
     word: 'funny',
+    pronunciation: '/ˈfʌni/ (FUH-nee)',
     meaning: 'making you laugh or smile.',
     examples: ['He is very funny.', 'That was a funny film.'],
     note: `Do not confuse it with "fun" (enjoyable).`,
@@ -224,6 +251,7 @@ export const a1Vocabulary: VocabularyEntry[] = [
   {
     id: 'a1-vc-028',
     word: 'lucky',
+    pronunciation: '/ˈlʌki/ (LUH-kee)',
     meaning: 'having good luck.',
     examples: ['I feel lucky today.', 'You are so lucky!'],
     note: `Opposite of "unlucky". The noun is "luck".`,
@@ -232,6 +260,7 @@ export const a1Vocabulary: VocabularyEntry[] = [
   {
     id: 'a1-vc-029',
     word: 'dark',
+    pronunciation: '/dɑːrk/ (dark)',
     meaning: 'with little or no light.',
     examples: ['The room is dark.', 'It gets dark early in winter.'],
     note: `Opposite of "bright" or "light".`,
@@ -240,6 +269,7 @@ export const a1Vocabulary: VocabularyEntry[] = [
   {
     id: 'a1-vc-030',
     word: 'bright',
+    pronunciation: '/braɪt/ (bryt)',
     meaning: 'full of light, or strong in color.',
     examples: ['The sun is very bright.', 'She wore a bright red coat.'],
     note: `It can also mean clever: "a bright student".`,
@@ -248,6 +278,7 @@ export const a1Vocabulary: VocabularyEntry[] = [
   {
     id: 'a1-vc-031',
     word: 'full',
+    pronunciation: '/fʊl/ (fuul)',
     meaning: 'holding as much as it can.',
     examples: ['The cup is full.', 'The train was full.'],
     note: `Opposite of "empty". "I am full" means you have eaten enough.`,
@@ -256,6 +287,7 @@ export const a1Vocabulary: VocabularyEntry[] = [
   {
     id: 'a1-vc-032',
     word: 'slow',
+    pronunciation: '/sloʊ/ (sloh)',
     meaning: 'not fast; taking a long time.',
     examples: ['The bus is slow today.', 'He is a slow reader.'],
     note: `Opposite of "fast". The adverb is "slowly".`,
@@ -264,6 +296,7 @@ export const a1Vocabulary: VocabularyEntry[] = [
   {
     id: 'a1-vc-033',
     word: 'fast',
+    pronunciation: '/fæst/ (fast)',
     meaning: 'moving or happening quickly.',
     examples: ['That car is very fast.', 'She is a fast learner.'],
     note: `Opposite of "slow". "fast" is both an adjective and an adverb.`,
@@ -272,6 +305,7 @@ export const a1Vocabulary: VocabularyEntry[] = [
   {
     id: 'a1-vc-034',
     word: 'soft',
+    pronunciation: '/sɔːft/ (sawft)',
     meaning: 'not hard; gentle to touch or hear.',
     examples: ['The pillow is soft.', 'She has a soft voice.'],
     note: `Opposite of "hard", or of "loud" for a sound.`,

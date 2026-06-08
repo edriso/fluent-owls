@@ -8,6 +8,7 @@ export const c1Vocabulary: VocabularyEntry[] = [
   {
     id: 'c1-vc-001',
     word: 'meticulous',
+    pronunciation: '/məˈtɪkjələs/ (muh-TIK-yuh-lus)',
     meaning: 'very careful about small details.',
     examples: ['She is meticulous about her work.', 'He kept meticulous records.'],
     note: `Stronger than "careful". Often "meticulous about" something.`,
@@ -16,6 +17,7 @@ export const c1Vocabulary: VocabularyEntry[] = [
   {
     id: 'c1-vc-002',
     word: 'resilient',
+    pronunciation: '/rɪˈzɪliənt/ (ri-ZIL-yunt)',
     meaning: 'able to recover quickly from difficulty.',
     examples: ['Children are remarkably resilient.', 'A resilient economy bounces back.'],
     note: `The noun is "resilience", a popular word in work and wellbeing.`,
@@ -24,6 +26,7 @@ export const c1Vocabulary: VocabularyEntry[] = [
   {
     id: 'c1-vc-003',
     word: 'nuance',
+    pronunciation: '/ˈnuːɑːns/ (NOO-ahns)',
     meaning: 'a small, subtle difference in meaning or feeling.',
     examples: ['He missed the nuance of the joke.', 'The argument has many nuances.'],
     note: `The adjective "nuanced" means subtle and carefully balanced.`,
@@ -32,6 +35,7 @@ export const c1Vocabulary: VocabularyEntry[] = [
   {
     id: 'c1-vc-004',
     word: 'inevitable',
+    pronunciation: '/ɪnˈɛvɪtəbəl/ (in-EV-i-tuh-bul)',
     meaning: 'certain to happen; impossible to avoid.',
     examples: ['Change is inevitable.', 'A delay now seems inevitable.'],
     note: `The adverb "inevitably" introduces a result you expected.`,
@@ -40,22 +44,25 @@ export const c1Vocabulary: VocabularyEntry[] = [
   {
     id: 'c1-vc-005',
     word: 'advocate',
+    pronunciation: '/ˈædvəkeɪt/ (AD-vuh-kayt)',
     meaning: 'to support an idea publicly; or a person who does so.',
     examples: ['She advocates for cleaner energy.', 'He is a strong advocate of reform.'],
-    note: `The verb stresses the end (advoCATE); the noun the start (ADvocate).`,
+    note: `The verb ends "-kayt"; the noun ends in a weak "-kit" (AD-vuh-kit).`,
     audio: 'c1-vc-005.ogg',
   },
   {
     id: 'c1-vc-006',
     word: 'deliberate',
+    pronunciation: '/dɪˈlɪbərət/ (di-LIB-uh-rit)',
     meaning: 'done on purpose; or slow and careful.',
     examples: ['It was a deliberate choice.', 'She spoke in a slow, deliberate way.'],
-    note: `As a verb (deLIBerate) it means to think carefully before deciding.`,
+    note: `The adjective ends "-rit"; the verb (to deliberate) ends "-rayt".`,
     audio: 'c1-vc-006.ogg',
   },
   {
     id: 'c1-vc-007',
     word: 'ambiguous',
+    pronunciation: '/æmˈbɪɡjuəs/ (am-BIG-yoo-us)',
     meaning: 'having more than one possible meaning; unclear.',
     examples: ['The wording is ambiguous.', 'He gave an ambiguous reply.'],
     note: `The noun is "ambiguity". Opposite: "clear" or "unambiguous".`,
@@ -64,6 +71,7 @@ export const c1Vocabulary: VocabularyEntry[] = [
   {
     id: 'c1-vc-008',
     word: 'undermine',
+    pronunciation: '/ˌʌndərˈmaɪn/ (un-der-MYNE)',
     meaning: 'to weaken something gradually, often without it being obvious.',
     examples: ['Constant doubt undermined her confidence.', 'The leak undermined trust.'],
     note: `Often used with "confidence", "trust", or "authority".`,
@@ -72,6 +80,7 @@ export const c1Vocabulary: VocabularyEntry[] = [
   {
     id: 'c1-vc-009',
     word: 'comprehensive',
+    pronunciation: '/ˌkɑːmprɪˈhɛnsɪv/ (kom-pri-HEN-siv)',
     meaning: 'complete; covering everything that is relevant.',
     examples: ['A comprehensive guide.', 'They did a comprehensive review.'],
     note: `Do not confuse it with "comprehensible" (able to be understood).`,
@@ -80,6 +89,7 @@ export const c1Vocabulary: VocabularyEntry[] = [
   {
     id: 'c1-vc-010',
     word: 'inherent',
+    pronunciation: '/ɪnˈhɪrənt/ (in-HEER-unt)',
     meaning: 'existing as a natural, permanent part of something.',
     examples: ['Risk is inherent in business.', 'It has an inherent flaw.'],
     note: `Use "inherent in" something. The adverb is "inherently".`,
@@ -88,6 +98,7 @@ export const c1Vocabulary: VocabularyEntry[] = [
   {
     id: 'c1-vc-011',
     word: 'prevalent',
+    pronunciation: '/ˈprɛvələnt/ (PREV-uh-lunt)',
     meaning: 'common or widespread in a place or time.',
     examples: ['That view is prevalent here.', 'It is a prevalent myth.'],
     note: `Close to "widespread". The noun is "prevalence".`,
@@ -96,6 +107,7 @@ export const c1Vocabulary: VocabularyEntry[] = [
   {
     id: 'c1-vc-012',
     word: 'compelling',
+    pronunciation: '/kəmˈpɛlɪŋ/ (kuhm-PEL-ing)',
     meaning: 'so convincing or interesting you cannot ignore it.',
     examples: ['She made a compelling argument.', 'The story is compelling.'],
     note: `Close to "convincing" or "gripping".`,
@@ -104,6 +116,7 @@ export const c1Vocabulary: VocabularyEntry[] = [
   {
     id: 'c1-vc-013',
     word: 'arbitrary',
+    pronunciation: '/ˈɑːrbɪtreri/ (AR-bi-trair-ee)',
     meaning: 'based on chance or personal whim, not on reason.',
     examples: ['It was an arbitrary decision.', 'The rules seem arbitrary.'],
     note: `It suggests there is no clear logic behind the choice.`,
@@ -112,6 +125,7 @@ export const c1Vocabulary: VocabularyEntry[] = [
   {
     id: 'c1-vc-014',
     word: 'robust',
+    pronunciation: '/roʊˈbʌst/ (roh-BUST)',
     meaning: 'strong and able to withstand pressure or difficulty.',
     examples: ['We need a robust system.', 'The economy is robust.'],
     note: `For health it means strong; for things, durable and reliable.`,
@@ -120,6 +134,7 @@ export const c1Vocabulary: VocabularyEntry[] = [
   {
     id: 'c1-vc-015',
     word: 'plausible',
+    pronunciation: '/ˈplɔːzəbəl/ (PLAW-zuh-bul)',
     meaning: 'seeming reasonable or probably true.',
     examples: ['That is a plausible explanation.', 'It sounds plausible.'],
     note: `It seems true but is not proven. Opposite: "implausible".`,
@@ -128,6 +143,7 @@ export const c1Vocabulary: VocabularyEntry[] = [
   {
     id: 'c1-vc-016',
     word: 'redundant',
+    pronunciation: '/rɪˈdʌndənt/ (ri-DUN-dunt)',
     meaning: 'not needed, often because it repeats something.',
     examples: ['That word is redundant.', 'This step is redundant.'],
     note: `In British English it can also mean "laid off" from a job.`,
@@ -136,6 +152,7 @@ export const c1Vocabulary: VocabularyEntry[] = [
   {
     id: 'c1-vc-017',
     word: 'coherent',
+    pronunciation: '/koʊˈhɪrənt/ (koh-HEER-unt)',
     meaning: 'clear, logical, and well-connected.',
     examples: ['She gave a coherent argument.', 'Try to stay coherent.'],
     note: `Opposite: "incoherent". The noun is "coherence".`,
@@ -144,6 +161,7 @@ export const c1Vocabulary: VocabularyEntry[] = [
   {
     id: 'c1-vc-018',
     word: 'tentative',
+    pronunciation: '/ˈtɛntətɪv/ (TEN-tuh-tiv)',
     meaning: 'not certain or fixed; provisional.',
     examples: ['We have a tentative plan.', 'They set a tentative date.'],
     note: `The adverb "tentatively" means not yet finally decided.`,
@@ -152,6 +170,7 @@ export const c1Vocabulary: VocabularyEntry[] = [
   {
     id: 'c1-vc-019',
     word: 'viable',
+    pronunciation: '/ˈvaɪəbəl/ (VY-uh-bul)',
     meaning: 'able to work or succeed in practice.',
     examples: ['It is a viable option.', 'The plan is not viable.'],
     note: `Close to "feasible" or "workable".`,
@@ -160,6 +179,7 @@ export const c1Vocabulary: VocabularyEntry[] = [
   {
     id: 'c1-vc-020',
     word: 'underlying',
+    pronunciation: '/ˌʌndərˈlaɪɪŋ/ (un-der-LY-ing)',
     meaning: 'hidden beneath the surface, but real and important.',
     examples: ['We must find the underlying cause.', 'There is an underlying problem.'],
     note: `It points to the real reason beneath the obvious one.`,
@@ -168,6 +188,7 @@ export const c1Vocabulary: VocabularyEntry[] = [
   {
     id: 'c1-vc-021',
     word: 'diligent',
+    pronunciation: '/ˈdɪlɪdʒənt/ (DIL-i-junt)',
     meaning: 'hardworking and careful in your work.',
     examples: ['She is a diligent student.', 'He made diligent efforts.'],
     note: `The noun is "diligence". Close to "hardworking".`,
@@ -176,6 +197,7 @@ export const c1Vocabulary: VocabularyEntry[] = [
   {
     id: 'c1-vc-022',
     word: 'versatile',
+    pronunciation: '/ˈvɜːrsətəl/ (VUR-suh-tul)',
     meaning: 'able to do many different things well.',
     examples: ['He is a versatile player.', 'It is a versatile tool.'],
     note: `Used of people and things that adapt to many uses.`,
@@ -184,14 +206,16 @@ export const c1Vocabulary: VocabularyEntry[] = [
   {
     id: 'c1-vc-023',
     word: 'intricate',
+    pronunciation: '/ˈɪntrɪkət/ (IN-tri-kit)',
     meaning: 'very detailed and complicated.',
     examples: ['An intricate design.', 'The plot is intricate.'],
-    note: `Close to "complex", but stresses fine detail.`,
+    note: `Ends in a weak "-kit", not "-kate". Close to "complex".`,
     audio: 'c1-vc-023.ogg',
   },
   {
     id: 'c1-vc-024',
     word: 'sceptical',
+    pronunciation: '/ˈskɛptɪkəl/ (SKEP-ti-kul)',
     meaning: 'doubtful; not easily convinced.',
     examples: ['I am sceptical about the claim.', 'She gave a sceptical look.'],
     note: `Spelled "skeptical" in American English. "sceptical of/about".`,
@@ -200,6 +224,7 @@ export const c1Vocabulary: VocabularyEntry[] = [
   {
     id: 'c1-vc-025',
     word: 'autonomous',
+    pronunciation: '/ɔːˈtɑːnəməs/ (aw-TON-uh-mus)',
     meaning: 'able to act independently, without outside control.',
     examples: ['An autonomous team.', 'The region is autonomous.'],
     note: `The noun is "autonomy", meaning independence.`,
@@ -208,6 +233,7 @@ export const c1Vocabulary: VocabularyEntry[] = [
   {
     id: 'c1-vc-026',
     word: 'transparent',
+    pronunciation: '/trænsˈpɛrənt/ (trans-PAIR-unt)',
     meaning: 'open and honest; easy to see through.',
     examples: ['We want a transparent process.', 'Be transparent about costs.'],
     note: `The noun is "transparency". The opposite is "secretive".`,
@@ -216,6 +242,7 @@ export const c1Vocabulary: VocabularyEntry[] = [
   {
     id: 'c1-vc-027',
     word: 'sustainable',
+    pronunciation: '/səˈsteɪnəbəl/ (suh-STAY-nuh-bul)',
     meaning: 'able to continue for a long time without harm.',
     examples: ['A sustainable lifestyle.', 'The pace is not sustainable.'],
     note: `Used for the environment and for habits or workloads.`,
@@ -224,6 +251,7 @@ export const c1Vocabulary: VocabularyEntry[] = [
   {
     id: 'c1-vc-028',
     word: 'controversial',
+    pronunciation: '/ˌkɑːntrəˈvɜːrʃəl/ (kon-truh-VUR-shul)',
     meaning: 'causing strong disagreement.',
     examples: ['It is a controversial topic.', 'She made a controversial choice.'],
     note: `The noun is "controversy".`,
@@ -232,6 +260,7 @@ export const c1Vocabulary: VocabularyEntry[] = [
   {
     id: 'c1-vc-029',
     word: 'astute',
+    pronunciation: '/əˈstuːt/ (uh-STOOT)',
     meaning: 'clever and quick to understand a situation.',
     examples: ['That was an astute observation.', 'She is an astute businesswoman.'],
     note: `Close to "shrewd" or "perceptive".`,
@@ -240,6 +269,7 @@ export const c1Vocabulary: VocabularyEntry[] = [
   {
     id: 'c1-vc-030',
     word: 'gracious',
+    pronunciation: '/ˈɡreɪʃəs/ (GRAY-shus)',
     meaning: 'kind, polite, and pleasant, especially to others.',
     examples: ['He is a gracious host.', 'She was gracious in defeat.'],
     note: `"gracious in defeat" means a good, generous loser.`,
@@ -248,6 +278,7 @@ export const c1Vocabulary: VocabularyEntry[] = [
   {
     id: 'c1-vc-031',
     word: 'perceptive',
+    pronunciation: '/pərˈsɛptɪv/ (per-SEP-tiv)',
     meaning: 'quick to notice and understand things.',
     examples: ['That is a perceptive comment.', 'She is very perceptive about people.'],
     note: `A perceptive person notices what others miss.`,
@@ -256,6 +287,7 @@ export const c1Vocabulary: VocabularyEntry[] = [
   {
     id: 'c1-vc-032',
     word: 'resourceful',
+    pronunciation: '/rɪˈsɔːrsfəl/ (ri-SORS-ful)',
     meaning: 'good at finding clever ways to solve problems.',
     examples: ['She is calm and resourceful.', 'A resourceful traveller adapts quickly.'],
     note: `Makes the most of whatever is available.`,
@@ -264,6 +296,7 @@ export const c1Vocabulary: VocabularyEntry[] = [
   {
     id: 'c1-vc-033',
     word: 'scrupulous',
+    pronunciation: '/ˈskruːpjələs/ (SKROO-pyuh-lus)',
     meaning: 'very careful to do what is right and exact.',
     examples: ['She pays scrupulous attention to detail.', 'He is scrupulous about honesty.'],
     note: `Opposite: "careless", or "unscrupulous" for dishonest.`,
@@ -272,9 +305,10 @@ export const c1Vocabulary: VocabularyEntry[] = [
   {
     id: 'c1-vc-034',
     word: 'articulate',
+    pronunciation: '/ɑːrˈtɪkjələt/ (ar-TIK-yuh-lit)',
     meaning: 'able to express ideas clearly and fluently.',
     examples: ['She is highly articulate.', 'He made an articulate argument.'],
-    note: `As a verb, "to articulate an idea", the ending sounds different.`,
+    note: `The adjective ends "-lit"; the verb (to articulate) ends "-layt".`,
     audio: 'c1-vc-034.ogg',
   },
 ];

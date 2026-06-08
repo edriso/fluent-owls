@@ -79,6 +79,7 @@ import {
   VOCAB_MAX_EXAMPLES,
   VOCAB_MEANING_MAX_CHARS,
   VOCAB_MIN_EXAMPLES,
+  VOCAB_PRON_MAX_CHARS,
   VOCAB_WORD_MAX_CHARS,
 } from '../src/lib/limits';
 import { LEVELS } from '../src/types';
@@ -316,6 +317,10 @@ for (const v of ALL_VOCABULARY) {
   seenWord.add(normWord);
 
   checkText(v.id, 'word', v.word, VOCAB_WORD_MAX_CHARS);
+  checkText(v.id, 'pronunciation', v.pronunciation, VOCAB_PRON_MAX_CHARS);
+  // Expect IPA in slashes plus a respelling in parentheses, e.g. "/kænd/ (kand)".
+  if (!/\/.+\/\s*\(.+\)/.test(v.pronunciation))
+    add(v.id, 'pronunciation', 'should be "/IPA/ (respelling)"');
   checkText(v.id, 'meaning', v.meaning, VOCAB_MEANING_MAX_CHARS);
   checkText(v.id, 'note', v.note, NOTE_MAX_CHARS);
 
@@ -441,10 +446,8 @@ const totalAudioChars =
   ALL_PROMPTS.reduce((sum, p) => sum + p.question.length + p.answer.length, 0) +
   ALL_PRONUNCIATION.reduce((sum, d) => sum + d.items.reduce((s, it) => s + it.length, 0), 0) +
   ALL_PHRASES.reduce((sum, p) => sum + p.phrase.length + p.example.length, 0) +
-  ALL_VOCABULARY.reduce(
-    (sum, v) => sum + v.word.length + v.examples.reduce((s, e) => s + e.length, 0),
-    0,
-  ) +
+  // Vocabulary audio reads only the example sentences (not the lone word).
+  ALL_VOCABULARY.reduce((sum, v) => sum + v.examples.reduce((s, e) => s + e.length, 0), 0) +
   ALL_IDIOMS.reduce(
     (sum, it) => sum + it.idiom.length + it.examples.reduce((s, e) => s + e.length, 0),
     0,

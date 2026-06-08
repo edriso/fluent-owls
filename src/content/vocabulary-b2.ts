@@ -8,6 +8,7 @@ export const b2Vocabulary: VocabularyEntry[] = [
   {
     id: 'b2-vc-001',
     word: 'overwhelmed',
+    pronunciation: '/ˌoʊvərˈwɛlmd/ (oh-ver-WELMD)',
     meaning: 'feeling unable to cope because there is too much to handle.',
     examples: ['I feel overwhelmed by all the work.', 'She was overwhelmed with messages.'],
     note: `"overwhelmed by" or "overwhelmed with". The verb is "overwhelm".`,
@@ -16,6 +17,7 @@ export const b2Vocabulary: VocabularyEntry[] = [
   {
     id: 'b2-vc-002',
     word: 'reluctant',
+    pronunciation: '/rɪˈlʌktənt/ (ri-LUK-tunt)',
     meaning: 'not wanting to do something; hesitant.',
     examples: ['He was reluctant to agree.', 'She gave a reluctant smile.'],
     note: `"reluctant to do" something. The noun is "reluctance".`,
@@ -24,6 +26,7 @@ export const b2Vocabulary: VocabularyEntry[] = [
   {
     id: 'b2-vc-003',
     word: 'straightforward',
+    pronunciation: '/ˌstreɪtˈfɔːrwərd/ (strayt-FOR-werd)',
     meaning: 'simple, clear, and easy to understand or do.',
     examples: ['The task is straightforward.', 'He gave a straightforward answer.'],
     note: `Close to "simple" or "clear". For people, it means honest and direct.`,
@@ -32,14 +35,16 @@ export const b2Vocabulary: VocabularyEntry[] = [
   {
     id: 'b2-vc-004',
     word: 'considerate',
+    pronunciation: '/kənˈsɪdərət/ (kuhn-SID-uh-rit)',
     meaning: 'thinking about other people and their feelings.',
     examples: ['It was considerate of you to call.', 'She is a considerate neighbor.'],
-    note: `"considerate of someone". Do not confuse it with "considerable" (large).`,
+    note: `Ends in a weak "-it", not "-ate". Do not confuse it with "considerable" (large).`,
     audio: 'b2-vc-004.ogg',
   },
   {
     id: 'b2-vc-005',
     word: 'eventually',
+    pronunciation: '/ɪˈvɛntʃuəli/ (i-VEN-choo-uh-lee)',
     meaning: 'in the end, after a long time or some delay.',
     examples: ['We eventually found the place.', 'She eventually agreed.'],
     note: `It means "finally", not "maybe". A false friend in some languages.`,
@@ -48,6 +53,7 @@ export const b2Vocabulary: VocabularyEntry[] = [
   {
     id: 'b2-vc-006',
     word: 'cope',
+    pronunciation: '/koʊp/ (kohp)',
     meaning: 'to deal successfully with a difficult situation.',
     examples: ['I can cope with the pressure.', 'How do you cope with stress?'],
     note: `Almost always "cope with" something.`,
@@ -56,6 +62,7 @@ export const b2Vocabulary: VocabularyEntry[] = [
   {
     id: 'b2-vc-007',
     word: 'deadline',
+    pronunciation: '/ˈdɛdlaɪn/ (DED-lyne)',
     meaning: 'the latest time by which something must be finished.',
     examples: ['The deadline is Friday.', 'We met the deadline.'],
     note: `Common verbs: "meet", "miss", or "extend" a deadline.`,
@@ -64,6 +71,7 @@ export const b2Vocabulary: VocabularyEntry[] = [
   {
     id: 'b2-vc-008',
     word: 'flexible',
+    pronunciation: '/ˈflɛksəbəl/ (FLEK-suh-bul)',
     meaning: 'able to change easily to fit new conditions.',
     examples: ['My schedule is flexible.', 'We need a flexible plan.'],
     note: `For objects it means "bends easily". The noun is "flexibility".`,
@@ -72,6 +80,7 @@ export const b2Vocabulary: VocabularyEntry[] = [
   {
     id: 'b2-vc-009',
     word: 'anticipate',
+    pronunciation: '/ænˈtɪsɪpeɪt/ (an-TIS-i-payt)',
     meaning: 'to expect something and prepare for it.',
     examples: ['We anticipate some delays.', 'She anticipated the question.'],
     note: `More formal than "expect". The noun is "anticipation".`,
@@ -80,6 +89,7 @@ export const b2Vocabulary: VocabularyEntry[] = [
   {
     id: 'b2-vc-010',
     word: 'emphasise',
+    pronunciation: '/ˈɛmfəsaɪz/ (EM-fuh-syze)',
     meaning: 'to give special importance to something.',
     examples: ['He emphasised the deadline.', 'I want to emphasise one point.'],
     note: `Spelled "emphasize" in American English. The noun is "emphasis".`,
@@ -88,14 +98,16 @@ export const b2Vocabulary: VocabularyEntry[] = [
   {
     id: 'b2-vc-011',
     word: 'acknowledge',
+    pronunciation: '/əkˈnɑːlɪdʒ/ (ak-NOL-ij)',
     meaning: 'to accept or admit that something is true.',
     examples: ['She acknowledged the mistake.', 'He acknowledged my email.'],
-    note: `It can also mean to show you noticed someone.`,
+    note: `The "k" and "w" are silent. It can also mean to show you noticed someone.`,
     audio: 'b2-vc-011.ogg',
   },
   {
     id: 'b2-vc-012',
     word: 'hesitate',
+    pronunciation: '/ˈhɛzɪteɪt/ (HEZ-i-tayt)',
     meaning: 'to pause before doing something, often from doubt.',
     examples: ['She hesitated before answering.', 'Do not hesitate to ask.'],
     note: `Use "hesitate to do". The noun is "hesitation".`,
@@ -104,6 +116,7 @@ export const b2Vocabulary: VocabularyEntry[] = [
   {
     id: 'b2-vc-013',
     word: 'demonstrate',
+    pronunciation: '/ˈdɛmənstreɪt/ (DEM-un-strayt)',
     meaning: 'to show something clearly, by example or proof.',
     examples: ['The data demonstrates a trend.', 'He demonstrated the method.'],
     note: `A simpler synonym is "show". The noun is "demonstration".`,
@@ -112,6 +125,7 @@ export const b2Vocabulary: VocabularyEntry[] = [
   {
     id: 'b2-vc-014',
     word: 'persuade',
+    pronunciation: '/pərˈsweɪd/ (per-SWAYD)',
     meaning: 'to make someone agree by giving them reasons.',
     examples: ['She persuaded me to stay.', 'They persuaded him to sign.'],
     note: `"persuade someone to do". Close to "convince".`,
@@ -120,30 +134,34 @@ export const b2Vocabulary: VocabularyEntry[] = [
   {
     id: 'b2-vc-015',
     word: 'genuine',
+    pronunciation: '/ˈdʒɛnjuɪn/ (JEN-yoo-in)',
     meaning: 'real and sincere; not fake.',
     examples: ['She gave a genuine smile.', 'He showed genuine interest.'],
-    note: `Opposite: "fake". The adverb is "genuinely".`,
+    note: `Ends in "-in", not "-ine". Opposite: "fake". The adverb is "genuinely".`,
     audio: 'b2-vc-015.ogg',
   },
   {
     id: 'b2-vc-016',
     word: 'thorough',
+    pronunciation: '/ˈθɜːroʊ/ (THUR-oh)',
     meaning: 'complete and careful, leaving nothing out.',
     examples: ['She did a thorough job.', 'They ran a thorough check.'],
-    note: `The adverb "thoroughly" means completely.`,
+    note: `Rhymes with "furrow", not "through". The adverb "thoroughly" means completely.`,
     audio: 'b2-vc-016.ogg',
   },
   {
     id: 'b2-vc-017',
     word: 'vague',
+    pronunciation: '/veɪɡ/ (vayg)',
     meaning: 'not clear or exact.',
     examples: ['He gave a vague answer.', 'I have a vague memory of it.'],
-    note: `Opposite: "clear" or "precise".`,
+    note: `The "ue" is silent. Opposite: "clear" or "precise".`,
     audio: 'b2-vc-017.ogg',
   },
   {
     id: 'b2-vc-018',
     word: 'sufficient',
+    pronunciation: '/səˈfɪʃənt/ (suh-FISH-unt)',
     meaning: 'enough for a particular purpose.',
     examples: ['We have sufficient time.', 'The evidence is sufficient.'],
     note: `A formal word for "enough". Opposite: "insufficient".`,
@@ -152,6 +170,7 @@ export const b2Vocabulary: VocabularyEntry[] = [
   {
     id: 'b2-vc-019',
     word: 'crucial',
+    pronunciation: '/ˈkruːʃəl/ (KROO-shul)',
     meaning: 'extremely important; decisive.',
     examples: ['Timing is crucial.', 'This is a crucial moment.'],
     note: `Stronger than "important". Close to "vital".`,
@@ -160,6 +179,7 @@ export const b2Vocabulary: VocabularyEntry[] = [
   {
     id: 'b2-vc-020',
     word: 'subtle',
+    pronunciation: '/ˈsʌtəl/ (SUT-ul)',
     meaning: 'not obvious; delicate or fine.',
     examples: ['There is a subtle difference.', 'She gave a subtle hint.'],
     note: `The "b" is silent: say "sut-le". The noun is "subtlety".`,
@@ -168,6 +188,7 @@ export const b2Vocabulary: VocabularyEntry[] = [
   {
     id: 'b2-vc-021',
     word: 'significant',
+    pronunciation: '/sɪɡˈnɪfɪkənt/ (sig-NIF-i-kunt)',
     meaning: 'large or important enough to matter.',
     examples: ['There was a significant change.', 'It made a significant difference.'],
     note: `The adverb "significantly" means by a large amount.`,
@@ -176,6 +197,7 @@ export const b2Vocabulary: VocabularyEntry[] = [
   {
     id: 'b2-vc-022',
     word: 'relevant',
+    pronunciation: '/ˈrɛləvənt/ (REL-uh-vunt)',
     meaning: 'connected to the matter at hand; useful here.',
     examples: ['That is a relevant point.', 'Keep your answer relevant.'],
     note: `Opposite: "irrelevant". The noun is "relevance".`,
@@ -184,6 +206,7 @@ export const b2Vocabulary: VocabularyEntry[] = [
   {
     id: 'b2-vc-023',
     word: 'efficient',
+    pronunciation: '/ɪˈfɪʃənt/ (i-FISH-unt)',
     meaning: 'working well without wasting time or effort.',
     examples: ['She is a very efficient worker.', 'We need a more efficient method.'],
     note: `The noun is "efficiency". Opposite: "inefficient".`,
@@ -192,14 +215,16 @@ export const b2Vocabulary: VocabularyEntry[] = [
   {
     id: 'b2-vc-024',
     word: 'accurate',
+    pronunciation: '/ˈækjərət/ (AK-yuh-rit)',
     meaning: 'correct and exact, with no mistakes.',
     examples: ['The report is accurate.', 'Give me an accurate figure.'],
-    note: `Opposite: "inaccurate". The noun is "accuracy".`,
+    note: `Ends in a weak "-it", not "-ate". Opposite: "inaccurate".`,
     audio: 'b2-vc-024.ogg',
   },
   {
     id: 'b2-vc-025',
     word: 'essential',
+    pronunciation: '/ɪˈsɛnʃəl/ (i-SEN-shul)',
     meaning: 'absolutely necessary.',
     examples: ['Water is essential for life.', 'It is essential to prepare.'],
     note: `Stronger than "important". Close to "vital" or "crucial".`,
@@ -208,6 +233,7 @@ export const b2Vocabulary: VocabularyEntry[] = [
   {
     id: 'b2-vc-026',
     word: 'complex',
+    pronunciation: '/ˈkɑːmplɛks/ (KOM-pleks)',
     meaning: 'having many connected parts; not simple.',
     examples: ['It is a complex problem.', 'The rules are complex.'],
     note: `The noun is "complexity". Opposite: "simple".`,
@@ -216,6 +242,7 @@ export const b2Vocabulary: VocabularyEntry[] = [
   {
     id: 'b2-vc-027',
     word: 'obvious',
+    pronunciation: '/ˈɑːbviəs/ (OB-vee-us)',
     meaning: 'easy to see or understand; clear.',
     examples: ['The answer is obvious.', 'It was an obvious mistake.'],
     note: `The adverb "obviously" means clearly or as expected.`,
@@ -224,6 +251,7 @@ export const b2Vocabulary: VocabularyEntry[] = [
   {
     id: 'b2-vc-028',
     word: 'gradual',
+    pronunciation: '/ˈɡrædʒuəl/ (GRAJ-oo-ul)',
     meaning: 'happening slowly over time, in small steps.',
     examples: ['There was a gradual improvement.', 'Change was gradual.'],
     note: `The adverb "gradually" is very common. Opposite: "sudden".`,
@@ -232,6 +260,7 @@ export const b2Vocabulary: VocabularyEntry[] = [
   {
     id: 'b2-vc-029',
     word: 'assertive',
+    pronunciation: '/əˈsɜːrtɪv/ (uh-SUR-tiv)',
     meaning: 'confident and direct, without being aggressive.',
     examples: ['Try to be more assertive in meetings.', 'She gave an assertive but polite reply.'],
     note: `It sits between passive and aggressive.`,
@@ -240,6 +269,7 @@ export const b2Vocabulary: VocabularyEntry[] = [
   {
     id: 'b2-vc-030',
     word: 'decisive',
+    pronunciation: '/dɪˈsaɪsɪv/ (di-SY-siv)',
     meaning: 'able to make decisions quickly and firmly.',
     examples: ['A good leader is decisive.', 'It was the decisive moment.'],
     note: `The noun is "decisiveness". Opposite: "indecisive".`,
@@ -248,6 +278,7 @@ export const b2Vocabulary: VocabularyEntry[] = [
   {
     id: 'b2-vc-031',
     word: 'humble',
+    pronunciation: '/ˈhʌmbəl/ (HUM-bul)',
     meaning: 'not proud; modest about yourself.',
     examples: ['She stayed humble after winning.', 'He came from humble beginnings.'],
     note: `The noun is "humility".`,
@@ -256,6 +287,7 @@ export const b2Vocabulary: VocabularyEntry[] = [
   {
     id: 'b2-vc-032',
     word: 'courteous',
+    pronunciation: '/ˈkɜːrtiəs/ (KUR-tee-us)',
     meaning: 'polite and respectful.',
     examples: ['The staff were courteous.', 'She sent a courteous reply.'],
     note: `The noun is "courtesy". Opposite: "rude".`,
@@ -264,6 +296,7 @@ export const b2Vocabulary: VocabularyEntry[] = [
   {
     id: 'b2-vc-033',
     word: 'diplomatic',
+    pronunciation: '/ˌdɪpləˈmætɪk/ (dip-luh-MAT-ik)',
     meaning: 'skilled at dealing with people without causing offence.',
     examples: ['She gave a diplomatic answer.', 'Be diplomatic when you share bad news.'],
     note: `It means tactful, not only about politics.`,
@@ -272,6 +305,7 @@ export const b2Vocabulary: VocabularyEntry[] = [
   {
     id: 'b2-vc-034',
     word: 'methodical',
+    pronunciation: '/məˈθɑːdɪkəl/ (muh-THOD-i-kul)',
     meaning: 'done in a careful, well-ordered way.',
     examples: ['He is methodical in his work.', 'They took a methodical approach.'],
     note: `Close to "systematic" or "organised".`,

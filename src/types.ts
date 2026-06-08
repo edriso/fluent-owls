@@ -402,9 +402,22 @@ export type VocabularyEntry = {
   id: string;
   /** The target word (or short phrase), e.g. "reliable". */
   word: string;
+  /**
+   * How to say the word, shown small under it so a reader gets the pronunciation
+   * even if the audio is imperfect. Format: IPA in slashes, then a plain
+   * respelling in parentheses, e.g. "/kənˈsɪdərət/ (kuhn-SID-uh-rit)". General
+   * American. CAPS marks the stressed syllable in the respelling.
+   */
+  pronunciation: string;
   /** A plain, junior-friendly definition. */
   meaning: string;
-  /** Two or three example sentences. The audio reads the word, then these. */
+  /**
+   * Two or three example sentences. The audio reads ONLY these (the target word
+   * is heard inside them, in natural context). The lone word is not spoken,
+   * because a text-to-speech voice often mispronounces a word out of context
+   * (e.g. the "-ate" adjectives). The word and its pronunciation are shown in the
+   * caption instead.
+   */
   examples: string[];
   /** One usage tip: a common collocation, a synonym, or a mistake to avoid. */
   note: string;

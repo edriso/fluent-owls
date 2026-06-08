@@ -331,7 +331,7 @@ export function buildVocabularyMessage(entry: LeveledVocabularyEntry): string {
   const examples = entry.examples.map((e) => `• ${escapeHtml(e)}`);
   return [
     `📖 <b>Word builder</b>  ·  ${badge}`,
-    `<b>${escapeHtml(entry.word)}</b>`,
+    `<b>${escapeHtml(entry.word)}</b>  <i>${escapeHtml(entry.pronunciation)}</i>`,
     `<i>${escapeHtml(entry.meaning)}</i>`,
     '',
     '<b>Examples:</b>',

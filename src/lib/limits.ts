@@ -89,6 +89,8 @@ export const PRON_ITEM_MAX_CHARS = 120;
 
 /** Maximum length of a vocabulary word (or short phrase). */
 export const VOCAB_WORD_MAX_CHARS = 40;
+/** Maximum length of the pronunciation guide, e.g. "/kənˈsɪdərət/ (kuhn-SID-uh-rit)". */
+export const VOCAB_PRON_MAX_CHARS = 80;
 /** Maximum length of a vocabulary definition. */
 export const VOCAB_MEANING_MAX_CHARS = 160;
 /** Fewest / most example sentences per vocabulary entry. */

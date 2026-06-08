@@ -8,6 +8,7 @@ export const a2Vocabulary: VocabularyEntry[] = [
   {
     id: 'a2-vc-001',
     word: 'borrow',
+    pronunciation: '/ˈbɑːroʊ/ (BAH-roh)',
     meaning: 'to take something for a short time and give it back.',
     examples: ['Can I borrow your pen?', 'I borrowed a book from the library.'],
     note: `You borrow FROM someone; they lend TO you. Do not mix them up.`,
@@ -16,6 +17,7 @@ export const a2Vocabulary: VocabularyEntry[] = [
   {
     id: 'a2-vc-002',
     word: 'lend',
+    pronunciation: '/lɛnd/ (lend)',
     meaning: 'to give something for a short time, expecting it back.',
     examples: ['Can you lend me ten dollars?', 'She lent me her car.'],
     note: `The opposite of "borrow". Past form is "lent".`,
@@ -24,6 +26,7 @@ export const a2Vocabulary: VocabularyEntry[] = [
   {
     id: 'a2-vc-003',
     word: 'decide',
+    pronunciation: '/dɪˈsaɪd/ (di-SYDE)',
     meaning: 'to choose after thinking about it.',
     examples: ['I decided to stay home.', 'We need to decide soon.'],
     note: `Use "decide to do" something. The noun is "decision".`,
@@ -32,6 +35,7 @@ export const a2Vocabulary: VocabularyEntry[] = [
   {
     id: 'a2-vc-004',
     word: 'improve',
+    pronunciation: '/ɪmˈpruːv/ (im-PROOV)',
     meaning: 'to get better, or make something better.',
     examples: ['My English is improving.', 'I want to improve my cooking.'],
     note: `The noun is "improvement". Often "improve at" a skill.`,
@@ -40,6 +44,7 @@ export const a2Vocabulary: VocabularyEntry[] = [
   {
     id: 'a2-vc-005',
     word: 'enough',
+    pronunciation: '/ɪˈnʌf/ (i-NUF)',
     meaning: 'as much as you need; not more, not less.',
     examples: ['We have enough time.', 'This is not big enough.'],
     note: `It goes BEFORE a noun but AFTER an adjective: "enough money", "big enough".`,
@@ -48,6 +53,7 @@ export const a2Vocabulary: VocabularyEntry[] = [
   {
     id: 'a2-vc-006',
     word: 'polite',
+    pronunciation: '/pəˈlaɪt/ (puh-LYTE)',
     meaning: 'showing good manners and respect.',
     examples: ['She is always polite.', 'It is polite to say thank you.'],
     note: `Opposite of "rude". The adverb is "politely".`,
@@ -56,6 +62,7 @@ export const a2Vocabulary: VocabularyEntry[] = [
   {
     id: 'a2-vc-007',
     word: 'nervous',
+    pronunciation: '/ˈnɜːrvəs/ (NUR-vus)',
     meaning: 'worried or a little afraid about something.',
     examples: ['I am nervous about the test.', 'He felt nervous before the talk.'],
     note: `"Nervous about" something. Different from "angry" or "excited".`,
@@ -64,6 +71,7 @@ export const a2Vocabulary: VocabularyEntry[] = [
   {
     id: 'a2-vc-008',
     word: 'bored',
+    pronunciation: '/bɔːrd/ (bord)',
     meaning: 'tired and unhappy because nothing interesting is happening.',
     examples: ['I am bored at home.', 'The film was so boring.'],
     note: `You feel "bored"; a thing is "boring". Do not say "I am boring".`,
@@ -72,6 +80,7 @@ export const a2Vocabulary: VocabularyEntry[] = [
   {
     id: 'a2-vc-009',
     word: 'arrive',
+    pronunciation: '/əˈraɪv/ (uh-RYVE)',
     meaning: 'to reach a place.',
     examples: ['We arrived at noon.', 'The train arrives soon.'],
     note: `Use "arrive at" a place, but "arrive in" a city or country.`,
@@ -80,6 +89,7 @@ export const a2Vocabulary: VocabularyEntry[] = [
   {
     id: 'a2-vc-010',
     word: 'prepare',
+    pronunciation: '/prɪˈpɛr/ (pri-PAIR)',
     meaning: 'to get ready, or make something ready.',
     examples: ['I prepared dinner.', 'She prepared for the exam.'],
     note: `Use "prepare for" something. The noun is "preparation".`,
@@ -88,6 +98,7 @@ export const a2Vocabulary: VocabularyEntry[] = [
   {
     id: 'a2-vc-011',
     word: 'explain',
+    pronunciation: '/ɪkˈspleɪn/ (ik-SPLAYN)',
     meaning: 'to make something clear.',
     examples: ['Can you explain the rule?', 'He explained the problem.'],
     note: `"explain something to someone". The noun is "explanation".`,
@@ -96,6 +107,7 @@ export const a2Vocabulary: VocabularyEntry[] = [
   {
     id: 'a2-vc-012',
     word: 'allow',
+    pronunciation: '/əˈlaʊ/ (uh-LOW)',
     meaning: 'to let someone do something.',
     examples: ['They allow dogs here.', 'We are not allowed to smoke.'],
     note: `"allow someone to do". Close to "let".`,
@@ -104,6 +116,7 @@ export const a2Vocabulary: VocabularyEntry[] = [
   {
     id: 'a2-vc-013',
     word: 'avoid',
+    pronunciation: '/əˈvɔɪd/ (uh-VOYD)',
     meaning: 'to keep away from something.',
     examples: ['I avoid sugar.', 'She avoided the question.'],
     note: `Use "avoid doing" something, not "avoid to do".`,
@@ -112,6 +125,7 @@ export const a2Vocabulary: VocabularyEntry[] = [
   {
     id: 'a2-vc-014',
     word: 'complain',
+    pronunciation: '/kəmˈpleɪn/ (kuhm-PLAYN)',
     meaning: 'to say you are unhappy about something.',
     examples: ['He complained about the noise.', 'Please do not complain.'],
     note: `"complain about" something. The noun is "complaint".`,
@@ -120,6 +134,7 @@ export const a2Vocabulary: VocabularyEntry[] = [
   {
     id: 'a2-vc-015',
     word: 'relax',
+    pronunciation: '/rɪˈlæks/ (ri-LAX)',
     meaning: 'to rest and become calm.',
     examples: ['I relax on weekends.', 'Just relax and breathe.'],
     note: `The adjective "relaxed" describes how you feel.`,
@@ -128,6 +143,7 @@ export const a2Vocabulary: VocabularyEntry[] = [
   {
     id: 'a2-vc-016',
     word: 'worried',
+    pronunciation: '/ˈwɜːrid/ (WUR-eed)',
     meaning: 'feeling anxious about something.',
     examples: ['I am worried about you.', 'She looked worried.'],
     note: `"worried about" something. The verb is "worry".`,
@@ -136,6 +152,7 @@ export const a2Vocabulary: VocabularyEntry[] = [
   {
     id: 'a2-vc-017',
     word: 'excited',
+    pronunciation: '/ɪkˈsaɪtɪd/ (ik-SY-tid)',
     meaning: 'very happy and eager about something.',
     examples: ['I am excited about the trip.', 'The kids were excited.'],
     note: `You feel "excited"; a thing is "exciting".`,
@@ -144,6 +161,7 @@ export const a2Vocabulary: VocabularyEntry[] = [
   {
     id: 'a2-vc-018',
     word: 'surprised',
+    pronunciation: '/sərˈpraɪzd/ (suh-PRYZD)',
     meaning: 'feeling that something was unexpected.',
     examples: ['I was surprised by the news.', 'She seemed surprised.'],
     note: `You feel "surprised"; a thing is "surprising".`,
@@ -152,6 +170,7 @@ export const a2Vocabulary: VocabularyEntry[] = [
   {
     id: 'a2-vc-019',
     word: 'comfortable',
+    pronunciation: '/ˈkʌmftərbəl/ (KUMF-ter-bul)',
     meaning: 'giving a pleasant, relaxed feeling.',
     examples: ['This chair is comfortable.', 'I feel comfortable here.'],
     note: `Opposite of "uncomfortable". Often shortened to "comfy".`,
@@ -160,6 +179,7 @@ export const a2Vocabulary: VocabularyEntry[] = [
   {
     id: 'a2-vc-020',
     word: 'convenient',
+    pronunciation: '/kənˈviːniənt/ (kuhn-VEEN-yunt)',
     meaning: 'easy and useful for your needs.',
     examples: ['The shop is convenient.', 'Is Friday convenient?'],
     note: `The noun is "convenience". Opposite: "inconvenient".`,
@@ -168,6 +188,7 @@ export const a2Vocabulary: VocabularyEntry[] = [
   {
     id: 'a2-vc-021',
     word: 'receive',
+    pronunciation: '/rɪˈsiːv/ (ri-SEEV)',
     meaning: 'to get something that is given or sent.',
     examples: ['I received your message.', 'She received a gift.'],
     note: `Opposite of "send" or "give". Remember "i before e" here is broken.`,
@@ -176,6 +197,7 @@ export const a2Vocabulary: VocabularyEntry[] = [
   {
     id: 'a2-vc-022',
     word: 'return',
+    pronunciation: '/rɪˈtɜːrn/ (ri-TURN)',
     meaning: 'to give back, or to go back.',
     examples: ['I returned the book.', 'We returned home late.'],
     note: `Two uses: return a thing, or return to a place.`,
@@ -184,6 +206,7 @@ export const a2Vocabulary: VocabularyEntry[] = [
   {
     id: 'a2-vc-023',
     word: 'repeat',
+    pronunciation: '/rɪˈpiːt/ (ri-PEET)',
     meaning: 'to say or do something again.',
     examples: ['Can you repeat that?', 'Do not repeat the mistake.'],
     note: `The noun is "repetition".`,
@@ -192,6 +215,7 @@ export const a2Vocabulary: VocabularyEntry[] = [
   {
     id: 'a2-vc-024',
     word: 'continue',
+    pronunciation: '/kənˈtɪnjuː/ (kuhn-TIN-yoo)',
     meaning: 'to keep going; to not stop.',
     examples: ['Please continue.', 'The rain continued all day.'],
     note: `Use "continue doing" or "continue to do".`,
@@ -200,6 +224,7 @@ export const a2Vocabulary: VocabularyEntry[] = [
   {
     id: 'a2-vc-025',
     word: 'accept',
+    pronunciation: '/əkˈsɛpt/ (uhk-SEPT)',
     meaning: 'to agree to take or receive something.',
     examples: ['I accept your offer.', 'She accepted the invitation.'],
     note: `Opposite of "refuse". The noun is "acceptance".`,
@@ -208,6 +233,7 @@ export const a2Vocabulary: VocabularyEntry[] = [
   {
     id: 'a2-vc-026',
     word: 'refuse',
+    pronunciation: '/rɪˈfjuːz/ (ri-FYOOZ)',
     meaning: 'to say no to something firmly.',
     examples: ['He refused the offer.', 'She refused to help.'],
     note: `Use "refuse to do". Opposite of "accept" or "agree".`,
@@ -216,6 +242,7 @@ export const a2Vocabulary: VocabularyEntry[] = [
   {
     id: 'a2-vc-027',
     word: 'succeed',
+    pronunciation: '/səkˈsiːd/ (suhk-SEED)',
     meaning: 'to achieve what you wanted.',
     examples: ['She succeeded in the end.', 'I hope you succeed.'],
     note: `The noun is "success"; the adjective is "successful".`,
@@ -224,6 +251,7 @@ export const a2Vocabulary: VocabularyEntry[] = [
   {
     id: 'a2-vc-028',
     word: 'discuss',
+    pronunciation: '/dɪˈskʌs/ (di-SKUS)',
     meaning: 'to talk about something with others.',
     examples: ['Let us discuss the plan.', 'We discussed the problem.'],
     note: `Do not say "discuss about"; just "discuss" the topic.`,
@@ -232,6 +260,7 @@ export const a2Vocabulary: VocabularyEntry[] = [
   {
     id: 'a2-vc-029',
     word: 'invite',
+    pronunciation: '/ɪnˈvaɪt/ (in-VYTE)',
     meaning: 'to ask someone to come or join.',
     examples: ['They invited us to dinner.', 'I will invite a few friends.'],
     note: `The noun is "invitation".`,
@@ -240,6 +269,7 @@ export const a2Vocabulary: VocabularyEntry[] = [
   {
     id: 'a2-vc-030',
     word: 'promise',
+    pronunciation: '/ˈprɑːmɪs/ (PRAH-mis)',
     meaning: 'to say firmly that you will do something.',
     examples: ['I promise to call you.', 'She kept her promise.'],
     note: `Both a verb and a noun: "make" and "keep" a promise.`,
@@ -248,6 +278,7 @@ export const a2Vocabulary: VocabularyEntry[] = [
   {
     id: 'a2-vc-031',
     word: 'choose',
+    pronunciation: '/tʃuːz/ (chooz)',
     meaning: 'to pick one thing from several.',
     examples: ['Choose any seat you like.', 'It is hard to choose.'],
     note: `Past form is "chose"; the noun is "choice".`,
@@ -256,6 +287,7 @@ export const a2Vocabulary: VocabularyEntry[] = [
   {
     id: 'a2-vc-032',
     word: 'climb',
+    pronunciation: '/klaɪm/ (klyme)',
     meaning: 'to go up something.',
     examples: ['They climbed the hill.', 'The cat climbed the tree.'],
     note: `The "b" is silent: say "clime".`,
@@ -264,6 +296,7 @@ export const a2Vocabulary: VocabularyEntry[] = [
   {
     id: 'a2-vc-033',
     word: 'repair',
+    pronunciation: '/rɪˈpɛr/ (ri-PAIR)',
     meaning: 'to fix something that is broken.',
     examples: ['I need to repair my bike.', 'They repaired the road.'],
     note: `A slightly more formal word for "fix".`,
@@ -272,6 +305,7 @@ export const a2Vocabulary: VocabularyEntry[] = [
   {
     id: 'a2-vc-034',
     word: 'share',
+    pronunciation: '/ʃɛr/ (shair)',
     meaning: 'to give part of something to others.',
     examples: ['Let us share the pizza.', 'She shared her notes with me.'],
     note: `It also means to post online: "share a photo".`,

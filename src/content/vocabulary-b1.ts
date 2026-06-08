@@ -8,6 +8,7 @@ export const b1Vocabulary: VocabularyEntry[] = [
   {
     id: 'b1-vc-001',
     word: 'reliable',
+    pronunciation: '/rɪˈlaɪəbəl/ (ri-LY-uh-bul)',
     meaning: 'able to be trusted to do what is expected.',
     examples: ['She is a reliable worker.', 'We need a reliable car.'],
     note: `Opposite of "unreliable". A close synonym is "dependable".`,
@@ -16,6 +17,7 @@ export const b1Vocabulary: VocabularyEntry[] = [
   {
     id: 'b1-vc-002',
     word: 'generous',
+    pronunciation: '/ˈdʒɛnərəs/ (JEN-uh-rus)',
     meaning: 'happy to give time, money, or help.',
     examples: ['He is very generous with his time.', 'That was a generous gift.'],
     note: `"generous with" something. The noun is "generosity".`,
@@ -24,6 +26,7 @@ export const b1Vocabulary: VocabularyEntry[] = [
   {
     id: 'b1-vc-003',
     word: 'confident',
+    pronunciation: '/ˈkɑːnfɪdənt/ (KAHN-fi-dunt)',
     meaning: 'sure of yourself and your abilities.',
     examples: ['She feels confident before exams.', 'Try to sound confident.'],
     note: `"confident about" or "confident in". The noun is "confidence".`,
@@ -32,6 +35,7 @@ export const b1Vocabulary: VocabularyEntry[] = [
   {
     id: 'b1-vc-004',
     word: 'suggest',
+    pronunciation: '/səˈdʒɛst/ (suhg-JEST)',
     meaning: 'to offer an idea for someone to think about.',
     examples: ['I suggest we leave early.', 'She suggested a new plan.'],
     note: `Use "suggest doing" or "suggest that...". Not "suggest to do".`,
@@ -40,6 +44,7 @@ export const b1Vocabulary: VocabularyEntry[] = [
   {
     id: 'b1-vc-005',
     word: 'manage',
+    pronunciation: '/ˈmænɪdʒ/ (MAN-ij)',
     meaning: 'to succeed in doing something difficult, or to be in charge.',
     examples: ['I managed to finish on time.', 'She manages a small team.'],
     note: `"manage to do" means you succeeded despite difficulty.`,
@@ -48,6 +53,7 @@ export const b1Vocabulary: VocabularyEntry[] = [
   {
     id: 'b1-vc-006',
     word: 'achieve',
+    pronunciation: '/əˈtʃiːv/ (uh-CHEEV)',
     meaning: 'to reach a goal through effort.',
     examples: ['He achieved his dream.', 'We achieved great results.'],
     note: `The noun is "achievement". Often "achieve a goal".`,
@@ -56,6 +62,7 @@ export const b1Vocabulary: VocabularyEntry[] = [
   {
     id: 'b1-vc-007',
     word: 'prefer',
+    pronunciation: '/prɪˈfɜːr/ (pri-FUR)',
     meaning: 'to like one thing more than another.',
     examples: ['I prefer tea to coffee.', 'She prefers to walk.'],
     note: `"prefer X to Y", or "prefer doing", or "prefer to do".`,
@@ -64,6 +71,7 @@ export const b1Vocabulary: VocabularyEntry[] = [
   {
     id: 'b1-vc-008',
     word: 'ordinary',
+    pronunciation: '/ˈɔːrdəneri/ (OR-duh-nair-ee)',
     meaning: 'normal and not special.',
     examples: ['It was just an ordinary day.', 'He lives an ordinary life.'],
     note: `Opposite of "extraordinary" or "special". Close to "everyday".`,
@@ -72,6 +80,7 @@ export const b1Vocabulary: VocabularyEntry[] = [
   {
     id: 'b1-vc-009',
     word: 'encourage',
+    pronunciation: '/ɪnˈkɜːrɪdʒ/ (in-KUR-ij)',
     meaning: 'to give someone confidence or support to do something.',
     examples: ['She encouraged me to apply.', 'Good teachers encourage students.'],
     note: `"encourage someone to do". Opposite: "discourage".`,
@@ -80,6 +89,7 @@ export const b1Vocabulary: VocabularyEntry[] = [
   {
     id: 'b1-vc-010',
     word: 'admire',
+    pronunciation: '/ədˈmaɪər/ (ad-MY-er)',
     meaning: 'to respect and like someone or something.',
     examples: ['I admire her courage.', 'They admire his work.'],
     note: `The noun is "admiration".`,
@@ -88,6 +98,7 @@ export const b1Vocabulary: VocabularyEntry[] = [
   {
     id: 'b1-vc-011',
     word: 'deserve',
+    pronunciation: '/dɪˈzɜːrv/ (di-ZURV)',
     meaning: 'to be worthy of something, good or bad.',
     examples: ['You deserve a break.', 'She deserves the prize.'],
     note: `Use "deserve to" do something, or "deserve" a noun.`,
@@ -96,6 +107,7 @@ export const b1Vocabulary: VocabularyEntry[] = [
   {
     id: 'b1-vc-012',
     word: 'appreciate',
+    pronunciation: '/əˈpriːʃieɪt/ (uh-PREE-shee-ayt)',
     meaning: 'to be grateful for, or to value something.',
     examples: ['I appreciate your help.', 'I appreciate good food.'],
     note: `"I would appreciate it if..." is a polite request.`,
@@ -104,6 +116,7 @@ export const b1Vocabulary: VocabularyEntry[] = [
   {
     id: 'b1-vc-013',
     word: 'recommend',
+    pronunciation: '/ˌrɛkəˈmɛnd/ (rek-uh-MEND)',
     meaning: 'to suggest that something is good.',
     examples: ['I recommend this book.', 'She recommended a doctor.'],
     note: `Use "recommend doing" or "recommend that...", not "recommend to do".`,
@@ -112,6 +125,7 @@ export const b1Vocabulary: VocabularyEntry[] = [
   {
     id: 'b1-vc-014',
     word: 'consider',
+    pronunciation: '/kənˈsɪdər/ (kuhn-SID-er)',
     meaning: 'to think about something carefully.',
     examples: ['I am considering a new job.', 'Consider all the options.'],
     note: `Use "consider doing" something. The noun is "consideration".`,
@@ -120,6 +134,7 @@ export const b1Vocabulary: VocabularyEntry[] = [
   {
     id: 'b1-vc-015',
     word: 'realise',
+    pronunciation: '/ˈriːəlaɪz/ (REE-uh-lyze)',
     meaning: 'to suddenly understand or become aware of something.',
     examples: ['I realised my mistake.', 'She realised he was right.'],
     note: `Spelled "realize" in American English.`,
@@ -128,6 +143,7 @@ export const b1Vocabulary: VocabularyEntry[] = [
   {
     id: 'b1-vc-016',
     word: 'afford',
+    pronunciation: '/əˈfɔːrd/ (uh-FORD)',
     meaning: 'to have enough money or time for something.',
     examples: ['I cannot afford it.', 'Can we afford the trip?'],
     note: `Almost always with "can" or "cannot".`,
@@ -136,6 +152,7 @@ export const b1Vocabulary: VocabularyEntry[] = [
   {
     id: 'b1-vc-017',
     word: 'depend',
+    pronunciation: '/dɪˈpɛnd/ (di-PEND)',
     meaning: 'to be decided by something else, or to rely on someone.',
     examples: ['It depends on the weather.', 'I depend on my team.'],
     note: `Always "depend on". "It depends" is very common.`,
@@ -144,6 +161,7 @@ export const b1Vocabulary: VocabularyEntry[] = [
   {
     id: 'b1-vc-018',
     word: 'available',
+    pronunciation: '/əˈveɪləbəl/ (uh-VAY-luh-bul)',
     meaning: 'able to be used or obtained, or free to meet.',
     examples: ['The room is available.', 'Are you available on Monday?'],
     note: `Opposite: "unavailable". The noun is "availability".`,
@@ -152,6 +170,7 @@ export const b1Vocabulary: VocabularyEntry[] = [
   {
     id: 'b1-vc-019',
     word: 'aware',
+    pronunciation: '/əˈwɛr/ (uh-WAIR)',
     meaning: 'knowing that something exists or is true.',
     examples: ['I am aware of the risk.', 'Are you aware of the rules?'],
     note: `"aware of" something. The noun is "awareness".`,
@@ -160,6 +179,7 @@ export const b1Vocabulary: VocabularyEntry[] = [
   {
     id: 'b1-vc-020',
     word: 'willing',
+    pronunciation: '/ˈwɪlɪŋ/ (WIL-ing)',
     meaning: 'ready and happy to do something.',
     examples: ['I am willing to help.', 'She is willing to learn.'],
     note: `"willing to do". Opposite: "unwilling" or "reluctant".`,
@@ -168,6 +188,7 @@ export const b1Vocabulary: VocabularyEntry[] = [
   {
     id: 'b1-vc-021',
     word: 'honest',
+    pronunciation: '/ˈɑːnɪst/ (AH-nist)',
     meaning: 'truthful; not lying or cheating.',
     examples: ['She gave an honest answer.', 'To be honest, I disagree.'],
     note: `The "h" is silent: "onest". The noun is "honesty".`,
@@ -176,6 +197,7 @@ export const b1Vocabulary: VocabularyEntry[] = [
   {
     id: 'b1-vc-022',
     word: 'patient',
+    pronunciation: '/ˈpeɪʃənt/ (PAY-shunt)',
     meaning: 'able to wait calmly without getting annoyed.',
     examples: ['Be patient, it takes time.', 'She is patient with children.'],
     note: `Opposite: "impatient". The noun is "patience".`,
@@ -184,6 +206,7 @@ export const b1Vocabulary: VocabularyEntry[] = [
   {
     id: 'b1-vc-023',
     word: 'curious',
+    pronunciation: '/ˈkjʊriəs/ (KYOOR-ee-us)',
     meaning: 'wanting to know or learn about things.',
     examples: ['I am curious about other cultures.', 'A curious child asks questions.'],
     note: `"curious about" something. The noun is "curiosity".`,
@@ -192,6 +215,7 @@ export const b1Vocabulary: VocabularyEntry[] = [
   {
     id: 'b1-vc-024',
     word: 'ambitious',
+    pronunciation: '/æmˈbɪʃəs/ (am-BISH-us)',
     meaning: 'having a strong wish to succeed.',
     examples: ['She is very ambitious.', 'It is an ambitious plan.'],
     note: `The noun is "ambition". Can describe people or plans.`,
@@ -200,6 +224,7 @@ export const b1Vocabulary: VocabularyEntry[] = [
   {
     id: 'b1-vc-025',
     word: 'organised',
+    pronunciation: '/ˈɔːrɡənaɪzd/ (OR-guh-nyzd)',
     meaning: 'arranged in a neat, planned way.',
     examples: ['She is very organised.', 'Keep your notes organised.'],
     note: `Spelled "organized" in American English. Opposite: "disorganised".`,
@@ -208,6 +233,7 @@ export const b1Vocabulary: VocabularyEntry[] = [
   {
     id: 'b1-vc-026',
     word: 'responsible',
+    pronunciation: '/rɪˈspɑːnsəbəl/ (ri-SPON-suh-bul)',
     meaning: 'in charge of something, or reliable and sensible.',
     examples: ['She is responsible for the team.', 'He is a responsible adult.'],
     note: `"responsible for" something. The noun is "responsibility".`,
@@ -216,6 +242,7 @@ export const b1Vocabulary: VocabularyEntry[] = [
   {
     id: 'b1-vc-027',
     word: 'sensible',
+    pronunciation: '/ˈsɛnsəbəl/ (SEN-suh-bul)',
     meaning: 'showing good judgment; practical.',
     examples: ['That is a sensible choice.', 'Be sensible about money.'],
     note: `Do not confuse it with "sensitive" (easily affected by feelings).`,
@@ -224,6 +251,7 @@ export const b1Vocabulary: VocabularyEntry[] = [
   {
     id: 'b1-vc-028',
     word: 'frustrated',
+    pronunciation: '/ˈfrʌstreɪtɪd/ (FRUS-tray-tid)',
     meaning: 'annoyed because you cannot do what you want.',
     examples: ['I felt frustrated by the delay.', 'She gets frustrated easily.'],
     note: `You feel "frustrated"; a thing is "frustrating".`,
@@ -232,6 +260,7 @@ export const b1Vocabulary: VocabularyEntry[] = [
   {
     id: 'b1-vc-029',
     word: 'brave',
+    pronunciation: '/breɪv/ (brayv)',
     meaning: 'ready to face danger, pain, or difficulty.',
     examples: ['It was a brave decision.', 'Be brave and give it a try.'],
     note: `The noun is "bravery". Close to "courageous".`,
@@ -240,14 +269,16 @@ export const b1Vocabulary: VocabularyEntry[] = [
   {
     id: 'b1-vc-030',
     word: 'calm',
+    pronunciation: '/kɑːm/ (kahm)',
     meaning: 'relaxed and not worried or excited.',
     examples: ['Stay calm and breathe slowly.', 'The sea was calm.'],
-    note: `Opposite of "anxious"; for weather, opposite of "stormy".`,
+    note: `The "l" is silent. Opposite of "anxious"; for weather, of "stormy".`,
     audio: 'b1-vc-030.ogg',
   },
   {
     id: 'b1-vc-031',
     word: 'loyal',
+    pronunciation: '/ˈlɔɪəl/ (LOY-ul)',
     meaning: 'faithful and reliable to a person or group.',
     examples: ['He is a loyal friend.', 'Loyal customers keep coming back.'],
     note: `The noun is "loyalty". Opposite: "disloyal".`,
@@ -256,6 +287,7 @@ export const b1Vocabulary: VocabularyEntry[] = [
   {
     id: 'b1-vc-032',
     word: 'modest',
+    pronunciation: '/ˈmɑːdɪst/ (MAH-dist)',
     meaning: 'not boasting about yourself or your success.',
     examples: ['She is modest about her talent.', 'He gave a modest reply.'],
     note: `It can also mean small: "a modest salary".`,
@@ -264,6 +296,7 @@ export const b1Vocabulary: VocabularyEntry[] = [
   {
     id: 'b1-vc-033',
     word: 'eager',
+    pronunciation: '/ˈiːɡər/ (EE-ger)',
     meaning: 'very keen and excited to do something.',
     examples: ['He is eager to learn.', 'The children were eager to start.'],
     note: `Use "eager to" plus a verb.`,
@@ -272,6 +305,7 @@ export const b1Vocabulary: VocabularyEntry[] = [
   {
     id: 'b1-vc-034',
     word: 'sincere',
+    pronunciation: '/sɪnˈsɪr/ (sin-SEER)',
     meaning: 'honest and truly meant.',
     examples: ['Please accept my sincere thanks.', 'She gave a sincere apology.'],
     note: `The adverb "sincerely" often closes a formal letter.`,

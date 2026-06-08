@@ -359,15 +359,17 @@ function allJobs(): Job[] {
   }));
   // Vocabulary: the word read aloud, then the example sentences, in one voice
   // with a small gap. Posted as a voice message with an HTML caption.
+  // Vocabulary: read ONLY the example sentences, with a small gap between them.
+  // The lone target word is deliberately NOT spoken: a TTS voice often
+  // mispronounces a word out of context (the "-ate" adjectives, etc.). The word
+  // is heard correctly inside the examples, and the caption shows it with its
+  // pronunciation guide.
   const vocab: Job[] = ALL_VOCABULARY.map((v) => ({
     id: v.id,
     level: v.level,
     audio: v.audio,
     kind: 'vocab',
-    segments: [
-      { text: v.word, voiceId: voiceA(v.level) },
-      ...v.examples.map((text) => ({ text, voiceId: voiceA(v.level) })),
-    ],
+    segments: v.examples.map((text) => ({ text, voiceId: voiceA(v.level) })),
   }));
   // Idioms: the idiom read aloud, then the example sentences, in one voice with
   // a small gap. Posted as a voice message with an HTML caption.

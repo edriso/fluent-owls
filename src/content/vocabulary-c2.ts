@@ -8,6 +8,7 @@ export const c2Vocabulary: VocabularyEntry[] = [
   {
     id: 'c2-vc-001',
     word: 'ubiquitous',
+    pronunciation: '/juːˈbɪkwɪtəs/ (yoo-BIK-wi-tus)',
     meaning: 'seeming to be everywhere at once.',
     examples: ['Smartphones are now ubiquitous.', 'Coffee shops are ubiquitous here.'],
     note: `A formal way to say "everywhere". Close to "omnipresent".`,
@@ -16,6 +17,7 @@ export const c2Vocabulary: VocabularyEntry[] = [
   {
     id: 'c2-vc-002',
     word: 'pragmatic',
+    pronunciation: '/præɡˈmætɪk/ (prag-MAT-ik)',
     meaning: 'dealing with things in a practical, realistic way.',
     examples: ['She took a pragmatic approach.', 'We need a pragmatic solution.'],
     note: `Opposite of "idealistic". The noun is "pragmatism".`,
@@ -24,6 +26,7 @@ export const c2Vocabulary: VocabularyEntry[] = [
   {
     id: 'c2-vc-003',
     word: 'candid',
+    pronunciation: '/ˈkændɪd/ (KAN-did)',
     meaning: 'honest and direct, even about difficult things.',
     examples: ['Can I be candid with you?', 'She gave a candid interview.'],
     note: `The noun is "candor". Close to "frank" or "straightforward".`,
@@ -32,6 +35,7 @@ export const c2Vocabulary: VocabularyEntry[] = [
   {
     id: 'c2-vc-004',
     word: 'scrutiny',
+    pronunciation: '/ˈskruːtəni/ (SKROO-tuh-nee)',
     meaning: 'careful and critical examination.',
     examples: ['The plan came under scrutiny.', 'It cannot survive close scrutiny.'],
     note: `Common phrases: "under scrutiny", "close scrutiny". The verb is "scrutinise".`,
@@ -40,6 +44,7 @@ export const c2Vocabulary: VocabularyEntry[] = [
   {
     id: 'c2-vc-005',
     word: 'paradox',
+    pronunciation: '/ˈpɛrədɑːks/ (PAIR-uh-doks)',
     meaning: 'a statement that seems to contradict itself but may be true.',
     examples: ['It is a paradox that less can be more.', 'Her life was full of paradoxes.'],
     note: `The adjective "paradoxical" describes something self-contradictory.`,
@@ -48,6 +53,7 @@ export const c2Vocabulary: VocabularyEntry[] = [
   {
     id: 'c2-vc-006',
     word: 'mitigate',
+    pronunciation: '/ˈmɪtɪɡeɪt/ (MIT-i-gayt)',
     meaning: 'to make something bad less severe.',
     examples: ['We took steps to mitigate the risk.', 'Nothing could mitigate the damage.'],
     note: `Formal. Often "mitigate the risk, impact, or effects".`,
@@ -56,6 +62,7 @@ export const c2Vocabulary: VocabularyEntry[] = [
   {
     id: 'c2-vc-007',
     word: 'profound',
+    pronunciation: '/prəˈfaʊnd/ (pruh-FOWND)',
     meaning: 'very great, deep, or far-reaching.',
     examples: ['It had a profound effect on me.', 'She asked a profound question.'],
     note: `Stronger than "big" or "deep". Often "a profound effect or impact".`,
@@ -64,6 +71,7 @@ export const c2Vocabulary: VocabularyEntry[] = [
   {
     id: 'c2-vc-008',
     word: 'juxtapose',
+    pronunciation: '/ˈdʒʌkstəpoʊz/ (JUK-stuh-pohz)',
     meaning: 'to place two things side by side to compare or contrast them.',
     examples: ['The film juxtaposes wealth and poverty.', 'She juxtaposed the two photos.'],
     note: `The noun is "juxtaposition", common in art and writing.`,
@@ -72,6 +80,7 @@ export const c2Vocabulary: VocabularyEntry[] = [
   {
     id: 'c2-vc-009',
     word: 'ephemeral',
+    pronunciation: '/ɪˈfɛmərəl/ (i-FEM-uh-rul)',
     meaning: 'lasting a very short time.',
     examples: ['Fame can be ephemeral.', 'It was an ephemeral trend.'],
     note: `Close to "fleeting" or "short-lived".`,
@@ -80,6 +89,7 @@ export const c2Vocabulary: VocabularyEntry[] = [
   {
     id: 'c2-vc-010',
     word: 'quintessential',
+    pronunciation: '/ˌkwɪntɪˈsɛnʃəl/ (kwin-tuh-SEN-shul)',
     meaning: 'the most perfect example of a type.',
     examples: ['The quintessential summer day.', 'He is the quintessential gentleman.'],
     note: `It means the purest, most typical example of something.`,
@@ -88,6 +98,7 @@ export const c2Vocabulary: VocabularyEntry[] = [
   {
     id: 'c2-vc-011',
     word: 'salient',
+    pronunciation: '/ˈseɪliənt/ (SAY-lee-unt)',
     meaning: 'most noticeable or important.',
     examples: ['Let us focus on the salient points.', 'That is the salient detail.'],
     note: `Often "the salient point", the one that stands out.`,
@@ -96,6 +107,7 @@ export const c2Vocabulary: VocabularyEntry[] = [
   {
     id: 'c2-vc-012',
     word: 'tenuous',
+    pronunciation: '/ˈtɛnjuəs/ (TEN-yoo-us)',
     meaning: 'weak, thin, or very slight.',
     examples: ['There is a tenuous connection.', 'His grip on power is tenuous.'],
     note: `Often "a tenuous link" between two things.`,
@@ -104,6 +116,7 @@ export const c2Vocabulary: VocabularyEntry[] = [
   {
     id: 'c2-vc-013',
     word: 'cogent',
+    pronunciation: '/ˈkoʊdʒənt/ (KOH-junt)',
     meaning: 'clear, logical, and convincing.',
     examples: ['She made a cogent argument.', 'He gave a cogent reason.'],
     note: `Used of reasoning that is hard to argue against.`,
@@ -112,6 +125,7 @@ export const c2Vocabulary: VocabularyEntry[] = [
   {
     id: 'c2-vc-014',
     word: 'ostensible',
+    pronunciation: '/ɑːˈstɛnsəbəl/ (oh-STEN-suh-bul)',
     meaning: 'appearing true on the surface, but perhaps not the real reason.',
     examples: ['The ostensible reason was cost.', 'That was his ostensible aim.'],
     note: `The adverb "ostensibly" hints the real reason is different.`,
@@ -120,6 +134,7 @@ export const c2Vocabulary: VocabularyEntry[] = [
   {
     id: 'c2-vc-015',
     word: 'innocuous',
+    pronunciation: '/ɪˈnɑːkjuəs/ (i-NOK-yoo-us)',
     meaning: 'harmless; unlikely to offend or cause harm.',
     examples: ['It was an innocuous remark.', 'The plant looks innocuous.'],
     note: `Opposite of "harmful" or "offensive".`,
@@ -128,6 +143,7 @@ export const c2Vocabulary: VocabularyEntry[] = [
   {
     id: 'c2-vc-016',
     word: 'prudent',
+    pronunciation: '/ˈpruːdənt/ (PROO-dunt)',
     meaning: 'careful and sensible; wise in practice.',
     examples: ['It was a prudent decision.', 'It is prudent to save.'],
     note: `The noun is "prudence". Close to "sensible" or "cautious".`,
@@ -136,6 +152,7 @@ export const c2Vocabulary: VocabularyEntry[] = [
   {
     id: 'c2-vc-017',
     word: 'eloquent',
+    pronunciation: '/ˈɛləkwənt/ (EL-uh-kwunt)',
     meaning: 'fluent and persuasive in speech or writing.',
     examples: ['She is an eloquent speaker.', 'He gave an eloquent reply.'],
     note: `The noun is "eloquence".`,
@@ -144,6 +161,7 @@ export const c2Vocabulary: VocabularyEntry[] = [
   {
     id: 'c2-vc-018',
     word: 'austere',
+    pronunciation: '/ɔːˈstɪr/ (aw-STEER)',
     meaning: 'very plain and strict, without comfort or luxury.',
     examples: ['It was an austere room.', 'They led an austere life.'],
     note: `It can describe people (severe) or things (bare).`,
@@ -152,6 +170,7 @@ export const c2Vocabulary: VocabularyEntry[] = [
   {
     id: 'c2-vc-019',
     word: 'lucid',
+    pronunciation: '/ˈluːsɪd/ (LOO-sid)',
     meaning: 'clear and easy to understand; clear-thinking.',
     examples: ['She gave a lucid explanation.', 'He stayed calm and lucid.'],
     note: `The noun is "lucidity". Opposite: "confusing".`,
@@ -160,14 +179,16 @@ export const c2Vocabulary: VocabularyEntry[] = [
   {
     id: 'c2-vc-020',
     word: 'disparate',
+    pronunciation: '/ˈdɪspərət/ (DIS-puh-rit)',
     meaning: 'very different in kind; hard to compare.',
     examples: ['She drew on disparate ideas.', 'It was a disparate group.'],
-    note: `It means fundamentally different, not just varied.`,
+    note: `Ends in a weak "-it". It means fundamentally different, not just varied.`,
     audio: 'c2-vc-020.ogg',
   },
   {
     id: 'c2-vc-021',
     word: 'arduous',
+    pronunciation: '/ˈɑːrdʒuəs/ (AR-joo-us)',
     meaning: 'needing a lot of hard, tiring effort.',
     examples: ['It was an arduous journey.', 'The training is arduous.'],
     note: `Close to "gruelling". Stronger than "difficult".`,
@@ -176,6 +197,7 @@ export const c2Vocabulary: VocabularyEntry[] = [
   {
     id: 'c2-vc-022',
     word: 'perpetual',
+    pronunciation: '/pərˈpɛtʃuəl/ (per-PECH-oo-ul)',
     meaning: 'never ending or seeming to never stop.',
     examples: ['A perpetual state of worry.', 'Their perpetual arguing.'],
     note: `Close to "constant" or "endless".`,
@@ -184,6 +206,7 @@ export const c2Vocabulary: VocabularyEntry[] = [
   {
     id: 'c2-vc-023',
     word: 'intrinsic',
+    pronunciation: '/ɪnˈtrɪnsɪk/ (in-TRIN-sik)',
     meaning: 'belonging naturally to something; essential to it.',
     examples: ['It has intrinsic value.', 'Curiosity is intrinsic to learning.'],
     note: `"intrinsic to" something. Opposite: "extrinsic".`,
@@ -192,6 +215,7 @@ export const c2Vocabulary: VocabularyEntry[] = [
   {
     id: 'c2-vc-024',
     word: 'ostentatious',
+    pronunciation: '/ˌɑːstɛnˈteɪʃəs/ (oh-sten-TAY-shus)',
     meaning: 'showy in a way meant to impress others.',
     examples: ['An ostentatious display of wealth.', 'The decor was ostentatious.'],
     note: `Negative. The opposite is "understated" or "modest".`,
@@ -200,6 +224,7 @@ export const c2Vocabulary: VocabularyEntry[] = [
   {
     id: 'c2-vc-025',
     word: 'gregarious',
+    pronunciation: '/ɡrɪˈɡɛriəs/ (gri-GAIR-ee-us)',
     meaning: 'enjoying the company of others; sociable.',
     examples: ['He is warm and gregarious.', 'A gregarious host.'],
     note: `Opposite of "solitary" or "reserved".`,
@@ -208,6 +233,7 @@ export const c2Vocabulary: VocabularyEntry[] = [
   {
     id: 'c2-vc-026',
     word: 'succinct',
+    pronunciation: '/səkˈsɪŋkt/ (suhk-SINKT)',
     meaning: 'expressed clearly in very few words.',
     examples: ['She gave a succinct summary.', 'Keep the reply succinct.'],
     note: `Close to "concise". The opposite is "long-winded".`,
@@ -216,6 +242,7 @@ export const c2Vocabulary: VocabularyEntry[] = [
   {
     id: 'c2-vc-027',
     word: 'tenacious',
+    pronunciation: '/təˈneɪʃəs/ (tuh-NAY-shus)',
     meaning: 'holding on firmly; not giving up.',
     examples: ['A tenacious negotiator.', 'She is tenacious about her goals.'],
     note: `The noun is "tenacity". Close to "determined".`,
@@ -224,6 +251,7 @@ export const c2Vocabulary: VocabularyEntry[] = [
   {
     id: 'c2-vc-028',
     word: 'magnanimous',
+    pronunciation: '/mæɡˈnænɪməs/ (mag-NAN-i-mus)',
     meaning: 'generous and forgiving, especially toward a rival.',
     examples: ['He was magnanimous in victory.', 'A magnanimous gesture.'],
     note: `Suggests rising above pettiness. Noun: "magnanimity".`,
@@ -232,6 +260,7 @@ export const c2Vocabulary: VocabularyEntry[] = [
   {
     id: 'c2-vc-029',
     word: 'erudite',
+    pronunciation: '/ˈɛrədaɪt/ (AIR-uh-dyte)',
     meaning: 'having or showing deep, wide knowledge.',
     examples: ['She gave an erudite lecture.', 'He is remarkably erudite.'],
     note: `Formal. Close to "learned" or "scholarly".`,
@@ -240,6 +269,7 @@ export const c2Vocabulary: VocabularyEntry[] = [
   {
     id: 'c2-vc-030',
     word: 'sagacious',
+    pronunciation: '/səˈɡeɪʃəs/ (suh-GAY-shus)',
     meaning: 'wise and showing good judgment.',
     examples: ['A sagacious leader plans ahead.', 'She offered sagacious advice.'],
     note: `Literary and formal. The noun is "sagacity".`,
@@ -248,6 +278,7 @@ export const c2Vocabulary: VocabularyEntry[] = [
   {
     id: 'c2-vc-031',
     word: 'indefatigable',
+    pronunciation: '/ˌɪndɪˈfætɪɡəbəl/ (in-di-FAT-i-guh-bul)',
     meaning: 'never seeming to get tired; tireless.',
     examples: ['She is an indefatigable worker.', 'His energy was indefatigable.'],
     note: `Praises someone who simply does not give up.`,
@@ -256,6 +287,7 @@ export const c2Vocabulary: VocabularyEntry[] = [
   {
     id: 'c2-vc-032',
     word: 'fastidious',
+    pronunciation: '/fæˈstɪdiəs/ (fa-STID-ee-us)',
     meaning: 'very attentive to detail and hard to please.',
     examples: ['He is fastidious about cleanliness.', 'She is a fastidious editor.'],
     note: `Can be praise or a mild criticism, depending on tone.`,
@@ -264,6 +296,7 @@ export const c2Vocabulary: VocabularyEntry[] = [
   {
     id: 'c2-vc-033',
     word: 'circumspect',
+    pronunciation: '/ˈsɜːrkəmspɛkt/ (SUR-kum-spekt)',
     meaning: 'careful to consider everything before acting.',
     examples: ['Be circumspect about what you share online.', 'She gave a circumspect reply.'],
     note: `Close to "cautious" or "wary".`,
@@ -272,6 +305,7 @@ export const c2Vocabulary: VocabularyEntry[] = [
   {
     id: 'c2-vc-034',
     word: 'unflappable',
+    pronunciation: '/ʌnˈflæpəbəl/ (un-FLAP-uh-bul)',
     meaning: 'calm and not easily upset, even under pressure.',
     examples: ['She stayed unflappable during the crisis.', 'He is an unflappable manager.'],
     note: `Praises someone who never seems to panic.`,

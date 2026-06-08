@@ -8,6 +8,7 @@ import {
   VOCAB_MAX_EXAMPLES,
   VOCAB_MEANING_MAX_CHARS,
   VOCAB_MIN_EXAMPLES,
+  VOCAB_PRON_MAX_CHARS,
   VOCAB_WORD_MAX_CHARS,
 } from '../src/lib/limits';
 import { LEVELS } from '../src/types';
@@ -54,18 +55,28 @@ describe('vocabulary banks', () => {
     }
   });
 
+  it('has a pronunciation guide: IPA in slashes plus a respelling in parentheses', () => {
+    for (const v of ALL_VOCABULARY) {
+      expect(v.pronunciation.trim().length, v.id).toBeGreaterThan(0);
+      expect(v.pronunciation.length, v.id).toBeLessThanOrEqual(VOCAB_PRON_MAX_CHARS);
+      // e.g. "/kənˈsɪdərət/ (kuhn-SID-uh-rit)"
+      expect(/\/.+\/\s*\(.+\)/.test(v.pronunciation), v.id).toBe(true);
+    }
+  });
+
   it('has an audio name of <id>.ogg and renders a caption within the limit', () => {
     for (const v of ALL_VOCABULARY) {
       expect(v.audio, v.id).toBe(`${v.id}.ogg`);
       const caption = buildVocabularyMessage(v);
       expect(caption.length, v.id).toBeLessThanOrEqual(CAPTION_MAX_CHARS);
       expect(caption, v.id).toContain(v.word);
+      expect(caption, v.id).toContain(v.pronunciation);
     }
   });
 
   it('uses no em-dashes (house style)', () => {
     for (const v of ALL_VOCABULARY) {
-      const blob = [v.word, v.meaning, v.note, ...v.examples].join(' ');
+      const blob = [v.word, v.pronunciation, v.meaning, v.note, ...v.examples].join(' ');
       expect(blob.includes('—'), v.id).toBe(false);
     }
   });
