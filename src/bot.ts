@@ -12,32 +12,17 @@ import {
   setReminders,
 } from './database/learners';
 import { searchGrammar } from './lib/search';
-import { poolForLevel, randomOf } from './lib/select';
+import { randomOf } from './lib/select';
 import { LEVELS, type Level } from './types';
-import { ALL_QUESTIONS } from './content/index';
-import { ALL_SHADOWING } from './content/shadowing';
-import { ALL_DIALOGUES } from './content/dialogues';
-import { ALL_PHRASES } from './content/phrases';
-import { ALL_GRAMMAR } from './content/grammar';
-import { ALL_MONOLOGUES } from './content/monologues';
-import { ALL_PROMPTS } from './content/prompts';
-import { ALL_PRONUNCIATION } from './content/pronunciation';
-import { ALL_VOCABULARY } from './content/vocabulary';
-import { ALL_IDIOMS } from './content/idioms';
-import { ALL_STORIES } from './content/stories';
-import { ALL_TALKS } from './content/talks';
+import { CONTENT_COMMANDS, GRAMMAR_COMMAND } from './content-commands';
+// Posters used outside the content-command registry: the /grammar topic search,
+// the free-text grammar reply, and the personal-tutor /next sequence.
 import {
   postDialogue,
   postGrammar,
-  postIdiom,
-  postMonologue,
   postPhrase,
   postPrompt,
-  postPronunciation,
   postQuizPoll,
-  postStory,
-  postTalk,
-  postVocabulary,
   postVoice,
 } from './lib/post';
 
@@ -101,17 +86,20 @@ export function buildBot(): Bot {
   // On-demand content: anyone can pull a random exercise in a DM whenever they
   // want more than the daily set. Stateless (a random pick), so no database is
   // needed; the reply goes to the chat that asked. Every command takes an
-  // OPTIONAL CEFR level (e.g. "/story b1"), so a learner can target their level;
-  // with no level it draws from all of them (see poolForLevel).
-  bot.command('quiz', async (ctx) => {
-    if (ctx.chat)
-      await postQuizPoll(bot, randomOf(poolForLevel(ALL_QUESTIONS, ctx.match)), {
-        chatId: ctx.chat.id,
-      });
-  });
+  // OPTIONAL CEFR level (e.g. "/story b1"). The list of commands lives in one
+  // registry (src/content-commands.ts), which also drives /listen, /help, and
+  // the command menu, so the four never drift apart. /grammar is registered
+  // separately below because it also does topic search.
+  for (const c of CONTENT_COMMANDS) {
+    if (c.customHandler) continue;
+    bot.command([c.command, ...(c.aliases ?? [])], async (ctx) => {
+      if (ctx.chat) await c.send(bot, ctx.chat.id, ctx.match);
+    });
+  }
+
   // /grammar is special: a CEFR level ("/grammar b1") gives a random point at
   // that level; any other text ("/grammar present perfect") searches the bank;
-  // no argument sends a random point.
+  // no argument sends a random point (via the registry).
   bot.command('grammar', async (ctx) => {
     if (!ctx.chat) return;
     const query = ctx.match.trim();
@@ -127,143 +115,32 @@ export function buildBot(): Bot {
       await postGrammar(bot, found, { chatId: ctx.chat.id });
       return;
     }
-    await postGrammar(bot, randomOf(poolForLevel(ALL_GRAMMAR, ctx.match)), { chatId: ctx.chat.id });
-  });
-  bot.command('phrase', async (ctx) => {
-    if (ctx.chat)
-      await postPhrase(bot, randomOf(poolForLevel(ALL_PHRASES, ctx.match)), {
-        chatId: ctx.chat.id,
-      });
-  });
-  bot.command('dialogue', async (ctx) => {
-    if (ctx.chat)
-      await postDialogue(bot, randomOf(poolForLevel(ALL_DIALOGUES, ctx.match)), {
-        chatId: ctx.chat.id,
-      });
-  });
-  bot.command('shadow', async (ctx) => {
-    if (ctx.chat)
-      await postVoice(bot, randomOf(poolForLevel(ALL_SHADOWING, ctx.match)), {
-        chatId: ctx.chat.id,
-      });
-  });
-  bot.command('monologue', async (ctx) => {
-    if (ctx.chat)
-      await postMonologue(bot, randomOf(poolForLevel(ALL_MONOLOGUES, ctx.match)), {
-        chatId: ctx.chat.id,
-      });
-  });
-  bot.command('prompt', async (ctx) => {
-    if (ctx.chat)
-      await postPrompt(bot, randomOf(poolForLevel(ALL_PROMPTS, ctx.match)), {
-        chatId: ctx.chat.id,
-      });
-  });
-  // /pronounce is the public name; /pron stays as a quiet (unlisted) alias so
-  // anyone who learned the old command is not broken.
-  bot.command(['pronounce', 'pron'], async (ctx) => {
-    if (ctx.chat)
-      await postPronunciation(bot, randomOf(poolForLevel(ALL_PRONUNCIATION, ctx.match)), {
-        chatId: ctx.chat.id,
-      });
-  });
-  bot.command('vocab', async (ctx) => {
-    if (ctx.chat)
-      await postVocabulary(bot, randomOf(poolForLevel(ALL_VOCABULARY, ctx.match)), {
-        chatId: ctx.chat.id,
-      });
-  });
-  bot.command('idiom', async (ctx) => {
-    if (ctx.chat)
-      await postIdiom(bot, randomOf(poolForLevel(ALL_IDIOMS, ctx.match)), { chatId: ctx.chat.id });
-  });
-  bot.command('story', async (ctx) => {
-    if (ctx.chat)
-      await postStory(bot, randomOf(poolForLevel(ALL_STORIES, ctx.match)), { chatId: ctx.chat.id });
-  });
-  bot.command('talk', async (ctx) => {
-    if (ctx.chat)
-      await postTalk(bot, randomOf(poolForLevel(ALL_TALKS, ctx.match)), { chatId: ctx.chat.id });
+    await GRAMMAR_COMMAND.send(bot, ctx.chat.id, ctx.match);
   });
 
   // /listen surfaces the WHOLE audio library: a random clip from any of the
   // audio banks (so a learner can just ask for "some audio"). Takes an optional
-  // level too, e.g. "/listen c1". Quizzes and text-only items are excluded; every
-  // kind here is a voice message.
+  // level too, e.g. "/listen c1". The text-only quiz is excluded; every type
+  // here is a voice message (see `inListen` in the registry).
+  const listenCommands = CONTENT_COMMANDS.filter((c) => c.inListen);
   bot.command('listen', async (ctx) => {
-    if (!ctx.chat) return;
-    const chatId = ctx.chat.id;
-    const arg = ctx.match;
-    const pick = randomOf([
-      'shadow',
-      'dialogue',
-      'grammar',
-      'monologue',
-      'prompt',
-      'pron',
-      'vocab',
-      'idiom',
-      'story',
-      'talk',
-      'phrase',
-    ] as const);
-    switch (pick) {
-      case 'shadow':
-        await postVoice(bot, randomOf(poolForLevel(ALL_SHADOWING, arg)), { chatId });
-        break;
-      case 'dialogue':
-        await postDialogue(bot, randomOf(poolForLevel(ALL_DIALOGUES, arg)), { chatId });
-        break;
-      case 'grammar':
-        await postGrammar(bot, randomOf(poolForLevel(ALL_GRAMMAR, arg)), { chatId });
-        break;
-      case 'monologue':
-        await postMonologue(bot, randomOf(poolForLevel(ALL_MONOLOGUES, arg)), { chatId });
-        break;
-      case 'prompt':
-        await postPrompt(bot, randomOf(poolForLevel(ALL_PROMPTS, arg)), { chatId });
-        break;
-      case 'pron':
-        await postPronunciation(bot, randomOf(poolForLevel(ALL_PRONUNCIATION, arg)), { chatId });
-        break;
-      case 'vocab':
-        await postVocabulary(bot, randomOf(poolForLevel(ALL_VOCABULARY, arg)), { chatId });
-        break;
-      case 'idiom':
-        await postIdiom(bot, randomOf(poolForLevel(ALL_IDIOMS, arg)), { chatId });
-        break;
-      case 'story':
-        await postStory(bot, randomOf(poolForLevel(ALL_STORIES, arg)), { chatId });
-        break;
-      case 'talk':
-        await postTalk(bot, randomOf(poolForLevel(ALL_TALKS, arg)), { chatId });
-        break;
-      case 'phrase':
-        await postPhrase(bot, randomOf(poolForLevel(ALL_PHRASES, arg)), { chatId });
-        break;
-    }
+    if (ctx.chat) await randomOf(listenCommands).send(bot, ctx.chat.id, ctx.match);
   });
 
-  // /help lists everything the bot can send, grouped, with the optional-level tip.
+  // /help lists everything the bot can send, built from the same registry as the
+  // handlers, so it can never list a command that does not exist (or miss one).
   bot.command('help', async (ctx) => {
+    const lines = CONTENT_COMMANDS.map(
+      (c) => `${c.emoji} ${c.help}: /${c.command}${c.helpNote ? ` ${c.helpNote}` : ''}`,
+    );
     await ctx.reply(
       [
         '🦉 What I can send you (each is a random pick; add a level like "b1" to target it, e.g. /story b1):',
         '',
         '🎧 Audio anything: /listen',
-        '📝 Quiz: /quiz',
-        '📘 Grammar: /grammar (or a topic: /grammar present perfect)',
-        '🗣️ Native phrase: /phrase',
-        '🎭 Role-play dialogue: /dialogue',
-        '🔁 Shadowing clip: /shadow',
-        '🎙️ Monologue to retell: /monologue',
-        '🎤 Question to answer: /prompt',
-        '🔊 Pronunciation drill: /pronounce',
-        '📖 Vocabulary word: /vocab',
-        '💡 Idiom: /idiom',
-        '📚 Short story: /story',
-        '🧠 Useful talk: /talk',
+        ...lines,
         dbEnabled ? '\n🔥 Personal track: /next, /level, /streak, /reminders' : '',
+        '\n— Owlivia 🦉',
       ]
         .join('\n')
         .trim(),
@@ -430,27 +307,20 @@ export async function setBotProfile(bot: Bot): Promise<void> {
         { command: 'reminders', description: 'Daily reminder on/off: /reminders off' },
       ]
     : [];
+  // The content commands come from the registry (descriptions and order in one
+  // place). /quiz leads, then /listen, then the rest of the registry order.
+  const [quizMenu, ...restMenu] = CONTENT_COMMANDS.map((c) => ({
+    command: c.command,
+    description: c.menu,
+  }));
   // Ordered most-used first for better UX: the personal track and quick practice
   // lead, then the content types roughly by popularity, then the settings and
   // meta commands (help, start, about) last.
   await bot.api.setMyCommands([
     ...tutorNext,
-    { command: 'quiz', description: 'A random quiz (add a level: /quiz a2)' },
+    quizMenu,
     { command: 'listen', description: 'Any audio clip, at random (add a level: /listen b1)' },
-    { command: 'grammar', description: 'A grammar point; add a topic or level: /grammar b1' },
-    { command: 'story', description: 'A short story to listen to and retell (audio; add a level)' },
-    { command: 'vocab', description: 'A word to learn, with examples (audio; add a level)' },
-    { command: 'phrase', description: 'A "say it like a native" phrase (audio; add a level)' },
-    { command: 'idiom', description: 'An idiom to sound native (audio; add a level)' },
-    { command: 'dialogue', description: 'A role-play dialogue (audio; add a level)' },
-    { command: 'shadow', description: 'A shadowing clip (audio; add a level)' },
-    {
-      command: 'talk',
-      description: 'A useful talk on focus, health, or habits (audio; add a level)',
-    },
-    { command: 'monologue', description: 'A passage to retell (audio; add a level)' },
-    { command: 'prompt', description: 'A question to answer out loud (audio; add a level)' },
-    { command: 'pronounce', description: 'A pronunciation drill (audio; add a level)' },
+    ...restMenu,
     ...tutorSettings,
     { command: 'help', description: 'List everything I can send you' },
     { command: 'start', description: 'What Fluent Owls is and how to join the channel' },
