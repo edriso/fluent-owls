@@ -48,7 +48,7 @@ The voice clips are AI-generated with ElevenLabs and are **not in the repository
 
 Because the clips live outside git, they are **not** baked into the Docker image either. The runtime stage ships only the code; the clips are supplied at runtime by a **read-only bind mount** onto `src/content/audio`. The clips are durable host data, like a database volume, decoupled from the code release. This also keeps the image and the public repo small and code-only.
 
-**One-time host setup (VPS):** put the clip folder somewhere persistent OUTSIDE the git checkout, e.g. `/opt/bots/telegram/fluent-owls-audio/`, and mount it into the container. In `/opt/bots/docker-compose.yml`, the `fluent-owls` service (and the bot only, not the migrate helper) gets:
+**One-time host setup (VPS):** keep all bots' runtime data in one tree, `/opt/bots/data/<bot>/...`, OUTSIDE the git checkouts, so no `git pull`/`reset` can ever touch it. This bot's clips live in `/opt/bots/data/fluent-owls/audio/`. Mount that into the container. In `/opt/bots/docker-compose.yml`, the `fluent-owls` service (the bot only, not the migrate helper) gets:
 
 ```yaml
   fluent-owls:
@@ -56,16 +56,16 @@ Because the clips live outside git, they are **not** baked into the Docker image
     env_file: ./telegram/fluent-owls/.env
     restart: unless-stopped
     volumes:
-      - ./telegram/fluent-owls-audio:/app/src/content/audio:ro   # voice clips, read-only
+      - ./data/fluent-owls/audio:/app/src/content/audio:ro   # voice clips, read-only
     depends_on:
       shared-db:
         condition: service_healthy
 ```
 
-The `:ro` makes it read-only (the bot never writes audio). The path `/app/src/content/audio` matches where the bot resolves clips (`process.cwd()` is `/app`). To populate or refresh the host folder, generate the clips on your laptop (`pnpm generate-audio`) and copy them up:
+The compose file lives at `/opt/bots/`, so the relative source `./data/fluent-owls/audio` resolves to `/opt/bots/data/fluent-owls/audio`. The `:ro` makes it read-only (the bot never writes audio). The target `/app/src/content/audio` matches where the bot resolves clips (`process.cwd()` is `/app`). To populate or refresh the host folder, generate the clips on your laptop (`pnpm generate-audio`) and copy them up:
 
 ```bash
-rsync -av src/content/audio/ <SERVER_IP>:/opt/bots/telegram/fluent-owls-audio/
+rsync -av src/content/audio/ <SERVER_IP>:/opt/bots/data/fluent-owls/audio/
 ```
 
 `generate-audio` is idempotent (it skips a clip whose `.ogg` already exists), so after adding content you regenerate only the new clips and rsync again. No redeploy is needed for an audio-only change; the bind mount is live.
@@ -166,7 +166,7 @@ Logs go to stdout. There is nothing to mount.
 - **403 from Telegram.** Same answer: admin rights.
 - **400 on sendPoll.** An option over 100 chars or a bad option count. Run `pnpm audit-questions`.
 - **A voice post did not arrive** (`Failed to post shadowing voice` or `Failed to post role-play dialogue`, "is the audio generated?"). The `.ogg` file is missing. Run `pnpm generate-audio` and commit the files, or `pnpm audit-speaking --require-audio` to find every gap. The other posts are unaffected.
-- **Every voice post fails at once, but quizzes and the text phrase still arrive** (you see `No audio clips found` at boot, or a wall of "is the audio generated?" for grammar, dialogue, and shadow together). The audio bind mount is missing or empty. Confirm with `docker compose exec fluent-owls ls src/content/audio | head` (expect only `README.md`, or `No such file or directory`, when broken). Check that the host folder `/opt/bots/telegram/fluent-owls-audio/` exists and is full of `.ogg` files, and that the `fluent-owls` service in `/opt/bots/docker-compose.yml` has the `volumes: - ./telegram/fluent-owls-audio:/app/src/content/audio:ro` line (see [Audio](#audio-voice-clips)). Re-up with `docker compose up -d fluent-owls`. This is distinct from one clip missing above: here the whole directory is absent.
+- **Every voice post fails at once, but quizzes and the text phrase still arrive** (you see `No audio clips found` at boot, or a wall of "is the audio generated?" for grammar, dialogue, and shadow together). The audio bind mount is missing or empty. Confirm with `docker compose exec fluent-owls ls src/content/audio | head` (expect only `README.md`, or `No such file or directory`, when broken). Check that the host folder `/opt/bots/data/fluent-owls/audio/` exists and is full of `.ogg` files, and that the `fluent-owls` service in `/opt/bots/docker-compose.yml` has the `volumes: - ./data/fluent-owls/audio:/app/src/content/audio:ro` line (see [Audio](#audio-voice-clips)). Re-up with `docker compose up -d fluent-owls`. This is distinct from one clip missing above: here the whole directory is absent.
 
 ## Backups
 
