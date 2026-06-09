@@ -44,8 +44,8 @@ the rest are sent silently.
 
 The "bonus" slot rotates by day of year through the richer types (vocabulary,
 idiom, story, talk, pronunciation, monologue, prompt), so channel followers meet
-the whole library over time without ever DMing the bot. It reuses the
-already-committed audio, so it adds no generation cost.
+the whole library over time without ever DMing the bot. It reuses the existing
+audio, so it adds no generation cost.
 
 The quizzes climb the CEFR bands; the grammar, phrase, dialogue, bonus, and shadowing
 slots pool every level and show the level on each post, so learners self-select.
@@ -97,7 +97,7 @@ The bot picks today's question with `dayOfYearIn(today, TZ) % poolSize` for each
 ## Adding content
 
 - **A quiz question**: see [`docs/QUESTIONS.md`](docs/QUESTIONS.md). Append an object to the right `src/content/questions-<level>.ts`, then run `pnpm audit-questions` and `pnpm test`.
-- **A speaking item** (shadowing clip, dialogue, grammar point, monologue, or native phrase): see [`docs/SPEAKING.md`](docs/SPEAKING.md). Append to the matching `src/content/*-<level>.ts`, run `pnpm audit-speaking` and `pnpm test`, then `pnpm generate-audio` for any new audio and commit the new `.ogg`.
+- **A speaking item** (shadowing clip, dialogue, grammar point, monologue, or native phrase): see [`docs/SPEAKING.md`](docs/SPEAKING.md). Append to the matching `src/content/*-<level>.ts`, run `pnpm audit-speaking` and `pnpm test`, then `pnpm generate-audio` for any new audio. The `.ogg` are git-ignored (not in the repo); in production you rsync them to the host's clip folder, see [`docs/DEPLOY.md`](docs/DEPLOY.md).
 
 If the checks pass, redeploy.
 

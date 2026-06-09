@@ -189,9 +189,11 @@ Authoring checklist:
 
 ## Generating the audio (one time, dev only)
 
-The shadowing `.ogg` files are generated once and committed. The running bot
-never calls a text-to-speech API, so production needs no key and has no audio
-cost or extra failure mode.
+The `.ogg` files are generated once and kept on disk. They are ElevenLabs output
+under the owner's commercial license, so they are **git-ignored and not in the
+repo** (see [`../NOTICE`](../NOTICE)); generate your own with the command below.
+The running bot never calls a text-to-speech API, so production needs no key and
+has no audio cost or extra failure mode.
 
 You need an ElevenLabs API key and `ffmpeg` installed (`brew install ffmpeg`).
 
@@ -206,7 +208,10 @@ It is idempotent: clips that already have a `.ogg` are skipped, so after adding
 new clips you just run it again and only the new ones are generated. It prints
 the total character count up front (ElevenLabs bills ~1 credit per character on
 the multilingual model), so you can check it against your plan before it runs.
-Commit the new `.ogg` files in `src/content/audio/` afterwards.
+The new `.ogg` files in `src/content/audio/` are git-ignored, so they stay on
+your machine. To deploy them, rsync them to the production host's clip folder
+(`/opt/bots/data/fluent-owls/audio`, bind-mounted read-only); see
+[`DEPLOY.md`](./DEPLOY.md). Do not commit them.
 
 Tip on cost: ElevenLabs commercial rights are perpetual once generated on a paid
 plan, even after you cancel. A common path is to take a one-month plan, generate
@@ -247,7 +252,7 @@ bank (2,146 voice clips, every speaking type including phrases, pronunciation,
 vocabulary, idioms, stories, and useful talks) is around 238k credits to generate
 once (spread across months as you add content), and the running bot never pays
 again:
-the clips are committed and only ever read. Adding content and re-running
+the clips are generated once and only ever read. Adding content and re-running
 `pnpm generate-audio` only generates the new items (it is idempotent). Each CEFR
 level has its own American voice (speaker A) plus a contrasting partner voice for
 the two-speaker dialogues and prompts; keep new content on those same voices for
