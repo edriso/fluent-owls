@@ -51,15 +51,15 @@ Because the clips live outside git, they are **not** baked into the Docker image
 **One-time host setup (VPS):** keep all bots' runtime data in one tree, `/opt/bots/data/<bot>/...`, OUTSIDE the git checkouts, so no `git pull`/`reset` can ever touch it. This bot's clips live in `/opt/bots/data/fluent-owls/audio/`. Mount that into the container. In `/opt/bots/docker-compose.yml`, the `fluent-owls` service (the bot only, not the migrate helper) gets:
 
 ```yaml
-  fluent-owls:
-    build: ./telegram/fluent-owls
-    env_file: ./telegram/fluent-owls/.env
-    restart: unless-stopped
-    volumes:
-      - ./data/fluent-owls/audio:/app/src/content/audio:ro   # voice clips, read-only
-    depends_on:
-      shared-db:
-        condition: service_healthy
+fluent-owls:
+  build: ./telegram/fluent-owls
+  env_file: ./telegram/fluent-owls/.env
+  restart: unless-stopped
+  volumes:
+    - ./data/fluent-owls/audio:/app/src/content/audio:ro # voice clips, read-only
+  depends_on:
+    shared-db:
+      condition: service_healthy
 ```
 
 The compose file lives at `/opt/bots/`, so the relative source `./data/fluent-owls/audio` resolves to `/opt/bots/data/fluent-owls/audio`. The `:ro` makes it read-only (the bot never writes audio). The target `/app/src/content/audio` matches where the bot resolves clips (`process.cwd()` is `/app`). To populate or refresh the host folder, generate the clips on your laptop (`pnpm generate-audio`) and copy them up:
