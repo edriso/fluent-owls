@@ -47,14 +47,19 @@ COPY package.json pnpm-lock.yaml ./
 RUN pnpm install --frozen-lockfile --prod --ignore-scripts
 
 COPY --from=builder /app/dist ./dist
-# The committed voice clips live in src/, NOT dist (tsc only emits .ts -> .js, it
-# never copies .ogg files). The bot resolves them from the working directory
-# (src/content/audio, see content/audio-path.ts), so they must be present here or
-# every voice post silently fails. Copy just the audio, nothing else from src.
-COPY --from=builder /app/src/content/audio ./src/content/audio
+# The voice clips (.ogg) are NOT baked into the image. They are ElevenLabs output
+# under a commercial license (not redistributable, see NOTICE), so they live
+# outside git and outside the build context, and are supplied at RUNTIME by a
+# read-only bind mount onto /app/src/content/audio (see docs/DEPLOY.md). We copy
+# only the folder's README so the directory exists; the bot resolves clips from
+# this path (process.cwd()/src/content/audio, see content/audio-path.ts). If the
+# mount is missing, the boot check in index.ts logs loudly (0 clips) instead of
+# every voice post silently failing.
+COPY --from=builder /app/src/content/audio/README.md ./src/content/audio/README.md
 
-# The bot writes nothing to disk: content (incl. the audio above) ships in the
-# image; the optional tutor state lives in the shared database. No volume.
+# The bot writes nothing to disk: the code ships in the image, the voice clips
+# come from the bind mount above, and the optional tutor state lives in the
+# shared database.
 
 # Drop privileges. The official node image ships a `node` user (UID 1000).
 USER node

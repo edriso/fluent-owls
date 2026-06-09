@@ -9,7 +9,11 @@ dist
 .vscode
 coverage
 
-# Temp staging files from generate-audio (the committed .ogg clips are kept).
+# Generated voice clips. These are ElevenLabs output under the owner's
+# commercial license (NOT redistributable, see NOTICE), so they are kept out of
+# the repo. Generate your own with `pnpm generate-audio`. The folder's README.md
+# is tracked; the .ogg clips and the temp staging .mp3 files are not.
+src/content/audio/*.ogg
 src/content/audio/*.tmp.mp3
 
 # Prisma generated client (machine-written; recreated by `prisma generate`).

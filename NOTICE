@@ -1,28 +1,28 @@
 Fluent Owls - third-party notices
 ==================================
 
-The SOURCE CODE in this repository is licensed under the MIT License (see
-LICENSE).
+The SOURCE CODE in this repository is licensed under the BSD Zero Clause
+License (0BSD, see LICENSE). That includes the transcripts: the `text` fields
+in src/content/*.ts are part of the source and are 0BSD-licensed like the rest.
 
-The AUDIO FILES in src/content/audio/ are NOT covered by the MIT License.
+The AUDIO FILES (src/content/audio/*.ogg) are NOT in this repository.
 --------------------------------------------------------------------------
 
 Those .ogg voice clips are AI-generated speech, created with ElevenLabs
 (https://elevenlabs.io) using ElevenLabs premade voices, under a commercial
-license held by this project's owner. They are included here only so the bot can
-post them, and their use is governed by the ElevenLabs Terms of Service
-(https://elevenlabs.io/terms-of-use), not by this repository's MIT License.
+license held by this project's owner. Their use is governed by the ElevenLabs
+Terms of Service (https://elevenlabs.io/terms-of-use), NOT by this repository's
+0BSD license, so they are deliberately left out of the public repository and are
+git-ignored.
 
-In particular, the MIT grant in LICENSE applies to the code only. It does not
-grant you rights to the voices or the generated audio. If you fork or reuse this
-project, do not redistribute these audio files as your own. Instead, generate
+The 0BSD grant in LICENSE applies to the code only. It does not grant you any
+rights to the voices or the generated audio. To run this bot with sound, generate
 your own clips from the transcripts:
 
     pnpm generate-audio
 
-with your own ElevenLabs account and API key (see docs/SPEAKING.md). The
-transcripts themselves (the `text` fields in src/content/shadowing-*.ts) are part
-of the source and are MIT-licensed like the rest of the code.
+with your own ElevenLabs account and API key (see docs/SPEAKING.md). The clips
+land in src/content/audio/ and the running bot reads them from there.
 
 The audio covers every spoken item: shadowing clips, role-play dialogues,
 grammar examples, monologues, question prompts, pronunciation drills, vocabulary

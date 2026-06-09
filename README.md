@@ -111,7 +111,7 @@ Set `DATABASE_URL` and the bot gains a personal tutor in its DMs: **/next** walk
 
 ## The audio
 
-Every spoken item (shadowing clips, role-play dialogues, grammar examples, monologues, question prompts, pronunciation drills, vocabulary, idioms, stories, useful talks, and native phrases) is AI-generated once with [ElevenLabs](https://elevenlabs.io) and committed as OGG/Opus under `src/content/audio/`. Most types use one American voice per CEFR level; dialogues and prompts use two voices (an asker and an answerer), and prompts include a built-in pause so the learner can answer before the model. The talks bank rotates through a wider set of American voices (one per talk) so the longer talks have variety. The running bot only reads the files, so production needs no text-to-speech key and has no audio cost. Generating is a one-time dev step (`pnpm generate-audio`, needs `ELEVENLABS_API_KEY` and `ffmpeg`); see [`docs/SPEAKING.md`](docs/SPEAKING.md). The audio is **not** covered by this repo's MIT license, see [`NOTICE`](NOTICE).
+Every spoken item (shadowing clips, role-play dialogues, grammar examples, monologues, question prompts, pronunciation drills, vocabulary, idioms, stories, useful talks, and native phrases) is AI-generated with [ElevenLabs](https://elevenlabs.io) as OGG/Opus under `src/content/audio/`. Most types use one American voice per CEFR level; dialogues and prompts use two voices (an asker and an answerer), and prompts include a built-in pause so the learner can answer before the model. The talks bank rotates through a wider set of American voices (one per talk) so the longer talks have variety. The running bot only reads the files, so production needs no text-to-speech key and has no audio cost. The `.ogg` files are **not** in this repository (they are ElevenLabs output under the owner's commercial license, not redistributable, see [`NOTICE`](NOTICE)). To run with sound, generate your own from the transcripts: `pnpm generate-audio` (a one-time dev step, needs `ELEVENLABS_API_KEY` and `ffmpeg`); see [`docs/SPEAKING.md`](docs/SPEAKING.md).
 
 ## Scripts
 
@@ -149,9 +149,11 @@ A daily question channel does not need accounts, saved votes, or a leaderboard. 
 
 ## License
 
-Code: MIT (see [`LICENSE`](LICENSE)).
+Code: BSD Zero Clause License (0BSD, see [`LICENSE`](LICENSE)). The transcripts
+(the `text` fields in `src/content/*.ts`) are part of the code and are 0BSD too.
 
-The generated voice clips in `src/content/audio/` are **not** MIT-licensed. They
-are AI-generated with ElevenLabs under a commercial license and are subject to
-the ElevenLabs Terms of Service. If you fork this project, generate your own
-audio rather than reusing those files. See [`NOTICE`](NOTICE).
+The voice clips for `src/content/audio/` are **not** in this repository and are
+**not** 0BSD-licensed. They are AI-generated with ElevenLabs under a commercial
+license and are subject to the ElevenLabs Terms of Service, so they are left out
+of the public repo. To run with sound, generate your own from the transcripts
+(`pnpm generate-audio`) rather than reusing the owner's. See [`NOTICE`](NOTICE).

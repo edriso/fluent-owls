@@ -1,6 +1,6 @@
 # Deployment
 
-This bot is small and (by default) stateless. It runs anywhere Node 20 runs: Fly.io, Railway, Render, a VPS, a Docker container, or your laptop. There is no volume to mount, and no database unless you opt into the personal tutor (`DATABASE_URL`), whose Prisma schema is applied by a one-off `fluent-owls-migrate` step on deploy. A redeploy is the whole release process.
+This bot is small and (by default) stateless. It runs anywhere Node 20 runs: Fly.io, Railway, Render, a VPS, a Docker container, or your laptop. The one thing it needs on disk is the voice clips, which are NOT in the repo and are supplied at runtime by a bind mount (see [Audio](#audio-voice-clips) below). There is no database unless you opt into the personal tutor (`DATABASE_URL`), whose Prisma schema is applied by a one-off `fluent-owls-migrate` step on deploy. A redeploy is the whole release process.
 
 ## What you need
 
@@ -42,7 +42,35 @@ docker compose up -d --build fluent-owls
 
 The CI deploy runs both for you on push. The exact `fluent-owls-migrate` service block, schema, and commands are in [`TUTOR.md`](./TUTOR.md). The shared DB and this bot's database/user are set up once on the server (see the server's `docs/05-databases.md`). To turn the tutor off, unset `DATABASE_URL` and remove the migrate step from the deploy.
 
-The `ELEVENLABS_*` variables in `.env.example` are **dev only**: they are used by `pnpm generate-audio` to create the audio clips once (shadowing, dialogues, grammar, monologues, prompts), and are never read by the running bot. Leave them unset in production. The committed `.ogg` files in `src/content/audio/` are all production needs, so make sure they ship with your deploy. The bot resolves them from `src/content/audio` relative to the working directory, so that folder must exist in the running image. The multi-stage `Dockerfile` copies the compiled `dist/` **and** `src/content/audio/` into the slim runtime stage for exactly this reason: `tsc` only emits `.ts -> .js` and never copies `.ogg` files, so copying `dist/` alone would leave every voice post failing silently. If you change the build, keep that audio copy, and watch the boot log: index.ts logs `No audio clips found` (an error) if the directory is missing, or `Audio clips available` with a count when it is present.
+## Audio (voice clips)
+
+The voice clips are AI-generated with ElevenLabs and are **not in the repository**: they are ElevenLabs output under the owner's commercial license, governed by the ElevenLabs Terms of Service, so they are git-ignored and not redistributed (see [`../NOTICE`](../NOTICE)). The running bot only reads them; production needs no text-to-speech key.
+
+Because the clips live outside git, they are **not** baked into the Docker image either. The runtime stage ships only the code; the clips are supplied at runtime by a **read-only bind mount** onto `src/content/audio`. The clips are durable host data, like a database volume, decoupled from the code release. This also keeps the image and the public repo small and code-only.
+
+**One-time host setup (VPS):** put the clip folder somewhere persistent OUTSIDE the git checkout, e.g. `/opt/bots/telegram/fluent-owls-audio/`, and mount it into the container. In `/opt/bots/docker-compose.yml`, the `fluent-owls` service (and the bot only, not the migrate helper) gets:
+
+```yaml
+  fluent-owls:
+    build: ./telegram/fluent-owls
+    env_file: ./telegram/fluent-owls/.env
+    restart: unless-stopped
+    volumes:
+      - ./telegram/fluent-owls-audio:/app/src/content/audio:ro   # voice clips, read-only
+    depends_on:
+      shared-db:
+        condition: service_healthy
+```
+
+The `:ro` makes it read-only (the bot never writes audio). The path `/app/src/content/audio` matches where the bot resolves clips (`process.cwd()` is `/app`). To populate or refresh the host folder, generate the clips on your laptop (`pnpm generate-audio`) and copy them up:
+
+```bash
+rsync -av src/content/audio/ <SERVER_IP>:/opt/bots/telegram/fluent-owls-audio/
+```
+
+`generate-audio` is idempotent (it skips a clip whose `.ogg` already exists), so after adding content you regenerate only the new clips and rsync again. No redeploy is needed for an audio-only change; the bind mount is live.
+
+The `ELEVENLABS_*` variables in `.env.example` are **dev only**: they are used by `pnpm generate-audio` and are never read by the running bot. Leave them unset in production. Watch the boot log: index.ts logs `No audio clips found` (an error, meaning the mount is missing or empty) or `Audio clips available` with a count when the mount is healthy.
 
 ## First post: the pinned welcome
 
@@ -71,7 +99,7 @@ pnpm send-test shadow     # today's shadowing voice clip (needs the .ogg generat
 pnpm send-test all        # the whole daily set, in order
 ```
 
-The `grammar`, `dialogue`, and `shadow` slots post committed audio files, so run `pnpm generate-audio` (dev only, see [SPEAKING.md](./SPEAKING.md)) and commit the `.ogg` files before relying on them.
+The `grammar`, `dialogue`, and `shadow` slots post audio files, so run `pnpm generate-audio` (dev only, see [SPEAKING.md](./SPEAKING.md)) to create the `.ogg` files locally before relying on them. The clips are git-ignored, so they stay on your machine (and on the production host's bind mount), never in the repo.
 
 The script preflights `getChat` first, so a wrong token or channel id gives one clean error instead of two confusing ones.
 
@@ -138,8 +166,8 @@ Logs go to stdout. There is nothing to mount.
 - **403 from Telegram.** Same answer: admin rights.
 - **400 on sendPoll.** An option over 100 chars or a bad option count. Run `pnpm audit-questions`.
 - **A voice post did not arrive** (`Failed to post shadowing voice` or `Failed to post role-play dialogue`, "is the audio generated?"). The `.ogg` file is missing. Run `pnpm generate-audio` and commit the files, or `pnpm audit-speaking --require-audio` to find every gap. The other posts are unaffected.
-- **Every voice post fails at once, but quizzes and the text phrase still arrive** (you see `No audio clips found` at boot, or a wall of "is the audio generated?" for grammar, dialogue, and shadow together). The audio did not make it into the running image. Confirm with `docker compose exec fluent-owls ls src/content/audio | head` (expect a `No such file or directory` when broken). The `Dockerfile` runtime stage must `COPY --from=builder /app/src/content/audio ./src/content/audio`; rebuild with `docker compose up -d --build fluent-owls`. This is distinct from one clip missing above: here the whole directory is absent.
+- **Every voice post fails at once, but quizzes and the text phrase still arrive** (you see `No audio clips found` at boot, or a wall of "is the audio generated?" for grammar, dialogue, and shadow together). The audio bind mount is missing or empty. Confirm with `docker compose exec fluent-owls ls src/content/audio | head` (expect only `README.md`, or `No such file or directory`, when broken). Check that the host folder `/opt/bots/telegram/fluent-owls-audio/` exists and is full of `.ogg` files, and that the `fluent-owls` service in `/opt/bots/docker-compose.yml` has the `volumes: - ./telegram/fluent-owls-audio:/app/src/content/audio:ro` line (see [Audio](#audio-voice-clips)). Re-up with `docker compose up -d fluent-owls`. This is distinct from one clip missing above: here the whole directory is absent.
 
 ## Backups
 
-There is nothing to back up. The repo is the truth. Pin the welcome once and forget it.
+The code is in git, so the repo is the truth for everything except the voice clips. The clips are NOT in the repo (see [Audio](#audio-voice-clips)), so they are the one thing to keep a copy of: they cost ElevenLabs credits to make, and regenerating all of them is not free. Keep the clip folder backed up off the host (a `tar czf fluent-owls-audio.tgz src/content/audio` kept somewhere safe, or attached as a private release asset). You can always rebuild them from the transcripts with `pnpm generate-audio`, but only with an ElevenLabs key and credits, so a copy saves both. The tutor database, if enabled, is backed up with the shared MariaDB dump (see the server's cheatsheet). Pin the welcome once and forget it.

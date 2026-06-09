@@ -5,6 +5,13 @@ node_modules
 dist
 # Prisma generated client: recreated inside the image by `prisma generate`.
 src/database/generated
+
+# Voice clips. NOT baked into the image: they are supplied at runtime by a
+# read-only bind mount (see Dockerfile + docs/DEPLOY.md). Excluding them keeps
+# the build context (and the image) small and code-only. The folder's README.md
+# still ships so the mount point exists.
+src/content/audio/*.ogg
+src/content/audio/*.tmp.mp3
 .git
 .gitignore
 
