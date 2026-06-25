@@ -10,18 +10,18 @@ This bot is small and (by default) stateless. It runs anywhere Node 20 runs: Fly
 
 ## Environment variables
 
-| Variable             | Required | Notes                                                     |
-| -------------------- | -------- | --------------------------------------------------------- |
-| `BOT_TOKEN`          | yes      | From `@BotFather`.                                        |
-| `CHANNEL_CHAT_ID`    | yes      | Numeric `-100...` is best; `@channel` also works.         |
-| `CHANNEL_PUBLIC_URL` | no       | Public link shown by `/start` in DMs.                     |
-| `ADMIN_TELEGRAM_ID`  | no       | Unlocks the `/admin_*` slot commands in DMs.              |
-| `TZ_NAME`            | no       | Cron timezone. Default Africa/Cairo.                      |
-| `DAILY_CRON`         | no       | When the daily set posts (default `0 18 * * *`).          |
-| `REMINDER_CRON`      | no       | Per-user reminder time (default `0 9 * * *`, tutor only). |
-| `DATABASE_URL`       | no       | Enables the personal tutor; Prisma/MariaDB URL.           |
-| `PORT`               | no       | `/health` server port. Default 8080.                      |
-| `NODE_ENV`           | no       | `production` for hosted.                                  |
+| Variable             | Required | Notes                                                                              |
+| -------------------- | -------- | ---------------------------------------------------------------------------------- |
+| `BOT_TOKEN`          | yes      | From `@BotFather`.                                                                 |
+| `CHANNEL_CHAT_ID`    | yes      | Numeric `-100...` is best; `@channel` also works.                                  |
+| `CHANNEL_PUBLIC_URL` | no       | Public link shown by `/start` in DMs.                                              |
+| `ADMIN_TELEGRAM_ID`  | no       | Unlocks the `/admin_*` commands in DMs (slot fire, `/admin_stats`, `/admin_help`). |
+| `TZ_NAME`            | no       | Cron timezone. Default Africa/Cairo.                                               |
+| `DAILY_CRON`         | no       | When the daily set posts (default `0 18 * * *`).                                   |
+| `REMINDER_CRON`      | no       | Per-user reminder time (default `0 9 * * *`, tutor only).                          |
+| `DATABASE_URL`       | no       | Enables the personal tutor; Prisma/MariaDB URL.                                    |
+| `PORT`               | no       | `/health` server port. Default 8080.                                               |
+| `NODE_ENV`           | no       | `production` for hosted.                                                           |
 
 The `.env` file is optional. If you set the variables in your host dashboard, you do not need a file at all.
 

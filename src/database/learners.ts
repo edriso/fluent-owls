@@ -7,6 +7,7 @@
 import { prisma } from './client';
 import { config } from '../config';
 import { dayKeyIn, nextStreak } from '../lib/streak';
+import { summarizeLearners, type LearnerStats } from '../lib/stats';
 import { kindForStep, pickNext, type TutorPick } from '../lib/tutor';
 import { LEVELS, type Level } from '../types';
 
@@ -77,6 +78,23 @@ export async function getLearnersToRemind(
   return rows
     .filter((r) => r.lastDay !== today)
     .map((r) => ({ telegramId: Number(r.telegramId), streak: r.streak }));
+}
+
+/**
+ * Subscriber counts for the admin /admin_stats command. Reads only the few
+ * fields the summary needs and defers all counting to the pure summarizeLearners
+ * (so the logic is unit-tested without a DB). Returns null when the DB is off.
+ */
+export async function getStats(): Promise<LearnerStats | null> {
+  if (!prisma) return null;
+  const rows = await prisma.learner.findMany({
+    select: { level: true, lastDay: true, remindersOn: true },
+  });
+  const today = dayKeyIn(new Date(), config.timezone);
+  return summarizeLearners(
+    rows.map((r) => ({ level: toLevel(r.level), lastDay: r.lastDay, remindersOn: r.remindersOn })),
+    today,
+  );
 }
 
 /** Turn the daily reminder on or off for a learner. Returns false if the DB is off. */

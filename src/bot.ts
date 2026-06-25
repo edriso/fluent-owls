@@ -6,12 +6,14 @@ import { schedules } from './schedules';
 import { dbEnabled } from './database/client';
 import {
   getProfile,
+  getStats,
   nextForLearner,
   registerLearner,
   setLevel,
   setReminders,
 } from './database/learners';
 import { searchGrammar } from './lib/search';
+import type { LearnerStats } from './lib/stats';
 import { randomOf } from './lib/select';
 import { LEVELS, type Level } from './types';
 import { CONTENT_COMMANDS, GRAMMAR_COMMAND } from './content-commands';
@@ -280,6 +282,29 @@ export function buildBot(): Bot {
     });
   }
 
+  // Subscriber counts. Only useful (and only registered) when the personal
+  // tutor database is on, since that is the only per-user state we keep.
+  if (dbEnabled) {
+    bot.command('admin_stats', async (ctx) => {
+      if (!isAdmin(ctx.from?.id)) return;
+      const stats = await getStats();
+      if (!stats) {
+        await ctx.reply('No stats available (the tutor database is off).');
+        return;
+      }
+      await ctx.reply(formatStats(stats));
+    });
+  }
+
+  // Lists every admin command, so the admin never has to remember them. Like the
+  // other /admin_* commands it is silent for non-admins, so it never leaks to
+  // strangers in DMs. The list is built from the live schedules (one fire
+  // command per slot) so it can never drift from what is actually registered.
+  bot.command('admin_help', async (ctx) => {
+    if (!isAdmin(ctx.from?.id)) return;
+    await ctx.reply(adminHelpText());
+  });
+
   bot.catch((err) => {
     logger.error('Grammy uncaught error', { error: String(err.error) });
   });
@@ -333,4 +358,36 @@ export async function setBotProfile(bot: Bot): Promise<void> {
 function isAdmin(id: number | undefined): boolean {
   if (!config.adminTelegramId || !id) return false;
   return BigInt(id) === config.adminTelegramId;
+}
+
+/**
+ * The /admin_help body: every admin command with a one-line description. The
+ * per-slot fire commands are derived from the live schedules so the list never
+ * names a command that does not exist. /admin_stats is shown only when the tutor
+ * database is on (it is only registered then). Plain text, matching the terse
+ * style of the other admin replies.
+ */
+function adminHelpText(): string {
+  const lines = ['Admin commands:'];
+  for (const slot of schedules.map((s) => s.name)) {
+    lines.push(`/admin_${slot} - post the "${slot}" slot to the channel now`);
+  }
+  if (dbEnabled) {
+    lines.push('/admin_stats - subscriber counts (total, active, by level)');
+  }
+  lines.push('/admin_help - this list');
+  return lines.join('\n');
+}
+
+/** Render the subscriber stats as a short plain-text report for /admin_stats. */
+function formatStats(stats: LearnerStats): string {
+  const byLevel = stats.byLevel.map((b) => `${b.level.toUpperCase()} ${b.count}`).join(', ');
+  return [
+    `Learners: ${stats.total}`,
+    `Practised at least once: ${stats.everPractised}`,
+    `Active today: ${stats.activeToday}`,
+    `Active this week: ${stats.activeThisWeek}`,
+    `Reminders on: ${stats.remindersOn}`,
+    `By level: ${byLevel}`,
+  ].join('\n');
 }

@@ -24,7 +24,7 @@ fluent-owls/
 │   ├── index.ts          Entry point: builds the bot, the kernel scheduler, and the kernel /health server.
 │   ├── config.ts         env loading (via the kernel's loadEnv). Required: BOT_TOKEN, CHANNEL_CHAT_ID. Optional: DATABASE_URL (tutor).
 │   ├── database/         Optional personal-tutor DB (Prisma + adapter-mariadb). client.ts (client, null when no DATABASE_URL), learners.ts (service), generated/ (gitignored client). No-op when DATABASE_URL is unset.
-│   ├── bot.ts            Grammy setup: /start, /about/help/listen, the on-demand content commands (driven by content-commands.ts), the tutor commands, and one /admin_<slot> per batch slot.
+│   ├── bot.ts            Grammy setup: /start, /about/help/listen, the on-demand content commands (driven by content-commands.ts), the tutor commands, one /admin_<slot> per batch slot, /admin_stats (subscriber counts, tutor DB only), and /admin_help (lists every admin command).
 │   ├── content-commands.ts  SINGLE SOURCE OF TRUTH for the on-demand "send a random X" commands: pairs each bank+poster and carries its emoji/help/menu text. Drives the handlers, /listen, /help, and the command menu so they never drift.
 │   ├── scheduler.ts      Domain layer over the kernel's Scheduler; runOnce dispatches by slot kind; runDailyBatch; findSlot; start/stopScheduler.
 │   ├── schedules.ts      THE EDIT POINT for the batch order, slot kinds, level bands, and which slots are silent.
@@ -140,21 +140,21 @@ To change WHEN the set posts, set `DAILY_CRON`. To change the ORDER, the slot KI
 
 ## Environment variables
 
-| Variable              | Required | Notes                                                                                                                                                                  |
-| --------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `BOT_TOKEN`           | yes      | From `@BotFather`.                                                                                                                                                     |
-| `CHANNEL_CHAT_ID`     | yes      | Numeric `-100...` is best; `@channel` also works.                                                                                                                      |
-| `CHANNEL_PUBLIC_URL`  | no       | Public link shown by `/start` in DMs.                                                                                                                                  |
-| `ADMIN_TELEGRAM_ID`   | no       | Unlocks the `/admin_*` slot commands in DMs.                                                                                                                           |
-| `TZ_NAME`             | no       | Cron timezone. Default Africa/Cairo.                                                                                                                                   |
-| `DAILY_CRON`          | no       | When the daily set posts (default `0 18 * * *`).                                                                                                                       |
-| `REMINDER_CRON`       | no       | When the per-user practice reminder fires (default `0 9 * * *`, tutor only).                                                                                           |
-| `DATABASE_URL`        | no       | Enables the personal tutor (/next, /level, /streak, /reminders). MySQL/MariaDB via Prisma; schema applied by the migrate step. Unset = no database. See docs/TUTOR.md. |
-| `PORT`                | no       | `/health` server port. Default 8080.                                                                                                                                   |
-| `NODE_ENV`            | no       | `production` for hosted.                                                                                                                                               |
-| `ELEVENLABS_API_KEY`  | dev only | Only for `pnpm generate-audio`. Never read at runtime.                                                                                                                 |
-| `ELEVENLABS_VOICE_ID` | dev only | Optional. Force one voice (else two American voices alternate).                                                                                                        |
-| `ELEVENLABS_MODEL_ID` | dev only | Optional. Defaults to `eleven_multilingual_v2`.                                                                                                                        |
+| Variable              | Required | Notes                                                                                                                                                                            |
+| --------------------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `BOT_TOKEN`           | yes      | From `@BotFather`.                                                                                                                                                               |
+| `CHANNEL_CHAT_ID`     | yes      | Numeric `-100...` is best; `@channel` also works.                                                                                                                                |
+| `CHANNEL_PUBLIC_URL`  | no       | Public link shown by `/start` in DMs.                                                                                                                                            |
+| `ADMIN_TELEGRAM_ID`   | no       | Unlocks the `/admin_*` commands in DMs: one `/admin_<slot>` per batch slot (fire it now), `/admin_stats` (subscriber counts; tutor DB only), and `/admin_help` (lists them all). |
+| `TZ_NAME`             | no       | Cron timezone. Default Africa/Cairo.                                                                                                                                             |
+| `DAILY_CRON`          | no       | When the daily set posts (default `0 18 * * *`).                                                                                                                                 |
+| `REMINDER_CRON`       | no       | When the per-user practice reminder fires (default `0 9 * * *`, tutor only).                                                                                                     |
+| `DATABASE_URL`        | no       | Enables the personal tutor (/next, /level, /streak, /reminders). MySQL/MariaDB via Prisma; schema applied by the migrate step. Unset = no database. See docs/TUTOR.md.           |
+| `PORT`                | no       | `/health` server port. Default 8080.                                                                                                                                             |
+| `NODE_ENV`            | no       | `production` for hosted.                                                                                                                                                         |
+| `ELEVENLABS_API_KEY`  | dev only | Only for `pnpm generate-audio`. Never read at runtime.                                                                                                                           |
+| `ELEVENLABS_VOICE_ID` | dev only | Optional. Force one voice (else two American voices alternate).                                                                                                                  |
+| `ELEVENLABS_MODEL_ID` | dev only | Optional. Defaults to `eleven_multilingual_v2`.                                                                                                                                  |
 
 The `ELEVENLABS_*` vars are used only by the audio-generation script. The running bot never touches a TTS API: it posts the pre-generated `.ogg` files (read from the bind mount in production). Leave them unset in production.
 
