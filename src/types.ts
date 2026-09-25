@@ -340,11 +340,7 @@ export type LeveledPrompt = Prompt & {
  *  - spelling-sound:    how spelling maps to sound (silent letters, -ed endings, "ough"), to decode words
  */
 export type PronunciationFocus =
-  | 'minimal-pair'
-  | 'connected-speech'
-  | 'word-stress'
-  | 'weak-forms'
-  | 'spelling-sound';
+  'minimal-pair' | 'connected-speech' | 'word-stress' | 'weak-forms' | 'spelling-sound';
 
 /**
  * One pronunciation drill: a short, targeted listen-and-repeat exercise on a
