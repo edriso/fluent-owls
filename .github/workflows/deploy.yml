@@ -75,6 +75,9 @@ jobs:
           script: |
             set -e
             cd /opt/bots/telegram/fluent-owls && git pull
-            cd /opt/bots && docker compose run --rm --build fluent-owls-migrate
+            cd /opt/bots
+            docker builder prune -af
+            docker image prune -f
+            docker compose run --rm --build fluent-owls-migrate
             docker compose up -d --build fluent-owls
             docker image prune -f
